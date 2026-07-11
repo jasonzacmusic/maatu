@@ -1,0 +1,14 @@
+{
+  "name": "Maatu",
+  "short_name": "Maatu",
+  "description": "Learn to speak Kannada, Hindi, and Tamil by talking to people.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C101D",
+  "theme_color": "#0C101D",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

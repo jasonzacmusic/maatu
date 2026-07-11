@@ -2,12 +2,18 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
-- [x] **M1 (h 0-1): Repo scaffolded** Claude Code part DONE 2026-07-11. Waiting on Jason: 4 signups + keys.txt (see "Waiting on Jason" below).
-- [ ] **M2 (h 1-6): Voice pipeline proven.** Mic in browser to Sarvam STT to LLM persona to Bulbul V3 to speakers. The Kannada auto driver speaks. BLOCKED on keys.
+- [x] **M1 (h 0-1): Repo scaffolded** DONE 2026-07-11. All 4 keys received and wired.
+- [~] **M2 (h 1-6): Voice pipeline.** Proven end to end EXCEPT the brain LLM call. Token to LiveKit room to agent dispatch to persona routing to Sarvam STT + Bulbul V3 TTS (voice kabir) + Silero VAD all initialize; the agent joins as Manjunath and reaches the LLM. BLOCKED at the brain: the Gemini key has zero free-tier quota in region (429), needs billing. Worker is now provider flexible (Anthropic preferred when its key is present). See "Blocker" below.
+- [x] **M4 (h 12-18): Design applied EARLY.** Claude Design's "Night Bazaar" fully implemented: the Street (illustrated SVG, 3 languages re-dress live), Call (wired to the real pipeline), Debrief card, Progress, PWA manifest + icons. Verified in browser.
 - [ ] **M3 (h 6-12): Scenario engine.** 6 launch personas x 3 languages, debrief system, session reports to Neon.
-- [ ] **M4 (h 12-18): Design applied.** The Street home screen, live call screen, debrief card, PWA install.
-- [ ] **M5 (h 18-22): Teach Mode.** Music student persona, romanized caption toggle, level dial.
+- [ ] **M5 (h 18-22): Teach Mode.** Music student persona, romanized caption toggle wired to real transcripts, level dial.
 - [ ] **M6 (h 22-24): Ear-test, punch list, deploy to domain.**
+
+## Blocker (needs Jason or Codex, one step)
+
+The brain LLM cannot generate: the Gemini key's free tier is zero quota in India (Google restricts it). Two unlock paths, pick one:
+1. Enable billing on the Google Cloud project behind the Gemini key (Gemini Flash is nearly free per call). Then everything runs with the existing key.
+2. Add a billed ANTHROPIC_API_KEY line to keys.txt (from console.anthropic.com). The worker prefers Anthropic automatically when that key is present.
 
 ## Waiting on Jason (the only human steps)
 
