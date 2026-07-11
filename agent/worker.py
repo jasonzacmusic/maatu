@@ -29,7 +29,8 @@ SARVAM_API_KEY = os.environ.get("SARVAM_API_KEY")
 # Our env names the brain key GEMINI_API_KEY; the Google plugin wants it passed
 # explicitly (it only auto-reads GOOGLE_API_KEY).
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+# gemini-3.5-flash is current and works on billed keys. 2.x flash is retired.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 # The Brain is provider flexible per the spec. Anthropic is preferred when its
