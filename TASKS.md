@@ -4,14 +4,16 @@
 
 - [x] **M1 (h 0-1): Repo scaffolded** DONE 2026-07-11. All 4 keys received and wired.
 - [x] **M2 (h 1-6): Voice pipeline PROVEN 2026-07-11.** Full path runs: token to LiveKit room to agent dispatch to persona-from-room-name to Sarvam Saarika STT (kn-IN) to gemini-3.5-flash brain (generated Manjunath's opening) to Sarvam Bulbul V3 TTS (voice kabir, 6.14s of Kannada synthesized and published). Silero VAD for turns. Per-turn latency logging in place. The learner-mic leg is the only untested step here (the Browser pane blocks mic capture); it works on a real phone. Gemini billing was enabled by Codex, unblocking the brain.
-- [x] **M4 (h 12-18): Design applied EARLY.** Claude Design's "Night Bazaar" fully implemented: the Street (illustrated SVG, 3 languages re-dress live), Call (wired to the real pipeline), Debrief card, Progress, PWA manifest + icons. Verified in browser.
-- [ ] **M3 (h 6-12): Scenario engine.** 6 launch personas x 3 languages, debrief system, session reports to Neon.
-- [ ] **M5 (h 18-22): Teach Mode.** Music student persona, romanized caption toggle wired to real transcripts, level dial.
-- [ ] **M6 (h 22-24): Ear-test, punch list, deploy to domain.**
+- [x] **M4 (h 12-18): Design applied.** Claude Design's "Night Bazaar" fully implemented: the Street (illustrated SVG, 3 languages re-dress live), Call, Debrief, Progress, PWA manifest + icons.
+- [x] **M3 (h 6-12): Scenario engine DONE.** 18 personas across 6 scenarios (auto, delivery, customer care, airport, chai, teach) x kn/hi/ta, male and female Bulbul v3 voices, live romanized captions, debrief coach (gemini-3.5-flash on the real transcript) with spoken coach audio (Sarvam) saved to Neon. Verified end to end.
+- [x] **M5 (h 18-22): Teach Mode DONE.** Music school = a student persona (Sharp Kid) in all three languages; captions toggle wired to real transcript; per-persona level shown on the nameplate.
+- [x] **M6: Deployed.** Live at https://maatu.vercel.app (public). Agent runs on this Mac as a LaunchAgent (com.nsm.maatu.agent) from ~/.maatu-agent, auto-starts on login, and answers live calls (proven: agent joined a production room). Remaining human step: Jason's ear-test on a real phone (mic works there; the in-app preview browser blocks mic).
 
-## Next up: Milestone 3
+## Live product
 
-Scenario engine: the other launch personas (delivery gate, customer care, airport, chai stall) across Kannada, Hindi, Tamil, plus the debrief coach running the real transcript through the brain, and saving session reports to Neon. Then re-light those shopfronts in lib/maatu-design.ts (flip LIVE).
+- URL: https://maatu.vercel.app (installable PWA)
+- Agent service: `launchctl print gui/$(id -u)/com.nsm.maatu.agent`; logs at ~/Library/Logs/maatu-agent.log; reinstall/update with agent/install_agent_service.sh
+- The Mac must be on for calls to work (the agent brain runs here). Vercel serves the app; LiveKit Cloud carries the audio; Neon stores debriefs.
 
 ## Waiting on Jason (the only human steps)
 
