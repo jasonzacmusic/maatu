@@ -26,9 +26,11 @@ export interface MaatuCall {
   caption: Line | null;
   transcript: Line[];
   roomName: string | null;
+  needsAudioUnlock: boolean;
   connect: () => Promise<void>;
   hangUp: () => Promise<void>;
   toggleMute: () => Promise<void>;
+  unlockAudio: () => Promise<void>;
 }
 
 export function useMaatuCall(persona: string): MaatuCall {
@@ -39,6 +41,7 @@ export function useMaatuCall(persona: string): MaatuCall {
   const [caption, setCaption] = useState<Line | null>(null);
   const [transcript, setTranscript] = useState<Line[]>([]);
   const [roomName, setRoomName] = useState<string | null>(null);
+  const [needsAudioUnlock, setNeedsAudioUnlock] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
@@ -48,11 +51,24 @@ export function useMaatuCall(persona: string): MaatuCall {
     if (!audioElRef.current) {
       const el = document.createElement("audio");
       el.autoplay = true;
+      el.setAttribute("playsinline", "true");
+      (el as HTMLAudioElement & { playsInline: boolean }).playsInline = true;
       el.style.display = "none";
       document.body.appendChild(el);
       audioElRef.current = el;
     }
     return audioElRef.current;
+  }, []);
+
+  const unlockAudio = useCallback(async () => {
+    const room = roomRef.current;
+    try {
+      if (room) await room.startAudio();
+      await audioElRef.current?.play().catch(() => {});
+      setNeedsAudioUnlock(room ? !room.canPlaybackAudio : false);
+    } catch {
+      // leave the unlock prompt up
+    }
   }, []);
 
   const hangUp = useCallback(async () => {
@@ -82,7 +98,13 @@ export function useMaatuCall(persona: string): MaatuCall {
 
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
         const el = ensureAudioEl();
-        if (track.kind === Track.Kind.Audio && el) track.attach(el);
+        if (track.kind === Track.Kind.Audio && el) {
+          track.attach(el);
+          el.play().catch(() => setNeedsAudioUnlock(!room.canPlaybackAudio));
+        }
+      });
+      room.on(RoomEvent.AudioPlaybackStatusChanged, () => {
+        setNeedsAudioUnlock(!room.canPlaybackAudio);
       });
       room.on(RoomEvent.ActiveSpeakersChanged, (speakers) => {
         if (speakers.length === 0) setSpeaker(null);
@@ -117,8 +139,21 @@ export function useMaatuCall(persona: string): MaatuCall {
       });
 
       await room.connect(url, token);
-      await room.localParticipant.setMicrophoneEnabled(true);
-      setMuted(false);
+      ensureAudioEl();
+      // Unlock remote audio playback within the tap that started the call.
+      try {
+        await room.startAudio();
+      } catch {
+        // fall back to the tap-to-hear prompt
+      }
+      setNeedsAudioUnlock(!room.canPlaybackAudio);
+      try {
+        await room.localParticipant.setMicrophoneEnabled(true);
+        setMuted(false);
+      } catch {
+        // Mic denied or unavailable: they can still listen. Not fatal.
+        setMuted(true);
+      }
       setPhase("live");
     } catch (e) {
       roomRef.current = null;
@@ -152,8 +187,10 @@ export function useMaatuCall(persona: string): MaatuCall {
     caption,
     transcript,
     roomName,
+    needsAudioUnlock,
     connect,
     hangUp,
     toggleMute,
+    unlockAudio,
   };
 }

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import StreetScene from "./StreetScene";
+import CallBackdrop from "./CallBackdrop";
 import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import {
@@ -245,7 +246,6 @@ function CallScreen({
   const active: Speaker = call.phase === "live" ? call.speaker : null;
   const speakingColor = active === "learner" ? C.tube : C.sodium;
   const barsAnimate = active !== null;
-  const isAuto = meta.scenario === "auto";
 
   const captionText =
     caps && call.caption
@@ -264,26 +264,7 @@ function CallScreen({
 
   return (
     <div className={"absolute inset-0 overflow-hidden" + (rm ? " mt-noanim" : "")} style={{ background: C.night }}>
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute -top-24 -left-16 w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(255,179,92,0.16), transparent 65%)" }} />
-        {isAuto ? (
-          <svg viewBox="0 0 390 844" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMax slice">
-            <rect x="0" y="700" width="390" height="144" fill="#0E1017" />
-            <g opacity="0.85" transform="translate(18,600)">
-              <rect x="0" y="20" width="150" height="96" rx="26" fill="#0A0D18" stroke="#1D2438" strokeWidth="2" />
-              <rect x="4" y="20" width="142" height="16" rx="8" fill="#211E12" />
-              <rect x="20" y="44" width="46" height="40" rx="3" fill="#FFD9A0" opacity="0.14" />
-              <circle cx="34" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
-              <circle cx="116" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
-              <circle cx="4" cy="78" r="6" fill="#FFD9A0" opacity="0.6" />
-            </g>
-            <rect x="286" y="96" width="86" height="4" rx="2" fill="#E9FFF4" opacity="0.35" />
-          </svg>
-        ) : (
-          <div className="absolute inset-x-0 bottom-0 h-72" style={{ background: "radial-gradient(ellipse at 50% 120%, rgba(255,179,92,0.14), transparent 70%)" }} />
-        )}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(12,16,29,0.2), rgba(12,16,29,0.75) 55%, rgba(12,16,29,0.92))" }} />
-      </div>
+      <CallBackdrop scenario={meta.scenario} />
 
       <div className="relative flex flex-col items-center pt-24">
         <div className="px-6 py-2 rounded-md" style={{ background: "#F5C542", boxShadow: "0 0 32px rgba(245,197,66,0.25)" }}>
@@ -324,18 +305,28 @@ function CallScreen({
           ))}
         </div>
         <div className="h-16 px-9 mt-8 text-center flex items-center justify-center">
-          {captionText && (
-            <p
-              key={captionText}
-              className="text-[15px] leading-snug"
-              style={{
-                fontFamily: BODY,
-                color: call.caption?.who === "learner" ? "rgba(191,239,219,0.92)" : "rgba(242,237,226,0.9)",
-                animation: "mtFade .4s ease both",
-              }}
+          {call.needsAudioUnlock ? (
+            <button
+              onClick={call.unlockAudio}
+              className="px-6 py-3 rounded-full text-[15px] font-bold animate-pulse focus-visible:outline focus-visible:outline-2"
+              style={{ fontFamily: BODY, background: C.sodium, color: "#1A1206", outlineColor: C.tube }}
             >
-              {captionText}
-            </p>
+              🔊 Tap to hear {meta.name}
+            </button>
+          ) : (
+            captionText && (
+              <p
+                key={captionText}
+                className="text-[15px] leading-snug"
+                style={{
+                  fontFamily: BODY,
+                  color: call.caption?.who === "learner" ? "rgba(191,239,219,0.92)" : "rgba(242,237,226,0.9)",
+                  animation: "mtFade .4s ease both",
+                }}
+              >
+                {captionText}
+              </p>
+            )
           )}
         </div>
       </div>
