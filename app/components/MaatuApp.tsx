@@ -5,6 +5,7 @@ import StreetScene from "./StreetScene";
 import CallBackdrop from "./CallBackdrop";
 import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
+import { UNITS, teacherMeta, getDone, markDone, LANG_NAME } from "@/lib/curriculum";
 import {
   C,
   BODY,
@@ -22,7 +23,7 @@ import {
 // languages opens a real live call; the Debrief reads the real coach report
 // from the session. No em dashes anywhere.
 
-type Screen = "street" | "call" | "debrief" | "progress";
+type Screen = "street" | "call" | "debrief" | "progress" | "school";
 type SessionEnd = { room: string | null; transcript: Line[]; durationSec: number };
 
 const NUMERALS: Record<Lang, string[]> = {
@@ -60,12 +61,14 @@ function StreetScreen({
   setLang,
   onEnter,
   onProgress,
+  onSchool,
   rm,
 }: {
   lang: Lang;
   setLang: (l: Lang) => void;
   onEnter: (id: ShopId) => void;
   onProgress: () => void;
+  onSchool: () => void;
   rm: boolean;
 }) {
   const [cam, setCam] = useState<{ x: number; y: number; s: number } | null>(null);
@@ -160,9 +163,17 @@ function StreetScreen({
         className="absolute bottom-0 inset-x-0 px-5 pb-9 flex items-end justify-between"
         style={{ opacity: cam ? 0 : 1, transition: "opacity 300ms" }}
       >
-        <div className="text-[10px] font-semibold uppercase" style={{ fontFamily: BODY, letterSpacing: 2, color: "rgba(126,137,168,0.8)" }}>
-          tap a lit shopfront
-        </div>
+        <button
+          onClick={onSchool}
+          aria-label="Classroom"
+          className="flex items-center gap-2 h-11 px-4 rounded-full backdrop-blur-md focus-visible:outline focus-visible:outline-2"
+          style={{ background: "rgba(191,239,219,0.14)", border: "1px solid rgba(191,239,219,0.35)", outlineColor: C.tube }}
+        >
+          <span className="text-[15px]">📖</span>
+          <span className="text-[13px] font-semibold" style={{ fontFamily: BODY, color: C.tube }}>
+            Learn {LANG_NAME[lang]}
+          </span>
+        </button>
         <button
           onClick={onProgress}
           aria-label="Progress"
@@ -272,11 +283,17 @@ function CallScreen({
             {meta.name.toUpperCase()}
           </span>
         </div>
-        <div className="flex gap-1.5 mt-3" aria-label={`Level ${meta.level} of 5`}>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: i < meta.level ? C.sodium : "rgba(255,255,255,0.18)" }} />
-          ))}
-        </div>
+        {meta.scenario === "class" || meta.scenario === "tutor" ? (
+          <div className="mt-3 px-3 text-[12px] font-semibold text-center" style={{ fontFamily: BODY, color: C.tube }}>
+            {meta.sceneLabel}
+          </div>
+        ) : (
+          <div className="flex gap-1.5 mt-3" aria-label={`Level ${meta.level} of 5`}>
+            {[0, 1, 2, 3, 4].map((i) => (
+              <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: i < meta.level ? C.sodium : "rgba(255,255,255,0.18)" }} />
+            ))}
+          </div>
+        )}
         <div className="mt-2 text-[12px] tabular-nums" style={{ fontFamily: BODY, color: "rgba(126,137,168,0.9)" }}>
           {mm}:{ss}
         </div>
@@ -762,6 +779,106 @@ function ProgressScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
+// ....................................................... THE SCHOOL
+function SchoolScreen({
+  lang,
+  onBack,
+  onTutor,
+  onLesson,
+}: {
+  lang: Lang;
+  onBack: () => void;
+  onTutor: () => void;
+  onLesson: (lessonId: string) => void;
+}) {
+  const done = getDone(lang);
+  let n = 0;
+  return (
+    <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
+      <div className="px-5 pt-16 pb-10 flex flex-col gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBack}
+            aria-label="Back to the street"
+            className="w-10 h-10 rounded-full flex items-center justify-center flex-none focus-visible:outline focus-visible:outline-2"
+            style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", outlineColor: C.tube }}
+          >
+            <ChevronLeft />
+          </button>
+          <div>
+            <h1 style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 700, fontSize: 26, lineHeight: 1.1, color: C.milk }}>
+              Learn {LANG_NAME[lang]}
+            </h1>
+            <div className="text-[11px] mt-0.5" style={{ fontFamily: BODY, color: C.muted }}>
+              A real class. The teacher leads and corrects you.
+            </div>
+          </div>
+        </div>
+
+        {/* Free conversation, corrected on the fly */}
+        <button
+          onClick={onTutor}
+          className="text-left rounded-2xl p-5 focus-visible:outline focus-visible:outline-2"
+          style={{ background: "linear-gradient(135deg, rgba(191,239,219,0.16), rgba(255,179,92,0.10))", border: "1px solid rgba(191,239,219,0.3)", outlineColor: C.tube }}
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">💬</span>
+            <div>
+              <div className="text-[16px] font-bold" style={{ fontFamily: BODY, color: C.milk }}>
+                Free conversation
+              </div>
+              <div className="text-[12.5px] mt-0.5" style={{ fontFamily: BODY, color: "rgba(191,239,219,0.85)" }}>
+                Just talk. The teacher chats with you and corrects you as you go.
+              </div>
+            </div>
+          </div>
+        </button>
+
+        {UNITS.map((unit) => (
+          <div key={unit.unit}>
+            <div className="text-[10px] font-bold uppercase mb-2 mt-2" style={{ fontFamily: BODY, letterSpacing: 2.5, color: C.sodium }}>
+              {unit.unit}
+            </div>
+            <div className="flex flex-col gap-2">
+              {unit.lessons.map((lesson) => {
+                n += 1;
+                const isDone = done.has(lesson.id);
+                return (
+                  <button
+                    key={lesson.id}
+                    onClick={() => onLesson(lesson.id)}
+                    className="text-left rounded-xl p-4 flex items-center gap-3 focus-visible:outline focus-visible:outline-2"
+                    style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)", outlineColor: C.tube }}
+                  >
+                    <span
+                      className="w-7 h-7 rounded-full flex items-center justify-center flex-none text-[12px] font-bold"
+                      style={{
+                        background: isDone ? C.sodium : "rgba(255,255,255,0.08)",
+                        color: isDone ? "#1A1206" : C.muted,
+                        fontFamily: BODY,
+                      }}
+                    >
+                      {isDone ? "✓" : n}
+                    </span>
+                    <div className="flex-1">
+                      <div className="text-[14.5px] font-semibold" style={{ fontFamily: BODY, color: C.milk }}>
+                        {lesson.title}
+                      </div>
+                      <div className="text-[12px] mt-0.5" style={{ fontFamily: BODY, color: C.muted }}>
+                        {lesson.objective}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ....................................................... APP SHELL
 export default function MaatuApp() {
   const [screen, setScreen] = useState<Screen>("street");
@@ -787,25 +904,57 @@ export default function MaatuApp() {
     [lang],
   );
 
-  const meta = PERSONAS[activePersona] ?? PERSONAS["kn-auto"];
+  const startLesson = useCallback((lessonId: string) => {
+    setActivePersona(`teacher-${lang}-${lessonId}`);
+    setScreen("call");
+  }, [lang]);
+
+  const startTutor = useCallback(() => {
+    setActivePersona(`tutor-${lang}`);
+    setScreen("call");
+  }, [lang]);
+
+  const isClassroom = activePersona.startsWith("teacher-") || activePersona.startsWith("tutor-");
+  const meta: PersonaMeta = isClassroom
+    ? activePersona.startsWith("tutor-")
+      ? teacherMeta(lang, null)
+      : teacherMeta(lang, activePersona.split("-").slice(2).join("-"))
+    : PERSONAS[activePersona] ?? PERSONAS["kn-auto"];
+
+  const handleCallEnd = useCallback(
+    (payload: SessionEnd) => {
+      if (activePersona.startsWith("teacher-")) {
+        const lessonId = activePersona.split("-").slice(2).join("-");
+        markDone(lang, lessonId);
+        setScreen("school");
+      } else if (activePersona.startsWith("tutor-")) {
+        setScreen("school");
+      } else {
+        setLastSession(payload);
+        setScreen("debrief");
+      }
+    },
+    [activePersona, lang],
+  );
 
   return (
     <div className="mt-app relative w-full h-dvh overflow-hidden" style={{ background: C.night, fontFamily: BODY }}>
       <div key={screen} className="absolute inset-0" style={{ animation: "mtFade 450ms ease both" }}>
         {screen === "street" && (
-          <StreetScreen lang={lang} setLang={setLang} onEnter={enterShop} onProgress={() => setScreen("progress")} rm={rm} />
-        )}
-        {screen === "call" && (
-          <CallScreen
-            meta={meta}
+          <StreetScreen
             lang={lang}
-            captionsDefault
-            onEnd={(payload) => {
-              setLastSession(payload);
-              setScreen("debrief");
-            }}
+            setLang={setLang}
+            onEnter={enterShop}
+            onProgress={() => setScreen("progress")}
+            onSchool={() => setScreen("school")}
             rm={rm}
           />
+        )}
+        {screen === "school" && (
+          <SchoolScreen lang={lang} onBack={() => setScreen("street")} onTutor={startTutor} onLesson={startLesson} />
+        )}
+        {screen === "call" && (
+          <CallScreen meta={meta} lang={lang} captionsDefault onEnd={handleCallEnd} rm={rm} />
         )}
         {screen === "debrief" && (
           <DebriefScreen meta={meta} lang={lang} session={lastSession} onStreet={() => setScreen("street")} onAgain={() => setScreen("call")} />

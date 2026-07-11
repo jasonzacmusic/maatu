@@ -77,8 +77,39 @@ def _build_system_prompt(p: dict) -> str:
     return "\n\n".join(x for x in parts if x)
 
 
+def _persona_from_fields(data: dict) -> Persona:
+    """Build a Persona from a fully-formed fields dict (teacher/tutor path,
+    where the system prompt and opening are already written)."""
+    from voices import resolve
+
+    gender = data.get("gender", "female")
+    seed = sum(ord(c) for c in data["id"])
+    return Persona(
+        id=data["id"],
+        language=data["language"],
+        name=data["name"],
+        voice=resolve(data.get("voice"), gender, seed),
+        pace=float(data.get("pace", 1.0)),
+        opening=data["opening"],
+        system_prompt=data["system_prompt"],
+        level=int(data.get("level", 0)),
+        gender=gender,
+        teach_mode=bool(data.get("teach_mode", False)),
+        rubric=data.get("rubric", []),
+        raw=data,
+    )
+
+
 def load_persona(persona_id: str | None) -> Persona:
     pid = persona_id or DEFAULT_PERSONA
+    # Classroom mode: teacher-<lang>-<lesson> and tutor-<lang> are built, not files.
+    if pid.startswith("teacher-") or pid.startswith("tutor-"):
+        from teacher import build_fields
+
+        fields = build_fields(pid)
+        if fields:
+            return _persona_from_fields(fields)
+        pid = DEFAULT_PERSONA
     path = PERSONA_DIR / f"{pid}.json"
     if not path.exists():
         path = PERSONA_DIR / f"{DEFAULT_PERSONA}.json"

@@ -135,6 +135,27 @@ export default function CallBackdrop({ scenario }: { scenario: string }) {
           </g>
         </Frame>
       );
+    case "class":
+    case "tutor":
+      return (
+        <Frame>
+          {/* a warm classroom: blackboard and a desk */}
+          <rect x="70" y="560" width="250" height="120" rx="4" fill="#12281F" stroke="#2E4034" strokeWidth="2" />
+          <rect x="70" y="560" width="250" height="120" rx="4" fill="#BFEFDB" opacity="0.05" />
+          <g stroke="#BFEFDB" strokeWidth="2" opacity="0.35" fill="none" strokeLinecap="round">
+            <path d="M92 596 h60" />
+            <path d="M92 614 h96" />
+            <path d="M92 632 h44" />
+          </g>
+          <g fill="#BFEFDB" opacity="0.3">
+            <circle cx="250" cy="600" r="4" />
+            <rect x="252" y="580" width="2" height="22" />
+          </g>
+          <rect x="120" y="700" width="150" height="14" rx="2" fill="#3A2E17" />
+          <rect x="140" y="714" width="10" height="30" fill="#2A1A08" />
+          <rect x="240" y="714" width="10" height="30" fill="#2A1A08" />
+        </Frame>
+      );
     default:
       return (
         <Frame>

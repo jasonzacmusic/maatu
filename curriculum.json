@@ -1,0 +1,165 @@
+{
+  "note": "Language-agnostic teaching plan. The teacher LLM renders every word and sentence in the chosen language (kn/hi/ta) with romanized forms, so the target-language content is always accurate. No em dashes anywhere.",
+  "units": [
+    {
+      "unit": "First Words",
+      "lessons": [
+        {
+          "id": "l1",
+          "title": "Greetings and courtesies",
+          "objective": "Greet someone, ask how they are, and say please, thank you, sorry, yes and no.",
+          "teach": ["a natural hello and a reply", "how are you", "I am fine", "thank you", "please", "sorry", "yes and no"],
+          "grammar": "These are fixed everyday phrases, no grammar yet. Focus on natural pronunciation.",
+          "examples_en": ["Hello, how are you?", "I am fine, thank you.", "Sorry, please say it again."],
+          "practice": ["Have the student greet you and ask how you are", "Have them thank you for something"]
+        },
+        {
+          "id": "l2",
+          "title": "About yourself",
+          "objective": "Say your name, where you are from, and ask someone their name.",
+          "teach": ["my name is", "what is your name", "I am from", "nice to meet you"],
+          "grammar": "Introduce the idea of 'my' and 'your'. Keep it to fixed patterns for now.",
+          "examples_en": ["My name is Ravi.", "What is your name?", "I am from Bangalore."],
+          "practice": ["Have the student introduce themselves fully", "Have them ask you your name and where you are from"]
+        },
+        {
+          "id": "l3",
+          "title": "Numbers 1 to 20",
+          "objective": "Count from 1 to 20 and ask how many.",
+          "teach": ["numbers one to ten", "numbers eleven to twenty", "how many"],
+          "grammar": "Just vocabulary and counting. Drill the numbers in small groups of five.",
+          "examples_en": ["One, two, three...", "How many?", "I have three."],
+          "practice": ["Have the student count 1 to 10", "Ask how many fingers you are holding up and have them answer"]
+        }
+      ]
+    },
+    {
+      "unit": "Naming the World",
+      "lessons": [
+        {
+          "id": "l4",
+          "title": "Fruits",
+          "objective": "Name common fruits and say 'this is a ...'.",
+          "teach": ["banana", "mango", "apple", "orange", "grapes"],
+          "grammar": "Introduce 'this is' plus a noun. One simple pattern.",
+          "examples_en": ["This is a mango.", "That is a banana.", "I like grapes."],
+          "practice": ["Point to imaginary fruits and have the student name them", "Have them say 'this is a mango' with two other fruits"]
+        },
+        {
+          "id": "l5",
+          "title": "Food and drink",
+          "objective": "Name everyday food and drink staples.",
+          "teach": ["rice", "water", "milk", "tea", "onion", "tomato"],
+          "grammar": "More nouns, reuse 'this is' and 'I want' informally.",
+          "examples_en": ["This is water.", "I want tea.", "Rice and milk."],
+          "practice": ["Have the student order a tea and a rice", "Have them name three foods"]
+        },
+        {
+          "id": "l6",
+          "title": "Family",
+          "objective": "Name family members.",
+          "teach": ["mother", "father", "elder brother", "younger sister", "child"],
+          "grammar": "Note that many Indian languages distinguish elder and younger siblings. Point this out gently.",
+          "examples_en": ["This is my mother.", "I have one elder brother.", "My father is at home."],
+          "practice": ["Have the student describe their own family in a few short sentences"]
+        },
+        {
+          "id": "l7",
+          "title": "Everyday things",
+          "objective": "Name common objects around you.",
+          "teach": ["house", "door", "phone", "money", "chair", "book"],
+          "grammar": "Reuse 'this is' and 'where is'. Build toward asking for things.",
+          "examples_en": ["This is my phone.", "Where is the book?", "The chair is here."],
+          "practice": ["Have the student name three objects near them", "Have them ask where the phone is"]
+        }
+      ]
+    },
+    {
+      "unit": "Simple Sentences",
+      "lessons": [
+        {
+          "id": "l8",
+          "title": "This and that",
+          "objective": "Say this is X, that is Y, and ask is this X.",
+          "teach": ["this", "that", "this is", "that is", "is this?"],
+          "grammar": "Demonstratives plus the verb 'to be'. Show the yes/no question form.",
+          "examples_en": ["This is water.", "That is a mango.", "Is this milk?"],
+          "practice": ["Have the student ask you three 'is this?' questions and answer them"]
+        },
+        {
+          "id": "l9",
+          "title": "I want, I have, I need",
+          "objective": "Express wanting, having and needing something.",
+          "teach": ["I want", "I have", "I need", "I do not want"],
+          "grammar": "Introduce the verb ending for 'I'. Keep to these three verbs.",
+          "examples_en": ["I want tea.", "I have money.", "I need water."],
+          "practice": ["Have the student say three things they want", "Have them say one thing they do not want"]
+        },
+        {
+          "id": "l10",
+          "title": "Asking questions",
+          "objective": "Ask what, where, how much, how many, and who.",
+          "teach": ["what is this", "where is", "how much", "how many", "who"],
+          "grammar": "Question words at the start, and where they sit in the sentence.",
+          "examples_en": ["What is this?", "Where is the shop?", "How much is this?"],
+          "practice": ["Have the student haggle: ask how much, say it is too much", "Have them ask where three things are"]
+        }
+      ]
+    },
+    {
+      "unit": "Verbs and Tenses",
+      "lessons": [
+        {
+          "id": "l11",
+          "title": "Present tense",
+          "objective": "Say what you do: I eat, I drink, I go, I speak, I come.",
+          "teach": ["I eat", "I drink", "I go", "I speak", "I come"],
+          "grammar": "The present tense 'I' form. Point out that the verb comes at the end of the sentence.",
+          "examples_en": ["I eat rice.", "I go home.", "I speak a little Kannada."],
+          "practice": ["Have the student say three things they do every day"]
+        },
+        {
+          "id": "l12",
+          "title": "Past tense",
+          "objective": "Say what you did: I ate, I went, I came, I saw.",
+          "teach": ["I ate", "I went", "I came", "I saw"],
+          "grammar": "The past tense 'I' form. Contrast one verb in present and past.",
+          "examples_en": ["I ate rice.", "I went home.", "I saw my friend."],
+          "practice": ["Have the student tell you three things they did today"]
+        },
+        {
+          "id": "l13",
+          "title": "Future tense",
+          "objective": "Say what you will do: I will eat, I will go, I will come.",
+          "teach": ["I will eat", "I will go", "I will come", "I will speak"],
+          "grammar": "The future 'I' form. Now the student has all three tenses of one verb.",
+          "examples_en": ["I will eat later.", "I will go tomorrow.", "I will come home."],
+          "practice": ["Have the student say one thing they will do tomorrow", "Have them say one verb in past, present and future"]
+        }
+      ]
+    },
+    {
+      "unit": "Speaking Freely",
+      "lessons": [
+        {
+          "id": "l14",
+          "title": "Building sentences",
+          "objective": "Join words into longer sentences and use and, but, because.",
+          "teach": ["and", "but", "because", "word order subject object verb"],
+          "grammar": "Reinforce that the verb goes last, and show how to join two ideas.",
+          "examples_en": ["I want tea and rice.", "I am tired but happy.", "I will go home because it is late."],
+          "practice": ["Have the student join two short sentences with and", "Have them give a reason using because"]
+        },
+        {
+          "id": "l15",
+          "title": "Being polite and saying no",
+          "objective": "Make polite requests and say there isn't or I don't want.",
+          "teach": ["please give", "can you", "there is not", "I do not want", "a little"],
+          "grammar": "Polite request forms and negation. This ties the whole course together.",
+          "examples_en": ["Please give a little water.", "Can you say it again?", "There is no milk."],
+          "practice": ["Have the student make three polite requests", "Have the student hold a 30 second chat with you using everything they know"]
+        }
+      ]
+    }
+  ]
+}
