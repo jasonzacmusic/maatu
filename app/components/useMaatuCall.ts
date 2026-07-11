@@ -1,20 +1,31 @@
 "use client";
 
-import { Room, RoomEvent, Track, type RemoteTrack } from "livekit-client";
+import {
+  Room,
+  RoomEvent,
+  Track,
+  type RemoteTrack,
+  type TranscriptionSegment,
+  type Participant,
+} from "livekit-client";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Drives one live Maatu call: mints a token, joins the LiveKit room, publishes
-// the mic, plays the character's audio, and reports who is speaking so the Call
-// screen can paint Sodium (character) or Tube (learner). No em dashes anywhere.
+// the mic, plays the character's audio, reports who is speaking, and surfaces
+// live romanized captions plus the running transcript. No em dashes anywhere.
 
 export type CallPhase = "idle" | "connecting" | "live" | "ended" | "error";
 export type Speaker = "character" | "learner" | null;
+export type Line = { who: "character" | "learner"; text: string };
 
 export interface MaatuCall {
   phase: CallPhase;
   error: string | null;
   muted: boolean;
   speaker: Speaker;
+  caption: Line | null;
+  transcript: Line[];
+  roomName: string | null;
   connect: () => Promise<void>;
   hangUp: () => Promise<void>;
   toggleMute: () => Promise<void>;
@@ -25,11 +36,13 @@ export function useMaatuCall(persona: string): MaatuCall {
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
   const [speaker, setSpeaker] = useState<Speaker>(null);
+  const [caption, setCaption] = useState<Line | null>(null);
+  const [transcript, setTranscript] = useState<Line[]>([]);
+  const [roomName, setRoomName] = useState<string | null>(null);
 
   const roomRef = useRef<Room | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
 
-  // Lazily create one hidden audio sink for the agent's voice.
   const ensureAudioEl = useCallback(() => {
     if (typeof document === "undefined") return null;
     if (!audioElRef.current) {
@@ -53,13 +66,16 @@ export function useMaatuCall(persona: string): MaatuCall {
   const connect = useCallback(async () => {
     setPhase("connecting");
     setError(null);
+    setTranscript([]);
+    setCaption(null);
     try {
       const res = await fetch(`/api/token?persona=${encodeURIComponent(persona)}`);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error ?? "Could not reach the auto stand.");
+        throw new Error(body.error ?? "Could not reach the character.");
       }
-      const { token, url } = await res.json();
+      const { token, url, room: roomId } = await res.json();
+      setRoomName(roomId);
 
       const room = new Room({ adaptiveStream: true, dynacast: true });
       roomRef.current = room;
@@ -69,14 +85,29 @@ export function useMaatuCall(persona: string): MaatuCall {
         if (track.kind === Track.Kind.Audio && el) track.attach(el);
       });
       room.on(RoomEvent.ActiveSpeakersChanged, (speakers) => {
-        if (speakers.length === 0) {
-          setSpeaker(null);
-        } else if (speakers.some((sp) => !sp.isLocal)) {
-          setSpeaker("character");
-        } else {
-          setSpeaker("learner");
-        }
+        if (speakers.length === 0) setSpeaker(null);
+        else if (speakers.some((sp) => !sp.isLocal)) setSpeaker("character");
+        else setSpeaker("learner");
       });
+      room.on(
+        RoomEvent.TranscriptionReceived,
+        (segments: TranscriptionSegment[], participant?: Participant) => {
+          const who: "character" | "learner" = participant?.isLocal ? "learner" : "character";
+          for (const seg of segments) {
+            if (!seg.text?.trim()) continue;
+            setCaption({ who, text: seg.text });
+            if (seg.final) {
+              setTranscript((prev) => {
+                const last = prev[prev.length - 1];
+                if (last && last.who === who && !seg.text.startsWith(last.text) && last.text.startsWith(seg.text)) {
+                  return prev;
+                }
+                return [...prev.slice(-40), { who, text: seg.text }];
+              });
+            }
+          }
+        },
+      );
       room.on(RoomEvent.Disconnected, () => {
         if (roomRef.current) {
           roomRef.current = null;
@@ -113,5 +144,16 @@ export function useMaatuCall(persona: string): MaatuCall {
     };
   }, []);
 
-  return { phase, error, muted, speaker, connect, hangUp, toggleMute };
+  return {
+    phase,
+    error,
+    muted,
+    speaker,
+    caption,
+    transcript,
+    roomName,
+    connect,
+    hangUp,
+    toggleMute,
+  };
 }

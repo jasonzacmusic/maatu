@@ -20,7 +20,7 @@ LANG_NAMES = {
     "en-IN": "Indian English",
 }
 
-DEFAULT_PERSONA = "kn-auto-driver-l3"
+DEFAULT_PERSONA = "kn-auto"
 
 
 @dataclass
@@ -32,6 +32,10 @@ class Persona:
     pace: float
     opening: str
     system_prompt: str
+    level: int
+    gender: str
+    teach_mode: bool
+    rubric: list
     raw: dict
 
     @property
@@ -81,17 +85,27 @@ def load_persona(persona_id: str | None) -> Persona:
         pid = DEFAULT_PERSONA
     data = json.loads(path.read_text())
     tts = data.get("tts", {}) or {}
+    gender = data.get("gender", "male")
+    # Resolve to a valid Bulbul v3 voice, gender appropriate if none/invalid.
+    from voices import resolve
+
+    seed = sum(ord(c) for c in data["id"])
+    voice = resolve(data.get("voice"), gender, seed)
     return Persona(
         id=data["id"],
         language=data["language"],
         name=data["name"],
-        voice=data.get("voice", "hitesh"),
+        voice=voice,
         pace=float(tts.get("pace", 1.0)),
         opening=data.get(
             "opening",
             f"Greet the person naturally and start the scene, in your own {LANG_NAMES.get(data['language'], data['language'])}.",
         ),
         system_prompt=_build_system_prompt(data),
+        level=int(data.get("level", 3)),
+        gender=gender,
+        teach_mode=bool(data.get("teach_mode", False)),
+        rubric=data.get("debrief_rubric", []),
         raw=data,
     )
 

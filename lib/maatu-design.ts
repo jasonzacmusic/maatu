@@ -26,23 +26,18 @@ export type ShopId =
   | "salon"
   | "market";
 
-// Which shops are truly wired to a live persona right now. Milestone 2 ships
-// only the Kannada auto driver; the rest re-light in Milestone 3 as their
-// personas land. See DECISIONS.md.
+// The five launch scenarios plus Teach Mode are all live across the three
+// languages. Salon and market stay shuttered. Routing to a real persona is
+// decided by personaId() in lib/personas.generated.ts.
 export const LIVE: Record<ShopId, boolean> = {
   auto: true,
-  chai: false,
-  gate: false,
-  phone: false,
-  music: false,
-  airport: false,
+  chai: true,
+  gate: true,
+  phone: true,
+  music: true,
+  airport: true,
   salon: false,
   market: false,
-};
-
-// Maps a lit shopfront to the persona the agent worker should become.
-export const SHOP_PERSONA: Partial<Record<ShopId, string>> = {
-  auto: "kn-auto-driver-l3",
 };
 
 export const LABELS: Record<ShopId, string> = {

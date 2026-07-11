@@ -2,14 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import StreetScene from "./StreetScene";
-import { useMaatuCall, type Speaker } from "./useMaatuCall";
+import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
+import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import {
   C,
   BODY,
   DISPLAY,
   KN,
-  LIVE,
-  SHOP_PERSONA,
   SLOW,
   STREET_CAM,
   STREET_LANG,
@@ -18,17 +17,21 @@ import {
 } from "@/lib/maatu-design";
 
 // The Maatu app: Street, Call, Debrief, Progress, with the one orchestrated
-// camera move on entering a shop. The Call is wired to the live LiveKit
-// pipeline. Debrief and Progress carry demo data until Milestone 3 wires the
-// real session reports. No em dashes anywhere.
+// camera move on entering a shop. Every lit shopfront across all three
+// languages opens a real live call; the Debrief reads the real coach report
+// from the session. No em dashes anywhere.
 
 type Screen = "street" | "call" | "debrief" | "progress";
+type SessionEnd = { room: string | null; transcript: Line[]; durationSec: number };
 
-// Which shop, in which language, maps to a real persona right now.
-function personaFor(id: ShopId, lang: Lang): string | null {
-  if (!LIVE[id]) return null;
-  if (id === "auto" && lang === "kn") return SHOP_PERSONA.auto ?? null;
-  return null;
+const NUMERALS: Record<Lang, string[]> = {
+  kn: ["೧", "೨", "೩", "೪", "೫"],
+  hi: ["१", "२", "३", "४", "५"],
+  ta: ["௧", "௨", "௩", "௪", "௫"],
+};
+
+function personaFor(shop: ShopId, lang: Lang): string | null {
+  return personaId(shop, lang);
 }
 
 function MicIcon({ muted }: { muted: boolean }) {
@@ -74,9 +77,7 @@ function StreetScreen({
   const L = STREET_LANG[lang];
 
   const enter = (id: ShopId) => {
-    const persona = personaFor(id, lang);
-    if (!persona) {
-      // Lit in the world but not wired yet: treat as opening soon.
+    if (!personaFor(id, lang)) {
       setWiggleId(id);
       setToast(Date.now());
       timers.current.push(setTimeout(() => setWiggleId(null), 900));
@@ -116,7 +117,6 @@ function StreetScreen({
         style={{ background: C.night, opacity: dim ? 1 : 0, transition: "opacity 480ms ease" }}
       />
 
-      {/* Top chrome */}
       <div
         className="absolute top-0 inset-x-0 px-5 pt-16 flex items-start justify-between"
         style={{ opacity: cam ? 0 : 1, transition: "opacity 300ms" }}
@@ -155,7 +155,6 @@ function StreetScreen({
         </div>
       </div>
 
-      {/* Bottom chrome */}
       <div
         className="absolute bottom-0 inset-x-0 px-5 pb-9 flex items-end justify-between"
         style={{ opacity: cam ? 0 : 1, transition: "opacity 300ms" }}
@@ -198,31 +197,29 @@ function StreetScreen({
 
 // ....................................................... THE CALL
 function CallScreen({
+  meta,
   lang,
-  persona,
   captionsDefault,
   onEnd,
   rm,
 }: {
+  meta: PersonaMeta;
   lang: Lang;
-  persona: string;
   captionsDefault: boolean;
-  onEnd: () => void;
+  onEnd: (payload: SessionEnd) => void;
   rm: boolean;
 }) {
-  const call = useMaatuCall(persona);
+  const call = useMaatuCall(meta.id);
   const [caps, setCaps] = useState(captionsDefault);
   const [slow, setSlow] = useState(false);
   const [sec, setSec] = useState(0);
   const slowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Ring the character as soon as the screen opens.
   useEffect(() => {
     call.connect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Session timer runs while the call is live.
   useEffect(() => {
     if (call.phase !== "live") return;
     const t = setInterval(() => setSec((x) => x + 1), 1000);
@@ -236,8 +233,10 @@ function CallScreen({
   };
 
   const endCall = async () => {
+    const room = call.roomName;
+    const transcript = call.transcript;
     await call.hangUp();
-    onEnd();
+    onEnd({ room, transcript, durationSec: sec });
   };
 
   const mm = Math.floor(sec / 60);
@@ -246,44 +245,55 @@ function CallScreen({
   const active: Speaker = call.phase === "live" ? call.speaker : null;
   const speakingColor = active === "learner" ? C.tube : C.sodium;
   const barsAnimate = active !== null;
+  const isAuto = meta.scenario === "auto";
 
-  const status = (() => {
-    if (call.phase === "connecting") return "Calling Manjunath";
-    if (call.phase === "error") return call.error ?? "Could not connect";
-    if (call.phase === "ended") return "Ride over";
-    if (active === "character") return "Manjunath is speaking";
-    if (active === "learner") return "Go on";
-    return "Your turn, just talk";
-  })();
+  const captionText =
+    caps && call.caption
+      ? call.caption.text
+      : caps
+        ? call.phase === "connecting"
+          ? `Calling ${meta.name}`
+          : call.phase === "error"
+            ? call.error ?? "Could not connect"
+            : call.phase === "ended"
+              ? "Call over"
+              : active === "character"
+                ? `${meta.name} is speaking`
+                : "Your turn, just talk"
+        : "";
 
   return (
     <div className={"absolute inset-0 overflow-hidden" + (rm ? " mt-noanim" : "")} style={{ background: C.night }}>
-      {/* Environmental frame: the auto stand at night, out of focus */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute -top-24 -left-16 w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(255,179,92,0.16), transparent 65%)" }} />
-        <svg viewBox="0 0 390 844" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMax slice">
-          <rect x="0" y="700" width="390" height="144" fill="#0E1017" />
-          <g opacity="0.85" transform="translate(18,600)">
-            <rect x="0" y="20" width="150" height="96" rx="26" fill="#0A0D18" stroke="#1D2438" strokeWidth="2" />
-            <rect x="4" y="20" width="142" height="16" rx="8" fill="#211E12" />
-            <rect x="20" y="44" width="46" height="40" rx="3" fill="#FFD9A0" opacity="0.14" />
-            <circle cx="34" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
-            <circle cx="116" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
-            <circle cx="4" cy="78" r="6" fill="#FFD9A0" opacity="0.6" />
-          </g>
-          <rect x="286" y="96" width="86" height="4" rx="2" fill="#E9FFF4" opacity="0.35" />
-        </svg>
+        {isAuto ? (
+          <svg viewBox="0 0 390 844" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMax slice">
+            <rect x="0" y="700" width="390" height="144" fill="#0E1017" />
+            <g opacity="0.85" transform="translate(18,600)">
+              <rect x="0" y="20" width="150" height="96" rx="26" fill="#0A0D18" stroke="#1D2438" strokeWidth="2" />
+              <rect x="4" y="20" width="142" height="16" rx="8" fill="#211E12" />
+              <rect x="20" y="44" width="46" height="40" rx="3" fill="#FFD9A0" opacity="0.14" />
+              <circle cx="34" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
+              <circle cx="116" cy="118" r="18" fill="#060810" stroke="#1D2438" strokeWidth="3" />
+              <circle cx="4" cy="78" r="6" fill="#FFD9A0" opacity="0.6" />
+            </g>
+            <rect x="286" y="96" width="86" height="4" rx="2" fill="#E9FFF4" opacity="0.35" />
+          </svg>
+        ) : (
+          <div className="absolute inset-x-0 bottom-0 h-72" style={{ background: "radial-gradient(ellipse at 50% 120%, rgba(255,179,92,0.14), transparent 70%)" }} />
+        )}
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(12,16,29,0.2), rgba(12,16,29,0.75) 55%, rgba(12,16,29,0.92))" }} />
       </div>
 
-      {/* Nameplate */}
       <div className="relative flex flex-col items-center pt-24">
         <div className="px-6 py-2 rounded-md" style={{ background: "#F5C542", boxShadow: "0 0 32px rgba(245,197,66,0.25)" }}>
-          <span style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 800, fontSize: 24, letterSpacing: 4, color: "#14100A" }}>MANJUNATH</span>
+          <span style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 800, fontSize: 24, letterSpacing: 4, color: "#14100A" }}>
+            {meta.name.toUpperCase()}
+          </span>
         </div>
-        <div className="flex gap-1.5 mt-3" aria-label="Level 3 of 5">
+        <div className="flex gap-1.5 mt-3" aria-label={`Level ${meta.level} of 5`}>
           {[0, 1, 2, 3, 4].map((i) => (
-            <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: i < 3 ? C.sodium : "rgba(255,255,255,0.18)" }} />
+            <span key={i} className="w-1.5 h-1.5 rounded-full" style={{ background: i < meta.level ? C.sodium : "rgba(255,255,255,0.18)" }} />
           ))}
         </div>
         <div className="mt-2 text-[12px] tabular-nums" style={{ fontFamily: BODY, color: "rgba(126,137,168,0.9)" }}>
@@ -291,7 +301,6 @@ function CallScreen({
         </div>
       </div>
 
-      {/* Voice */}
       <div className="relative flex flex-col items-center justify-center" style={{ height: 300 }}>
         <div
           className="mt-orb absolute w-44 h-44 rounded-full blur-2xl"
@@ -315,15 +324,22 @@ function CallScreen({
           ))}
         </div>
         <div className="h-16 px-9 mt-8 text-center flex items-center justify-center">
-          {caps && (
-            <p key={status} className="text-[15px] leading-snug" style={{ fontFamily: BODY, color: "rgba(242,237,226,0.9)", animation: "mtFade .4s ease both" }}>
-              {status}
+          {captionText && (
+            <p
+              key={captionText}
+              className="text-[15px] leading-snug"
+              style={{
+                fontFamily: BODY,
+                color: call.caption?.who === "learner" ? "rgba(191,239,219,0.92)" : "rgba(242,237,226,0.9)",
+                animation: "mtFade .4s ease both",
+              }}
+            >
+              {captionText}
             </p>
           )}
         </div>
       </div>
 
-      {/* Controls */}
       <div className="absolute bottom-0 inset-x-0 pb-14 px-6 flex items-center justify-center gap-3.5">
         <button
           onClick={call.toggleMute}
@@ -377,148 +393,236 @@ function CallScreen({
 }
 
 // ....................................................... THE DEBRIEF
-function DebriefScreen({ onStreet, onAgain }: { onStreet: () => void; onAgain: () => void }) {
+type Report = {
+  headline: string;
+  strength: string;
+  duration_min: number;
+  takeaways: { you: string; native: string; why: string }[];
+  words: [string, string][];
+  transcript: [string, string][];
+  coach_audio_b64?: string | null;
+};
+
+function DebriefScreen({
+  meta,
+  lang,
+  session,
+  onStreet,
+  onAgain,
+}: {
+  meta: PersonaMeta;
+  lang: Lang;
+  session: SessionEnd | null;
+  onStreet: () => void;
+  onAgain: () => void;
+}) {
+  const [report, setReport] = useState<Report | null>(null);
+  const [status, setStatus] = useState<"pending" | "ready" | "none">("pending");
   const [playing, setPlaying] = useState(false);
-  const takeaways = [
-    { n: "೧", you: "Yeshtu duddu?", native: "Meter mele eshtu aagatte?", why: "Locals price a ride on top of the meter, not in the abstract." },
-    { n: "೨", you: "Naanu hogu airport", native: "Airport ge hogbeku", why: "The place takes ge, and the verb goes last." },
-    { n: "೩", you: "Nilisu illi", native: "Illi nillisi saar", why: "Nillisi is the polite imperative. Saar softens it." },
-  ];
-  const words = [
-    ["adjust maadi", "make it work"],
-    ["chillare", "loose change"],
-    ["sikkapatte", "a whole lot"],
-    ["bere daari", "another route"],
-  ];
-  const transcript = [
-    ["M", "Elli hogbeku saar?"],
-    ["You", "Airport... naanu hogu airport"],
-    ["M", "Airport aa? Nanooru aagatte saar"],
-    ["You", "Illa illa, meter mele nooru kodi"],
-    ["M", "Aytu saar, kootkoli. Traffic jaasti ide ivattu"],
-    ["You", "Parvagilla, nidhaanavaagi hogi"],
-  ];
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const numerals = NUMERALS[lang];
+
+  useEffect(() => {
+    const learnerLines = session?.transcript.filter((l) => l.who === "learner").length ?? 0;
+    if (!session || !session.room || learnerLines < 1) {
+      setStatus("none");
+      return;
+    }
+    let alive = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            room: session.room,
+            personaId: meta.id,
+            durationSec: session.durationSec,
+            transcript: session.transcript,
+          }),
+        });
+        const data = await res.json();
+        if (!alive) return;
+        if (data.status === "ready" && data.report) {
+          setReport(data.report);
+          setStatus("ready");
+        } else {
+          setStatus("none");
+        }
+      } catch {
+        if (alive) setStatus("none");
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [session, meta.id]);
+
+  const toggleAudio = () => {
+    const el = audioRef.current;
+    if (!el) return;
+    if (playing) {
+      el.pause();
+      setPlaying(false);
+    } else {
+      el.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    }
+  };
+
+  const durationLabel = report ? `${report.duration_min} min with ${meta.name}` : `${meta.name}, ${meta.sceneLabel.split(",")[0].toLowerCase()}`;
+
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <div className="px-5 pt-16 pb-10 flex flex-col gap-4">
         <div>
           <div className="text-[10px] font-semibold uppercase" style={{ fontFamily: BODY, letterSpacing: 2.5, color: C.muted }}>
-            Auto stand · debrief
+            {meta.sceneLabel} · debrief
           </div>
           <h1 className="mt-1" style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 700, fontSize: 28, lineHeight: 1.1, color: C.milk }}>
-            8 min with Manjunath
+            {durationLabel}
           </h1>
         </div>
 
-        <div className="rounded-2xl p-4 flex items-center gap-3.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)" }}>
-          <button
-            onClick={() => setPlaying(!playing)}
-            aria-label={playing ? "Pause coach" : "Play coach"}
-            className="w-11 h-11 rounded-full flex items-center justify-center flex-none focus-visible:outline focus-visible:outline-2"
-            style={{ background: C.sodium, outlineColor: C.tube }}
-          >
-            {playing ? (
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <rect x="2" y="1" width="3.5" height="12" rx="1" fill="#1A1206" />
-                <rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="#1A1206" />
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <polygon points="3,1 13,7 3,13" fill="#1A1206" />
-              </svg>
-            )}
-          </button>
-          <div className="flex-1">
-            <div className="text-[10px] font-semibold uppercase mb-2" style={{ fontFamily: BODY, letterSpacing: 2, color: C.muted }}>
-              Coach
+        {status === "pending" && (
+          <div className="rounded-2xl p-5 text-center" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)" }}>
+            <div className="mt-orb mx-auto w-10 h-10 rounded-full blur-md mb-3" style={{ background: C.sodium, opacity: 0.4 }} />
+            <div className="text-[14px]" style={{ fontFamily: BODY, color: C.milk }}>
+              The coach is reviewing your conversation.
             </div>
-            <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
-              <div className="h-full rounded-full" style={{ background: C.sodium, width: playing ? "100%" : "0%", transition: playing ? "width 42s linear" : "none" }} />
+            <div className="text-[12px] mt-1" style={{ fontFamily: BODY, color: C.muted }}>
+              A few seconds.
             </div>
           </div>
-          <span className="text-[12px] tabular-nums" style={{ fontFamily: BODY, color: C.muted }}>
-            0:42
-          </span>
-        </div>
+        )}
 
-        <div className="rounded-[20px] overflow-hidden" style={{ border: "1px solid rgba(255,179,92,0.25)", background: "linear-gradient(180deg, #1D1A12, #161B2B 70%)" }}>
-          <div className="p-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-            <div className="text-[9px] font-bold uppercase" style={{ fontFamily: BODY, letterSpacing: 3, color: C.sodium }}>
-              Maatu · Kannada
-            </div>
-            <div className="mt-1.5" style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 700, fontSize: 22, color: C.milk }}>
-              You held your ground
-            </div>
-            <div className="mt-0.5 text-[12px]" style={{ fontFamily: BODY, color: C.muted }}>
-              Auto stand with Manjunath · L3 · 8 min
+        {status === "none" && (
+          <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)" }}>
+            <div className="text-[14px]" style={{ fontFamily: BODY, color: C.milk }}>
+              That was a short one. Talk a little longer next time and the coach will have something to say.
             </div>
           </div>
-          <div className="p-5 flex flex-col gap-4">
-            {takeaways.map((t) => (
-              <div key={t.n} className="flex gap-3">
-                <div className="w-8 flex-none text-right" style={{ fontFamily: KN, fontSize: 26, lineHeight: 1, color: "rgba(255,179,92,0.35)" }}>
-                  {t.n}
-                </div>
+        )}
+
+        {status === "ready" && report && (
+          <>
+            {report.coach_audio_b64 && (
+              <div className="rounded-2xl p-4 flex items-center gap-3.5" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)" }}>
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <audio ref={audioRef} src={`data:audio/mp3;base64,${report.coach_audio_b64}`} onEnded={() => setPlaying(false)} />
+                <button
+                  onClick={toggleAudio}
+                  aria-label={playing ? "Pause coach" : "Play coach"}
+                  className="w-11 h-11 rounded-full flex items-center justify-center flex-none focus-visible:outline focus-visible:outline-2"
+                  style={{ background: C.sodium, outlineColor: C.tube }}
+                >
+                  {playing ? (
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                      <rect x="2" y="1" width="3.5" height="12" rx="1" fill="#1A1206" />
+                      <rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="#1A1206" />
+                    </svg>
+                  ) : (
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                      <polygon points="3,1 13,7 3,13" fill="#1A1206" />
+                    </svg>
+                  )}
+                </button>
                 <div className="flex-1">
-                  <div className="text-[13px]" style={{ fontFamily: BODY, color: "rgba(242,237,226,0.5)" }}>
-                    {t.you}
+                  <div className="text-[10px] font-semibold uppercase" style={{ fontFamily: BODY, letterSpacing: 2, color: C.muted }}>
+                    Coach
                   </div>
-                  <div className="text-[15px] font-medium mt-0.5" style={{ fontFamily: BODY, color: C.milk }}>
-                    ↳ {t.native}
-                  </div>
-                  <div className="text-[12px] mt-1" style={{ fontFamily: BODY, color: "rgba(126,137,168,0.9)" }}>
-                    {t.why}
+                  <div className="text-[13px] mt-0.5" style={{ fontFamily: BODY, color: C.milk }}>
+                    Listen to your 45 second summary
                   </div>
                 </div>
               </div>
-            ))}
-            <div className="rounded-xl p-3 text-[13px]" style={{ fontFamily: BODY, background: "rgba(191,239,219,0.09)", border: "1px solid rgba(191,239,219,0.2)", color: C.tube }}>
-              You pushed back on the first price without switching to English.
-            </div>
-            <div>
-              <div className="text-[9px] font-bold uppercase mb-2" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>
-                New words
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {words.map(([w, m]) => (
-                  <span key={w} className="px-3 py-1.5 rounded-full text-[12px]" style={{ fontFamily: BODY, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                    <span className="font-semibold" style={{ color: C.milk }}>
-                      {w}
-                    </span>
-                    <span style={{ color: C.muted }}> · {m}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontFamily: KN, fontSize: 15, color: "rgba(242,237,226,0.75)" }}>
-              ಮಾತು <span style={{ fontFamily: BODY, fontSize: 10, letterSpacing: 2, color: C.muted }}>MAATU</span>
-            </span>
-            <span className="text-[10px]" style={{ fontFamily: BODY, letterSpacing: 1, color: C.muted }}>
-              11 JUL · BENGALURU
-            </span>
-          </div>
-        </div>
+            )}
 
-        <details className="rounded-2xl px-4 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
-          <summary className="text-[13px] font-semibold cursor-pointer list-none flex items-center justify-between" style={{ fontFamily: BODY, color: "rgba(242,237,226,0.75)" }}>
-            Transcript
-            <svg width="10" height="7" viewBox="0 0 10 7" aria-hidden="true">
-              <path d="M1 1l4 4 4-4" stroke={C.muted} strokeWidth="1.8" fill="none" strokeLinecap="round" />
-            </svg>
-          </summary>
-          <div className="mt-3 flex flex-col gap-2 pb-1">
-            {transcript.map(([w, t], i) => (
-              <div key={i} className="text-[12.5px] leading-snug" style={{ fontFamily: BODY }}>
-                <span className="font-bold" style={{ color: w === "M" ? "rgba(255,179,92,0.8)" : "rgba(191,239,219,0.8)" }}>
-                  {w}{" "}
-                </span>
-                <span style={{ color: "rgba(242,237,226,0.62)" }}>{t}</span>
+            <div className="rounded-[20px] overflow-hidden" style={{ border: "1px solid rgba(255,179,92,0.25)", background: "linear-gradient(180deg, #1D1A12, #161B2B 70%)" }}>
+              <div className="p-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                <div className="text-[9px] font-bold uppercase" style={{ fontFamily: BODY, letterSpacing: 3, color: C.sodium }}>
+                  Maatu · {meta.language === "kn" ? "Kannada" : meta.language === "hi" ? "Hindi" : "Tamil"}
+                </div>
+                <div className="mt-1.5" style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 700, fontSize: 22, color: C.milk }}>
+                  {report.headline}
+                </div>
+                <div className="mt-0.5 text-[12px]" style={{ fontFamily: BODY, color: C.muted }}>
+                  {meta.sceneLabel} · L{meta.level} · {report.duration_min} min
+                </div>
               </div>
-            ))}
-          </div>
-        </details>
+              <div className="p-5 flex flex-col gap-4">
+                {report.takeaways.map((t, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="w-8 flex-none text-right" style={{ fontFamily: KN, fontSize: 26, lineHeight: 1, color: "rgba(255,179,92,0.35)" }}>
+                      {numerals[i] ?? i + 1}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-[13px]" style={{ fontFamily: BODY, color: "rgba(242,237,226,0.5)" }}>
+                        {t.you}
+                      </div>
+                      <div className="text-[15px] font-medium mt-0.5" style={{ fontFamily: BODY, color: C.milk }}>
+                        ↳ {t.native}
+                      </div>
+                      <div className="text-[12px] mt-1" style={{ fontFamily: BODY, color: "rgba(126,137,168,0.9)" }}>
+                        {t.why}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {report.strength && (
+                  <div className="rounded-xl p-3 text-[13px]" style={{ fontFamily: BODY, background: "rgba(191,239,219,0.09)", border: "1px solid rgba(191,239,219,0.2)", color: C.tube }}>
+                    {report.strength}
+                  </div>
+                )}
+                {report.words.length > 0 && (
+                  <div>
+                    <div className="text-[9px] font-bold uppercase mb-2" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>
+                      New words
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {report.words.map(([w, m], i) => (
+                        <span key={i} className="px-3 py-1.5 rounded-full text-[12px]" style={{ fontFamily: BODY, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                          <span className="font-semibold" style={{ color: C.milk }}>
+                            {w}
+                          </span>
+                          <span style={{ color: C.muted }}> · {m}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                <span style={{ fontFamily: KN, fontSize: 15, color: "rgba(242,237,226,0.75)" }}>
+                  ಮಾತು <span style={{ fontFamily: BODY, fontSize: 10, letterSpacing: 2, color: C.muted }}>MAATU</span>
+                </span>
+                <span className="text-[10px]" style={{ fontFamily: BODY, letterSpacing: 1, color: C.muted }}>
+                  {meta.sceneLabel.split(", ").pop()?.toUpperCase()}
+                </span>
+              </div>
+            </div>
+
+            {report.transcript.length > 0 && (
+              <details className="rounded-2xl px-4 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                <summary className="text-[13px] font-semibold cursor-pointer list-none flex items-center justify-between" style={{ fontFamily: BODY, color: "rgba(242,237,226,0.75)" }}>
+                  Transcript
+                  <svg width="10" height="7" viewBox="0 0 10 7" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" stroke={C.muted} strokeWidth="1.8" fill="none" strokeLinecap="round" />
+                  </svg>
+                </summary>
+                <div className="mt-3 flex flex-col gap-2 pb-1">
+                  {report.transcript.map(([who, text], i) => (
+                    <div key={i} className="text-[12.5px] leading-snug" style={{ fontFamily: BODY }}>
+                      <span className="font-bold" style={{ color: who === "you" ? "rgba(191,239,219,0.8)" : "rgba(255,179,92,0.8)" }}>
+                        {who === "you" ? "You" : meta.name[0]}{" "}
+                      </span>
+                      <span style={{ color: "rgba(242,237,226,0.62)" }}>{text}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+          </>
+        )}
 
         <button
           onClick={onStreet}
@@ -528,7 +632,7 @@ function DebriefScreen({ onStreet, onAgain }: { onStreet: () => void; onAgain: (
           Back to the street
         </button>
         <button onClick={onAgain} className="text-[13px] font-semibold underline underline-offset-4" style={{ fontFamily: BODY, color: C.muted }}>
-          Ride again
+          Talk again
         </button>
       </div>
     </div>
@@ -671,7 +775,8 @@ function ProgressScreen({ onBack }: { onBack: () => void }) {
 export default function MaatuApp() {
   const [screen, setScreen] = useState<Screen>("street");
   const [lang, setLang] = useState<Lang>("kn");
-  const [persona, setPersona] = useState<string>(SHOP_PERSONA.auto ?? "kn-auto-driver-l3");
+  const [activePersona, setActivePersona] = useState<string>("kn-auto");
+  const [lastSession, setLastSession] = useState<SessionEnd | null>(null);
   const [rm, setRm] = useState(false);
 
   useEffect(() => {
@@ -684,12 +789,14 @@ export default function MaatuApp() {
     (id: ShopId) => {
       const p = personaFor(id, lang);
       if (p) {
-        setPersona(p);
+        setActivePersona(p);
         setScreen("call");
       }
     },
     [lang],
   );
+
+  const meta = PERSONAS[activePersona] ?? PERSONAS["kn-auto"];
 
   return (
     <div className="mt-app relative w-full h-dvh overflow-hidden" style={{ background: C.night, fontFamily: BODY }}>
@@ -698,9 +805,20 @@ export default function MaatuApp() {
           <StreetScreen lang={lang} setLang={setLang} onEnter={enterShop} onProgress={() => setScreen("progress")} rm={rm} />
         )}
         {screen === "call" && (
-          <CallScreen lang={lang} persona={persona} captionsDefault onEnd={() => setScreen("debrief")} rm={rm} />
+          <CallScreen
+            meta={meta}
+            lang={lang}
+            captionsDefault
+            onEnd={(payload) => {
+              setLastSession(payload);
+              setScreen("debrief");
+            }}
+            rm={rm}
+          />
         )}
-        {screen === "debrief" && <DebriefScreen onStreet={() => setScreen("street")} onAgain={() => setScreen("call")} />}
+        {screen === "debrief" && (
+          <DebriefScreen meta={meta} lang={lang} session={lastSession} onStreet={() => setScreen("street")} onAgain={() => setScreen("call")} />
+        )}
         {screen === "progress" && <ProgressScreen onBack={() => setScreen("street")} />}
       </div>
     </div>
