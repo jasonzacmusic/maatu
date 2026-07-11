@@ -46,3 +46,6 @@ agent/.env
 agent/.venv/
 agent/.venv/
 agent/__pycache__/
+
+# Classroom memory (agent-local, single user)
+progress.json
