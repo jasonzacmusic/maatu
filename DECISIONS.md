@@ -2,6 +2,19 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+## Spec items cut or deferred (audit against 01_BUILD_SPEC section 11, 2026-07-11)
+
+- 2026-07-11: Nightly self-improving job NOT BUILT. No cron, no secret_agenda rewrite, no FSRS review queue, no learner_profiles, no "Coach's notes" digest. Reason: needs a scheduled runner and accumulated real data; out of the build window. This is the single biggest cut.
+- 2026-07-11: DB tables reduced to session_reports only. sessions, turns, users, learner_profiles, personas, vocab_items, review_queue (spec section 2) NOT BUILT. Reason: session_reports covers the debrief loop; the rest serve auth, the nightly job, and drills which are deferred.
+- 2026-07-11: Auth NOT BUILT. No magic-link, no family name picker, no row scoping. The app is single anonymous user. Reason: not needed to prove the core loop; adds signup friction.
+- 2026-07-11: Level dial cut. Each persona ships at one fixed level (shown on the nameplate); there is no in-app level 1-5 picker before a call. Reason: level is baked into persona behavior; a picker is UI-only polish.
+- 2026-07-11: Drill mode (shadow drills, record/playback overlaid, FSRS self-judgment) NOT BUILT. Separate entry point, deferred.
+- 2026-07-11: Ambient scenario audio beds (street noise, hold music, terminal announcements) NOT BUILT. Reason: audio mixing under the voice was out of scope for the window.
+- 2026-07-11: The panic button ("solpa nidhaanavaagi" / slow-down) is visual only; it does not signal the agent to actually slow down. Reason: needs an in-call data channel to the agent, deferred.
+- 2026-07-11: Progress screen and the Street's "247 min / 6 nights" are hardcoded demo data, not DB. Zero-state is therefore not honest. Reason: real stats need the sessions table and aggregation, which were cut.
+- 2026-07-11: Debrief report is simplified. It has 3 takeaways + strength + up to 4 words + transcript, but NOT the full spec metrics (words-per-minute, hesitation count from STT timestamps, comprehension repairs, errors-by-category). Reason: the richer metrics need turn-level timing capture not yet wired.
+- 2026-07-11: Only salon and market render as locked "opening soon" shopfronts. The wider Scenario Library (home services, job interview, bus/metro, cab, market bargaining) is not represented as shuttered fronts. Reason: the Street art has a fixed set of facades.
+
 - 2026-07-11: The agent worker runs from ~/.maatu-agent, NOT from the repo under ~/Documents. macOS TCC blocks background launchd processes from reading ~/Documents (exit 126). install_agent_service.sh copies code + personas + .env there, builds a venv, and installs the LaunchAgent. Re-run it after changing agent code or personas.
 - 2026-07-11: The LaunchAgent uses livekit-agents `dev` mode (not `start`). `start` mode's multiprocessing prewarm hung under launchd; `dev` registers and dispatches reliably. Auto-reload is already removed from the Python CLI, so `dev` is effectively production-safe here. Note: livekit logs are terse under launchd; verify health by checking LiveKit room participants, not the log.
 - 2026-07-11: Debrief is generated server-side in /api/report from the transcript the browser captured via LiveKit TranscriptionReceived, not in the agent worker's shutdown. Reason: worker-shutdown timing is fragile; a Next route using the same Gemini key is reliable and serverless-friendly. The coach report + a Sarvam-synthesized spoken summary are stored in Neon (session_reports, created lazily, no separate migration).
