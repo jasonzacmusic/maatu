@@ -1,0 +1,6 @@
+# Pinned during Milestone 2 once the pipeline is proven.
+livekit-agents
+livekit-plugins-sarvam
+livekit-plugins-google
+livekit-plugins-silero
+python-dotenv
