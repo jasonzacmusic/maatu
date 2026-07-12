@@ -125,7 +125,11 @@ async def entrypoint(ctx: agents.JobContext):
     )
 
     # Latency logging: mark the VAD speech end, then measure to first agent audio.
-    turn = {"user_stopped_at": None, "transcript": "", "ack_active": False}
+    turn = {
+        "user_stopped_at": None,
+        "ack_active": False,
+        "awaiting_first_audio": False,
+    }
     acknowledgment_frames = []
 
     async def _acknowledgment_audio():
@@ -142,9 +146,14 @@ async def entrypoint(ctx: agents.JobContext):
 
     @session.on("user_state_changed")
     def _on_user_state(ev):
-        if getattr(ev, "old_state", None) == "speaking" and getattr(ev, "new_state", None) == "listening":
+        speech_ended = (
+            getattr(ev, "old_state", None) == "speaking"
+            and getattr(ev, "new_state", None) == "listening"
+        )
+        if speech_ended and not turn["ack_active"]:
             turn["user_stopped_at"] = time.perf_counter()
-            if acknowledgment_frames and not turn["ack_active"]:
+            turn["awaiting_first_audio"] = True
+            if acknowledgment_frames:
                 turn["ack_active"] = True
                 handle = session.say(
                     ACKNOWLEDGMENTS.get(persona.language, "Okay."),
@@ -154,25 +163,23 @@ async def entrypoint(ctx: agents.JobContext):
                 )
                 asyncio.create_task(_finish_turn_after_acknowledgment(handle))
 
-    @session.on("user_input_transcribed")
-    def _on_user_transcript(ev):
-        if getattr(ev, "is_final", False):
-            turn["transcript"] = getattr(ev, "transcript", "")
-
     @session.on("agent_state_changed")
     def _on_agent_state(ev):
-        if getattr(ev, "new_state", None) == "speaking" and turn["user_stopped_at"]:
+        if (
+            getattr(ev, "new_state", None) == "speaking"
+            and turn["awaiting_first_audio"]
+            and turn["user_stopped_at"]
+        ):
             latency_ms = (time.perf_counter() - turn["user_stopped_at"]) * 1000
             budget = "OK" if latency_ms <= 1500 else "OVER"
             logger.info(
-                "turn latency: %.0f ms [%s] speech_end_to_agent_audio persona=%s transcript=%r",
+                "turn latency: %.0f ms [%s] speech_end_to_agent_audio persona=%s",
                 latency_ms,
                 budget,
                 persona.id,
-                turn["transcript"][:80],
             )
             turn["user_stopped_at"] = None
-            turn["transcript"] = ""
+            turn["awaiting_first_audio"] = False
 
     @session.on("metrics_collected")
     def _on_metrics(ev):

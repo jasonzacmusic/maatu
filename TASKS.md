@@ -3,7 +3,7 @@
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
 - [x] **M1 (h 0-1): Repo scaffolded** DONE 2026-07-11. All 4 keys received and wired.
-- [x] **M2 (h 1-6): Voice pipeline PROVEN 2026-07-11.** Full path runs: token to LiveKit room to agent dispatch to persona-from-room-name to Sarvam Saarika STT (kn-IN) to gemini-flash-lite-latest to Sarvam Bulbul V3 TTS. A production LiveKit audio probe now publishes spoken learner audio and verifies full replies; Kannada measured 1,314 ms externally and 657 ms in the worker log on a full reply. Silero VAD logs every turn.
+- [x] **M2 (h 1-6): Voice pipeline PROVEN 2026-07-11.** Full path runs: token to LiveKit room to agent dispatch to persona-from-room-name to Sarvam Saarika STT (kn-IN) to gemini-flash-lite-latest to Sarvam Bulbul V3 TTS. A production LiveKit audio probe publishes spoken learner audio and verifies full replies; the latest Kannada run measured 223 ms externally, with first-audio worker lines of 23 ms and 35 ms for its two detected speech segments. Silero VAD logs every turn.
 - [x] **M4 (h 12-18): Design applied.** Claude Design's "Night Bazaar" fully implemented: the Street (illustrated SVG, 3 languages re-dress live), Call, Debrief, Progress, PWA manifest + icons.
 - [x] **M3 (h 6-12): Scenario engine DONE.** 18 personas across 6 scenarios (auto, delivery, customer care, airport, chai, teach) x kn/hi/ta, male and female Bulbul v3 voices, live romanized captions, debrief coach (gemini-3.5-flash on the real transcript) with spoken coach audio (Sarvam) saved to Neon. Verified end to end.
 - [x] **M5 (h 18-22): Teach Mode DONE.** Music school = a student persona (Sharp Kid) in all three languages; captions toggle wired to real transcript; per-persona level shown on the nameplate.
@@ -28,6 +28,10 @@ No credential setup is pending. A physical phone ear test remains useful as a de
 
 ## Coach's notes
 
+- Nightly repair run: 2026-07-12T15:21:54.403Z. The protected production route read 5 reports across 3 languages, rewrote 7 rows, learned only from exact-persona sessions, and restored unrelated Kannada agendas to their defaults.
+- Cron authentication repaired: production `CRON_SECRET` is now non-empty and the authorized route returned 200 after the production redeploy.
+- Acceptance rerun: 2026-07-12T15:16Z. Production mobile browser showed a live romanized Kannada caption with zero native-script characters; Kannada, Hindi, Tamil, and Kannada Teach Mode LiveKit probes all returned full replies.
+- Latency instrumentation repaired and the LaunchAgent reinstalled. The fresh Kannada room kn-auto__e2e1783869287 logged only in-budget first-audio measurements.
 - Nightly run: 2026-07-12T01:03:01.149Z.
 - Source: 2 session reports from the last 7 days.
 - Rewritten: 6 Kannada persona agendas.

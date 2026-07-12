@@ -119,6 +119,7 @@ export const dbEnabled = !!process.env.DATABASE_URL;
 
 type NightlyReportRow = {
   room: string;
+  persona_id: string;
   language: string;
   report: {
     takeaways?: { native?: string; why?: string }[];
@@ -183,7 +184,7 @@ export async function runNightlyPersonaRewrite(): Promise<NightlyResult> {
   await ensureNightlySchema();
 
   const recentRows = (await sql`
-    SELECT room, language, report - 'coach_audio_b64' AS report
+    SELECT room, persona_id, language, report - 'coach_audio_b64' AS report
     FROM session_reports
     WHERE created_at >= now() - interval '7 days'
     ORDER BY created_at DESC
@@ -197,17 +198,16 @@ export async function runNightlyPersonaRewrite(): Promise<NightlyResult> {
   let sampleAfter: string[] = [];
 
   for (const persona of Object.values(PERSONAS)) {
-    const languageRows = recentRows.filter((row) => row.language === persona.language);
-    if (languageRows.length === 0) continue;
+    const personaRows = recentRows.filter((row) => row.persona_id === persona.id);
     const defaultAgenda = persona.defaultSecretAgenda ?? [];
     const before = existing.get(persona.id) ?? defaultAgenda;
-    const after = deriveAgenda(languageRows, defaultAgenda);
+    const after = personaRows.length > 0 ? deriveAgenda(personaRows, defaultAgenda) : defaultAgenda;
     if (JSON.stringify(before) === JSON.stringify(after)) continue;
 
     await sql`
       INSERT INTO persona_agendas (persona_id, language, previous_agenda, secret_agenda, source_sessions, updated_at)
       VALUES (
-        ${persona.id}, ${persona.language}, ${JSON.stringify(before)}, ${JSON.stringify(after)}, ${languageRows.length}, now()
+        ${persona.id}, ${persona.language}, ${JSON.stringify(before)}, ${JSON.stringify(after)}, ${personaRows.length}, now()
       )
       ON CONFLICT (persona_id) DO UPDATE SET
         language = EXCLUDED.language,
