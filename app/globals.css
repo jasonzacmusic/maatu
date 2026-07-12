@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-night: #0c101d;
+  --color-night: #0a0d16;
+  --color-base: #0c101d;
   --color-tar: #161b2b;
+  --color-elevated: #1e2438;
   --color-milk: #f2ede2;
+  --color-muted: #9aa4c0;
+  --color-faint: #59637f;
   --color-sodium: #ffb35c;
   --color-kumkum: #e8503a;
   --color-tube: #bfefdb;
-  --font-body: "Instrument Sans", sans-serif;
-  --font-display: "Anek Latin", sans-serif;
+  --font-body: "Hanken Grotesk", system-ui, sans-serif;
+  --font-display: "Newsreader", serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 html,
@@ -17,10 +22,17 @@ body {
 }
 
 body {
-  background: #0c101d;
+  background: #0a0d16;
   color: #f2ede2;
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overscroll-behavior: none;
+}
+
+::selection {
+  background: rgba(255, 179, 92, 0.28);
+  color: #f2ede2;
 }
 
 /* Night Bazaar world animations. All opacity/transform only, per D3. */
@@ -190,6 +202,76 @@ body {
 .mt-toast {
   animation: mtToast 1.7s ease both;
 }
+/* Redesign motifs: lamp breathe, avatar ring, voice bars, skeleton, live dot. */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+.mt-breathe-lamp {
+  animation: breathe 5s ease-in-out infinite;
+}
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.mt-ring {
+  animation: ringPulse 2.4s ease-out infinite;
+}
+@keyframes bar {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.mt-bar {
+  animation: bar 0.9s ease-in-out infinite;
+  transform-origin: bottom;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.mt-skeleton {
+  background: linear-gradient(90deg, #1e2438 25%, #252c44 50%, #1e2438 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes dotFlash {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.mt-dotflash {
+  animation: dotFlash 1.4s infinite;
+}
+.mt-caret {
+  animation: dotFlash 1s infinite;
+}
+
 .mt-still *,
 .mt-noanim * {
   animation: none !important;

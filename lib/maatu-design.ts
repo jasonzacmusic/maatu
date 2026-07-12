@@ -1,19 +1,31 @@
-// Maatu design system: "Night Bazaar". Ported from Claude Design D1/D2/D3.
-// Single source of palette, fonts, and street dressing. No em dashes anywhere.
+// Maatu design system: "Night Bazaar", elevated (Claude Design redesign 2026-07).
+// Single source of palette, fonts, and scenario dressing. The bazaar is carried
+// through light and warmth, not literal scenery. No em dashes anywhere.
 
 export const C = {
-  night: "#0C101D",
-  tar: "#161B2B",
-  milk: "#F2EDE2",
-  sodium: "#FFB35C",
-  kumkum: "#E8503A",
-  tube: "#BFEFDB",
-  muted: "#7E89A8",
+  night: "#0A0D16", // app canvas
+  base: "#0C101D", // base surface behind cards
+  tar: "#161B2B", // card / surface
+  elevated: "#1E2438", // elevated surface, disabled
+  milk: "#F2EDE2", // primary text
+  muted: "#9AA4C0", // secondary text
+  faint: "#59637F", // tertiary / disabled text
+  mono: "#7E89A8", // mono labels
+  sodium: "#FFB35C", // warm accent, primary CTA (dark text on fill)
+  kumkum: "#E8503A", // record / end-call / danger (milk text on fill)
+  tube: "#BFEFDB", // success / correct / caption highlight
+  ink: "#0A0D16", // text on sodium fill
+  onKumkum: "#FFF7F0", // text on kumkum fill
 } as const;
 
-export const DISPLAY = "'Anek Latin', sans-serif";
-export const BODY = "'Instrument Sans', sans-serif";
-export const KN = "'Baloo Tamma 2', 'Anek Kannada', sans-serif";
+// Common translucent lines and fills, so screens stay consistent.
+export const LINE = "rgba(242,237,226,0.10)";
+export const LINE_SOFT = "rgba(242,237,226,0.07)";
+
+export const DISPLAY = "'Newsreader', serif";
+export const BODY = "'Hanken Grotesk', system-ui, sans-serif";
+export const MONO = "'JetBrains Mono', monospace";
+export const KN = "'Anek Kannada', sans-serif";
 
 export type Lang = "kn" | "hi" | "ta";
 export type ShopId =
@@ -148,3 +160,51 @@ export const LANG_PERSONA_PREFIX: Record<Lang, string> = {
   hi: "hi",
   ta: "ta",
 };
+
+// Hub / scenario-card dressing. Order is the display order of the grid; each
+// card reads its name, scene label and level from the generated persona meta.
+export const SCENARIO_ORDER: ShopId[] = ["auto", "chai", "gate", "phone", "airport", "music"];
+
+export const SCENARIO_TAGLINE: Record<ShopId, string> = {
+  auto: "Haggle the fare",
+  chai: "Pure small talk",
+  gate: "Find the flat",
+  phone: "Sort out the plan",
+  airport: "Check in and board",
+  music: "Teach a curious kid",
+  salon: "A trim and a chat",
+  market: "Buy the vegetables",
+};
+
+// A one-line brief for the pre-call screen, second person, warm.
+export const SCENARIO_BRIEF: Record<ShopId, string> = {
+  auto: "It is evening and you need a ride. The driver quotes a high fare. Greet him, name your stop, and haggle to a fair price. He stays in character and will not correct you.",
+  chai: "You are both at the tea stall with a warm glass. No task tonight, just easy talk about the day, the weather, cricket. He keeps the chat alive and encourages you.",
+  gate: "The delivery rider is at the gate and cannot find your flat. Confirm the order, then guide him in: block, floor, a landmark. He is polite but in a mild hurry.",
+  phone: "You are calling broadband customer care for a new connection. Verify who you are, hear two plans, and book an installation slot. Formal, patient, number heavy.",
+  airport: "You reach the airline check-in counter. Hand over ticket and ID, sort one baggage wrinkle, pick a seat, and follow what to do at the gate. Keep it moving.",
+  music: "A curious child at their first class. You are the teacher. Explain a simple idea, answer their why, and gently fix them when they use a word wrong.",
+  salon: "A relaxed trim and an easy chat while you wait. Small talk, no pressure.",
+  market: "Buy a few vegetables and settle a price at the market stall.",
+};
+
+export const DIFFICULTY: Record<ShopId, string> = {
+  auto: "Beginner",
+  chai: "Beginner",
+  gate: "Easy",
+  phone: "Intermediate",
+  airport: "Intermediate",
+  music: "Teach mode",
+  salon: "Beginner",
+  market: "Beginner",
+};
+
+// The three teacher hosts, so onboarding and the hub can name them.
+export const HOST: Record<Lang, { name: string; place: string }> = {
+  kn: { name: "Meera", place: "Gandhi Bazaar, Bengaluru" },
+  hi: { name: "Anjali", place: "Purani Sadak, Delhi" },
+  ta: { name: "Kavya", place: "Mylapore, Chennai" },
+};
+
+// Native single-letter script mark per language, for the language picker.
+export const LANG_GLYPH: Record<Lang, string> = { kn: "ಕ", hi: "क", ta: "த" };
