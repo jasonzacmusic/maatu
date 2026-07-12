@@ -16,6 +16,11 @@ PYBIN="/opt/homebrew/bin/python3.12"
 
 echo "Relocating agent runtime to $RT ..."
 launchctl bootout "gui/$(id -u)/$LABEL" 2>/dev/null || true
+launchctl bootout "gui/$(id -u)" "$PLIST" 2>/dev/null || true
+for _ in 1 2 3 4 5; do
+  if ! launchctl print "gui/$(id -u)/$LABEL" >/dev/null 2>&1; then break; fi
+  sleep 1
+done
 mkdir -p "$RT/agent" "$RT/personas"
 cp "$REPO/agent/"*.py "$RT/agent/"
 cp "$REPO/agent/run_worker.sh" "$RT/agent/" 2>/dev/null || true
@@ -40,7 +45,7 @@ LOG="$HOME/Library/Logs/maatu-agent.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 5000000 ]; then : > "$LOG"; fi
 export PYTHONUNBUFFERED=1
 echo "=== maatu agent starting $(date) ===" >> "$LOG"
-exec ./.venv/bin/python worker.py dev >> "$LOG" 2>&1
+exec ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
 SH
 chmod +x "$RT/agent/run_worker.sh"
 

@@ -145,3 +145,14 @@ def persona_from_room_name(room_name: str) -> Persona:
     """Room names are '<persona-id>__<random>'. Fall back to the default."""
     persona_id = room_name.split("__", 1)[0] if room_name else None
     return load_persona(persona_id)
+
+
+def apply_secret_agenda(persona: Persona, agenda: list[str]) -> Persona:
+    """Apply the active nightly agenda to a file-backed persona."""
+    if not agenda or persona.id.startswith("teacher-") or persona.id.startswith("tutor-"):
+        return persona
+    data = dict(persona.raw)
+    data["secret_agenda"] = agenda
+    persona.raw = data
+    persona.system_prompt = _build_system_prompt(data)
+    return persona

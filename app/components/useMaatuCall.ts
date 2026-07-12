@@ -18,6 +18,18 @@ export type CallPhase = "idle" | "connecting" | "live" | "ended" | "error";
 export type Speaker = "character" | "learner" | null;
 export type Line = { who: "character" | "learner"; text: string };
 
+const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u;
+
+function safeRomanizedText(text: string) {
+  return NATIVE_SCRIPT.test(text) ? "Romanizing speech..." : text;
+}
+
+function languageCode(persona: string) {
+  if (persona.startsWith("hi-")) return "hi-IN";
+  if (persona.startsWith("ta-")) return "ta-IN";
+  return "kn-IN";
+}
+
 export interface MaatuCall {
   phase: CallPhase;
   error: string | null;
@@ -115,17 +127,37 @@ export function useMaatuCall(persona: string): MaatuCall {
         RoomEvent.TranscriptionReceived,
         (segments: TranscriptionSegment[], participant?: Participant) => {
           const who: "character" | "learner" = participant?.isLocal ? "learner" : "character";
+          const appendFinal = (text: string) => {
+            setTranscript((prev) => {
+              const last = prev[prev.length - 1];
+              if (last && last.who === who && !text.startsWith(last.text) && last.text.startsWith(text)) {
+                return prev;
+              }
+              return [...prev.slice(-40), { who, text }];
+            });
+          };
           for (const seg of segments) {
             if (!seg.text?.trim()) continue;
-            setCaption({ who, text: seg.text });
+            const raw = seg.text.trim();
+            const text = safeRomanizedText(raw);
+            setCaption({ who, text });
             if (seg.final) {
-              setTranscript((prev) => {
-                const last = prev[prev.length - 1];
-                if (last && last.who === who && !seg.text.startsWith(last.text) && last.text.startsWith(seg.text)) {
-                  return prev;
-                }
-                return [...prev.slice(-40), { who, text: seg.text }];
-              });
+              if (NATIVE_SCRIPT.test(raw)) {
+                void fetch("/api/romanize", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ text: raw, languageCode: languageCode(persona) }),
+                })
+                  .then((response) => (response.ok ? response.json() : { text: "Romanization unavailable" }))
+                  .then((data) => {
+                    const romanized = safeRomanizedText(typeof data.text === "string" ? data.text : "Romanization unavailable");
+                    setCaption({ who, text: romanized });
+                    appendFinal(romanized);
+                  })
+                  .catch(() => appendFinal("Romanization unavailable"));
+              } else {
+                appendFinal(text);
+              }
             }
           }
         },

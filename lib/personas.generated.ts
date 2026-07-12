@@ -13,6 +13,7 @@ export type PersonaMeta = {
   sceneLabel: string;
   teachMode: boolean;
   rubric: string[];
+  defaultSecretAgenda?: string[];
 };
 
 export const PERSONAS: Record<string, PersonaMeta> = {
@@ -32,6 +33,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number fluency",
       "politeness register",
       "response latency"
+    ],
+    "defaultSecretAgenda": [
+      "numbers 40 to 90",
+      "polite imperative forms",
+      "past continuous tense"
     ]
   },
   "hi-auto": {
@@ -50,6 +56,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number fluency",
       "politeness register",
       "response latency"
+    ],
+    "defaultSecretAgenda": [
+      "numbers 40 to 90",
+      "polite imperative forms",
+      "past continuous tense"
     ]
   },
   "ta-auto": {
@@ -68,6 +79,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number fluency",
       "politeness register",
       "response latency"
+    ],
+    "defaultSecretAgenda": [
+      "numbers 40 to 90",
+      "polite imperative forms",
+      "past continuous tense"
     ]
   },
   "kn-delivery": {
@@ -86,6 +102,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and address fluency",
       "politeness",
       "clarity"
+    ],
+    "defaultSecretAgenda": [
+      "directions and locations",
+      "flat and floor numbers",
+      "polite requests"
     ]
   },
   "hi-delivery": {
@@ -104,6 +125,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and address fluency",
       "politeness",
       "clarity"
+    ],
+    "defaultSecretAgenda": [
+      "directions and locations",
+      "flat and floor numbers",
+      "polite requests"
     ]
   },
   "ta-delivery": {
@@ -122,6 +148,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and address fluency",
       "politeness",
       "clarity"
+    ],
+    "defaultSecretAgenda": [
+      "directions and locations",
+      "flat and floor numbers",
+      "polite requests"
     ]
   },
   "kn-care": {
@@ -140,6 +171,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and date fluency",
       "address dictation",
       "comprehension under hold"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and dates",
+      "formal address forms",
+      "spelling out an address"
     ]
   },
   "hi-care": {
@@ -158,6 +194,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and date fluency",
       "address dictation",
       "comprehension under hold"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and dates",
+      "formal address forms",
+      "spelling out an address"
     ]
   },
   "ta-care": {
@@ -176,6 +217,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number and date fluency",
       "address dictation",
       "comprehension under hold"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and dates",
+      "formal address forms",
+      "spelling out an address"
     ]
   },
   "kn-airport": {
@@ -194,6 +240,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number comprehension",
       "following instructions",
       "courtesy"
+    ],
+    "defaultSecretAgenda": [
+      "numbers (seat, gate, weight, kilos)",
+      "polite requests",
+      "understanding instructions"
     ]
   },
   "hi-airport": {
@@ -212,6 +263,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number comprehension",
       "following instructions",
       "courtesy"
+    ],
+    "defaultSecretAgenda": [
+      "numbers (seat, gate, weight, kilos)",
+      "polite requests",
+      "understanding instructions"
     ]
   },
   "ta-airport": {
@@ -230,6 +286,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "number comprehension",
       "following instructions",
       "courtesy"
+    ],
+    "defaultSecretAgenda": [
+      "numbers (seat, gate, weight, kilos)",
+      "polite requests",
+      "understanding instructions"
     ]
   },
   "kn-chai": {
@@ -248,6 +309,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "asking questions back",
       "everyday vocabulary",
       "confidence"
+    ],
+    "defaultSecretAgenda": [
+      "everyday small talk",
+      "opinions and preferences",
+      "present and past tense mix"
     ]
   },
   "hi-chai": {
@@ -266,6 +332,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "asking questions back",
       "everyday vocabulary",
       "confidence"
+    ],
+    "defaultSecretAgenda": [
+      "everyday small talk",
+      "opinions and preferences",
+      "present and past tense mix"
     ]
   },
   "ta-chai": {
@@ -284,6 +355,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "asking questions back",
       "everyday vocabulary",
       "confidence"
+    ],
+    "defaultSecretAgenda": [
+      "everyday small talk",
+      "opinions and preferences",
+      "present and past tense mix"
     ]
   },
   "kn-teach": {
@@ -302,6 +378,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "target-language music vocabulary (flag every English fallback)",
       "pacing",
       "whether questions were truly answered"
+    ],
+    "defaultSecretAgenda": [
+      "music vocabulary in the target language",
+      "explaining and simplifying",
+      "answering why questions"
     ]
   },
   "hi-teach": {
@@ -320,6 +401,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "target-language music vocabulary (flag every English fallback)",
       "pacing",
       "whether questions were truly answered"
+    ],
+    "defaultSecretAgenda": [
+      "music vocabulary in the target language",
+      "explaining and simplifying",
+      "answering why questions"
     ]
   },
   "ta-teach": {
@@ -338,6 +424,11 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "target-language music vocabulary (flag every English fallback)",
       "pacing",
       "whether questions were truly answered"
+    ],
+    "defaultSecretAgenda": [
+      "music vocabulary in the target language",
+      "explaining and simplifying",
+      "answering why questions"
     ]
   }
 };

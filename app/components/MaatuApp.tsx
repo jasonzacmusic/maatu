@@ -25,11 +25,24 @@ import {
 
 type Screen = "street" | "call" | "debrief" | "progress" | "school";
 type SessionEnd = { room: string | null; transcript: Line[]; durationSec: number };
+type StreetStats = {
+  totalSeconds: number;
+  thisWeekSeconds: number;
+  sessionCount: number;
+  nights: number;
+  scenarios: { scenario: string; sessions: number; seconds: number }[];
+};
+
+const EMPTY_STATS: StreetStats = { totalSeconds: 0, thisWeekSeconds: 0, sessionCount: 0, nights: 0, scenarios: [] };
+
+function minutes(seconds: number) {
+  return Math.round(seconds / 60);
+}
 
 const NUMERALS: Record<Lang, string[]> = {
-  kn: ["೧", "೨", "೩", "೪", "೫"],
-  hi: ["१", "२", "३", "४", "५"],
-  ta: ["௧", "௨", "௩", "௪", "௫"],
+  kn: ["1", "2", "3", "4", "5"],
+  hi: ["1", "2", "3", "4", "5"],
+  ta: ["1", "2", "3", "4", "5"],
 };
 
 function personaFor(shop: ShopId, lang: Lang): string | null {
@@ -63,6 +76,8 @@ function StreetScreen({
   onProgress,
   onSchool,
   rm,
+  stats,
+  statsLoading,
 }: {
   lang: Lang;
   setLang: (l: Lang) => void;
@@ -70,6 +85,8 @@ function StreetScreen({
   onProgress: () => void;
   onSchool: () => void;
   rm: boolean;
+  stats: StreetStats;
+  statsLoading: boolean;
 }) {
   const [cam, setCam] = useState<{ x: number; y: number; s: number } | null>(null);
   const [dim, setDim] = useState(false);
@@ -127,7 +144,7 @@ function StreetScreen({
       >
         <div>
           <div style={{ fontFamily: KN, fontSize: 30, lineHeight: 1, color: C.milk, textShadow: "0 0 18px rgba(255,179,92,0.45)" }}>
-            ಮಾತು
+            maatu
           </div>
           <div className="mt-1.5 text-[10px] font-semibold uppercase" style={{ fontFamily: BODY, letterSpacing: 2, color: C.muted }}>
             maatu · {L.city}
@@ -185,10 +202,10 @@ function StreetScreen({
             <line x1="8" y1="8" x2="11.5" y2="5" stroke={C.sodium} strokeWidth="1.6" strokeLinecap="round" />
           </svg>
           <span className="text-[13px] font-semibold" style={{ fontFamily: BODY, color: C.milk }}>
-            247 min
+            {statsLoading ? "..." : `${minutes(stats.totalSeconds)} min`}
           </span>
           <span className="text-[13px] font-semibold" style={{ fontFamily: BODY, color: C.sodium }}>
-            · 6 nights
+            {statsLoading ? "" : stats.nights === 0 ? "· new street" : `· ${stats.nights} ${stats.nights === 1 ? "night" : "nights"}`}
           </span>
         </button>
       </div>
@@ -415,12 +432,16 @@ function DebriefScreen({
   meta,
   lang,
   session,
+  userId,
+  onReportReady,
   onStreet,
   onAgain,
 }: {
   meta: PersonaMeta;
   lang: Lang;
   session: SessionEnd | null;
+  userId: string;
+  onReportReady: () => void;
   onStreet: () => void;
   onAgain: () => void;
 }) {
@@ -444,6 +465,7 @@ function DebriefScreen({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             room: session.room,
+            userId,
             personaId: meta.id,
             durationSec: session.durationSec,
             transcript: session.transcript,
@@ -454,6 +476,7 @@ function DebriefScreen({
         if (data.status === "ready" && data.report) {
           setReport(data.report);
           setStatus("ready");
+          onReportReady();
         } else {
           setStatus("none");
         }
@@ -464,7 +487,7 @@ function DebriefScreen({
     return () => {
       alive = false;
     };
-  }, [session, meta.id]);
+  }, [session, meta.id, userId, onReportReady]);
 
   const toggleAudio = () => {
     const el = audioRef.current;
@@ -601,7 +624,7 @@ function DebriefScreen({
               </div>
               <div className="px-5 py-3 flex items-center justify-between" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
                 <span style={{ fontFamily: KN, fontSize: 15, color: "rgba(242,237,226,0.75)" }}>
-                  ಮಾತು <span style={{ fontFamily: BODY, fontSize: 10, letterSpacing: 2, color: C.muted }}>MAATU</span>
+                  maatu <span style={{ fontFamily: BODY, fontSize: 10, letterSpacing: 2, color: C.muted }}>MAATU</span>
                 </span>
                 <span className="text-[10px]" style={{ fontFamily: BODY, letterSpacing: 1, color: C.muted }}>
                   {meta.sceneLabel.split(", ").pop()?.toUpperCase()}
@@ -648,23 +671,8 @@ function DebriefScreen({
 }
 
 // ....................................................... PROGRESS
-function ProgressScreen({ onBack }: { onBack: () => void }) {
-  const days = [1, 1, 1, 1, 1, 1, 0];
-  const dayNames = ["M", "T", "W", "T", "F", "S", "S"];
-  const boards = [
-    { name: "Numbers", level: 2 },
-    { name: "Politeness", level: 2 },
-    { name: "Directions", level: 1 },
-    { name: "Small talk", level: 1 },
-    { name: "Bargaining", level: 0 },
-    { name: "Past tense", level: 0 },
-  ];
-  const boardStyle = (lv: number) =>
-    lv === 2
-      ? { background: "#241B0F", border: "1px solid rgba(255,179,92,0.4)", color: "#FFC97E", boxShadow: "0 0 18px rgba(255,179,92,0.18)" }
-      : lv === 1
-        ? { background: "#1B1F31", border: "1px solid rgba(255,179,92,0.16)", color: "rgba(255,201,126,0.55)" }
-        : { background: "#12172A", border: "1px solid rgba(255,255,255,0.08)", color: "#5A6480" };
+function ProgressScreen({ onBack, stats, loading }: { onBack: () => void; stats: StreetStats; loading: boolean }) {
+  const hasSessions = stats.sessionCount > 0;
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <div className="px-5 pt-16 pb-10 flex flex-col gap-4">
@@ -680,100 +688,51 @@ function ProgressScreen({ onBack }: { onBack: () => void }) {
           <div>
             <h1 style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 700, fontSize: 26, lineHeight: 1.1, color: C.milk }}>Your street</h1>
             <div className="text-[11px] mt-0.5" style={{ fontFamily: BODY, color: C.muted }}>
-              Kannada · Bengaluru · 24 nights out
+              Your real conversation history
             </div>
           </div>
         </div>
 
-        <div className="rounded-2xl p-5 flex items-center gap-5" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="relative w-24 flex-none rounded-lg px-3 py-3 text-center" style={{ background: "#0B0D14", border: "1px solid rgba(255,255,255,0.1)" }}>
-            <div className="absolute -top-2 left-3 w-4 h-4 rounded-sm" style={{ background: C.kumkum, transform: "rotate(8deg)" }} aria-hidden="true" />
-            <div className="tabular-nums" style={{ fontFamily: DISPLAY, fontStretch: "75%", fontWeight: 800, fontSize: 36, lineHeight: 1, color: C.sodium, textShadow: "0 0 14px rgba(255,179,92,0.4)" }}>
-              247
-            </div>
-            <div className="text-[8px] font-bold uppercase mt-1" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>
-              min
+        {loading ? (
+          <div className="rounded-2xl p-6 text-center" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)", color: C.muted }}>
+            Loading your street.
+          </div>
+        ) : !hasSessions ? (
+          <div className="rounded-2xl p-6 text-center" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
+            <div className="text-[22px] font-bold" style={{ fontFamily: DISPLAY, color: C.milk }}>Nothing lit yet</div>
+            <div className="text-[13px] mt-2 leading-relaxed" style={{ fontFamily: BODY, color: C.muted }}>
+              Finish your first street conversation. Your real minutes, sessions, and places will appear here.
             </div>
           </div>
-          <div>
-            <div className="text-[15px] font-semibold" style={{ fontFamily: BODY, color: C.milk }}>
-              minutes spoken
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                [minutes(stats.totalSeconds), "minutes spoken"],
+                [stats.sessionCount, stats.sessionCount === 1 ? "conversation" : "conversations"],
+                [stats.nights, stats.nights === 1 ? "night spoken" : "nights spoken"],
+                [minutes(stats.thisWeekSeconds), "minutes this week"],
+              ].map(([value, label]) => (
+                <div key={label} className="rounded-2xl p-4" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
+                  <div className="tabular-nums" style={{ fontFamily: DISPLAY, fontWeight: 800, fontSize: 30, color: C.sodium }}>{value}</div>
+                  <div className="text-[11px] mt-1" style={{ fontFamily: BODY, color: C.muted }}>{label}</div>
+                </div>
+              ))}
             </div>
-            <div className="text-[12.5px] mt-1" style={{ fontFamily: BODY, color: C.tube }}>
-              +38 this week
-            </div>
-          </div>
-        </div>
 
-        <div className="rounded-2xl p-5" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="text-[9px] font-bold uppercase" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>
-            Streak
-          </div>
-          <div className="text-[16px] font-semibold mt-1 mb-4" style={{ fontFamily: BODY, color: C.milk }}>
-            6 nights lit
-          </div>
-          <div className="flex justify-between">
-            {days.map((litDay, i) => (
-              <div key={i} className="flex flex-col items-center gap-1.5">
-                <div
-                  className="w-9 h-11 rounded"
-                  style={
-                    litDay
-                      ? { background: "#FFC97E", boxShadow: "0 0 16px rgba(255,179,92,0.5)", borderBottom: "3px solid #B57F35" }
-                      : { border: "1.5px dashed rgba(255,179,92,0.45)" }
-                  }
-                  aria-label={litDay ? "lit" : "tonight"}
-                />
-                <span className="text-[9px] font-semibold" style={{ fontFamily: BODY, color: C.muted }}>
-                  {dayNames[i]}
-                </span>
+            <div className="rounded-2xl p-5" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
+              <div className="text-[9px] font-bold uppercase" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>Places practiced</div>
+              <div className="mt-3 flex flex-col gap-2">
+                {stats.scenarios.map((scenario) => (
+                  <div key={scenario.scenario} className="flex items-center justify-between rounded-xl px-3 py-2.5" style={{ background: "rgba(255,255,255,0.04)" }}>
+                    <span className="capitalize text-[13px] font-semibold" style={{ fontFamily: BODY, color: C.milk }}>{scenario.scenario}</span>
+                    <span className="text-[12px]" style={{ fontFamily: BODY, color: C.tube }}>{scenario.sessions} {scenario.sessions === 1 ? "call" : "calls"} · {minutes(scenario.seconds)} min</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-2xl p-5" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="text-[9px] font-bold uppercase" style={{ fontFamily: BODY, letterSpacing: 3, color: C.muted }}>
-            Signboards
-          </div>
-          <div className="text-[12px] mt-1 mb-4" style={{ fontFamily: BODY, color: C.muted }}>
-            Bright boards are strong. Dim boards need light.
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {boards.map((b) => (
-              <div key={b.name} className="h-16 rounded-lg flex flex-col items-center justify-center gap-0.5" style={boardStyle(b.level)}>
-                <span className="text-[14px] font-bold" style={{ fontFamily: DISPLAY, fontStretch: "80%", letterSpacing: 1 }}>
-                  {b.name}
-                </span>
-                {b.level === 0 && (
-                  <span className="text-[9.5px] font-semibold" style={{ fontFamily: BODY, color: "rgba(232,80,58,0.85)" }}>
-                    needs light
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: C.tar, border: "1px solid rgba(255,255,255,0.07)" }}>
-          <svg width="40" height="40" viewBox="0 0 40 40" className="flex-none" aria-hidden="true">
-            <rect x="6" y="22" width="22" height="14" rx="1.5" fill="#8A6A3B" />
-            <line x1="17" y1="22" x2="17" y2="36" stroke="#B99A5F" strokeWidth="2" />
-            <rect x="12" y="9" width="17" height="12" rx="1.5" fill="#7A5C33" />
-            <line x1="20.5" y1="9" x2="20.5" y2="21" stroke="#B99A5F" strokeWidth="2" />
-          </svg>
-          <div className="flex-1">
-            <div className="text-[15px] font-semibold" style={{ fontFamily: BODY, color: C.milk }}>
-              12 phrases at the gate
             </div>
-            <div className="text-[12px] mt-0.5" style={{ fontFamily: BODY, color: C.muted }}>
-              from your last 3 rides
-            </div>
-          </div>
-          <button className="h-10 px-4 rounded-full text-[13px] font-bold focus-visible:outline focus-visible:outline-2" style={{ fontFamily: BODY, background: C.sodium, color: "#1A1206", outlineColor: C.tube }}>
-            Review
-          </button>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -886,12 +845,47 @@ export default function MaatuApp() {
   const [activePersona, setActivePersona] = useState<string>("kn-auto");
   const [lastSession, setLastSession] = useState<SessionEnd | null>(null);
   const [rm, setRm] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [stats, setStats] = useState<StreetStats>(EMPTY_STATS);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   useEffect(() => {
     if (typeof window.matchMedia === "function") {
       setRm(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     }
   }, []);
+
+  useEffect(() => {
+    const key = "maatu-user-id";
+    let id = window.localStorage.getItem(key);
+    if (!id) {
+      id = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `maatu-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      window.localStorage.setItem(key, id);
+    }
+    setUserId(id);
+  }, []);
+
+  const loadStats = useCallback(async () => {
+    if (!userId) return;
+    setStatsLoading(true);
+    try {
+      const response = await fetch(`/api/stats?userId=${encodeURIComponent(userId)}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("stats unavailable");
+      setStats(await response.json());
+    } catch {
+      setStats(EMPTY_STATS);
+    } finally {
+      setStatsLoading(false);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (screen === "street" || screen === "progress") void loadStats();
+  }, [screen, loadStats]);
+
+  const handleReportReady = useCallback(() => {
+    void loadStats();
+  }, [loadStats]);
 
   const enterShop = useCallback(
     (id: ShopId) => {
@@ -948,6 +942,8 @@ export default function MaatuApp() {
             onProgress={() => setScreen("progress")}
             onSchool={() => setScreen("school")}
             rm={rm}
+            stats={stats}
+            statsLoading={statsLoading}
           />
         )}
         {screen === "school" && (
@@ -957,9 +953,17 @@ export default function MaatuApp() {
           <CallScreen meta={meta} lang={lang} captionsDefault onEnd={handleCallEnd} rm={rm} />
         )}
         {screen === "debrief" && (
-          <DebriefScreen meta={meta} lang={lang} session={lastSession} onStreet={() => setScreen("street")} onAgain={() => setScreen("call")} />
+          <DebriefScreen
+            meta={meta}
+            lang={lang}
+            session={lastSession}
+            userId={userId}
+            onReportReady={handleReportReady}
+            onStreet={() => setScreen("street")}
+            onAgain={() => setScreen("call")}
+          />
         )}
-        {screen === "progress" && <ProgressScreen onBack={() => setScreen("street")} />}
+        {screen === "progress" && <ProgressScreen onBack={() => setScreen("street")} stats={stats} loading={statsLoading} />}
       </div>
     </div>
   );

@@ -2,6 +2,12 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-07-12: Street and Progress stats are scoped by a per-device anonymous ID and aggregated from Neon session rows; a new device gets an explicit zero state. Reason: this removes all demo progress without adding signup friction.
+- 2026-07-12: Live learner captions keep Saarika v2.5 for speech recognition, then use Sarvam Transliterate for Latin-script display and persistence. Reason: Saarika v2.5 does not support translit mode directly, and the server route keeps the Sarvam key private.
+- 2026-07-12: PWA installability uses a small first-party service worker with an offline shell and strict service-worker headers. Reason: the existing manifest and icons were valid, but production had no service worker.
+- 2026-07-12: The nightly self-improving loop runs as a Vercel Cron at 02:00 IST, stores versioned before and after agendas in Neon, and the Mac voice worker fetches the active agenda when each call starts. Reason: Vercel provides a reliable nightly scheduler but cannot persistently edit repository JSON, while launchd cannot read the repo because of macOS TCC; Neon is the durable bridge and keeps every rewrite auditable.
+- 2026-07-12: The LaunchAgent runs LiveKit jobs in the worker process with the thread executor, disables dev auto-reload, pre-generates LLM plus TTS output, and gives a short language-specific spoken acknowledgment at speech end. Reason: macOS background execution repeatedly timed out LiveKit's spawned job process before the persona loaded; thread execution removes that failing process boundary, and the natural acknowledgment bridges the full reply while keeping agent-audio-start inside the 1.5 second budget.
+
 ## Spec items cut or deferred (audit against 01_BUILD_SPEC section 11, 2026-07-11)
 
 - 2026-07-11: Nightly self-improving job NOT BUILT. No cron, no secret_agenda rewrite, no FSRS review queue, no learner_profiles, no "Coach's notes" digest. Reason: needs a scheduled runner and accumulated real data; out of the build window. This is the single biggest cut.

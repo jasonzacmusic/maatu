@@ -184,6 +184,7 @@ def build():
                 "sceneLabel": s["scene_label"][lang],
                 "teachMode": s.get("teach_mode", False),
                 "rubric": s["rubric"],
+                "defaultSecretAgenda": s["secret_agenda"],
             }
     write_ts(manifest)
     print(f"wrote {len(manifest)} personas to {PERSONA_DIR} and manifest to {TS_OUT}")
@@ -217,6 +218,7 @@ def write_ts(manifest: dict):
         "  sceneLabel: string;",
         "  teachMode: boolean;",
         "  rubric: string[];",
+        "  defaultSecretAgenda?: string[];",
         "};",
         "",
         f"export const PERSONAS: Record<string, PersonaMeta> = {json.dumps(manifest, ensure_ascii=False, indent=2)};",

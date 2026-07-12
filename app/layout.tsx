@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import RegisterServiceWorker from "./components/RegisterServiceWorker";
 
 export const metadata: Metadata = {
   title: "Maatu",
@@ -35,7 +36,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        <RegisterServiceWorker />
+      </body>
     </html>
   );
 }
