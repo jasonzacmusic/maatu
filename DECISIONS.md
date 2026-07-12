@@ -2,6 +2,9 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-07-12: Agent-local start-time visit memory is retired; assessed completion in the app is the course record, and open tutoring receives the full curriculum reference. Reason: a started or probed call is not proof that a lesson was learned.
+- 2026-07-12: Classroom lessons count as complete only when the teacher says the exact spoken assessment marker "Lesson complete" after the final check. Reason: hanging up is not evidence that a beginner mastered the chapter.
+- 2026-07-12: The open Classroom session is "Ask your teacher", not another Conversation Mode. Reason: scenario calls already cover conversation, while Classroom must answer language questions and proactively teach or review.
 - 2026-07-12: Nightly agenda learning is scoped to the exact persona ID, and a previously contaminated agenda is restored to that persona's default when it has no matching sessions. Reason: language-wide feedback copied auto-rickshaw goals into unrelated Kannada characters and was not honest self-improvement.
 - 2026-07-12: Per-turn latency is logged once, at the first agent audio after a learner speech end, and repeated VAD transitions are ignored while the acknowledgment and reply are active. Reason: the acceptance metric is first audio, and duplicate lines made one turn look both inside and outside budget.
 - 2026-07-12: Street and Progress stats are scoped by a per-device anonymous ID and aggregated from Neon session rows; a new device gets an explicit zero state. Reason: this removes all demo progress without adding signup friction.

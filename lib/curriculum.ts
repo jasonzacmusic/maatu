@@ -24,7 +24,7 @@ export function teacherMeta(lang: Lang, lessonId: string | null): PersonaMeta {
   const isTutor = lessonId === null;
   const lesson = lessonId ? ALL_LESSONS.find((l) => l.id === lessonId) : null;
   const label = isTutor
-    ? `${LANG_NAME[lang]} · free conversation`
+    ? `${LANG_NAME[lang]} · ask your teacher`
     : `${LANG_NAME[lang]} class · ${lesson?.title ?? "lesson"}`;
   return {
     id: isTutor ? `tutor-${lang}` : `teacher-${lang}-${lessonId}`,
@@ -61,4 +61,10 @@ export function markDone(lang: Lang, lessonId: string) {
   const s = getDone(lang);
   s.add(lessonId);
   localStorage.setItem(doneKey(lang), JSON.stringify([...s]));
+}
+
+export function lessonWasMastered(transcript: { who: "character" | "learner"; text: string }[]) {
+  return transcript.some(
+    (line) => line.who === "character" && /\blesson\s+complete\b/i.test(line.text),
+  );
 }

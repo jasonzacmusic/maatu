@@ -26,6 +26,12 @@ PHRASES = {
     "hi-auto": "Bhaiya, Connaught Place chaliye. Meter lagaiye.",
     "ta-auto": "Anna, T Nagar ponga. Meter podunga.",
     "kn-teach": "Naanu nimge taala helthini. Modalu naalku beat ide.",
+    "teacher-kn-l1": "Namaskara. Hegiddira?",
+    "teacher-hi-l1": "Namaste. Aap kaise hain?",
+    "teacher-ta-l1": "Vanakkam. Eppadi irukkeenga?",
+    "tutor-kn": "What does hegiddira mean?",
+    "tutor-hi": "What does aap kaise hain mean?",
+    "tutor-ta": "What does eppadi irukkeenga mean?",
 }
 
 ACKNOWLEDGMENTS = {"sari", "theek hai", "seri", "okay"}
@@ -99,7 +105,9 @@ def rms(frame: rtc.AudioFrame) -> float:
 
 async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, object]:
     env = load_env(ROOT / "agent" / ".env")
-    language = LANGUAGE[persona.split("-", 1)[0]]
+    parts = persona.split("-")
+    lang = parts[1] if parts[0] in {"teacher", "tutor"} else parts[0]
+    language = LANGUAGE[lang]
     room_name = f"{persona}__e2e{int(time.time())}"
     identity = f"e2e-probe-{int(time.time())}"
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
 import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
-import { UNITS, teacherMeta, getDone, markDone, LANG_NAME } from "@/lib/curriculum";
+import { UNITS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME } from "@/lib/curriculum";
 import {
   C,
   BODY,
@@ -914,7 +914,7 @@ function SchoolScreen({ lang, onTutor, onLesson }: { lang: Lang; onTutor: () => 
           Classroom with {host.name}
         </h1>
         <div className="mt-1 text-[13px]" style={{ color: C.muted }}>
-          A real class. {host.name} leads and gently corrects you.
+          A 15-lesson beginner course. {host.name} leads, answers questions, and checks your speaking.
         </div>
 
         <button
@@ -927,10 +927,10 @@ function SchoolScreen({ lang, onTutor, onLesson }: { lang: Lang; onTutor: () => 
           </span>
           <span>
             <span className="block text-[16px] font-bold" style={{ color: C.milk }}>
-              Free conversation
+              Ask your teacher
             </span>
             <span className="block text-[12.5px]" style={{ color: "rgba(191,239,219,0.85)" }}>
-              Just talk. {host.name} chats with you and corrects you as you go.
+              Ask any {LANG_NAME[lang]} question, or let {host.name} lead a review.
             </span>
           </span>
         </button>
@@ -1272,7 +1272,7 @@ export default function MaatuApp() {
     (payload: SessionEnd) => {
       if (activePersona.startsWith("teacher-")) {
         const lessonId = activePersona.split("-").slice(2).join("-");
-        markDone(lang, lessonId);
+        if (lessonWasMastered(payload.transcript)) markDone(lang, lessonId);
         setScreen("school");
       } else if (activePersona.startsWith("tutor-")) {
         setScreen("school");

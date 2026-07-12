@@ -7,20 +7,18 @@ LEADS and CORRECTS. Two modes:
 
 Both drive the interaction and make the learner speak. Every target-language
 word comes from the vetted romanized lexicon in curriculum.json, never native
-script. The teacher remembers past lessons via progress.json next to
-curriculum.json (written here at session start, one file, no backend).
+script. Course completion is recorded by the app only after the teacher's final
+speaking check, never merely because a call started.
 No em dashes anywhere.
 """
 
 from __future__ import annotations
 
-import datetime
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CURRICULUM = ROOT / "curriculum.json"
-PROGRESS = ROOT / "progress.json"
 
 LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
 LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
@@ -77,52 +75,8 @@ def _ordered_lessons() -> list[dict]:
     return [l for u in _load_curriculum()["units"] for l in u["lessons"]]
 
 
-# ---------------------------------------------------------------------------
-# Progress memory: {"kn": {"l4": {"visits": 2, "last": "2026-07-11"}}, ...}
-# Lives next to curriculum.json so the launchd agent can read and write it.
-# ---------------------------------------------------------------------------
-
-def _load_progress() -> dict:
-    try:
-        return json.loads(PROGRESS.read_text())
-    except Exception:
-        return {}
-
-
-def _record_visit(lang: str, lesson_id: str) -> None:
-    prog = _load_progress()
-    entry = prog.setdefault(lang, {}).setdefault(lesson_id, {"visits": 0, "last": ""})
-    entry["visits"] += 1
-    entry["last"] = datetime.date.today().isoformat()
-    try:
-        PROGRESS.write_text(json.dumps(prog, indent=2) + "\n")
-    except Exception:
-        pass  # memory is best effort, a class must never fail on it
-
-
-def _history(lang: str, exclude: str | None = None):
-    """Return (visited lessons in course order, most recent lesson) for a language."""
-    prog = _load_progress().get(lang, {})
-    visited = [l for l in _ordered_lessons() if l["id"] in prog and l["id"] != exclude]
-    recent = None
-    if visited:
-        recent = max(visited, key=lambda l: prog[l["id"]].get("last", ""))
-    return visited, recent, prog
-
-
 def _lexicon_lines(lesson: dict, lang: str) -> list[str]:
     return lesson.get("lexicon", {}).get(lang, [])
-
-
-def _first_recall_item(lesson: dict, lang: str):
-    """First real 'english = form' pair of a lesson's lexicon, for warm-up recall."""
-    for line in _lexicon_lines(lesson, lang):
-        if line.startswith("note:"):
-            continue
-        if " = " in line:
-            en, form = line.split(" = ", 1)
-            return en.strip(), form.strip()
-    return None
 
 
 def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
@@ -135,38 +89,20 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
     t = TEACHER[lang]
     rules = _CORE_RULES.format(ln=ln)
 
-    visited, recent, prog = _history(lang, exclude=lesson_id)
-    revisit = prog.get(lesson_id, {}).get("visits", 0) > 0
-    _record_visit(lang, lesson_id)
-
     teach = "; ".join(lesson["teach"])
     lexicon = "\n".join("- " + x for x in _lexicon_lines(lesson, lang))
     examples = " / ".join(lesson["examples_en"])
     practice = "; ".join(lesson["practice"])
 
-    memory = ""
-    if visited:
-        titles = ", ".join(f"'{l['title']}'" for l in visited)
-        memory = (
-            f"\nYou have taught this student before. They have already covered: {titles}. "
-            f"Their most recent lesson was '{recent['title']}'. Weave in a quick recall of "
-            f"earlier material when it fits naturally, and reuse words they already know in "
-            f"your examples.\n"
-        )
-    if revisit:
-        memory += (
-            "\nThe student has ALREADY done today's lesson once, so run it as revision: for "
-            "each item ask them to produce it from the English meaning FIRST, reteach only "
-            "what they miss, move faster, and spend the saved time on the sentence-building "
-            "and check questions.\n"
-        )
+    ordered = _ordered_lessons()
+    lesson_number = next(i for i, item in enumerate(ordered, 1) if item["id"] == lesson_id)
 
     system = (
         f"You are {t['name']}, a warm, patient {ln} teacher on a one-on-one voice call with "
         f"an adult beginner whose first language is English. You speak in English and teach "
         f"{ln} in romanized form. You lead the whole class.\n\n"
-        f"Today's class: '{lesson['title']}' (unit: {unit_name}). Goal: {lesson['objective']}\n"
-        f"{memory}\n"
+        f"Today's class is lesson {lesson_number} of {len(ordered)}: '{lesson['title']}' "
+        f"(unit: {unit_name}). Goal: {lesson['objective']}\n\n"
         f"VOCABULARY. Teach exactly these items, one at a time, in this order: {teach}.\n"
         f"Use ONLY these vetted romanized {ln} forms, exactly as written. Do not invent or "
         f"substitute alternative words or spellings:\n{lexicon}\n"
@@ -175,6 +111,13 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
         f"word.\n\n"
         f"Grammar point to land: {lesson['grammar']} Say it in one plain sentence at the "
         f"right moment, then show it through examples. Never lecture.\n\n"
+        f"STUDENT QUESTIONS. The student may interrupt at any time with a question about "
+        f"{ln}, this chapter, pronunciation, grammar, or how a phrase is used. Answer the "
+        f"question directly in brief plain English, give one romanized {ln} example, and "
+        f"have them say or use the answer once. Then return naturally to the exact point "
+        f"where the lesson paused. Never punish a question by skipping the rest of class. "
+        f"If the question belongs to a later chapter, still give a useful beginner answer, "
+        f"name the later topic in one phrase, and resume today's lesson.\n\n"
         f"HOW TO RUN THE CLASS, in order:\n"
         f"1. For each vocabulary item: give the English meaning, say the {ln} form clearly, "
         f"and ask the student to say it back. Wait for them. React. Only then move to the "
@@ -184,28 +127,24 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
         f"3. When all items are done, teach the sentence pattern with ONE example, then have "
         f"the student build their own sentences, one at a time. English versions of the "
         f"target sentences: {examples}\n"
-        f"4. Two quick check questions: you say the English, they say the {ln}.\n"
-        f"5. Recap in two spoken sentences what they can now say, then a warm goodbye.\n"
+        f"4. Final speaking check: give three short prompts, one at a time. You say the "
+        f"English meaning or situation and the student answers in {ln}. Do not reveal each "
+        f"answer before they try.\n"
+        f"5. Judge the result honestly. If at least two answers communicate the right "
+        f"meaning, give one specific strength, one next practice point, then say the exact "
+        f"words 'Lesson complete.' If fewer than two communicate the right meaning, say "
+        f"which one point needs work, reteach that point, and run another short check. Never "
+        f"say 'Lesson complete' until they pass.\n"
+        f"6. After a pass, recap in two spoken sentences what they can now say, then a warm "
+        f"goodbye.\n"
         f"Practice ideas you can use in steps 3 and 4: {practice}.\n\n" + rules
     )
 
-    if recent:
-        recall = _first_recall_item(recent, lang)
-        recall_bit = (
-            f"then ask them to say, from memory, how to say '{recall[0]}' in {ln} "
-            f"(the answer is {recall[1]}), " if recall else ""
-        )
-        opening = (
-            f"Welcome the student back warmly by one short sentence, {recall_bit}"
-            f"and tell them today's class is '{lesson['title']}'. One short turn only. "
-            f"After their attempt, give quick feedback and start the first item."
-        )
-    else:
-        opening = (
-            f"Greet the student warmly in one sentence and name today's lesson, "
-            f"'{lesson['title']}'. Then immediately teach the first item: its English "
-            f"meaning, the romanized {ln} form, and ask them to say it back. One short turn."
-        )
+    opening = (
+        f"Greet the student warmly in one sentence and name today's lesson, "
+        f"'{lesson['title']}'. Then immediately teach the first item: its English "
+        f"meaning, the romanized {ln} form, and ask them to say it back. One short turn."
+    )
 
     return {
         "id": f"teacher-{lang}-{lesson_id}",
@@ -229,11 +168,9 @@ def _tutor_fields(lang: str) -> dict | None:
     t = TEACHER[lang]
     rules = _CORE_RULES.format(ln=ln)
 
-    # Ground the tutor in what the student has actually studied. Always include
-    # the first two lessons so a brand-new student still gets greetings and names.
-    visited, recent, _ = _history(lang)
-    base_ids = {"l1", "l2"} | {l["id"] for l in visited}
-    known = [l for l in _ordered_lessons() if l["id"] in base_ids]
+    # Ground open tutoring in the complete course so any chapter question can
+    # be answered with the same vetted forms as a structured lesson.
+    known = _ordered_lessons()
     titles = ", ".join(f"'{l['title']}'" for l in known)
     vocab = "\n".join(
         "- " + line
@@ -242,8 +179,9 @@ def _tutor_fields(lang: str) -> dict | None:
         if not line.startswith("note:")
     )
     coverage = (
-        f"The student has studied these lessons so far: {titles}. Keep the conversation "
-        f"inside that ground so they feel capable. Vetted romanized forms you should prefer:\n"
+        f"The beginner course contains these chapters: {titles}. Start with first-lesson "
+        f"language unless the student asks about a later chapter. Vetted romanized forms "
+        f"you should prefer:\n"
         f"{vocab}\n"
         f"If the conversation truly needs a word outside this list, give it in its most "
         f"common everyday spoken form with a quick English meaning, at most one new word "
@@ -251,15 +189,23 @@ def _tutor_fields(lang: str) -> dict | None:
     )
 
     system = (
-        f"You are {t['name']}, a warm {ln} conversation tutor on a voice call with an adult "
-        f"beginner whose first language is English. This is a relaxed chat, not a lesson, "
-        f"but YOU LEAD: you start, you ask the questions, you keep it alive, you never wait "
-        f"to be prompted.\n\n"
+        f"You are {t['name']}, a warm {ln} teacher holding open tutoring hours on a voice "
+        f"call with an adult complete beginner whose first language is English. The student "
+        f"may ask any question about spoken {ln}, pronunciation, vocabulary, grammar, or a "
+        f"course chapter. Answer directly in brief plain English, always demonstrate with one "
+        f"romanized {ln} example, then have them say or use it once. You still LEAD: if they "
+        f"do not bring a question, start a useful review from their course, ask the questions, "
+        f"and keep the session moving.\n\n"
         f"How to run it:\n"
+        f"- A meaning question has a fixed response order: first say '[phrase] means [plain "
+        f"English meaning].' Only after answering may you give an example and ask the student "
+        f"to say it. Never mistake 'what does this mean?' for a pronunciation attempt.\n"
+        f"- For 'why' or 'how' questions, give the reason or method first, then demonstrate "
+        f"and practise. The answer must come before the drill.\n"
         f"- Speak in simple {ln}, one short romanized sentence at a time, and add a few "
         f"words of English support when something is likely new.\n"
-        f"- Ask one easy concrete question per turn: their name, how they are, what they "
-        f"ate, their family, what they like. Real conversation, real reactions.\n"
+        f"- Ask one easy concrete question per turn, based on the current question or course "
+        f"topic. Judge the answer for meaning first, then pronunciation and form.\n"
         f"- Correct on the fly, but fix at most ONE thing per turn: the mistake that most "
         f"affects meaning. Give the better form romanized, have them say it once, then "
         f"respond to WHAT THEY MEANT so it still feels like a chat, not a test.\n"
@@ -271,8 +217,10 @@ def _tutor_fields(lang: str) -> dict | None:
         f"{coverage}\n\n" + rules
     )
     opening = (
-        f"Greet the student warmly in {ln} (romanized, with a quick English gloss), then ask "
-        f"them ONE easy question in {ln} to get them talking. One short turn."
+        f"Greet the student warmly in romanized {ln}, then say they can ask about a word, "
+        f"pronunciation, grammar, or any course chapter. Ask what they want to understand. "
+        f"Do not ask a competing language exercise in this opening. If their next turn is "
+        f"not a question, choose a first-lesson review and lead it. One short turn."
     )
     return {
         "id": f"tutor-{lang}",
