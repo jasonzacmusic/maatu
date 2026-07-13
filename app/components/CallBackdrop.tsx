@@ -61,7 +61,7 @@ export default function CallBackdrop({ scenario }: { scenario: string }) {
           {/* STD ISD PCO phone booth */}
           <rect x="120" y="560" width="150" height="160" rx="4" fill="#131828" stroke="#2B3552" strokeWidth="2" />
           <rect x="132" y="574" width="126" height="40" rx="2" fill="#E8E3D5" opacity="0.9" />
-          <text x="195" y="600" textAnchor="middle" fill="#E8503A" style={{ fontFamily: "'Anek Latin',sans-serif", fontSize: 16, fontWeight: 800, letterSpacing: 2 }}>
+          <text x="195" y="600" textAnchor="middle" fill="#E8503A" style={{ fontFamily: "var(--font-hanken), sans-serif", fontSize: 16, fontWeight: 800, letterSpacing: 2 }}>
             STD ISD PCO
           </text>
           <rect x="150" y="628" width="90" height="80" rx="3" fill="#FFD9A0" opacity="0.12" />

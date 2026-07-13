@@ -4,13 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
 import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
-import { UNITS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME } from "@/lib/curriculum";
+import { ALL_LESSONS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
+import { ClassroomScreen } from "./ClassroomScreen";
+import { CourseProgressCard } from "./CourseProgressCard";
+import { LessonPreviewScreen } from "./LessonPreviewScreen";
+import { LessonResultScreen } from "./LessonResultScreen";
 import {
   C,
   BODY,
   DISPLAY,
   MONO,
-  KN,
   LINE,
   LINE_SOFT,
   SLOW,
@@ -19,7 +22,6 @@ import {
   SCENARIO_BRIEF,
   DIFFICULTY,
   HOST,
-  LANG_GLYPH,
   type Lang,
   type ShopId,
 } from "@/lib/maatu-design";
@@ -38,9 +40,12 @@ type Screen =
   | "debrief"
   | "progress"
   | "school"
+  | "lessonPreview"
+  | "lessonResult"
   | "settings";
 type Tab = "hub" | "school" | "progress" | "settings";
 type SessionEnd = { room: string | null; transcript: Line[]; durationSec: number };
+type LessonResult = { lesson: Lesson; passed: boolean; transcript: Line[] };
 type StreetStats = {
   totalSeconds: number;
   thisWeekSeconds: number;
@@ -184,13 +189,13 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
             className="inline-flex items-center justify-center rounded-[17px]"
             style={{ width: 56, height: 56, background: "linear-gradient(150deg,#FFB35C,#E8503A)", boxShadow: "0 10px 34px rgba(255,179,92,0.34)" }}
           >
-            <span style={{ fontFamily: KN, fontWeight: 600, fontSize: 26, color: C.ink }}>ಮಾ</span>
+            <span style={{ fontFamily: DISPLAY, fontWeight: 600, fontSize: 28, color: C.ink }}>M</span>
           </div>
           <h1 className="mx-auto mt-6" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 31, lineHeight: 1.12, color: C.milk, maxWidth: 340 }}>
-            Speak an Indian language, out loud, tonight.
+            Your private speaking teacher, from the very first word.
           </h1>
           <p className="mx-auto mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 320 }}>
-            No flashcards. You phone a real person in a real scene and just talk.
+            Learn Kannada, Hindi, or Tamil through guided voice lessons. Then practise in real conversations.
           </p>
         </div>
 
@@ -213,7 +218,12 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
                     outlineColor: C.sodium,
                   }}
                 >
-                  <span style={{ fontFamily: KN, fontSize: 26, color: on ? C.sodium : C.muted }}>{LANG_GLYPH[k]}</span>
+                  <span
+                    className="flex h-10 w-10 items-center justify-center rounded-full text-[12px] font-bold"
+                    style={{ background: on ? "rgba(255,179,92,0.14)" : C.elevated, color: on ? C.sodium : C.muted }}
+                  >
+                    {k.toUpperCase()}
+                  </span>
                   <span className="flex-1">
                     <span className="block text-[16px] font-semibold" style={{ color: C.milk }}>
                       {LANG_NAME[k]}
@@ -235,14 +245,14 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
 
         <div className="relative mt-auto pt-8">
           <div className="mb-3.5 flex items-center justify-center gap-2 text-center text-[12.5px]" style={{ color: C.muted }}>
-            <span aria-hidden="true">🎙</span> We will ask for your mic next. Nothing is recorded without you.
+            <span aria-hidden="true">🎙</span> Your first lesson starts with hello. You can ask questions at any time.
           </div>
           <button
             onClick={onEnter}
             className={"w-full rounded-[16px] text-[16px] font-bold focus-visible:outline focus-visible:outline-2" + (rm ? "" : " transition-transform active:scale-[0.99]")}
             style={{ padding: 16, background: C.sodium, color: C.ink, boxShadow: "0 10px 30px rgba(255,179,92,0.28)", outlineColor: C.milk }}
           >
-            Enter the bazaar
+            Meet your teacher
           </button>
         </div>
       </div>
@@ -307,6 +317,7 @@ function Hub({
   lang,
   stats,
   nextLesson,
+  completedLessons,
   onScenario,
   onSchool,
   rm,
@@ -314,6 +325,7 @@ function Hub({
   lang: Lang;
   stats: StreetStats;
   nextLesson: { index: number; title: string };
+  completedLessons: number;
   onScenario: (shop: ShopId) => void;
   onSchool: () => void;
   rm: boolean;
@@ -322,26 +334,60 @@ function Hub({
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <Lamp rm={rm} />
-      <div className="relative mx-auto max-w-[760px] px-6 pb-28 pt-16 lg:pt-14">
+      <div className="relative mx-auto max-w-[760px] px-6 pb-28 pt-14 lg:pt-14">
         <div className="flex items-start justify-between">
           <div>
-            <div className="text-[13px]" style={{ color: C.muted }}>
-              Good evening
+            <div className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.3 }}>
+              LEARN, THEN PRACTISE
             </div>
-            <div style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>Welcome</div>
+            <div className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>Good evening</div>
             <div className="mt-2 text-[13.5px]" style={{ color: C.muted, maxWidth: 380 }}>
-              {host.place.split(",")[0]} is awake, the lamps are lit. Who will you call tonight?
+              Build your {LANG_NAME[lang]} with {host.name}, then use it with people around {host.place.split(",")[0]}.
             </div>
           </div>
           <StreakChip streak={stats.nights} />
         </div>
 
-        <div className="mb-3 mt-8 flex items-center justify-between">
-          <span className="text-[16px] font-bold" style={{ color: C.milk }}>
-            Scenarios
+        <button
+          onClick={onSchool}
+          className="mt-7 w-full rounded-[18px] p-5 text-left focus-visible:outline focus-visible:outline-2"
+          style={{ background: "linear-gradient(135deg,rgba(255,179,92,0.18),rgba(232,80,58,0.07))", border: "1px solid rgba(255,179,92,0.36)", outlineColor: C.sodium }}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1 }}>
+              {completedLessons === 0 ? "YOUR FIRST STEP" : "CONTINUE LEARNING"}
+            </span>
+            <span className="rounded-full px-2.5 py-1 text-[11px] font-semibold" style={{ background: "rgba(255,179,92,0.12)", color: C.sodium }}>
+              {completedLessons}/15 complete
+            </span>
+          </div>
+          <div className="mt-3 flex items-center gap-4">
+            <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full text-[18px] font-bold" style={{ background: C.sodium, color: C.ink }}>
+              {nextLesson.index}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[18px] font-bold" style={{ color: C.milk }}>
+                {nextLesson.title}
+              </span>
+              <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
+                {host.name} teaches you by voice, answers questions, and checks your speaking.
+              </span>
+            </span>
+            <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>
+          </div>
+        </button>
+
+        <div className="mb-3 mt-7 flex items-end justify-between">
+          <span>
+            <span className="block text-[16px] font-bold" style={{ color: C.milk }}>
+              Practise in real situations
+            </span>
+            <span className="mt-0.5 block text-[12px]" style={{ color: C.muted }}>
+              Characters stay in role. Use what you know.
+            </span>
           </span>
-          <span className="text-[12.5px] font-semibold" style={{ color: C.sodium }}>
-            Six to call
+          <span className="text-[12px] font-semibold" style={{ color: C.sodium }}>
+            6 live
           </span>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -349,31 +395,6 @@ function Hub({
             <ScenarioCard key={shop} shop={shop} lang={lang} onOpen={onScenario} />
           ))}
         </div>
-
-        <button
-          onClick={onSchool}
-          className="mt-4 flex w-full items-center gap-4 rounded-[16px] p-4 text-left focus-visible:outline focus-visible:outline-2"
-          style={{ background: "linear-gradient(120deg,#1E2438,#161B2B)", border: `1px solid ${LINE}`, outlineColor: C.sodium }}
-        >
-          <span
-            className="flex items-center justify-center rounded-[14px] text-[20px]"
-            style={{ width: 46, height: 46, background: "radial-gradient(circle at 30% 30%, rgba(191,239,219,0.40), rgba(191,239,219,0.10))" }}
-            aria-hidden="true"
-          >
-            🎓
-          </span>
-          <span className="flex-1">
-            <span className="block text-[15px] font-semibold" style={{ color: C.milk }}>
-              Classroom with {host.name}
-            </span>
-            <span className="block text-[12.5px]" style={{ color: C.muted }}>
-              Lesson {nextLesson.index} of 15 · {nextLesson.title}
-            </span>
-          </span>
-          <span className="text-[20px]" style={{ color: C.sodium }} aria-hidden="true">
-            ›
-          </span>
-        </button>
       </div>
     </div>
   );
@@ -447,7 +468,7 @@ function CallScreen({
 }) {
   const call = useMaatuCall(meta.id);
   const [caps, setCaps] = useState(captionsDefault);
-  const [slow, setSlow] = useState(false);
+  const [slowPending, setSlowPending] = useState(false);
   const [sec, setSec] = useState(0);
   const slowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -462,10 +483,24 @@ function CallScreen({
     return () => clearInterval(t);
   }, [call.phase]);
 
-  const pressSlow = () => {
-    setSlow(true);
+  useEffect(() => {
+    if (!call.slowerPace) return;
+    setSlowPending(false);
     if (slowTimer.current) clearTimeout(slowTimer.current);
-    slowTimer.current = setTimeout(() => setSlow(false), 6000);
+  }, [call.slowerPace]);
+
+  useEffect(() => {
+    return () => {
+      if (slowTimer.current) clearTimeout(slowTimer.current);
+    };
+  }, []);
+
+  const pressSlow = async () => {
+    if (call.slowerPace || slowPending || call.phase !== "live") return;
+    const sent = await call.requestSlowDown();
+    if (!sent) return;
+    setSlowPending(true);
+    slowTimer.current = setTimeout(() => setSlowPending(false), 6000);
   };
 
   const endCall = async () => {
@@ -489,6 +524,8 @@ function CallScreen({
         ? call.error ?? "Could not connect"
         : call.phase === "ended"
           ? "Call over"
+          : call.muted
+            ? "Microphone is off. Tap the mic to answer."
           : active === "learner"
             ? "Your turn, just talk"
             : `${meta.name} is listening`;
@@ -584,11 +621,13 @@ function CallScreen({
         <div className="flex justify-center pb-1">
           <button
             onClick={pressSlow}
-            aria-pressed={slow}
-            className="inline-flex items-center gap-2 rounded-full text-[13px] font-semibold focus-visible:outline focus-visible:outline-2"
-            style={{ padding: "9px 16px", color: slow ? C.tube : C.muted, background: slow ? "rgba(191,239,219,0.14)" : "rgba(242,237,226,0.06)", border: `1px solid ${slow ? "rgba(191,239,219,0.4)" : LINE}`, outlineColor: C.tube }}
+            disabled={call.phase !== "live" || call.slowerPace || slowPending}
+            aria-label={call.slowerPace ? "Slower speaking pace is on" : slowPending ? "Asking to slow down" : "Ask to slow down"}
+            aria-pressed={call.slowerPace}
+            className="inline-flex items-center gap-2 rounded-full text-[13px] font-semibold focus-visible:outline focus-visible:outline-2 disabled:cursor-default"
+            style={{ padding: "9px 16px", color: call.slowerPace ? C.tube : C.muted, background: call.slowerPace ? "rgba(191,239,219,0.14)" : "rgba(242,237,226,0.06)", border: `1px solid ${call.slowerPace ? "rgba(191,239,219,0.4)" : LINE}`, outlineColor: C.tube }}
           >
-            🐢 {SLOW[lang] || SLOW.kn}
+            🐢 {call.slowerPace ? "Slower pace is on" : slowPending ? "Asking..." : SLOW[lang] || SLOW.kn}
           </button>
         </div>
 
@@ -843,24 +882,31 @@ function StatTile({ value, label }: { value: number | string; label: string }) {
   );
 }
 
-function ProgressScreen({ stats, loading }: { stats: StreetStats; loading: boolean }) {
+function ProgressScreen({ stats, loading, lang, onSchool }: { stats: StreetStats; loading: boolean; lang: Lang; onSchool: () => void }) {
   const hasSessions = stats.sessionCount > 0;
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <div className="relative mx-auto max-w-[760px] px-6 pb-28 pt-16 lg:pt-14">
         <h1 style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 30, lineHeight: 1.05, color: C.milk }}>Your progress</h1>
         <div className="mt-1 text-[13px]" style={{ color: C.muted }}>
-          Your real conversation history, nothing invented.
+          Your completed lessons and real speaking history.
+        </div>
+
+        <CourseProgressCard activeLanguage={lang} onOpenCourse={onSchool} />
+
+        <div className="mb-3 mt-7">
+          <div className="text-[16px] font-bold" style={{ color: C.milk }}>Conversation practice</div>
+          <div className="mt-0.5 text-[12px]" style={{ color: C.muted }}>Only completed calls are counted here.</div>
         </div>
 
         {loading ? (
-          <div className="mt-6 grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             {[0, 1, 2, 3].map((i) => (
               <div key={i} className="mt-skeleton rounded-[16px]" style={{ height: 96 }} />
             ))}
           </div>
         ) : !hasSessions ? (
-          <div className="mt-6 rounded-[16px] p-6 text-center" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
+          <div className="rounded-[16px] p-6 text-center" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
             <div className="mx-auto rounded-[13px]" style={{ width: 44, height: 44, border: "1px dashed rgba(255,179,92,0.4)" }} />
             <div className="mt-3.5 text-[15px] font-semibold" style={{ color: C.milk }}>
               No calls yet
@@ -871,7 +917,7 @@ function ProgressScreen({ stats, loading }: { stats: StreetStats; loading: boole
           </div>
         ) : (
           <>
-            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <StatTile value={minutes(stats.totalSeconds)} label="minutes spoken" />
               <StatTile value={stats.sessionCount} label={stats.sessionCount === 1 ? "conversation" : "conversations"} />
               <StatTile value={stats.nights} label={stats.nights === 1 ? "night spoken" : "nights spoken"} />
@@ -896,91 +942,6 @@ function ProgressScreen({ stats, loading }: { stats: StreetStats; loading: boole
             </div>
           </>
         )}
-      </div>
-    </div>
-  );
-}
-
-// ....................................................... CLASSROOM
-function SchoolScreen({ lang, onTutor, onLesson }: { lang: Lang; onTutor: () => void; onLesson: (lessonId: string) => void }) {
-  const done = getDone(lang);
-  const host = HOST[lang];
-  let n = 0;
-  let firstOpen = true;
-  return (
-    <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
-      <div className="relative mx-auto max-w-[760px] px-6 pb-28 pt-16 lg:pt-14">
-        <h1 style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 30, lineHeight: 1.05, color: C.milk }}>
-          Classroom with {host.name}
-        </h1>
-        <div className="mt-1 text-[13px]" style={{ color: C.muted }}>
-          A 15-lesson beginner course. {host.name} leads, answers questions, and checks your speaking.
-        </div>
-
-        <button
-          onClick={onTutor}
-          className="mt-5 flex w-full items-center gap-3.5 rounded-[16px] p-5 text-left focus-visible:outline focus-visible:outline-2"
-          style={{ background: "linear-gradient(135deg, rgba(191,239,219,0.16), rgba(255,179,92,0.10))", border: "1px solid rgba(191,239,219,0.30)", outlineColor: C.tube }}
-        >
-          <span className="text-[26px]" aria-hidden="true">
-            💬
-          </span>
-          <span>
-            <span className="block text-[16px] font-bold" style={{ color: C.milk }}>
-              Ask your teacher
-            </span>
-            <span className="block text-[12.5px]" style={{ color: "rgba(191,239,219,0.85)" }}>
-              Ask any {LANG_NAME[lang]} question, or let {host.name} lead a review.
-            </span>
-          </span>
-        </button>
-
-        <div className="mt-6 flex flex-col gap-5">
-          {UNITS.map((unit) => (
-            <div key={unit.unit}>
-              <div className="mb-2 text-[12px] font-bold" style={{ letterSpacing: 1.5, color: C.sodium }}>
-                {unit.unit.toUpperCase()}
-              </div>
-              <div className="flex flex-col gap-2">
-                {unit.lessons.map((lesson) => {
-                  n += 1;
-                  const isDone = done.has(lesson.id);
-                  const isNext = !isDone && firstOpen;
-                  if (isNext) firstOpen = false;
-                  const border = isDone ? "1px solid rgba(191,239,219,0.20)" : isNext ? "1px solid rgba(255,179,92,0.28)" : `1px solid ${LINE_SOFT}`;
-                  return (
-                    <button
-                      key={lesson.id}
-                      onClick={() => onLesson(lesson.id)}
-                      className="flex items-center gap-3.5 rounded-[14px] p-3.5 text-left focus-visible:outline focus-visible:outline-2"
-                      style={{ background: C.base, border, outlineColor: C.tube }}
-                    >
-                      <span
-                        className="flex flex-none items-center justify-center rounded-full text-[13px] font-bold"
-                        style={{
-                          width: 34,
-                          height: 34,
-                          background: isDone ? "rgba(191,239,219,0.14)" : isNext ? "rgba(255,179,92,0.16)" : C.elevated,
-                          color: isDone ? C.tube : isNext ? C.sodium : C.faint,
-                        }}
-                      >
-                        {isDone ? "✓" : n}
-                      </span>
-                      <span className="flex-1">
-                        <span className="block text-[15px] font-semibold" style={{ color: C.milk }}>
-                          {lesson.title}
-                        </span>
-                        <span className="block text-[12px]" style={{ color: C.muted }}>
-                          Lesson {n} · {isDone ? "done" : isNext ? "start here" : lesson.objective}
-                        </span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
@@ -1085,10 +1046,7 @@ function SettingsScreen({
           )}
 
           <div className="mt-3 text-center text-[12px]" style={{ color: C.faint }}>
-            <span style={{ fontFamily: KN, fontSize: 16, color: C.muted }}>ಮಾತು</span>
-            <span className="ml-2" style={{ fontFamily: MONO }}>
-              Maatu · spoken practice
-            </span>
+            <span style={{ fontFamily: MONO }}>Maatu · private voice learning</span>
           </div>
         </div>
       </div>
@@ -1098,8 +1056,8 @@ function SettingsScreen({
 
 // ....................................................... NAV SHELL
 const TABS: { tab: Tab; label: string }[] = [
-  { tab: "hub", label: "Bazaar" },
-  { tab: "school", label: "Classroom" },
+  { tab: "hub", label: "Practice" },
+  { tab: "school", label: "Learn" },
   { tab: "progress", label: "Progress" },
   { tab: "settings", label: "Settings" },
 ];
@@ -1110,7 +1068,7 @@ function SideRail({ active, go, lang }: { active: Tab; go: (t: Tab) => void; lan
       <div className="flex w-full flex-col px-5 py-7">
         <div className="mb-9 flex items-center gap-3">
           <div className="flex items-center justify-center rounded-[12px]" style={{ width: 38, height: 38, background: "linear-gradient(150deg,#FFB35C,#E8503A)" }}>
-            <span style={{ fontFamily: KN, fontWeight: 600, fontSize: 18, color: C.ink }}>ಮಾ</span>
+            <span style={{ fontFamily: DISPLAY, fontWeight: 600, fontSize: 20, color: C.ink }}>M</span>
           </div>
           <span style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 20, color: C.milk }}>Maatu</span>
         </div>
@@ -1172,7 +1130,9 @@ export default function MaatuApp() {
   const [lang, setLangState] = useState<Lang>("kn");
   const [activePersona, setActivePersona] = useState<string>("kn-auto");
   const [pendingShop, setPendingShop] = useState<ShopId | null>(null);
+  const [pendingLessonId, setPendingLessonId] = useState("l1");
   const [lastSession, setLastSession] = useState<SessionEnd | null>(null);
+  const [lastLessonResult, setLastLessonResult] = useState<LessonResult | null>(null);
   const [rm, setRm] = useState(false);
   const [caps, setCaps] = useState(true);
   const [userId, setUserId] = useState("");
@@ -1183,13 +1143,14 @@ export default function MaatuApp() {
 
   // First run: no stored language means show onboarding.
   useEffect(() => {
-    if (typeof window.matchMedia === "function") {
-      setRm(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    }
+    const storedMotion = window.localStorage.getItem("maatu-reduce-motion");
+    const prefersReduced = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setRm(storedMotion === null ? prefersReduced : storedMotion === "true");
+    setCaps(window.localStorage.getItem("maatu-captions") !== "false");
     const storedLang = window.localStorage.getItem("maatu-lang") as Lang | null;
     if (storedLang && LANGS.includes(storedLang)) {
       setLangState(storedLang);
-      setScreen("hub");
+      setScreen("school");
     } else {
       setScreen("onboarding");
     }
@@ -1216,6 +1177,16 @@ export default function MaatuApp() {
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
     window.localStorage.setItem("maatu-lang", l);
+  }, []);
+
+  const setCaptions = useCallback((value: boolean) => {
+    setCaps(value);
+    window.localStorage.setItem("maatu-captions", String(value));
+  }, []);
+
+  const setReducedMotion = useCallback((value: boolean) => {
+    setRm(value);
+    window.localStorage.setItem("maatu-reduce-motion", String(value));
   }, []);
 
   const loadStats = useCallback(async () => {
@@ -1251,7 +1222,13 @@ export default function MaatuApp() {
     [lang],
   );
 
+  const openLesson = useCallback((lessonId: string) => {
+    setPendingLessonId(lessonId);
+    setScreen("lessonPreview");
+  }, []);
+
   const startLesson = useCallback((lessonId: string) => {
+    setPendingLessonId(lessonId);
     setActivePersona(`teacher-${lang}-${lessonId}`);
     setScreen("call");
   }, [lang]);
@@ -1272,8 +1249,11 @@ export default function MaatuApp() {
     (payload: SessionEnd) => {
       if (activePersona.startsWith("teacher-")) {
         const lessonId = activePersona.split("-").slice(2).join("-");
-        if (lessonWasMastered(payload.transcript)) markDone(lang, lessonId);
-        setScreen("school");
+        const lesson = ALL_LESSONS.find((item) => item.id === lessonId);
+        const passed = lessonWasMastered(payload.transcript);
+        if (passed) markDone(lang, lessonId);
+        if (lesson) setLastLessonResult({ lesson, passed, transcript: payload.transcript });
+        setScreen(lesson ? "lessonResult" : "school");
       } else if (activePersona.startsWith("tutor-")) {
         setScreen("school");
       } else {
@@ -1284,23 +1264,15 @@ export default function MaatuApp() {
     [activePersona, lang],
   );
 
-  // Next lesson label for the hub classroom card.
+  // Next lesson label for the course-first home card.
   const done = ready ? getDone(lang) : new Set<string>();
-  let idx = 0;
-  let nextLesson = { index: 1, title: "Greetings" };
-  for (const u of UNITS) {
-    for (const l of u.lessons) {
-      idx += 1;
-      if (!done.has(l.id)) {
-        nextLesson = { index: idx, title: l.title };
-        idx = 999;
-        break;
-      }
-    }
-    if (idx === 999) break;
-  }
+  const completedLessonCount = ALL_LESSONS.filter((lesson) => done.has(lesson.id)).length;
+  const nextIndex = ALL_LESSONS.findIndex((lesson) => !done.has(lesson.id));
+  const nextLessonItem = nextIndex >= 0 ? ALL_LESSONS[nextIndex] : ALL_LESSONS[0];
+  const nextLesson = { index: nextIndex >= 0 ? nextIndex + 1 : 1, title: nextLessonItem.title };
+  const pendingLesson = ALL_LESSONS.find((lesson) => lesson.id === pendingLessonId) ?? ALL_LESSONS[0];
 
-  const immersive = screen === "onboarding" || screen === "scenario" || screen === "call" || screen === "debrief";
+  const immersive = screen === "onboarding" || screen === "scenario" || screen === "call" || screen === "debrief" || screen === "lessonPreview" || screen === "lessonResult";
   const activeTab: Tab = (["hub", "school", "progress", "settings"].includes(screen) ? screen : "hub") as Tab;
   const goTab = (t: Tab) => setScreen(t);
 
@@ -1316,21 +1288,33 @@ export default function MaatuApp() {
       <main className="relative flex-1 overflow-hidden">
         <div key={screen} className="absolute inset-0" style={{ animation: rm ? undefined : "mtFade 420ms ease both" }}>
           {!ready ? null : screen === "onboarding" ? (
-            <Onboarding lang={lang} setLang={setLang} onEnter={() => setScreen("hub")} rm={rm} />
+            <Onboarding lang={lang} setLang={setLang} onEnter={() => setScreen("school")} rm={rm} />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} onScenario={openScenario} onSchool={() => setScreen("school")} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} onScenario={openScenario} onSchool={() => setScreen("school")} rm={rm} />
+          ) : screen === "lessonPreview" ? (
+            <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
             <ScenarioDetail meta={meta} shop={pendingShop} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
           ) : screen === "call" ? (
-            <CallScreen meta={meta} lang={lang} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(isClassroom ? "school" : "hub")} rm={rm} />
+            <CallScreen meta={meta} lang={lang} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : isClassroom ? "school" : "hub")} rm={rm} />
+          ) : screen === "lessonResult" && lastLessonResult ? (
+            <LessonResultScreen
+              lang={lang}
+              lesson={lastLessonResult.lesson}
+              passed={lastLessonResult.passed}
+              transcript={lastLessonResult.transcript}
+              onCourse={() => setScreen("school")}
+              onOpenLesson={openLesson}
+              onRetry={() => startLesson(lastLessonResult.lesson.id)}
+            />
           ) : screen === "debrief" ? (
             <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen("hub")} onAgain={() => setScreen("call")} />
           ) : screen === "progress" ? (
-            <ProgressScreen stats={stats} loading={statsLoading} />
+            <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (
-            <SchoolScreen lang={lang} onTutor={startTutor} onLesson={startLesson} />
+            <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} />
           ) : screen === "settings" ? (
-            <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaps} rm={rm} setRm={setRm} canInstall={canInstall} onInstall={doInstall} />
+            <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}
         </div>
 

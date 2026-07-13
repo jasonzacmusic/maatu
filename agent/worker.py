@@ -124,6 +124,50 @@ async def entrypoint(ctx: agents.JobContext):
         },
     )
 
+    async def _apply_slow_down():
+        slower_pace = max(0.72, persona.pace - 0.18)
+        tts_engine.update_options(pace=slower_pace)
+        logger.info(
+            "control=slow-down persona=%s pace=%.2f",
+            persona.id,
+            slower_pace,
+        )
+        try:
+            await ctx.room.local_participant.publish_data(
+                json.dumps({"action": "slow-down-applied", "pace": slower_pace}),
+                reliable=True,
+                topic="maatu.control",
+            )
+        except Exception:
+            logger.exception("slow-down acknowledgment failed persona=%s", persona.id)
+        try:
+            await session.interrupt(force=True)
+        except Exception:
+            pass
+        try:
+            reply = session.generate_reply(
+                instructions=(
+                    "The learner tapped the slow down control. Acknowledge it in one short "
+                    "romanized target-language phrase, then repeat your most recent teaching "
+                    "point, question, or scene prompt more slowly. Use very short chunks and "
+                    "full-stop pauses. Stay at the same point in the lesson or scene."
+                )
+            )
+            await reply.wait_for_playout()
+        except Exception:
+            logger.exception("slow-down reply failed persona=%s", persona.id)
+
+    @ctx.room.on("data_received")
+    def _on_data_received(packet):
+        if packet.topic != "maatu.control":
+            return
+        try:
+            payload = json.loads(packet.data.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            return
+        if payload.get("action") == "slow-down":
+            asyncio.create_task(_apply_slow_down())
+
     # Latency logging: mark the VAD speech end, then measure to first agent audio.
     turn = {
         "user_stopped_at": None,

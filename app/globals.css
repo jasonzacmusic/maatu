@@ -11,9 +11,9 @@
   --color-sodium: #ffb35c;
   --color-kumkum: #e8503a;
   --color-tube: #bfefdb;
-  --font-body: "Hanken Grotesk", system-ui, sans-serif;
-  --font-display: "Newsreader", serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-body: var(--font-hanken), system-ui, sans-serif;
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 html,
@@ -24,7 +24,7 @@ body {
 body {
   background: #0a0d16;
   color: #f2ede2;
-  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overscroll-behavior: none;

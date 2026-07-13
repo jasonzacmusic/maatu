@@ -2,6 +2,12 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-07-13: Next.js keeps its current 16.2.10 release, with only its nested PostCSS dependency overridden to 8.5.10. Reason: this clears the active moderate advisory without accepting npm's unsafe forced downgrade to Next 9, and the production build passes with the patched dependency.
+- 2026-07-13: Teachers are explicitly told that native characters in a learner turn come from speech recognition, never from learner typing. Reason: live Tamil and Hindi probes showed the teacher could otherwise scold a speaking student for the alphabet chosen by the STT service.
+- 2026-07-13: Maatu now opens on Learn and treats the 15-lesson foundation course as the primary beginner path, while the Bazaar is labeled Practice. Reason: complete beginners need a recommended next step before they are asked to improvise with a character.
+- 2026-07-13: Every lesson has a preview and an explicit passed or paused result, and course progress appears separately from real conversation history. Reason: starting or ending a call is not evidence of learning, while a visible speaking check makes the teacher's judgment understandable.
+- 2026-07-13: The slow-down control now sends a reliable LiveKit control packet, lowers Sarvam TTS pace for the rest of the call, repeats the current point, and confirms the change back to the browser. Reason: a beginner support control must change the actual lesson, not only its button color.
+- 2026-07-13: Course language switching lives inside Learn, captions and reduced-motion choices persist, native-script decoration is removed from the interface, and fonts are self-hosted by Next.js. Reason: these remove setup friction, honor the spoken-only rule, and keep the installed PWA visually stable offline.
 - 2026-07-12: Agent-local start-time visit memory is retired; assessed completion in the app is the course record, and open tutoring receives the full curriculum reference. Reason: a started or probed call is not proof that a lesson was learned.
 - 2026-07-12: Classroom lessons count as complete only when the teacher says the exact spoken assessment marker "Lesson complete" after the final check. Reason: hanging up is not evidence that a beginner mastered the chapter.
 - 2026-07-12: The open Classroom session is "Ask your teacher", not another Conversation Mode. Reason: scenario calls already cover conversation, while Classroom must answer language questions and proactively teach or review.

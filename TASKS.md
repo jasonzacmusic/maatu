@@ -10,6 +10,7 @@
 - [x] **M6: Deployed.** Live at https://maatu.vercel.app (public). Agent runs on this Mac as a LaunchAgent (com.nsm.maatu.agent) from ~/.maatu-agent, auto-starts on login, and answers live calls.
 - [x] **M7: Section 11 acceptance repaired 2026-07-12.** PWA service worker, three-language audio probes, Kannada Teach Mode, real Neon rows, spoken coach plus card payload, real per-device Street stats, Romanized captions, zero native-script UI copy, zero em dashes, and a production nightly agenda rewrite are verified.
 - [x] **M8: Teacher-led beginner courses repaired 2026-07-12.** Kannada, Hindi, and Tamil each have the same 15-lesson spoken course, proactive teacher openings, chapter questions, correction and retry, a three-prompt final check, honest pass-gated completion, and an open Ask Your Teacher session.
+- [x] **M9: Professional beginner learning experience completed 2026-07-13.** Course-first onboarding and return flow, in-class language switching, recommended lesson, previews, passed or paused results, three-language course progress, persistent accessibility settings, self-hosted fonts, native-script-free UI, and a real slow-down control.
 
 ## Live product
 
@@ -30,6 +31,7 @@ No credential setup is pending. A physical phone ear test remains useful as a de
 ## Coach's notes
 
 - Teacher-mode verification: all 45 language and lesson combinations validated against the curriculum. Live Lesson 1 rooms `teacher-kn-l1__e2e1783874470`, `teacher-hi-l1__e2e1783874507`, and `teacher-ta-l1__e2e1783874546` taught proactively; Tamil caught and corrected a pronunciation miss.
+- Beginner UX verification: mobile browser confirmed course-first onboarding, language switching, lesson preview, honest paused result, zero completion after early hangup, three-language progress, and zero console warnings. LiveKit control logs confirm the slow-down request changes the live Sarvam pace after agent acknowledgment.
 - Open tutoring verification: Tamil room `tutor-ta__e2e1783874827` answered the student's meaning question directly, gave a plain-English meaning, and requested one spoken use.
 - Nightly repair run: 2026-07-12T15:21:54.403Z. The protected production route read 5 reports across 3 languages, rewrote 7 rows, learned only from exact-persona sessions, and restored unrelated Kannada agendas to their defaults.
 - Cron authentication repaired: production `CRON_SECRET` is now non-empty and the authorized route returned 200 after the production redeploy.

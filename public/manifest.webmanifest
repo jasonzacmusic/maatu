@@ -2,7 +2,7 @@
   "name": "Maatu",
   "short_name": "Maatu",
   "id": "/",
-  "description": "Learn to speak Kannada, Hindi, and Tamil by talking to people.",
+  "description": "Private voice lessons and real speaking practice for beginner Kannada, Hindi, and Tamil.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -9,6 +9,11 @@ export type Lesson = {
   id: string;
   title: string;
   objective: string;
+  teach: string[];
+  grammar: string;
+  examples_en: string[];
+  practice: string[];
+  lexicon: Record<Lang, string[]>;
 };
 export type Unit = { unit: string; lessons: Lesson[] };
 
@@ -61,6 +66,29 @@ export function markDone(lang: Lang, lessonId: string) {
   const s = getDone(lang);
   s.add(lessonId);
   localStorage.setItem(doneKey(lang), JSON.stringify([...s]));
+}
+
+export function lessonNumber(lessonId: string) {
+  const index = ALL_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+  return index >= 0 ? index + 1 : 1;
+}
+
+export function lessonAfter(lessonId: string) {
+  const index = ALL_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+  return index >= 0 ? ALL_LESSONS[index + 1] ?? null : null;
+}
+
+export function courseStatus(lang: Lang) {
+  const done = getDone(lang);
+  const completed = ALL_LESSONS.filter((lesson) => done.has(lesson.id)).length;
+  const next = ALL_LESSONS.find((lesson) => !done.has(lesson.id)) ?? ALL_LESSONS[0];
+  return {
+    completed,
+    total: ALL_LESSONS.length,
+    next,
+    nextNumber: lessonNumber(next.id),
+    finished: completed >= ALL_LESSONS.length,
+  };
 }
 
 export function lessonWasMastered(transcript: { who: "character" | "learner"; text: string }[]) {

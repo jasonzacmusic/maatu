@@ -47,7 +47,7 @@ function Label({ x, y, text, anchor }: { x: number; y: number; text: string; anc
       y={y}
       textAnchor={anchor || "middle"}
       fill={N.mutedTx}
-      style={{ fontFamily: "'Anek Latin',sans-serif", fontSize: 8, fontWeight: 600, letterSpacing: 2 }}
+      style={{ fontFamily: "var(--font-hanken), sans-serif", fontSize: 8, fontWeight: 600, letterSpacing: 2 }}
     >
       {text}
     </text>
@@ -99,7 +99,7 @@ function SoonBoard({ x, y }: { x: number; y: number }) {
         y={y + 10}
         textAnchor="middle"
         fill="#6B5232"
-        style={{ fontFamily: "'Anek Latin',sans-serif", fontSize: 7.5, fontWeight: 700, letterSpacing: 1 }}
+        style={{ fontFamily: "var(--font-hanken), sans-serif", fontSize: 7.5, fontWeight: 700, letterSpacing: 1 }}
       >
         SOON
       </text>
@@ -339,7 +339,7 @@ export default function StreetScene({
           <Win x={48} y={22} lit={lit(2)} />
           <Win x={82} y={22} lit={false} />
           <rect x="10" y="52" width="104" height="27" rx="2" fill="#E8E3D5" filter="url(#glo2)" />
-          <text x="62" y="65" textAnchor="middle" fill={N.kumkum} style={{ fontFamily: "'Anek Latin',sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: 1.5 }}>
+          <text x="62" y="65" textAnchor="middle" fill={N.kumkum} style={{ fontFamily: "var(--font-hanken), sans-serif", fontSize: 11, fontWeight: 800, letterSpacing: 1.5 }}>
             STD ISD PCO
           </text>
           <text x="62" y="75.5" textAnchor="middle" fill="#3A4358" style={{ fontFamily: shopFont, fontSize: 8.5, fontWeight: 600 }}>

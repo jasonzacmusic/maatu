@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import { Hanken_Grotesk, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import RegisterServiceWorker from "./components/RegisterServiceWorker";
 
+const bodyFont = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
+const displayFont = Newsreader({ subsets: ["latin"], variable: "--font-newsreader", display: "swap" });
+const monoFont = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
+
 export const metadata: Metadata = {
   title: "Maatu",
-  description: "Learn to speak Kannada, Hindi, and Tamil by talking to people.",
+  description: "Private voice lessons and real speaking practice for beginner Kannada, Hindi, and Tamil.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
@@ -27,15 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Anek+Kannada:wght@400..800&family=Anek+Devanagari:wght@400..800&family=Anek+Tamil:wght@400..800&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} h-full antialiased`}>
       <body className="min-h-full">
         {children}
         <RegisterServiceWorker />

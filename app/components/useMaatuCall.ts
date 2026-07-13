@@ -39,10 +39,12 @@ export interface MaatuCall {
   transcript: Line[];
   roomName: string | null;
   needsAudioUnlock: boolean;
+  slowerPace: boolean;
   connect: () => Promise<void>;
   hangUp: () => Promise<void>;
   toggleMute: () => Promise<void>;
   unlockAudio: () => Promise<void>;
+  requestSlowDown: () => Promise<boolean>;
 }
 
 export function useMaatuCall(persona: string): MaatuCall {
@@ -54,6 +56,7 @@ export function useMaatuCall(persona: string): MaatuCall {
   const [transcript, setTranscript] = useState<Line[]>([]);
   const [roomName, setRoomName] = useState<string | null>(null);
   const [needsAudioUnlock, setNeedsAudioUnlock] = useState(false);
+  const [slowerPace, setSlowerPace] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
@@ -96,6 +99,7 @@ export function useMaatuCall(persona: string): MaatuCall {
     setError(null);
     setTranscript([]);
     setCaption(null);
+    setSlowerPace(false);
     try {
       const res = await fetch(`/api/token?persona=${encodeURIComponent(persona)}`);
       if (!res.ok) {
@@ -117,6 +121,15 @@ export function useMaatuCall(persona: string): MaatuCall {
       });
       room.on(RoomEvent.AudioPlaybackStatusChanged, () => {
         setNeedsAudioUnlock(!room.canPlaybackAudio);
+      });
+      room.on(RoomEvent.DataReceived, (payload, _participant, _kind, topic) => {
+        if (topic !== "maatu.control") return;
+        try {
+          const message = JSON.parse(new TextDecoder().decode(payload));
+          if (message.action === "slow-down-applied") setSlowerPace(true);
+        } catch {
+          // Ignore malformed or unrelated control packets.
+        }
       });
       room.on(RoomEvent.ActiveSpeakersChanged, (speakers) => {
         if (speakers.length === 0) setSpeaker(null);
@@ -202,6 +215,18 @@ export function useMaatuCall(persona: string): MaatuCall {
     setMuted(next);
   }, [muted]);
 
+  const requestSlowDown = useCallback(async () => {
+    const room = roomRef.current;
+    if (!room) return false;
+    try {
+      const payload = new TextEncoder().encode(JSON.stringify({ action: "slow-down" }));
+      await room.localParticipant.publishData(payload, { reliable: true, topic: "maatu.control" });
+      return true;
+    } catch {
+      return false;
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
       roomRef.current?.disconnect();
@@ -220,9 +245,11 @@ export function useMaatuCall(persona: string): MaatuCall {
     transcript,
     roomName,
     needsAudioUnlock,
+    slowerPace,
     connect,
     hangUp,
     toggleMute,
     unlockAudio,
+    requestSlowDown,
   };
 }

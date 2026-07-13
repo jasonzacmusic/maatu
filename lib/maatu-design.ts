@@ -22,10 +22,9 @@ export const C = {
 export const LINE = "rgba(242,237,226,0.10)";
 export const LINE_SOFT = "rgba(242,237,226,0.07)";
 
-export const DISPLAY = "'Newsreader', serif";
-export const BODY = "'Hanken Grotesk', system-ui, sans-serif";
-export const MONO = "'JetBrains Mono', monospace";
-export const KN = "'Anek Kannada', sans-serif";
+export const DISPLAY = "var(--font-newsreader), Georgia, serif";
+export const BODY = "var(--font-hanken), system-ui, sans-serif";
+export const MONO = "var(--font-jetbrains), ui-monospace, monospace";
 
 export type Lang = "kn" | "hi" | "ta";
 export type ShopId =
@@ -99,8 +98,8 @@ export const STREET_LANG: Record<
     sky2: "#1B2138",
     bulb: "#FFC97E",
     glow: "#FFB35C",
-    shopFont: "'Anek Latin',sans-serif",
-    busFont: "'Anek Latin',sans-serif",
+    shopFont: BODY,
+    busFont: BODY,
     s: {
       auto: "Aato",
       chai: "Chaha",
@@ -119,8 +118,8 @@ export const STREET_LANG: Record<
     sky2: "#261B33",
     bulb: "#FFB98A",
     glow: "#FF9E6B",
-    shopFont: "'Anek Latin',sans-serif",
-    busFont: "'Anek Latin',sans-serif",
+    shopFont: BODY,
+    busFont: BODY,
     s: {
       auto: "Auto",
       chai: "Chai",
@@ -139,8 +138,8 @@ export const STREET_LANG: Record<
     sky2: "#15292F",
     bulb: "#FFD189",
     glow: "#FFC46B",
-    shopFont: "'Anek Latin',sans-serif",
-    busFont: "'Anek Latin',sans-serif",
+    shopFont: BODY,
+    busFont: BODY,
     s: {
       auto: "Aatto",
       chai: "Tea",
@@ -205,6 +204,3 @@ export const HOST: Record<Lang, { name: string; place: string }> = {
   hi: { name: "Anjali", place: "Purani Sadak, Delhi" },
   ta: { name: "Kavya", place: "Mylapore, Chennai" },
 };
-
-// Native single-letter script mark per language, for the language picker.
-export const LANG_GLYPH: Record<Lang, string> = { kn: "ಕ", hi: "क", ta: "த" };
