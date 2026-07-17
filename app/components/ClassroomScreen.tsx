@@ -101,10 +101,10 @@ export function ClassroomScreen({ lang, onLanguageChange, onTutor, onLesson }: C
           </span>
           <span className="flex-1">
             <span className="block text-[15px] font-bold" style={{ color: C.milk }}>
-              Ask {host.name} anything
+              Just talk with {host.name}
             </span>
             <span className="mt-0.5 block text-[12.5px] leading-snug" style={{ color: "rgba(191,239,219,0.82)" }}>
-              Ask about a word, pronunciation, grammar, or any course chapter.
+              Chat about anything, ask her to teach any topic, or invent a scene to act out.
             </span>
           </span>
           <span className="text-[20px]" style={{ color: C.tube }} aria-hidden="true">

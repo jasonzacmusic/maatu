@@ -29,7 +29,7 @@ export function teacherMeta(lang: Lang, lessonId: string | null): PersonaMeta {
   const isTutor = lessonId === null;
   const lesson = lessonId ? ALL_LESSONS.find((l) => l.id === lessonId) : null;
   const label = isTutor
-    ? `${LANG_NAME[lang]} · ask your teacher`
+    ? `${LANG_NAME[lang]} · just talking`
     : `${LANG_NAME[lang]} class · ${lesson?.title ?? "lesson"}`;
   return {
     id: isTutor ? `tutor-${lang}` : `teacher-${lang}-${lessonId}`,
