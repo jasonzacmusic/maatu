@@ -8,10 +8,25 @@
           "id": "l1",
           "title": "Greetings and courtesies",
           "objective": "Greet someone, ask how they are, and say please, thank you, sorry, yes and no.",
-          "teach": ["a natural hello and a reply", "how are you", "I am fine", "thank you", "please", "sorry", "yes and no"],
+          "teach": [
+            "a natural hello and a reply",
+            "how are you",
+            "I am fine",
+            "thank you",
+            "please",
+            "sorry",
+            "yes and no"
+          ],
           "grammar": "These are fixed everyday phrases, no grammar yet. Focus on natural pronunciation.",
-          "examples_en": ["Hello, how are you?", "I am fine, thank you.", "Sorry, please say it again."],
-          "practice": ["Have the student greet you and ask how you are", "Have them thank you for something"],
+          "examples_en": [
+            "Hello, how are you?",
+            "I am fine, thank you.",
+            "Sorry, please say it again."
+          ],
+          "practice": [
+            "Have the student greet you and ask how you are",
+            "Have them thank you for something"
+          ],
           "lexicon": {
             "kn": [
               "hello = namaskara (the reply is also namaskara)",
@@ -20,6 +35,7 @@
               "thank you = dhanyavadagalu",
               "note: in daily life people very often just say the English word thanks; teach dhanyavadagalu but mention this",
               "please = dayavittu",
+              "note: dayavittu sounds formal in speech; people soften requests with swalpa plus a polite verb, or just say please in English",
               "sorry = kshamisi",
               "note: for sorry too, most people simply say the English word sorry",
               "yes = howdu",
@@ -32,6 +48,7 @@
               "I am fine = main theek hoon",
               "thank you = dhanyavaad (shukriya is also very common)",
               "please = kripya",
+              "note: kripya sounds like a railway announcement; in real speech people make the verb polite (dijiye, boliye) or just say please in English",
               "sorry = maaf kijiye",
               "yes = haan",
               "no = nahin"
@@ -53,16 +70,29 @@
           "id": "l2",
           "title": "About yourself",
           "objective": "Say your name, where you are from, and ask someone their name.",
-          "teach": ["my name is", "what is your name", "I am from", "nice to meet you"],
+          "teach": [
+            "my name is",
+            "what is your name",
+            "I am from",
+            "nice to meet you"
+          ],
           "grammar": "Introduce the idea of 'my' and 'your'. Keep it to fixed patterns for now.",
-          "examples_en": ["My name is Ravi.", "What is your name?", "I am from Bangalore."],
-          "practice": ["Have the student introduce themselves fully", "Have them ask you your name and where you are from"],
+          "examples_en": [
+            "My name is Ravi.",
+            "What is your name?",
+            "I am from Bangalore."
+          ],
+          "practice": [
+            "Have the student introduce themselves fully",
+            "Have them ask you your name and where you are from"
+          ],
           "lexicon": {
             "kn": [
               "my name is ___ = nanna hesaru ___",
               "what is your name = nimma hesaru enu",
               "I am from ___ (my home town is ___) = nanna ooru ___",
-              "nice to meet you = nimmannu bheti aagi santosha"
+              "nice to meet you = nimmannu bheti aagiddu santosha",
+              "note: in daily life most people simply say nice to meet you in English; teach the Kannada form but mention this"
             ],
             "hi": [
               "my name is ___ = mera naam ___ hai",
@@ -74,7 +104,8 @@
               "my name is ___ = en peru ___",
               "what is your name = unga peru enna",
               "I am from ___ (my home town is ___) = en ooru ___",
-              "nice to meet you = ungala paathadhula sandhosham"
+              "nice to meet you = ungala paathadhula romba sandhosham",
+              "note: in daily life most people simply say nice to meet you in English; teach the Tamil form but mention this"
             ]
           }
         },
@@ -82,10 +113,23 @@
           "id": "l3",
           "title": "Numbers 1 to 20",
           "objective": "Count from 1 to 20 and ask how many.",
-          "teach": ["numbers one to five", "numbers six to ten", "numbers eleven to fifteen", "numbers sixteen to twenty", "how many"],
+          "teach": [
+            "numbers one to five",
+            "numbers six to ten",
+            "numbers eleven to fifteen",
+            "numbers sixteen to twenty",
+            "how many"
+          ],
           "grammar": "Just vocabulary and counting. Drill the numbers in groups of five, and recall each group before starting the next.",
-          "examples_en": ["One, two, three...", "How many?", "I have three."],
-          "practice": ["Have the student count 1 to 10", "Ask how many fingers you are holding up and have them answer"],
+          "examples_en": [
+            "One, two, three...",
+            "How many?",
+            "I have three."
+          ],
+          "practice": [
+            "Have the student count 1 to 10",
+            "Ask how many fingers you are holding up and have them answer"
+          ],
           "lexicon": {
             "kn": [
               "one to five = ondu, eradu, mooru, naalku, aidu",
@@ -119,10 +163,23 @@
           "id": "l4",
           "title": "Fruits",
           "objective": "Name common fruits and say 'this is a ...'.",
-          "teach": ["banana", "mango", "apple", "orange", "grapes"],
+          "teach": [
+            "banana",
+            "mango",
+            "apple",
+            "orange",
+            "grapes"
+          ],
           "grammar": "Introduce 'this is' plus a noun. One simple pattern. In these languages there is no word for 'is' needed: 'this' plus the noun is a full sentence.",
-          "examples_en": ["This is a mango.", "That is a banana.", "I like grapes."],
-          "practice": ["Point to imaginary fruits and have the student name them", "Have them say 'this is a mango' with two other fruits"],
+          "examples_en": [
+            "This is a mango.",
+            "That is a banana.",
+            "I like grapes."
+          ],
+          "practice": [
+            "Point to imaginary fruits and have the student name them",
+            "Have them say 'this is a mango' with two other fruits"
+          ],
           "lexicon": {
             "kn": [
               "banana = baalehannu",
@@ -154,10 +211,24 @@
           "id": "l5",
           "title": "Food and drink",
           "objective": "Name everyday food and drink staples.",
-          "teach": ["rice", "water", "milk", "tea", "onion", "tomato"],
+          "teach": [
+            "rice",
+            "water",
+            "milk",
+            "tea",
+            "onion",
+            "tomato"
+          ],
           "grammar": "More nouns, reuse 'this is' and introduce 'I want' informally.",
-          "examples_en": ["This is water.", "I want tea.", "Rice and milk."],
-          "practice": ["Have the student order a tea and a rice", "Have them name three foods"],
+          "examples_en": [
+            "This is water.",
+            "I want tea.",
+            "Rice and milk."
+          ],
+          "practice": [
+            "Have the student order a tea and a rice",
+            "Have them name three foods"
+          ],
           "lexicon": {
             "kn": [
               "rice (cooked) = anna",
@@ -192,10 +263,22 @@
           "id": "l6",
           "title": "Family",
           "objective": "Name family members.",
-          "teach": ["mother", "father", "elder brother", "younger sister", "child"],
+          "teach": [
+            "mother",
+            "father",
+            "elder brother",
+            "younger sister",
+            "child"
+          ],
           "grammar": "Note that these languages distinguish elder and younger siblings. Point this out gently with one example.",
-          "examples_en": ["This is my mother.", "I have one elder brother.", "My father is at home."],
-          "practice": ["Have the student describe their own family in a few short sentences"],
+          "examples_en": [
+            "This is my mother.",
+            "I have one elder brother.",
+            "My father is at home."
+          ],
+          "practice": [
+            "Have the student describe their own family in a few short sentences"
+          ],
           "lexicon": {
             "kn": [
               "mother = amma",
@@ -227,10 +310,24 @@
           "id": "l7",
           "title": "Everyday things",
           "objective": "Name common objects around you.",
-          "teach": ["house", "door", "phone", "money", "chair", "book"],
+          "teach": [
+            "house",
+            "door",
+            "phone",
+            "money",
+            "chair",
+            "book"
+          ],
           "grammar": "Reuse 'this is' and introduce 'where is'. Build toward asking for things.",
-          "examples_en": ["This is my phone.", "Where is the book?", "The chair is here."],
-          "practice": ["Have the student name three objects near them", "Have them ask where the phone is"],
+          "examples_en": [
+            "This is my phone.",
+            "Where is the book?",
+            "The chair is here."
+          ],
+          "practice": [
+            "Have the student name three objects near them",
+            "Have them ask where the phone is"
+          ],
           "lexicon": {
             "kn": [
               "house = mane",
@@ -270,10 +367,22 @@
           "id": "l8",
           "title": "This and that",
           "objective": "Say this is X, that is Y, and ask is this X.",
-          "teach": ["this", "that", "this is", "that is", "is this?"],
+          "teach": [
+            "this",
+            "that",
+            "this is",
+            "that is",
+            "is this?"
+          ],
           "grammar": "Demonstratives. There is no separate word for 'is': 'this' plus a noun is a full sentence. The yes/no question is made with a small ending sound, not a new word.",
-          "examples_en": ["This is water.", "That is a mango.", "Is this milk?"],
-          "practice": ["Have the student ask you three 'is this?' questions and answer them"],
+          "examples_en": [
+            "This is water.",
+            "That is a mango.",
+            "Is this milk?"
+          ],
+          "practice": [
+            "Have the student ask you three 'is this?' questions and answer them"
+          ],
           "lexicon": {
             "kn": [
               "this = idu",
@@ -302,10 +411,22 @@
           "id": "l9",
           "title": "I want, I have, I need",
           "objective": "Express wanting, having and needing something.",
-          "teach": ["I want", "I do not want", "I have", "I need"],
+          "teach": [
+            "I want",
+            "I do not want",
+            "I have",
+            "I need"
+          ],
           "grammar": "These are fixed frames: learn the frame, drop any noun in. Point out that want and need share one word in Kannada and Tamil.",
-          "examples_en": ["I want tea.", "I have money.", "I need water."],
-          "practice": ["Have the student say three things they want", "Have them say one thing they do not want"],
+          "examples_en": [
+            "I want tea.",
+            "I have money.",
+            "I need water."
+          ],
+          "practice": [
+            "Have the student say three things they want",
+            "Have them say one thing they do not want"
+          ],
           "lexicon": {
             "kn": [
               "I want ___ = nanage ___ beku",
@@ -316,7 +437,8 @@
             "hi": [
               "I want ___ = mujhe ___ chaahiye",
               "I do not want ___ = mujhe ___ nahin chaahiye",
-              "I have ___ = mere paas ___ hai (mere paas paisa hai = I have money)",
+              "I have ___ = mere paas ___ hai (mere paas paise hain = I have money)",
+              "note: with plural words hai becomes hain: mere paas paise hain",
               "I need ___ = mujhe ___ ki zaroorat hai"
             ],
             "ta": [
@@ -331,10 +453,23 @@
           "id": "l10",
           "title": "Asking questions",
           "objective": "Ask what, where, how much, how many, and who.",
-          "teach": ["what is this", "where is", "how much", "how many", "who"],
+          "teach": [
+            "what is this",
+            "where is",
+            "how much",
+            "how many",
+            "who"
+          ],
           "grammar": "Question words. Show where the question word sits by reusing sentences they already know.",
-          "examples_en": ["What is this?", "Where is the shop?", "How much is this?"],
-          "practice": ["Have the student haggle: ask how much, say it is too much", "Have them ask where three things are"],
+          "examples_en": [
+            "What is this?",
+            "Where is the shop?",
+            "How much is this?"
+          ],
+          "practice": [
+            "Have the student haggle: ask how much, say it is too much",
+            "Have them ask where three things are"
+          ],
           "lexicon": {
             "kn": [
               "what is this = idu enu",
@@ -346,14 +481,14 @@
             "hi": [
               "what is this = yeh kya hai",
               "where is ___ = ___ kahaan hai",
-              "how much = kitna (yeh kitne ka hai? = how much is this?)",
+              "how much = kitna (for a price say yeh kitne ka hai? = how much is this?; kitna becomes kitne ka when asking a price)",
               "how many = kitne",
               "who = kaun"
             ],
             "ta": [
               "what is this = idhu enna",
               "where is ___ = ___ enga irukku",
-              "how much = evvalavu (idhu evvalavu? = how much is this?)",
+              "how much = evvalavu (on the street it shortens to evlo: idhu evlo? = how much is this?)",
               "how many = ethana",
               "who = yaaru"
             ]
@@ -368,10 +503,22 @@
           "id": "l11",
           "title": "Present tense",
           "objective": "Say what you do: I eat, I drink, I go, I speak, I come.",
-          "teach": ["I eat", "I drink", "I go", "I speak", "I come"],
+          "teach": [
+            "I eat",
+            "I drink",
+            "I go",
+            "I speak",
+            "I come"
+          ],
           "grammar": "The present tense 'I' form. Point out that the verb comes at the END of the sentence: I rice eat, not I eat rice.",
-          "examples_en": ["I eat rice.", "I go home.", "I speak a little."],
-          "practice": ["Have the student say three things they do every day"],
+          "examples_en": [
+            "I eat rice.",
+            "I go home.",
+            "I speak a little."
+          ],
+          "practice": [
+            "Have the student say three things they do every day"
+          ],
           "lexicon": {
             "kn": [
               "I eat = naanu tintini (naanu anna tintini = I eat rice)",
@@ -401,16 +548,28 @@
           "id": "l12",
           "title": "Past tense",
           "objective": "Say what you did: I ate, I went, I came, I saw.",
-          "teach": ["I ate", "I went", "I came", "I saw"],
+          "teach": [
+            "I ate",
+            "I went",
+            "I came",
+            "I saw"
+          ],
           "grammar": "The past tense 'I' form. Contrast one verb in present and past so the ending change is heard clearly.",
-          "examples_en": ["I ate rice.", "I went home.", "I saw my friend."],
-          "practice": ["Have the student tell you three things they did today"],
+          "examples_en": [
+            "I ate rice.",
+            "I went home.",
+            "I saw my friend."
+          ],
+          "practice": [
+            "Have the student tell you three things they did today"
+          ],
           "lexicon": {
             "kn": [
               "I ate = naanu tinde (naanu anna tinde = I ate rice)",
               "I went = naanu hode (naanu manege hode = I went home)",
               "I came = naanu bande",
               "I saw = naanu nodide",
+              "today = ivattu, yesterday = nenne (nenne naanu manege hode = yesterday I went home)",
               "note: contrast pair to teach the ending: tintini (I eat) vs tinde (I ate)"
             ],
             "hi": [
@@ -418,6 +577,7 @@
               "I went = main gaya (a woman says main gayi)",
               "I came = main aaya (a woman says main aayi)",
               "I saw = maine dekha",
+              "today = aaj, yesterday = kal (note: kal means both yesterday and tomorrow; the verb tense tells you which)",
               "note: teach khaaya and dekha as fixed phrases with maine; do not explain the maine grammar, it comes later"
             ],
             "ta": [
@@ -425,6 +585,7 @@
               "I went = naan ponen (naan veetukku ponen = I went home)",
               "I came = naan vandhen",
               "I saw = naan paathen",
+              "today = innikki, yesterday = nethikku (nethikku naan veetukku ponen = yesterday I went home)",
               "note: contrast pair to teach the ending: saapdren (I eat) vs saapten (I ate)"
             ]
           }
@@ -433,10 +594,23 @@
           "id": "l13",
           "title": "Future tense",
           "objective": "Say what you will do: I will eat, I will go, I will come.",
-          "teach": ["tomorrow", "I will eat", "I will go", "I will come", "I will speak"],
+          "teach": [
+            "tomorrow",
+            "I will eat",
+            "I will go",
+            "I will come",
+            "I will speak"
+          ],
           "grammar": "The future 'I' form. Now the student has all three tenses of one verb.",
-          "examples_en": ["I will eat later.", "I will go tomorrow.", "I will come home."],
-          "practice": ["Have the student say one thing they will do tomorrow", "Have them say one verb in past, present and future"],
+          "examples_en": [
+            "I will eat later.",
+            "I will go tomorrow.",
+            "I will come home."
+          ],
+          "practice": [
+            "Have the student say one thing they will do tomorrow",
+            "Have them say one verb in past, present and future"
+          ],
           "lexicon": {
             "kn": [
               "tomorrow = naale",
@@ -471,13 +645,26 @@
           "id": "l14",
           "title": "Building sentences",
           "objective": "Join words into longer sentences and use and, but, because.",
-          "teach": ["and", "but", "because", "word order subject object verb"],
+          "teach": [
+            "and",
+            "but",
+            "because",
+            "word order subject object verb"
+          ],
           "grammar": "Reinforce that the verb goes last, and show how to join two ideas.",
-          "examples_en": ["I want tea and rice.", "I am tired but happy.", "I will go home because it is late."],
-          "practice": ["Have the student join two short sentences with and", "Have them give a reason using because"],
+          "examples_en": [
+            "I want tea and rice.",
+            "I am tired but happy.",
+            "I will go home because it is late."
+          ],
+          "practice": [
+            "Have the student join two short sentences with and",
+            "Have them give a reason using because"
+          ],
           "lexicon": {
             "kn": [
               "and = mattu (tea mattu anna = tea and rice)",
+              "note: in spoken Bangalore people very often just say the English word and; teach mattu but mention this",
               "but = aadre",
               "because = yaakandre",
               "note: word order is subject, object, verb: naanu anna tintini = I rice eat"
@@ -491,7 +678,7 @@
             "ta": [
               "and = add um to both words (tea-um saadham-um = tea and rice)",
               "but = aana",
-              "because = yennaa",
+              "because = adhunaala, said as 'that is why' (late aachu, adhunaala naan poren = it got late, that is why I am going)",
               "note: word order is subject, object, verb: naan saadham saapdren = I rice eat"
             ]
           }
@@ -500,10 +687,23 @@
           "id": "l15",
           "title": "Being polite and saying no",
           "objective": "Make polite requests and say there isn't or I don't want.",
-          "teach": ["a little", "please give", "can you say it again", "there is not", "I do not want"],
+          "teach": [
+            "a little",
+            "please give",
+            "can you say it again",
+            "there is not",
+            "I do not want"
+          ],
           "grammar": "Polite request forms and negation. This ties the whole course together.",
-          "examples_en": ["Please give a little water.", "Can you say it again?", "There is no milk."],
-          "practice": ["Have the student make three polite requests", "Have the student hold a 30 second chat with you using everything they know"],
+          "examples_en": [
+            "Please give a little water.",
+            "Can you say it again?",
+            "There is no milk."
+          ],
+          "practice": [
+            "Have the student make three polite requests",
+            "Have the student hold a 30 second chat with you using everything they know"
+          ],
           "lexicon": {
             "kn": [
               "a little = swalpa",
@@ -525,6 +725,72 @@
               "can you say it again = thirumba sollunga",
               "there is no ___ = ___ illa (paal illa = there is no milk)",
               "I do not want = enakku vendam"
+            ]
+          }
+        },
+        {
+          "id": "l16",
+          "title": "Money, tens, and getting around",
+          "objective": "Handle rupees and bigger numbers, haggle, give directions, and rescue yourself when you do not understand.",
+          "teach": [
+            "tens 30 to 90",
+            "rupees",
+            "too much and reduce a little",
+            "left, right, straight",
+            "stop here",
+            "I did not understand",
+            "speak slowly"
+          ],
+          "grammar": "A street survival kit. The tens are building blocks: know the tens words and any fare or price makes sense. The two rescue phrases keep every conversation alive.",
+          "examples_en": [
+            "Eighty rupees is too much, reduce a little.",
+            "Go straight, then left.",
+            "I did not understand, please speak slowly."
+          ],
+          "practice": [
+            "Run a mini fare haggle: quote a price in tens and have the student refuse it and counter",
+            "Have the student direct you to their home using left, right, straight and stop here",
+            "Say one long fast sentence and have them rescue themselves with the two phrases"
+          ],
+          "lexicon": {
+            "kn": [
+              "thirty = muvattu, forty = nalavattu, fifty = aivattu",
+              "sixty = aravattu, seventy = eppattu, eighty = embattu, ninety = tombattu",
+              "rupees = rupaayi (aivattu rupaayi = fifty rupees)",
+              "too much = jaasti (idu jaasti = this is too much)",
+              "reduce a little = swalpa kammi maadi",
+              "left = edakke, right = balakke (edakke tirugi = turn left)",
+              "straight = nera (nera hogi = go straight)",
+              "note: auto drivers understand the English words left, right and straight perfectly well; teach the Kannada but say this",
+              "stop here = illi nilsi",
+              "I did not understand = artha aaglilla",
+              "speak slowly = nidhaanavaagi heli (people also say swalpa slow aagi heli)"
+            ],
+            "hi": [
+              "thirty = tees, forty = chaalees, fifty = pachaas",
+              "sixty = saath, seventy = sattar, eighty = assi, ninety = nabbe",
+              "note: sixty saath has a heavier t than saath meaning together; context always makes it clear",
+              "rupees = rupaye (pachaas rupaye = fifty rupees)",
+              "too much = bahut zyada (yeh bahut zyada hai = this is too much)",
+              "reduce a little = thoda kam kijiye",
+              "left = baayein, right = daayein (baayein mudiye = turn left)",
+              "straight = seedha (seedha chaliye = go straight)",
+              "stop here = yahaan rok dijiye",
+              "I did not understand = samajh nahin aaya",
+              "speak slowly = dheere boliye"
+            ],
+            "ta": [
+              "thirty = muppadhu, forty = naapadhu, fifty = ambadhu",
+              "sixty = arubadhu, seventy = ezhubadhu, eighty = embadhu, ninety = thonnooru",
+              "rupees = roobaa (ambadhu roobaa = fifty rupees)",
+              "too much = romba jaasti (idhu romba jaasti = this is way too much)",
+              "reduce a little = konjam kammi pannunga",
+              "left = idadhu pakkam, right = valadhu pakkam",
+              "straight = nera (neraa ponga = go straight)",
+              "note: auto drivers understand the English words left, right and straight perfectly well; teach the Tamil but say this",
+              "stop here = inga niruthunga",
+              "I did not understand = enakku puriyala",
+              "speak slowly = medhuva pesunga (people also say konjam slow a pesunga)"
             ]
           }
         }

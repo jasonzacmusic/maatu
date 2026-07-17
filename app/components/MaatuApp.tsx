@@ -44,7 +44,7 @@ type Screen =
   | "lessonResult"
   | "settings";
 type Tab = "hub" | "school" | "progress" | "settings";
-type SessionEnd = { room: string | null; transcript: Line[]; durationSec: number };
+type SessionEnd = { room: string | null; transcript: Line[]; rawTranscript?: Line[]; durationSec: number };
 type LessonResult = { lesson: Lesson; passed: boolean; transcript: Line[] };
 type StreetStats = {
   totalSeconds: number;
@@ -470,12 +470,25 @@ function CallScreen({
   const [caps, setCaps] = useState(captionsDefault);
   const [slowPending, setSlowPending] = useState(false);
   const [sec, setSec] = useState(0);
+  const [noShow, setNoShow] = useState(false);
   const slowTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const endedRef = useRef(false);
 
   useEffect(() => {
     call.connect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // If nobody answers within 25 seconds of going live, say so instead of
+  // leaving the learner on a silent call (the agent brain may be offline).
+  useEffect(() => {
+    if (call.phase !== "live" || call.characterHeard) {
+      setNoShow(false);
+      return;
+    }
+    const t = setTimeout(() => setNoShow(true), 25000);
+    return () => clearTimeout(t);
+  }, [call.phase, call.characterHeard]);
 
   useEffect(() => {
     if (call.phase !== "live") return;
@@ -504,11 +517,27 @@ function CallScreen({
   };
 
   const endCall = async () => {
+    if (endedRef.current) return;
+    endedRef.current = true;
     const room = call.roomName;
     const transcript = call.transcript;
     await call.hangUp();
-    onEnd({ room, transcript, durationSec: sec });
+    onEnd({ room, transcript, rawTranscript: call.recordTranscript(), durationSec: sec });
   };
+
+  // A dropped connection (network blip, agent offline, token expiry) must not
+  // strand the learner on a dead call screen: route out with what we have.
+  useEffect(() => {
+    if (call.phase !== "ended" || endedRef.current) return;
+    endedRef.current = true;
+    onEnd({
+      room: call.roomName,
+      transcript: call.transcript,
+      rawTranscript: call.recordTranscript(),
+      durationSec: sec,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [call.phase]);
 
   const mm = Math.floor(sec / 60);
   const ss = String(sec % 60).padStart(2, "0");
@@ -524,6 +553,10 @@ function CallScreen({
         ? call.error ?? "Could not connect"
         : call.phase === "ended"
           ? "Call over"
+          : call.micIssue
+            ? call.micIssue
+          : noShow && !call.characterHeard
+            ? `${meta.name} is not answering right now. Hang up and try again in a minute.`
           : call.muted
             ? "Microphone is off. Tap the mic to answer."
           : active === "learner"
@@ -587,6 +620,11 @@ function CallScreen({
 
         {/* caption block */}
         <div className="flex flex-1 flex-col justify-center gap-4 px-7">
+          {(call.micIssue || (noShow && !call.characterHeard)) && recent.length > 0 && (
+            <p className="text-center text-[13px] font-semibold" style={{ color: C.kumkum }}>
+              {call.micIssue ?? `${meta.name} is not answering right now. Hang up and try again in a minute.`}
+            </p>
+          )}
           {call.needsAudioUnlock ? (
             <button
               onClick={call.unlockAudio}
@@ -1250,7 +1288,9 @@ export default function MaatuApp() {
       if (activePersona.startsWith("teacher-")) {
         const lessonId = activePersona.split("-").slice(2).join("-");
         const lesson = ALL_LESSONS.find((item) => item.id === lessonId);
-        const passed = lessonWasMastered(payload.transcript);
+        // Check both the display transcript and the raw one: a romanization
+        // hiccup must never turn an honestly passed lesson into a fail.
+        const passed = lessonWasMastered([...payload.transcript, ...(payload.rawTranscript ?? [])]);
         if (passed) markDone(lang, lessonId);
         if (lesson) setLastLessonResult({ lesson, passed, transcript: payload.transcript });
         setScreen(lesson ? "lessonResult" : "school");

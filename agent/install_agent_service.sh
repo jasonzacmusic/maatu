@@ -45,6 +45,9 @@ LOG="$HOME/Library/Logs/maatu-agent.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 5000000 ]; then : > "$LOG"; fi
 export PYTHONUNBUFFERED=1
 echo "=== maatu agent starting $(date) ===" >> "$LOG"
+if command -v caffeinate >/dev/null 2>&1; then
+  exec caffeinate -s ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
+fi
 exec ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
 SH
 chmod +x "$RT/agent/run_worker.sh"

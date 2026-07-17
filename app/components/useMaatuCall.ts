@@ -34,9 +34,11 @@ export interface MaatuCall {
   phase: CallPhase;
   error: string | null;
   muted: boolean;
+  micIssue: string | null;
   speaker: Speaker;
   caption: Line | null;
   transcript: Line[];
+  characterHeard: boolean;
   roomName: string | null;
   needsAudioUnlock: boolean;
   slowerPace: boolean;
@@ -45,21 +47,29 @@ export interface MaatuCall {
   toggleMute: () => Promise<void>;
   unlockAudio: () => Promise<void>;
   requestSlowDown: () => Promise<boolean>;
+  // Snapshot for records at hang-up time: the raw transcript keeps every final
+  // line exactly as transcribed, so the lesson pass check can never be broken
+  // by a romanization failure.
+  recordTranscript: () => Line[];
 }
 
 export function useMaatuCall(persona: string): MaatuCall {
   const [phase, setPhase] = useState<CallPhase>("idle");
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
+  const [micIssue, setMicIssue] = useState<string | null>(null);
   const [speaker, setSpeaker] = useState<Speaker>(null);
   const [caption, setCaption] = useState<Line | null>(null);
   const [transcript, setTranscript] = useState<Line[]>([]);
+  const [characterHeard, setCharacterHeard] = useState(false);
   const [roomName, setRoomName] = useState<string | null>(null);
   const [needsAudioUnlock, setNeedsAudioUnlock] = useState(false);
   const [slowerPace, setSlowerPace] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
+  const rawRef = useRef<Line[]>([]);
+  const displayRef = useRef<Line[]>([]);
 
   const ensureAudioEl = useCallback(() => {
     if (typeof document === "undefined") return null;
@@ -100,6 +110,10 @@ export function useMaatuCall(persona: string): MaatuCall {
     setTranscript([]);
     setCaption(null);
     setSlowerPace(false);
+    setCharacterHeard(false);
+    setMicIssue(null);
+    rawRef.current = [];
+    displayRef.current = [];
     try {
       const res = await fetch(`/api/token?persona=${encodeURIComponent(persona)}`);
       if (!res.ok) {
@@ -115,6 +129,7 @@ export function useMaatuCall(persona: string): MaatuCall {
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
         const el = ensureAudioEl();
         if (track.kind === Track.Kind.Audio && el) {
+          setCharacterHeard(true);
           track.attach(el);
           el.play().catch(() => setNeedsAudioUnlock(!room.canPlaybackAudio));
         }
@@ -140,14 +155,31 @@ export function useMaatuCall(persona: string): MaatuCall {
         RoomEvent.TranscriptionReceived,
         (segments: TranscriptionSegment[], participant?: Participant) => {
           const who: "character" | "learner" = participant?.isLocal ? "learner" : "character";
+          if (who === "character") setCharacterHeard(true);
           const appendFinal = (text: string) => {
             setTranscript((prev) => {
               const last = prev[prev.length - 1];
-              if (last && last.who === who && !text.startsWith(last.text) && last.text.startsWith(text)) {
-                return prev;
+              let next: Line[];
+              if (last && last.who === who && (text === last.text || last.text.startsWith(text))) {
+                next = prev;
+              } else if (last && last.who === who && text.startsWith(last.text)) {
+                // An extended re-emit of the same utterance replaces it.
+                next = [...prev.slice(0, -1), { who, text }].slice(-40);
+              } else {
+                next = [...prev.slice(-40), { who, text }];
               }
-              return [...prev.slice(-40), { who, text }];
+              displayRef.current = next;
+              return next;
             });
+          };
+          const appendRaw = (text: string) => {
+            const last = rawRef.current[rawRef.current.length - 1];
+            if (last && last.who === who && (text === last.text || last.text.startsWith(text))) return;
+            if (last && last.who === who && text.startsWith(last.text)) {
+              rawRef.current = [...rawRef.current.slice(0, -1), { who, text }];
+            } else {
+              rawRef.current = [...rawRef.current.slice(-80), { who, text }];
+            }
           };
           for (const seg of segments) {
             if (!seg.text?.trim()) continue;
@@ -155,6 +187,7 @@ export function useMaatuCall(persona: string): MaatuCall {
             const text = safeRomanizedText(raw);
             setCaption({ who, text });
             if (seg.final) {
+              appendRaw(raw);
               if (NATIVE_SCRIPT.test(raw)) {
                 void fetch("/api/romanize", {
                   method: "POST",
@@ -198,6 +231,7 @@ export function useMaatuCall(persona: string): MaatuCall {
       } catch {
         // Mic denied or unavailable: they can still listen. Not fatal.
         setMuted(true);
+        setMicIssue("Your microphone is blocked. Allow the mic for this site in your browser settings, then tap the mic button.");
       }
       setPhase("live");
     } catch (e) {
@@ -211,9 +245,17 @@ export function useMaatuCall(persona: string): MaatuCall {
     const room = roomRef.current;
     if (!room) return;
     const next = !muted;
-    await room.localParticipant.setMicrophoneEnabled(!next);
-    setMuted(next);
+    try {
+      await room.localParticipant.setMicrophoneEnabled(!next);
+      setMuted(next);
+      setMicIssue(null);
+    } catch {
+      setMuted(true);
+      setMicIssue("Your microphone is blocked. Allow the mic for this site in your browser settings, then tap the mic button.");
+    }
   }, [muted]);
+
+  const recordTranscript = useCallback(() => [...rawRef.current], []);
 
   const requestSlowDown = useCallback(async () => {
     const room = roomRef.current;
@@ -240,9 +282,11 @@ export function useMaatuCall(persona: string): MaatuCall {
     phase,
     error,
     muted,
+    micIssue,
     speaker,
     caption,
     transcript,
+    characterHeard,
     roomName,
     needsAudioUnlock,
     slowerPace,
@@ -251,5 +295,6 @@ export function useMaatuCall(persona: string): MaatuCall {
     toggleMute,
     unlockAudio,
     requestSlowDown,
+    recordTranscript,
   };
 }

@@ -1,4 +1,5 @@
 import { PERSONAS, type PersonaMeta } from "./personas.generated";
+import { hasNativeScript, romanizeText } from "./romanize";
 
 // The debrief coach. Runs the real conversation transcript through the brain to
 // produce a structured report, then synthesizes a short spoken summary through
@@ -91,6 +92,16 @@ async function synthCoachAudio(text: string, languageCode: string): Promise<stri
   }
 }
 
+// The UI is strictly romanized. The prompt asks Gemini for Latin script only,
+// but nothing used to enforce it; run every user-visible field through the
+// same transliteration guard the live captions use, with a strip fallback.
+async function ensureRoman(text: string, languageCode: string): Promise<string> {
+  if (!hasNativeScript(text)) return text;
+  const out = await romanizeText(text, languageCode);
+  if (out && out !== "Romanization unavailable" && !hasNativeScript(out)) return out;
+  return text.replace(/[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]+/gu, "").replace(/\s+/g, " ").trim();
+}
+
 export async function generateReport(
   personaId: string,
   transcript: Line[],
@@ -103,17 +114,28 @@ export async function generateReport(
   const raw = await callGemini(prompt);
   if (!raw) return null;
 
-  const takeaways = Array.isArray(raw.takeaways)
+  const lc = persona.languageCode;
+  const takeawaysIn = Array.isArray(raw.takeaways)
     ? (raw.takeaways as { you: string; native: string; why: string }[]).slice(0, 3)
     : [];
-  const words = Array.isArray(raw.words) ? (raw.words as [string, string][]).slice(0, 4) : [];
+  const takeaways = await Promise.all(
+    takeawaysIn.map(async (t) => ({
+      you: await ensureRoman(String(t.you ?? ""), lc),
+      native: await ensureRoman(String(t.native ?? ""), lc),
+      why: await ensureRoman(String(t.why ?? ""), lc),
+    })),
+  );
+  const wordsIn = Array.isArray(raw.words) ? (raw.words as [string, string][]).slice(0, 4) : [];
+  const words = (await Promise.all(
+    wordsIn.map(async (w) => [await ensureRoman(String(w?.[0] ?? ""), lc), await ensureRoman(String(w?.[1] ?? ""), lc)]),
+  )) as [string, string][];
   const spoken = typeof raw.summary_spoken === "string" ? raw.summary_spoken : "";
 
   const coachAudio = await synthCoachAudio(spoken, persona.languageCode);
 
   return {
-    headline: typeof raw.headline === "string" ? raw.headline : "Nicely done",
-    strength: typeof raw.strength === "string" ? raw.strength : "",
+    headline: await ensureRoman(typeof raw.headline === "string" ? raw.headline : "Nicely done", lc),
+    strength: await ensureRoman(typeof raw.strength === "string" ? raw.strength : "", lc),
     duration_min: Math.max(1, Math.round(durationSec / 60)),
     takeaways,
     words,
