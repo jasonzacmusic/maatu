@@ -44,27 +44,16 @@ ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 BRAIN = os.environ.get("BRAIN", "anthropic" if ANTHROPIC_API_KEY else "gemini")
 MAATU_APP_URL = os.environ.get("MAATU_APP_URL", "https://maatu.vercel.app")
 
-ACKNOWLEDGMENTS = {
-    "kn-IN": "Sari.",
-    "hi-IN": "Theek hai.",
-    "ta-IN": "Seri.",
-}
-
 
 def build_brain():
     if BRAIN == "anthropic" and ANTHROPIC_API_KEY:
         return anthropic.LLM(model=ANTHROPIC_MODEL, api_key=ANTHROPIC_API_KEY)
 
-    # Disable thinking for lower latency; these are quick spoken turns.
-    try:
-        return google.LLM(
-            model=GEMINI_MODEL,
-            temperature=0.8,
-            api_key=GEMINI_API_KEY,
-            thinking_config={"thinking_budget": 0},
-        )
-    except Exception:
-        return google.LLM(model=GEMINI_MODEL, temperature=0.8, api_key=GEMINI_API_KEY)
+    # No thinking_config here, on purpose. Google repointed gemini-flash-lite-latest
+    # to a model that rejects thinking_budget 0 with a 400 INVALID_ARGUMENT, which
+    # silenced every reply in production (2026-07-22). The current lite model spends
+    # zero thought tokens on these short spoken turns anyway (~1s replies).
+    return google.LLM(model=GEMINI_MODEL, temperature=0.8, api_key=GEMINI_API_KEY)
 
 
 def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
@@ -169,24 +158,14 @@ async def entrypoint(ctx: agents.JobContext):
             asyncio.create_task(_apply_slow_down())
 
     # Latency logging: mark the VAD speech end, then measure to first agent audio.
+    # The canned one-word acknowledgment that used to play here is gone for good:
+    # when the brain broke it was the ONLY thing the learner ever heard, and even
+    # healthy it made the teacher sound robotic. Preemptive generation above keeps
+    # latency inside the budget without faking a reply.
     turn = {
         "user_stopped_at": None,
-        "ack_active": False,
         "awaiting_first_audio": False,
     }
-    acknowledgment_frames = []
-
-    async def _acknowledgment_audio():
-        for frame in acknowledgment_frames:
-            yield frame
-
-    async def _finish_turn_after_acknowledgment(handle):
-        try:
-            await handle.wait_for_playout()
-            reply = session.generate_reply()
-            await reply.wait_for_playout()
-        finally:
-            turn["ack_active"] = False
 
     @session.on("user_state_changed")
     def _on_user_state(ev):
@@ -194,18 +173,9 @@ async def entrypoint(ctx: agents.JobContext):
             getattr(ev, "old_state", None) == "speaking"
             and getattr(ev, "new_state", None) == "listening"
         )
-        if speech_ended and not turn["ack_active"]:
+        if speech_ended:
             turn["user_stopped_at"] = time.perf_counter()
             turn["awaiting_first_audio"] = True
-            if acknowledgment_frames:
-                turn["ack_active"] = True
-                handle = session.say(
-                    ACKNOWLEDGMENTS.get(persona.language, "Okay."),
-                    audio=_acknowledgment_audio(),
-                    allow_interruptions=False,
-                    add_to_chat_ctx=False,
-                )
-                asyncio.create_task(_finish_turn_after_acknowledgment(handle))
 
     @session.on("agent_state_changed")
     def _on_agent_state(ev):
@@ -233,9 +203,6 @@ async def entrypoint(ctx: agents.JobContext):
         room=ctx.room,
         agent=Agent(instructions=persona.system_prompt),
     )
-
-    async for chunk in tts_engine.synthesize(ACKNOWLEDGMENTS.get(persona.language, "Okay.")):
-        acknowledgment_frames.append(chunk.frame)
 
     # The character speaks first, in scene.
     await session.generate_reply(instructions=persona.opening)
