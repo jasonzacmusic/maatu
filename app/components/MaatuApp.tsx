@@ -320,6 +320,7 @@ function Hub({
   completedLessons,
   onScenario,
   onSchool,
+  onTutor,
   rm,
 }: {
   lang: Lang;
@@ -328,6 +329,7 @@ function Hub({
   completedLessons: number;
   onScenario: (shop: ShopId) => void;
   onSchool: () => void;
+  onTutor: () => void;
   rm: boolean;
 }) {
   const host = HOST[lang];
@@ -377,6 +379,26 @@ function Hub({
           </div>
         </button>
 
+        <button
+          onClick={onTutor}
+          className="mt-3 flex w-full items-center gap-4 rounded-[18px] p-5 text-left focus-visible:outline focus-visible:outline-2"
+          style={{ background: "linear-gradient(135deg,rgba(191,239,219,0.16),rgba(191,239,219,0.05))", border: "1px solid rgba(191,239,219,0.34)", outlineColor: C.tube }}
+        >
+          <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full text-[22px]" style={{ background: "rgba(191,239,219,0.14)" }} aria-hidden="true">
+            💬
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[17px] font-bold" style={{ color: C.milk }}>
+              Just talk with {host.name}
+            </span>
+            <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
+              No lesson, no script. Chat about anything, ask her to teach any topic, or invent
+              any scene and she will act it out with you.
+            </span>
+          </span>
+          <span className="text-[24px]" style={{ color: C.tube }} aria-hidden="true">›</span>
+        </button>
+
         <div className="mb-3 mt-7 flex items-end justify-between">
           <span>
             <span className="block text-[16px] font-bold" style={{ color: C.milk }}>
@@ -387,7 +409,7 @@ function Hub({
             </span>
           </span>
           <span className="text-[12px] font-semibold" style={{ color: C.sodium }}>
-            6 live
+            {SCENARIO_ORDER.length} live
           </span>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -1168,6 +1190,7 @@ export default function MaatuApp() {
   const [lang, setLangState] = useState<Lang>("kn");
   const [activePersona, setActivePersona] = useState<string>("kn-auto");
   const [pendingShop, setPendingShop] = useState<ShopId | null>(null);
+  const [tutorOrigin, setTutorOrigin] = useState<Screen>("hub");
   const [pendingLessonId, setPendingLessonId] = useState("l1");
   const [lastSession, setLastSession] = useState<SessionEnd | null>(null);
   const [lastLessonResult, setLastLessonResult] = useState<LessonResult | null>(null);
@@ -1271,10 +1294,13 @@ export default function MaatuApp() {
     setScreen("call");
   }, [lang]);
 
+  // Free talk is reachable from both the hub and the classroom, so remember
+  // where it started and go back there when the call ends.
   const startTutor = useCallback(() => {
+    setTutorOrigin(screen === "school" ? "school" : "hub");
     setActivePersona(`tutor-${lang}`);
     setScreen("call");
-  }, [lang]);
+  }, [lang, screen]);
 
   const isClassroom = activePersona.startsWith("teacher-") || activePersona.startsWith("tutor-");
   const meta: PersonaMeta = isClassroom
@@ -1295,13 +1321,13 @@ export default function MaatuApp() {
         if (lesson) setLastLessonResult({ lesson, passed, transcript: payload.transcript });
         setScreen(lesson ? "lessonResult" : "school");
       } else if (activePersona.startsWith("tutor-")) {
-        setScreen("school");
+        setScreen(tutorOrigin);
       } else {
         setLastSession(payload);
         setScreen("debrief");
       }
     },
-    [activePersona, lang],
+    [activePersona, lang, tutorOrigin],
   );
 
   // Next lesson label for the course-first home card.
@@ -1330,13 +1356,13 @@ export default function MaatuApp() {
           {!ready ? null : screen === "onboarding" ? (
             <Onboarding lang={lang} setLang={setLang} onEnter={() => setScreen("school")} rm={rm} />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} onScenario={openScenario} onSchool={() => setScreen("school")} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} rm={rm} />
           ) : screen === "lessonPreview" ? (
             <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
             <ScenarioDetail meta={meta} shop={pendingShop} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
           ) : screen === "call" ? (
-            <CallScreen meta={meta} lang={lang} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : isClassroom ? "school" : "hub")} rm={rm} />
+            <CallScreen meta={meta} lang={lang} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} />
           ) : screen === "lessonResult" && lastLessonResult ? (
             <LessonResultScreen
               lang={lang}

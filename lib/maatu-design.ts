@@ -35,11 +35,16 @@ export type ShopId =
   | "music"
   | "airport"
   | "salon"
-  | "market";
+  | "market"
+  | "kirana"
+  | "clinic"
+  | "restaurant"
+  | "neighbour"
+  | "landlord"
+  | "pharmacy";
 
-// The five launch scenarios plus Teach Mode are all live across the three
-// languages. Salon and market stay shuttered. Routing to a real persona is
-// decided by personaId() in lib/personas.generated.ts.
+// All fourteen scenarios are live across the three languages. Routing to a real
+// persona is decided by personaId() in lib/personas.generated.ts.
 export const LIVE: Record<ShopId, boolean> = {
   auto: true,
   chai: true,
@@ -47,8 +52,14 @@ export const LIVE: Record<ShopId, boolean> = {
   phone: true,
   music: true,
   airport: true,
-  salon: false,
-  market: false,
+  salon: true,
+  market: true,
+  kirana: true,
+  clinic: true,
+  restaurant: true,
+  neighbour: true,
+  landlord: true,
+  pharmacy: true,
 };
 
 export const LABELS: Record<ShopId, string> = {
@@ -60,6 +71,12 @@ export const LABELS: Record<ShopId, string> = {
   airport: "AIRPORT",
   salon: "SALON",
   market: "MARKET",
+  kirana: "PROVISION STORE",
+  clinic: "CLINIC",
+  restaurant: "EATERY",
+  neighbour: "NEXT DOOR",
+  landlord: "LANDLORD",
+  pharmacy: "MEDICAL STORE",
 };
 
 // Camera targets for the zoom into each shop (scene coordinates, viewBox 390x780).
@@ -162,7 +179,23 @@ export const LANG_PERSONA_PREFIX: Record<Lang, string> = {
 
 // Hub / scenario-card dressing. Order is the display order of the grid; each
 // card reads its name, scene label and level from the generated persona meta.
-export const SCENARIO_ORDER: ShopId[] = ["auto", "chai", "gate", "phone", "airport", "music"];
+// Everyday scenarios first, the occasional ones after.
+export const SCENARIO_ORDER: ShopId[] = [
+  "auto",
+  "chai",
+  "market",
+  "gate",
+  "kirana",
+  "restaurant",
+  "neighbour",
+  "clinic",
+  "pharmacy",
+  "salon",
+  "landlord",
+  "phone",
+  "airport",
+  "music",
+];
 
 export const SCENARIO_TAGLINE: Record<ShopId, string> = {
   auto: "Haggle the fare",
@@ -173,6 +206,12 @@ export const SCENARIO_TAGLINE: Record<ShopId, string> = {
   music: "Teach a curious kid",
   salon: "A trim and a chat",
   market: "Buy the vegetables",
+  kirana: "The monthly list",
+  clinic: "Explain what hurts",
+  restaurant: "Order the food",
+  neighbour: "Meet next door",
+  landlord: "Rent and repairs",
+  pharmacy: "Pick up medicine",
 };
 
 // A one-line brief for the pre-call screen, second person, warm.
@@ -183,8 +222,14 @@ export const SCENARIO_BRIEF: Record<ShopId, string> = {
   phone: "You are calling broadband customer care for a new connection. Verify who you are, hear two plans, and book an installation slot. Formal, patient, number heavy.",
   airport: "You reach the airline check-in counter. Hand over ticket and ID, sort one baggage wrinkle, pick a seat, and follow what to do at the gate. Keep it moving.",
   music: "A curious child at their first class. You are the teacher. Explain a simple idea, answer their why, and gently fix them when they use a word wrong.",
-  salon: "A relaxed trim and an easy chat while you wait. Small talk, no pressure.",
-  market: "Buy a few vegetables and settle a price at the market stall.",
+  salon: "You settle into the barber's chair. Say how you want it cut, turn down the extras you do not want, and hold up your end of the film and cricket chat.",
+  market: "The vendor calls you over to her stall. Ask what things cost by the kilo, bargain one round, and walk away with a full bag and a free bunch of coriander.",
+  kirana: "The provision store owner knows every regular. Read out your list, handle one item being out of stock, hear the running total, and settle the bill.",
+  clinic: "The doctor asks what is wrong. Describe how you feel and how long it has been, then follow the instructions: how many tablets, how often, before or after food.",
+  restaurant: "A busy waiter rattles off what is ready today. Order for yourself, say how spicy you want it, cope when one dish runs out, and ask for the bill.",
+  neighbour: "The neighbour from the next flat catches you at the door. Say who you are and where you are from, hear about the water timings, and handle a small favour.",
+  landlord: "Rent day. The landlord wants more for maintenance and you have a leaking tap to report. Make your complaint clearly and settle a day for the repair.",
+  pharmacy: "At the medical shop counter, ask for what you need, hear that one item needs a prescription, take the cheaper option, and get the dose instructions right.",
 };
 
 export const DIFFICULTY: Record<ShopId, string> = {
@@ -196,6 +241,12 @@ export const DIFFICULTY: Record<ShopId, string> = {
   music: "Teach mode",
   salon: "Beginner",
   market: "Beginner",
+  kirana: "Beginner",
+  clinic: "Intermediate",
+  restaurant: "Beginner",
+  neighbour: "Beginner",
+  landlord: "Intermediate",
+  pharmacy: "Beginner",
 };
 
 // The three teacher hosts, so onboarding and the hub can name them.

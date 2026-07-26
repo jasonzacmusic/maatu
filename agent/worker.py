@@ -100,7 +100,14 @@ async def entrypoint(ctx: agents.JobContext):
 
     session = AgentSession(
         stt=sarvam.STT(
-            language=persona.language,
+            # Auto-detect, NOT locked to the target language. A beginner speaks
+            # mostly English plus a few target words, and a locked transcriber
+            # turned every English question into phonetic native-script gibberish
+            # ("what does namaskara mean" -> Kannada letters), which the brain
+            # could not answer. Verified against the live API: auto-detect
+            # transcribes pure kn/hi/ta identically to the locked mode AND
+            # returns clean romanized text for mixed speech.
+            language="unknown",
             model="saarika:v2.5",
             api_key=SARVAM_API_KEY,
         ),

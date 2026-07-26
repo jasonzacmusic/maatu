@@ -430,6 +430,558 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "explaining and simplifying",
       "answering why questions"
     ]
+  },
+  "kn-market": {
+    "id": "kn-market",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "market",
+    "shop": "market",
+    "name": "Lakshmamma",
+    "level": 2,
+    "sceneLabel": "Vegetable market, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "vegetable vocabulary",
+      "numbers and quantities",
+      "bargaining confidence",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "vegetable names",
+      "numbers, weights and prices",
+      "bargaining phrases"
+    ]
+  },
+  "hi-market": {
+    "id": "hi-market",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "market",
+    "shop": "market",
+    "name": "Sunita",
+    "level": 2,
+    "sceneLabel": "Sabzi mandi, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "vegetable vocabulary",
+      "numbers and quantities",
+      "bargaining confidence",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "vegetable names",
+      "numbers, weights and prices",
+      "bargaining phrases"
+    ]
+  },
+  "ta-market": {
+    "id": "ta-market",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "market",
+    "shop": "market",
+    "name": "Meena",
+    "level": 2,
+    "sceneLabel": "Vegetable market, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "vegetable vocabulary",
+      "numbers and quantities",
+      "bargaining confidence",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "vegetable names",
+      "numbers, weights and prices",
+      "bargaining phrases"
+    ]
+  },
+  "kn-kirana": {
+    "id": "kn-kirana",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "kirana",
+    "shop": "kirana",
+    "name": "Shankar",
+    "level": 2,
+    "sceneLabel": "Provision store, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "grocery vocabulary",
+      "numbers and totals",
+      "asking for alternatives",
+      "everyday politeness"
+    ],
+    "defaultSecretAgenda": [
+      "grocery staples",
+      "quantities and packet sizes",
+      "asking for and refusing things politely"
+    ]
+  },
+  "hi-kirana": {
+    "id": "hi-kirana",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "kirana",
+    "shop": "kirana",
+    "name": "Gupta ji",
+    "level": 2,
+    "sceneLabel": "Kirana store, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "grocery vocabulary",
+      "numbers and totals",
+      "asking for alternatives",
+      "everyday politeness"
+    ],
+    "defaultSecretAgenda": [
+      "grocery staples",
+      "quantities and packet sizes",
+      "asking for and refusing things politely"
+    ]
+  },
+  "ta-kirana": {
+    "id": "ta-kirana",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "kirana",
+    "shop": "kirana",
+    "name": "Raja",
+    "level": 2,
+    "sceneLabel": "Provision store, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "grocery vocabulary",
+      "numbers and totals",
+      "asking for alternatives",
+      "everyday politeness"
+    ],
+    "defaultSecretAgenda": [
+      "grocery staples",
+      "quantities and packet sizes",
+      "asking for and refusing things politely"
+    ]
+  },
+  "kn-doctor": {
+    "id": "kn-doctor",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "doctor",
+    "shop": "clinic",
+    "name": "Dr Geetha",
+    "level": 3,
+    "sceneLabel": "Clinic, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "describing symptoms",
+      "time and frequency words",
+      "understanding instructions",
+      "asking the doctor to repeat"
+    ],
+    "defaultSecretAgenda": [
+      "body parts and symptoms",
+      "duration and frequency of time",
+      "understanding instructions"
+    ]
+  },
+  "hi-doctor": {
+    "id": "hi-doctor",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "doctor",
+    "shop": "clinic",
+    "name": "Dr Sharma",
+    "level": 3,
+    "sceneLabel": "Clinic, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "describing symptoms",
+      "time and frequency words",
+      "understanding instructions",
+      "asking the doctor to repeat"
+    ],
+    "defaultSecretAgenda": [
+      "body parts and symptoms",
+      "duration and frequency of time",
+      "understanding instructions"
+    ]
+  },
+  "ta-doctor": {
+    "id": "ta-doctor",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "doctor",
+    "shop": "clinic",
+    "name": "Dr Rekha",
+    "level": 3,
+    "sceneLabel": "Clinic, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "describing symptoms",
+      "time and frequency words",
+      "understanding instructions",
+      "asking the doctor to repeat"
+    ],
+    "defaultSecretAgenda": [
+      "body parts and symptoms",
+      "duration and frequency of time",
+      "understanding instructions"
+    ]
+  },
+  "kn-restaurant": {
+    "id": "kn-restaurant",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "restaurant",
+    "shop": "restaurant",
+    "name": "Ganesh",
+    "level": 2,
+    "sceneLabel": "Darshini, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "food vocabulary",
+      "ordering and requesting",
+      "handling a change of plan",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "food and drink names",
+      "likes, dislikes and quantities",
+      "polite requests"
+    ]
+  },
+  "hi-restaurant": {
+    "id": "hi-restaurant",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "restaurant",
+    "shop": "restaurant",
+    "name": "Vikas",
+    "level": 2,
+    "sceneLabel": "Dhaba, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "food vocabulary",
+      "ordering and requesting",
+      "handling a change of plan",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "food and drink names",
+      "likes, dislikes and quantities",
+      "polite requests"
+    ]
+  },
+  "ta-restaurant": {
+    "id": "ta-restaurant",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "restaurant",
+    "shop": "restaurant",
+    "name": "Saravanan",
+    "level": 2,
+    "sceneLabel": "Mess, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "food vocabulary",
+      "ordering and requesting",
+      "handling a change of plan",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "food and drink names",
+      "likes, dislikes and quantities",
+      "polite requests"
+    ]
+  },
+  "kn-neighbour": {
+    "id": "kn-neighbour",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "neighbour",
+    "shop": "neighbour",
+    "name": "Sudha",
+    "level": 2,
+    "sceneLabel": "Your street, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "small talk flow",
+      "talking about yourself",
+      "everyday household vocabulary",
+      "warmth"
+    ],
+    "defaultSecretAgenda": [
+      "introducing yourself",
+      "family and work",
+      "neighbourhood daily routine"
+    ]
+  },
+  "hi-neighbour": {
+    "id": "hi-neighbour",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "neighbour",
+    "shop": "neighbour",
+    "name": "Rekha",
+    "level": 2,
+    "sceneLabel": "Your gali, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "small talk flow",
+      "talking about yourself",
+      "everyday household vocabulary",
+      "warmth"
+    ],
+    "defaultSecretAgenda": [
+      "introducing yourself",
+      "family and work",
+      "neighbourhood daily routine"
+    ]
+  },
+  "ta-neighbour": {
+    "id": "ta-neighbour",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "neighbour",
+    "shop": "neighbour",
+    "name": "Vasanthi",
+    "level": 2,
+    "sceneLabel": "Your street, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "small talk flow",
+      "talking about yourself",
+      "everyday household vocabulary",
+      "warmth"
+    ],
+    "defaultSecretAgenda": [
+      "introducing yourself",
+      "family and work",
+      "neighbourhood daily routine"
+    ]
+  },
+  "kn-landlord": {
+    "id": "kn-landlord",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "landlord",
+    "shop": "landlord",
+    "name": "Murthy",
+    "level": 3,
+    "sceneLabel": "Your flat, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "making a complaint clearly",
+      "money and date fluency",
+      "negotiating politely",
+      "standing your ground"
+    ],
+    "defaultSecretAgenda": [
+      "household and repair vocabulary",
+      "dates, months and money",
+      "complaining and negotiating politely"
+    ]
+  },
+  "hi-landlord": {
+    "id": "hi-landlord",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "landlord",
+    "shop": "landlord",
+    "name": "Verma ji",
+    "level": 3,
+    "sceneLabel": "Your flat, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "making a complaint clearly",
+      "money and date fluency",
+      "negotiating politely",
+      "standing your ground"
+    ],
+    "defaultSecretAgenda": [
+      "household and repair vocabulary",
+      "dates, months and money",
+      "complaining and negotiating politely"
+    ]
+  },
+  "ta-landlord": {
+    "id": "ta-landlord",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "landlord",
+    "shop": "landlord",
+    "name": "Sekar",
+    "level": 3,
+    "sceneLabel": "Your flat, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "making a complaint clearly",
+      "money and date fluency",
+      "negotiating politely",
+      "standing your ground"
+    ],
+    "defaultSecretAgenda": [
+      "household and repair vocabulary",
+      "dates, months and money",
+      "complaining and negotiating politely"
+    ]
+  },
+  "kn-salon": {
+    "id": "kn-salon",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "salon",
+    "shop": "salon",
+    "name": "Basava",
+    "level": 2,
+    "sceneLabel": "Salon, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "describing preferences",
+      "saying no politely",
+      "small talk",
+      "comparison words"
+    ],
+    "defaultSecretAgenda": [
+      "describing what you want",
+      "more, less, shorter, longer",
+      "opinions and small talk"
+    ]
+  },
+  "hi-salon": {
+    "id": "hi-salon",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "salon",
+    "shop": "salon",
+    "name": "Salim",
+    "level": 2,
+    "sceneLabel": "Salon, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "describing preferences",
+      "saying no politely",
+      "small talk",
+      "comparison words"
+    ],
+    "defaultSecretAgenda": [
+      "describing what you want",
+      "more, less, shorter, longer",
+      "opinions and small talk"
+    ]
+  },
+  "ta-salon": {
+    "id": "ta-salon",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "salon",
+    "shop": "salon",
+    "name": "Kumar",
+    "level": 2,
+    "sceneLabel": "Salon, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "describing preferences",
+      "saying no politely",
+      "small talk",
+      "comparison words"
+    ],
+    "defaultSecretAgenda": [
+      "describing what you want",
+      "more, less, shorter, longer",
+      "opinions and small talk"
+    ]
+  },
+  "kn-pharmacy": {
+    "id": "kn-pharmacy",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "pharmacy",
+    "shop": "pharmacy",
+    "name": "Prakash",
+    "level": 2,
+    "sceneLabel": "Medical store, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "explaining what you need",
+      "understanding dose instructions",
+      "numbers and money",
+      "asking clarifying questions"
+    ],
+    "defaultSecretAgenda": [
+      "medicine and symptom words",
+      "numbers, doses and timing",
+      "asking for something cheaper"
+    ]
+  },
+  "hi-pharmacy": {
+    "id": "hi-pharmacy",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "pharmacy",
+    "shop": "pharmacy",
+    "name": "Imran",
+    "level": 2,
+    "sceneLabel": "Medical store, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "explaining what you need",
+      "understanding dose instructions",
+      "numbers and money",
+      "asking clarifying questions"
+    ],
+    "defaultSecretAgenda": [
+      "medicine and symptom words",
+      "numbers, doses and timing",
+      "asking for something cheaper"
+    ]
+  },
+  "ta-pharmacy": {
+    "id": "ta-pharmacy",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "pharmacy",
+    "shop": "pharmacy",
+    "name": "Bala",
+    "level": 2,
+    "sceneLabel": "Medical store, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "explaining what you need",
+      "understanding dose instructions",
+      "numbers and money",
+      "asking clarifying questions"
+    ],
+    "defaultSecretAgenda": [
+      "medicine and symptom words",
+      "numbers, doses and timing",
+      "asking for something cheaper"
+    ]
   }
 };
 
@@ -440,7 +992,15 @@ export const SHOP_SCENARIO: Record<string, string> = {
   "phone": "care",
   "airport": "airport",
   "chai": "chai",
-  "music": "teach"
+  "music": "teach",
+  "market": "market",
+  "kirana": "kirana",
+  "clinic": "doctor",
+  "restaurant": "restaurant",
+  "neighbour": "neighbour",
+  "landlord": "landlord",
+  "salon": "salon",
+  "pharmacy": "pharmacy"
 };
 
 export function personaId(shop: string, lang: string): string | null {
