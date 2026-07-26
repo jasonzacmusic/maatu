@@ -106,7 +106,13 @@ def rms(frame: rtc.AudioFrame) -> float:
     return math.sqrt(sum(sample * sample for sample in samples) / len(samples))
 
 
-async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, object]:
+async def run_probe(
+    persona: str,
+    phrase: str,
+    timeout: float,
+    barge_in: bool = False,
+    turns: int = 1,
+) -> dict[str, object]:
     env = load_env(ROOT / "agent" / ".env")
     parts = persona.split("-")
     lang = parts[1] if parts[0] in {"teacher", "tutor"} else parts[0]
@@ -127,6 +133,7 @@ async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, obje
         )
 
         room = rtc.Room()
+        opening_audio_started = asyncio.Event()
         opening_done = asyncio.Event()
         reply_audio = asyncio.Event()
         reply_done = asyncio.Event()
@@ -139,7 +146,10 @@ async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, obje
         async def consume_audio(track: rtc.RemoteAudioTrack) -> None:
             stream = rtc.AudioStream(track)
             async for event in stream:
-                if ready_for_reply and rms(event.frame) > 120 and not reply_audio.is_set():
+                level = rms(event.frame)
+                if level > 5 and not opening_done.is_set():
+                    opening_audio_started.set()
+                if ready_for_reply and level > 120 and not reply_audio.is_set():
                     timing["reply_audio_at"] = time.perf_counter()
                     reply_audio.set()
 
@@ -168,8 +178,15 @@ async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, obje
 
         await room.connect(env["LIVEKIT_URL"], token)
         try:
-            await asyncio.wait_for(opening_done.wait(), timeout=timeout)
-            await asyncio.sleep(0.6)
+            if barge_in:
+                await asyncio.wait_for(opening_audio_started.wait(), timeout=timeout)
+                await asyncio.sleep(0.8)
+            else:
+                await asyncio.wait_for(opening_done.wait(), timeout=timeout)
+                # The synchronized opening transcript can arrive just before the
+                # final audio frame. Clear that tail so it cannot be mistaken for
+                # the first audio of the learner's reply.
+                await asyncio.sleep(1.5)
 
             source = rtc.AudioSource(16000, 1, queue_size_ms=200)
             track = rtc.LocalAudioTrack.create_audio_track("probe-microphone", source)
@@ -177,31 +194,49 @@ async def run_probe(persona: str, phrase: str, timeout: float) -> dict[str, obje
             options.source = rtc.TrackSource.SOURCE_MICROPHONE
             await room.local_participant.publish_track(track, options)
 
-            with wave.open(str(audio_path), "rb") as wav:
-                if wav.getframerate() != 16000 or wav.getnchannels() != 1 or wav.getsampwidth() != 2:
-                    raise RuntimeError("Probe audio must be 16 kHz mono PCM16")
-                while chunk := wav.readframes(320):
-                    if len(chunk) < 640:
-                        chunk += b"\0" * (640 - len(chunk))
-                    await source.capture_frame(rtc.AudioFrame(chunk, 16000, 1, 320))
+            results: list[dict[str, object]] = []
+            for turn_number in range(1, turns + 1):
+                reply_audio = asyncio.Event()
+                reply_done = asyncio.Event()
+                ready_for_reply = False
+                learner_start = len(learner_lines)
+                remote_start = len(remote_lines)
 
-            timing["speech_end_at"] = time.perf_counter()
-            ready_for_reply = True
-            for _ in range(60):
-                await source.capture_frame(rtc.AudioFrame(b"\0" * 640, 16000, 1, 320))
-            await source.wait_for_playout()
+                with wave.open(str(audio_path), "rb") as wav:
+                    if wav.getframerate() != 16000 or wav.getnchannels() != 1 or wav.getsampwidth() != 2:
+                        raise RuntimeError("Probe audio must be 16 kHz mono PCM16")
+                    while chunk := wav.readframes(320):
+                        if len(chunk) < 640:
+                            chunk += b"\0" * (640 - len(chunk))
+                        await source.capture_frame(rtc.AudioFrame(chunk, 16000, 1, 320))
 
-            await asyncio.wait_for(reply_audio.wait(), timeout=timeout)
-            await asyncio.wait_for(reply_done.wait(), timeout=timeout)
-            latency_ms = round((timing["reply_audio_at"] - timing["speech_end_at"]) * 1000)
+                timing["speech_end_at"] = time.perf_counter()
+                ready_for_reply = True
+                for _ in range(60):
+                    await source.capture_frame(rtc.AudioFrame(b"\0" * 640, 16000, 1, 320))
+                await source.wait_for_playout()
+
+                await asyncio.wait_for(reply_audio.wait(), timeout=timeout)
+                await asyncio.wait_for(reply_done.wait(), timeout=timeout)
+                ready_for_reply = False
+                latency_ms = round((timing["reply_audio_at"] - timing["speech_end_at"]) * 1000)
+                results.append(
+                    {
+                        "turn": turn_number,
+                        "learner_transcript": learner_lines[-1] if len(learner_lines) > learner_start else None,
+                        "reply": remote_lines[-1] if len(remote_lines) > remote_start else None,
+                        "external_speech_end_to_audio_ms": latency_ms,
+                    }
+                )
+                await asyncio.sleep(0.8)
+
             return {
                 "room": room_name,
                 "persona": persona,
                 "phrase": phrase,
-                "learner_transcript": learner_lines[-1] if learner_lines else None,
                 "opening": remote_lines[0] if remote_lines else None,
-                "reply": remote_lines[-1] if len(remote_lines) > 1 else None,
-                "external_speech_end_to_audio_ms": latency_ms,
+                "turns": results,
+                "barge_in": barge_in,
             }
         finally:
             await room.disconnect()
@@ -214,8 +249,20 @@ def main() -> None:
     parser.add_argument("persona", choices=sorted(PHRASES))
     parser.add_argument("--phrase")
     parser.add_argument("--timeout", type=float, default=60)
+    parser.add_argument("--barge-in", action="store_true")
+    parser.add_argument("--turns", type=int, default=1)
     args = parser.parse_args()
-    result = asyncio.run(run_probe(args.persona, args.phrase or PHRASES[args.persona], args.timeout))
+    if args.turns < 1:
+        parser.error("--turns must be at least 1")
+    result = asyncio.run(
+        run_probe(
+            args.persona,
+            args.phrase or PHRASES[args.persona],
+            args.timeout,
+            args.barge_in,
+            args.turns,
+        )
+    )
     print(json.dumps(result, ensure_ascii=False))
 
 

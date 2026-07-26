@@ -40,7 +40,7 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 
 - Frontend: Next.js + Tailwind, PWA, Vercel.
 - Realtime: LiveKit Cloud, one room per session.
-- STT: Sarvam Saarika (streaming, language-locked, code-mixing on). TTS: Sarvam Bulbul V3 (streaming WS, voice per persona). Brain: Gemini Flash class behind a `Brain` interface with Anthropic fallback.
+- STT: Sarvam Saarika v2.5 streaming with `language="unknown"` auto-detect for every call, so English questions and code-mixed speech remain understandable. TTS: Sarvam Bulbul V3 (streaming WS, voice per persona). Brain: Gemini Flash class behind a `Brain` interface with Anthropic fallback.
 - DB: Neon Postgres + Drizzle.
 - Latency budget: under 1.5s from user speech end to agent audio start. Log per turn.
 - Personas are JSON data. `secret_agenda` is rewritten nightly. Characters NEVER correct the learner in scene.

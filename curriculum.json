@@ -46,9 +46,10 @@
               "how are you = aap kaise hain",
               "note: to a woman it is aap kaisi hain; mention this briefly",
               "I am fine = main theek hoon",
-              "thank you = dhanyavaad (shukriya is also very common)",
-              "please = kripya",
-              "note: kripya sounds like a railway announcement; in real speech people make the verb polite (dijiye, boliye) or just say please in English",
+              "thank you = shukriya",
+              "note: dhanyavaad also means thank you but sounds more formal; shukriya is warmer and more casual",
+              "please = please (or use a polite verb ending such as dijiye)",
+              "note: kripya is the literal word but sounds written or formal; everyday speech uses a polite verb or the English word please",
               "sorry = maaf kijiye",
               "yes = haan",
               "no = nahin"
@@ -91,7 +92,7 @@
               "my name is ___ = nanna hesaru ___",
               "what is your name = nimma hesaru enu",
               "I am from ___ (my home town is ___) = nanna ooru ___",
-              "nice to meet you = nimmannu bheti aagiddu santosha",
+              "nice to meet you = nimmannu nodi santoshavaaytu",
               "note: in daily life most people simply say nice to meet you in English; teach the Kannada form but mention this"
             ],
             "hi": [
@@ -537,7 +538,7 @@
             ],
             "ta": [
               "I eat = naan saapdren (naan saadham saapdren = I eat rice)",
-              "I drink = naan kudikkiren",
+              "I drink = naan kudikkuren",
               "I go = naan poren (naan veetukku poren = I go home)",
               "I speak = naan pesuren (naan konjam Tamil pesuren = I speak a little Tamil)",
               "I come = naan varen"
@@ -585,7 +586,7 @@
               "I went = naan ponen (naan veetukku ponen = I went home)",
               "I came = naan vandhen",
               "I saw = naan paathen",
-              "today = innikki, yesterday = nethikku (nethikku naan veetukku ponen = yesterday I went home)",
+              "today = innikki, yesterday = nethu (nethu naan veetukku ponen = yesterday I went home)",
               "note: contrast pair to teach the ending: saapdren (I eat) vs saapten (I ate)"
             ]
           }
@@ -678,7 +679,7 @@
             "ta": [
               "and = add um to both words (tea-um saadham-um = tea and rice)",
               "but = aana",
-              "because = adhunaala, said as 'that is why' (late aachu, adhunaala naan poren = it got late, that is why I am going)",
+              "because = aenna (naan poren, aenna late aachu = I am going because it got late)",
               "note: word order is subject, object, verb: naan saadham saapdren = I rice eat"
             ]
           }

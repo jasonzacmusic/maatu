@@ -1,6 +1,6 @@
 """Maatu voice agent worker.
 
-Per turn: LiveKit room audio -> Sarvam Saarika STT (language-locked) -> Gemini
+Per turn: LiveKit room audio -> Sarvam Saarika STT (auto-detect) -> Gemini
 Flash brain holding the persona -> Sarvam Bulbul V3 TTS -> room audio. The
 persona is chosen from the room name (see persona.py). Per-turn latency from
 user-speech-end to agent-audio-start is logged.
@@ -22,7 +22,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import Agent, AgentSession, metrics
+from livekit.agents import Agent, AgentSession
 from livekit.plugins import anthropic, google, sarvam, silero
 
 from persona import apply_secret_agenda, persona_from_room_name
@@ -64,8 +64,8 @@ def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
         agenda = data.get("secretAgenda")
         if isinstance(agenda, list) and all(isinstance(item, str) for item in agenda):
             return agenda, data.get("updatedAt")
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("active agenda unavailable persona=%s error=%s", persona_id, exc)
     return None, None
 
 logger = logging.getLogger("maatu.agent")
@@ -75,17 +75,22 @@ logging.basicConfig(level=logging.INFO)
 async def entrypoint(ctx: agents.JobContext):
     await ctx.connect()
 
-    persona = persona_from_room_name(ctx.room.name)
+    try:
+        persona = persona_from_room_name(ctx.room.name)
+    except ValueError as exc:
+        logger.error("rejecting room=%s error=%s", ctx.room.name, exc)
+        return
     agenda, agenda_updated_at = await asyncio.to_thread(fetch_active_agenda, persona.id)
     if agenda:
         persona = apply_secret_agenda(persona, agenda)
     logger.info(
-        "room=%s persona=%s language=%s voice=%s brain=%s agenda_updated_at=%s",
+        "room=%s persona=%s language=%s voice=%s brain=%s difficulty=%s agenda_updated_at=%s",
         ctx.room.name,
         persona.id,
         persona.language,
         persona.voice,
         BRAIN,
+        persona.raw.get("_difficulty_stage", 2),
         agenda_updated_at or "default",
     )
 
@@ -95,9 +100,10 @@ async def entrypoint(ctx: agents.JobContext):
         speaker=persona.voice,
         pace=persona.pace,
         min_buffer_size=30,
+        max_chunk_length=50,
+        output_audio_codec="mp3",
         api_key=SARVAM_API_KEY,
     )
-
     session = AgentSession(
         stt=sarvam.STT(
             # Auto-detect, NOT locked to the target language. A beginner speaks
@@ -115,9 +121,17 @@ async def entrypoint(ctx: agents.JobContext):
         tts=tts_engine,
         vad=silero.VAD.load(min_silence_duration=0.25),
         turn_handling={
-            "endpointing": {"min_delay": 0.3, "max_delay": 2.0},
+            "endpointing": {"min_delay": 0.1, "max_delay": 0.4},
+            "interruption": {
+                "enabled": True,
+                "mode": "vad",
+                "min_duration": 0.25,
+                "min_words": 1,
+                "resume_false_interruption": False,
+            },
             "preemptive_generation": {"enabled": True, "preemptive_tts": True, "max_speech_duration": 12.0},
         },
+        aec_warmup_duration=0.75,
     )
 
     async def _apply_slow_down():
@@ -164,11 +178,34 @@ async def entrypoint(ctx: agents.JobContext):
         if payload.get("action") == "slow-down":
             asyncio.create_task(_apply_slow_down())
 
+    @session.on("user_input_transcribed")
+    def _on_user_input_transcribed(ev):
+        if not getattr(ev, "is_final", False):
+            return
+        text = getattr(ev, "transcript", "").lower()
+        slow_requests = (
+            "slow down",
+            "speak slowly",
+            "dheere",
+            "nidhaan",
+            "medhuva",
+            "slow aagi",
+        )
+        if any(phrase in text for phrase in slow_requests):
+            slower_pace = max(0.72, persona.pace - 0.18)
+            tts_engine.update_options(pace=slower_pace)
+            logger.info(
+                "control=spoken-slow-down persona=%s pace=%.2f transcript=%s",
+                persona.id,
+                slower_pace,
+                text,
+            )
+
     # Latency logging: mark the VAD speech end, then measure to first agent audio.
     # The canned one-word acknowledgment that used to play here is gone for good:
     # when the brain broke it was the ONLY thing the learner ever heard, and even
-    # healthy it made the teacher sound robotic. Preemptive generation above keeps
-    # latency inside the budget without faking a reply.
+    # healthy it made the teacher sound robotic. Preemptive generation above reduces
+    # latency without faking a reply, but the 1.5 second budget is still not met.
     turn = {
         "user_stopped_at": None,
         "awaiting_first_audio": False,
@@ -202,17 +239,13 @@ async def entrypoint(ctx: agents.JobContext):
             turn["user_stopped_at"] = None
             turn["awaiting_first_audio"] = False
 
-    @session.on("metrics_collected")
-    def _on_metrics(ev):
-        metrics.log_metrics(ev.metrics)
-
     await session.start(
         room=ctx.room,
         agent=Agent(instructions=persona.system_prompt),
     )
 
     # The character speaks first, in scene.
-    await session.generate_reply(instructions=persona.opening)
+    await session.generate_reply(instructions=persona.opening, allow_interruptions=True)
 
 
 if __name__ == "__main__":

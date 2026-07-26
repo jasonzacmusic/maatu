@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { PERSONAS } from "@/lib/personas.generated";
 import { generateReport, type Line } from "@/lib/coach";
 import { getReport, saveReport } from "@/lib/db";
 import { romanizeText } from "@/lib/romanize";
+import { personaMeta } from "@/lib/curriculum";
 
 // The debrief coach endpoint.
 // GET  /api/report?room=...  fetches a saved report.
@@ -31,7 +31,8 @@ export async function POST(request: Request) {
   const transcript: Line[] = Array.isArray(body.transcript) ? body.transcript : [];
   const durationSec: number = Number(body.durationSec) || 0;
 
-  if (!room || !personaId || !PERSONAS[personaId]) {
+  const persona = personaId ? personaMeta(personaId) : null;
+  if (!room || !personaId || !persona) {
     return NextResponse.json({ status: "none" }, { status: 400 });
   }
 
@@ -41,7 +42,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ status: "ready", report: existing.report });
   }
 
-  const persona = PERSONAS[personaId];
   const romanizedTranscript = await Promise.all(
     transcript.map(async (line) => ({ ...line, text: await romanizeText(line.text, persona.languageCode) })),
   );
@@ -55,17 +55,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ status: "none" });
   }
 
-  await saveReport({
-    room,
-    userId,
-    personaId,
-    language: persona.language,
-    scenario: persona.scenario,
-    durationSec,
-    report,
-    transcript: romanizedTranscript,
-    coachAudioB64: report.coach_audio_b64 ?? null,
-  }).catch(() => {});
+  let persisted = true;
+  try {
+    await saveReport({
+      room,
+      userId,
+      personaId,
+      language: persona.language,
+      scenario: persona.scenario,
+      durationSec,
+      report,
+      transcript: romanizedTranscript,
+      coachAudioB64: report.coach_audio_b64 ?? null,
+    });
+  } catch (error) {
+    persisted = false;
+    console.error("Could not save Maatu report", error);
+  }
 
-  return NextResponse.json({ status: "ready", report });
+  return NextResponse.json({ status: "ready", report, persisted });
 }

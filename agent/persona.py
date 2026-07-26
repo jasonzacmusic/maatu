@@ -8,6 +8,7 @@ No em dashes anywhere, per brand rule.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -20,7 +21,7 @@ LANG_NAMES = {
     "en-IN": "Indian English",
 }
 
-DEFAULT_PERSONA = "kn-auto"
+DIFFICULTY_SUFFIX = re.compile(r"^(?P<base>.+)-d(?P<stage>[123])$")
 
 
 @dataclass
@@ -74,7 +75,23 @@ def _build_system_prompt(p: dict) -> str:
             "them: " + "; ".join(agenda) + "."
         )
     parts.append(f"How the scene ends: {p['end_condition']}")
-    return "\n\n".join(x for x in parts if x)
+    prompt = "\n\n".join(x for x in parts if x)
+    stage = int(p.get("_difficulty_stage", 2))
+    if stage == 1:
+        return (
+            prompt
+            + "\n\nSupport level: speak a little slower than normal, use one short clause "
+            "at a time, and rephrase once in simpler target-language words if the person "
+            "gets stuck. Keep the scene real and never become a teacher."
+        )
+    if stage == 3:
+        return (
+            prompt
+            + "\n\nChallenge level: use natural everyday speed, introduce one realistic "
+            "complication from this scene, and only simplify or use English support when "
+            "the person explicitly asks. Keep turns short enough to interrupt."
+        )
+    return prompt
 
 
 def _persona_from_fields(data: dict) -> Persona:
@@ -101,7 +118,11 @@ def _persona_from_fields(data: dict) -> Persona:
 
 
 def load_persona(persona_id: str | None) -> Persona:
-    pid = persona_id or DEFAULT_PERSONA
+    if not persona_id:
+        raise ValueError("Missing persona id")
+    difficulty_match = DIFFICULTY_SUFFIX.fullmatch(persona_id)
+    difficulty_stage = int(difficulty_match.group("stage")) if difficulty_match else 2
+    pid = difficulty_match.group("base") if difficulty_match else persona_id
     # Classroom mode: teacher-<lang>-<lesson> and tutor-<lang> are built, not files.
     if pid.startswith("teacher-") or pid.startswith("tutor-"):
         from teacher import build_fields
@@ -109,12 +130,12 @@ def load_persona(persona_id: str | None) -> Persona:
         fields = build_fields(pid)
         if fields:
             return _persona_from_fields(fields)
-        pid = DEFAULT_PERSONA
+        raise ValueError(f"Unknown classroom persona: {pid}")
     path = PERSONA_DIR / f"{pid}.json"
     if not path.exists():
-        path = PERSONA_DIR / f"{DEFAULT_PERSONA}.json"
-        pid = DEFAULT_PERSONA
+        raise ValueError(f"Unknown persona: {pid}")
     data = json.loads(path.read_text())
+    data["_difficulty_stage"] = difficulty_stage
     tts = data.get("tts", {}) or {}
     gender = data.get("gender", "male")
     # Resolve to a valid Bulbul v3 voice, gender appropriate if none/invalid.
@@ -142,7 +163,7 @@ def load_persona(persona_id: str | None) -> Persona:
 
 
 def persona_from_room_name(room_name: str) -> Persona:
-    """Room names are '<persona-id>__<random>'. Fall back to the default."""
+    """Room names are '<persona-id>__<random>'. Unknown ids fail explicitly."""
     persona_id = room_name.split("__", 1)[0] if room_name else None
     return load_persona(persona_id)
 

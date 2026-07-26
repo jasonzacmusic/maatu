@@ -1,4 +1,5 @@
-import { PERSONAS, type PersonaMeta } from "./personas.generated";
+import type { PersonaMeta } from "./personas.generated";
+import { personaMeta } from "./curriculum";
 import { hasNativeScript, romanizeText } from "./romanize";
 
 // The debrief coach. Runs the real conversation transcript through the brain to
@@ -25,9 +26,14 @@ function buildPrompt(persona: PersonaMeta, transcript: Line[]): string {
   const convo = transcript
     .map((l) => `${l.who === "learner" ? "LEARNER" : persona.name.toUpperCase()}: ${l.text}`)
     .join("\n");
-  const mode = persona.teachMode
-    ? `This was a TEACH MODE session: the learner was TEACHING a music concept to ${persona.name}, a student, in ${persona.languageName}. Evaluate their TEACHING: clarity, whether they used ${persona.languageName} music vocabulary (flag every time they fell back to English for a concept word and give the ${persona.languageName} term), pacing, and whether the student's questions were truly answered.`
-    : `This was a role play: the learner practiced spoken ${persona.languageName} with ${persona.name} (${persona.sceneLabel}). Evaluate their spoken ${persona.languageName}.`;
+  const mode =
+    persona.scenario === "class"
+      ? `This was a teacher-led ${persona.languageName} lesson with ${persona.name}. Evaluate only what the learner actually said, whether the target meaning was communicated, the strongest form they produced, and one useful correction. A completed final speaking check requires the teacher's exact "Final speaking check." marker, at least three later learner replies, and then the exact "Lesson complete" marker. If any evidence is absent, explicitly say the final speaking check was not completed. Never infer completion from an ordinary correction or retry.`
+      : persona.scenario === "tutor"
+        ? `This was an open ${persona.languageName} companion session with ${persona.name}. The learner could chat, ask to learn any topic, or invent a role play. Evaluate the conversation they actually chose and ground every observation in their words.`
+        : persona.teachMode
+          ? `This was a TEACH MODE session: the learner was TEACHING a music concept to ${persona.name}, a student, in ${persona.languageName}. Evaluate their TEACHING: clarity, whether they used ${persona.languageName} music vocabulary (flag every time they fell back to English for a concept word and give the ${persona.languageName} term), pacing, and whether the student's questions were truly answered.`
+          : `This was a role play: the learner practiced spoken ${persona.languageName} with ${persona.name} (${persona.sceneLabel}). Evaluate their spoken ${persona.languageName}.`;
   return `You are the Maatu coach. Warm, direct, no flattery padding. ${mode}
 Rubric to weigh: ${persona.rubric.join(", ")}.
 
@@ -96,10 +102,16 @@ async function synthCoachAudio(text: string, languageCode: string): Promise<stri
 // but nothing used to enforce it; run every user-visible field through the
 // same transliteration guard the live captions use, with a strip fallback.
 async function ensureRoman(text: string, languageCode: string): Promise<string> {
-  if (!hasNativeScript(text)) return text;
-  const out = await romanizeText(text, languageCode);
-  if (out && out !== "Romanization unavailable" && !hasNativeScript(out)) return out;
-  return text.replace(/[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]+/gu, "").replace(/\s+/g, " ").trim();
+  const brandSafe = text.replace(/\u2014/gu, ",");
+  if (!hasNativeScript(brandSafe)) return brandSafe;
+  const out = await romanizeText(brandSafe, languageCode);
+  if (out && out !== "Romanization unavailable" && !hasNativeScript(out)) {
+    return out.replace(/\u2014/gu, ",");
+  }
+  return brandSafe
+    .replace(/[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]+/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export async function generateReport(
@@ -107,7 +119,7 @@ export async function generateReport(
   transcript: Line[],
   durationSec: number,
 ): Promise<CoachReport | null> {
-  const persona = PERSONAS[personaId];
+  const persona = personaMeta(personaId);
   if (!persona) return null;
 
   const prompt = buildPrompt(persona, transcript);

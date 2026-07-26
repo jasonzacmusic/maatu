@@ -5,3 +5,4 @@ livekit-plugins-google==1.3.6
 livekit-plugins-anthropic
 livekit-plugins-silero==1.3.12
 python-dotenv
+certifi

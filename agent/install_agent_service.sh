@@ -35,7 +35,7 @@ if [ ! -x "$RT/agent/.venv/bin/python" ]; then
   "$RT/agent/.venv/bin/pip" install --quiet --upgrade pip
   "$RT/agent/.venv/bin/pip" install --quiet "livekit-agents>=1.0" \
     livekit-plugins-sarvam livekit-plugins-google livekit-plugins-anthropic \
-    livekit-plugins-silero python-dotenv
+    livekit-plugins-silero python-dotenv certifi
 fi
 
 cat > "$RT/agent/run_worker.sh" << 'SH'
@@ -44,6 +44,11 @@ cd "$(dirname "$0")" || exit 1
 LOG="$HOME/Library/Logs/maatu-agent.log"
 if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 5000000 ]; then : > "$LOG"; fi
 export PYTHONUNBUFFERED=1
+# LiveKit's Rust WebSocket client intermittently fails to read the macOS
+# keychain trust store under launchd. Use certifi's bundled roots.
+CERT_BUNDLE="$(./.venv/bin/python -c 'import certifi; print(certifi.where())')"
+export SSL_CERT_FILE="$CERT_BUNDLE"
+export REQUESTS_CA_BUNDLE="$CERT_BUNDLE"
 echo "=== maatu agent starting $(date) ===" >> "$LOG"
 if command -v caffeinate >/dev/null 2>&1; then
   exec caffeinate -s ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1

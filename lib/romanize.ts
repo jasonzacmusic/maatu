@@ -5,7 +5,7 @@ export function hasNativeScript(text: string) {
 }
 
 export async function romanizeText(text: string, sourceLanguageCode: string) {
-  const trimmed = text.trim();
+  const trimmed = text.trim().replace(/\u2014/gu, ",");
   if (!trimmed || !hasNativeScript(trimmed)) return trimmed;
 
   const key = process.env.SARVAM_API_KEY;
@@ -25,7 +25,9 @@ export async function romanizeText(text: string, sourceLanguageCode: string) {
     if (!response.ok) return "Romanization unavailable";
     const data = await response.json();
     const result = typeof data.transliterated_text === "string" ? data.transliterated_text.trim() : "";
-    return result && !hasNativeScript(result) ? result : "Romanization unavailable";
+    return result && !hasNativeScript(result)
+      ? result.replace(/\u2014/gu, ",")
+      : "Romanization unavailable";
   } catch {
     return "Romanization unavailable";
   }

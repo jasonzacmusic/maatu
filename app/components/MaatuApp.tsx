@@ -44,7 +44,14 @@ type Screen =
   | "lessonResult"
   | "settings";
 type Tab = "hub" | "school" | "progress" | "settings";
-type SessionEnd = { room: string | null; transcript: Line[]; rawTranscript?: Line[]; durationSec: number };
+type SessionEnd = {
+  room: string | null;
+  transcript: Line[];
+  rawTranscript?: Line[];
+  durationSec: number;
+  endedUnexpectedly?: boolean;
+};
+type DifficultyStage = 1 | 2 | 3;
 type LessonResult = { lesson: Lesson; passed: boolean; transcript: Line[] };
 type StreetStats = {
   totalSeconds: number;
@@ -62,6 +69,11 @@ function minutes(seconds: number) {
 }
 function personaFor(shop: ShopId, lang: Lang): string | null {
   return personaId(shop, lang);
+}
+function requirePersona(id: string): PersonaMeta {
+  const meta = PERSONAS[id];
+  if (!meta) throw new Error(`Unknown Maatu persona: ${id}`);
+  return meta;
 }
 function initial(name: string) {
   return (name || "?").trim().charAt(0).toUpperCase();
@@ -116,6 +128,12 @@ function difficultyColor(d: string) {
   if (d === "Intermediate") return C.milk;
   if (d === "Teach mode") return C.tube;
   return C.sodium;
+}
+
+function progressionLabel(stage: DifficultyStage) {
+  if (stage === 1) return "Supported";
+  if (stage === 3) return "Challenge";
+  return "Everyday";
 }
 
 // Nav icons, simple line marks.
@@ -261,7 +279,17 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
 }
 
 // ....................................................... HUB
-function ScenarioCard({ shop, lang, onOpen }: { shop: ShopId; lang: Lang; onOpen: (shop: ShopId) => void }) {
+function ScenarioCard({
+  shop,
+  lang,
+  difficultyStage,
+  onOpen,
+}: {
+  shop: ShopId;
+  lang: Lang;
+  difficultyStage: DifficultyStage;
+  onOpen: (shop: ShopId) => void;
+}) {
   const id = personaFor(shop, lang);
   const p = id ? PERSONAS[id] : null;
   const live = !!p;
@@ -305,7 +333,7 @@ function ScenarioCard({ shop, lang, onOpen }: { shop: ShopId; lang: Lang; onOpen
         <div className="mt-0.5 text-[12.5px]" style={{ color: live ? C.muted : C.faint }}>
           {live ? tagline : "Opening soon"}
           {live && (
-            <span style={{ color: difficultyColor(diff) }}> · {diff}</span>
+            <span style={{ color: difficultyColor(diff) }}> · {diff} · {progressionLabel(difficultyStage)}</span>
           )}
         </div>
       </div>
@@ -318,6 +346,7 @@ function Hub({
   stats,
   nextLesson,
   completedLessons,
+  difficultyStage,
   onScenario,
   onSchool,
   onTutor,
@@ -327,6 +356,7 @@ function Hub({
   stats: StreetStats;
   nextLesson: { index: number; title: string };
   completedLessons: number;
+  difficultyStage: DifficultyStage;
   onScenario: (shop: ShopId) => void;
   onSchool: () => void;
   onTutor: () => void;
@@ -360,7 +390,7 @@ function Hub({
               {completedLessons === 0 ? "YOUR FIRST STEP" : "CONTINUE LEARNING"}
             </span>
             <span className="rounded-full px-2.5 py-1 text-[11px] font-semibold" style={{ background: "rgba(255,179,92,0.12)", color: C.sodium }}>
-              {completedLessons}/15 complete
+              {completedLessons}/{ALL_LESSONS.length} complete
             </span>
           </div>
           <div className="mt-3 flex items-center gap-4">
@@ -414,7 +444,7 @@ function Hub({
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {SCENARIO_ORDER.map((shop) => (
-            <ScenarioCard key={shop} shop={shop} lang={lang} onOpen={onScenario} />
+            <ScenarioCard key={shop} shop={shop} lang={lang} difficultyStage={difficultyStage} onOpen={onScenario} />
           ))}
         </div>
       </div>
@@ -423,7 +453,21 @@ function Hub({
 }
 
 // ....................................................... SCENARIO PRE-CALL
-function ScenarioDetail({ meta, shop, onBack, onCall, rm }: { meta: PersonaMeta; shop: ShopId; onBack: () => void; onCall: () => void; rm: boolean }) {
+function ScenarioDetail({
+  meta,
+  shop,
+  difficultyStage,
+  onBack,
+  onCall,
+  rm,
+}: {
+  meta: PersonaMeta;
+  shop: ShopId;
+  difficultyStage: DifficultyStage;
+  onBack: () => void;
+  onCall: () => void;
+  rm: boolean;
+}) {
   const diff = DIFFICULTY[shop];
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
@@ -445,7 +489,7 @@ function ScenarioDetail({ meta, shop, onBack, onCall, rm }: { meta: PersonaMeta;
         </div>
         <div className="flex flex-1 flex-col px-7 pb-10 pt-6">
           <span className="self-start rounded-full px-3 py-1.5 text-[11.5px] font-semibold" style={{ color: difficultyColor(diff), background: "rgba(255,179,92,0.12)" }}>
-            {diff} · about {meta.level <= 2 ? 3 : 6} min
+            {diff} · {progressionLabel(difficultyStage)}
           </span>
           <h1 className="mt-3.5" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 30, lineHeight: 1.1, color: C.milk }}>
             {meta.name}
@@ -455,6 +499,13 @@ function ScenarioDetail({ meta, shop, onBack, onCall, rm }: { meta: PersonaMeta;
           </div>
           <p className="mt-4 text-[15px] leading-relaxed" style={{ color: C.milk }}>
             {SCENARIO_BRIEF[shop]}
+          </p>
+          <p className="mt-3 text-[13px] leading-relaxed" style={{ color: C.muted }}>
+            {difficultyStage === 1
+              ? "You will get shorter turns, extra prompting, and patient repeats."
+              : difficultyStage === 3
+                ? "Expect faster turns, follow-up questions, and fewer hints."
+                : "Expect natural turns with help when you ask for it."}
           </p>
           <button
             onClick={onCall}
@@ -476,6 +527,7 @@ function ScenarioDetail({ meta, shop, onBack, onCall, rm }: { meta: PersonaMeta;
 function CallScreen({
   meta,
   lang,
+  difficultyStage,
   captionsDefault,
   onEnd,
   onBack,
@@ -483,12 +535,13 @@ function CallScreen({
 }: {
   meta: PersonaMeta;
   lang: Lang;
+  difficultyStage: DifficultyStage;
   captionsDefault: boolean;
   onEnd: (payload: SessionEnd) => void;
   onBack: () => void;
   rm: boolean;
 }) {
-  const call = useMaatuCall(meta.id);
+  const call = useMaatuCall(meta.id, difficultyStage);
   const [caps, setCaps] = useState(captionsDefault);
   const [slowPending, setSlowPending] = useState(false);
   const [sec, setSec] = useState(0);
@@ -542,9 +595,14 @@ function CallScreen({
     if (endedRef.current) return;
     endedRef.current = true;
     const room = call.roomName;
-    const transcript = call.transcript;
     await call.hangUp();
-    onEnd({ room, transcript, rawTranscript: call.recordTranscript(), durationSec: sec });
+    onEnd({
+      room,
+      transcript: call.recordDisplayTranscript(),
+      rawTranscript: call.recordTranscript(),
+      durationSec: sec,
+      endedUnexpectedly: call.endedUnexpectedly,
+    });
   };
 
   // A dropped connection (network blip, agent offline, token expiry) must not
@@ -554,9 +612,10 @@ function CallScreen({
     endedRef.current = true;
     onEnd({
       room: call.roomName,
-      transcript: call.transcript,
+      transcript: call.recordDisplayTranscript(),
       rawTranscript: call.recordTranscript(),
       durationSec: sec,
+      endedUnexpectedly: call.endedUnexpectedly,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [call.phase]);
@@ -573,6 +632,8 @@ function CallScreen({
       ? `Calling ${meta.name}`
       : call.phase === "error"
         ? call.error ?? "Could not connect"
+        : call.connectionIssue
+          ? call.connectionIssue
         : call.phase === "ended"
           ? "Call over"
           : call.micIssue
@@ -642,9 +703,9 @@ function CallScreen({
 
         {/* caption block */}
         <div className="flex flex-1 flex-col justify-center gap-4 px-7">
-          {(call.micIssue || (noShow && !call.characterHeard)) && recent.length > 0 && (
+          {(call.connectionIssue || call.micIssue || (noShow && !call.characterHeard)) && recent.length > 0 && (
             <p className="text-center text-[13px] font-semibold" style={{ color: C.kumkum }}>
-              {call.micIssue ?? `${meta.name} is not answering right now. Hang up and try again in a minute.`}
+              {call.connectionIssue ?? call.micIssue ?? `${meta.name} is not answering right now. Hang up and try again in a minute.`}
             </p>
           )}
           {call.needsAudioUnlock ? (
@@ -759,6 +820,7 @@ function DebriefScreen({
   const [report, setReport] = useState<Report | null>(null);
   const [status, setStatus] = useState<"pending" | "ready" | "none">("pending");
   const [playing, setPlaying] = useState(false);
+  const [persisted, setPersisted] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -785,6 +847,7 @@ function DebriefScreen({
         if (!alive) return;
         if (data.status === "ready" && data.report) {
           setReport(data.report);
+          setPersisted(data.persisted !== false);
           setStatus("ready");
           onReportReady();
         } else {
@@ -814,6 +877,16 @@ function DebriefScreen({
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: 260, background: "radial-gradient(180px 130px at 50% 0, rgba(191,239,219,0.20), transparent 70%)" }} aria-hidden="true" />
       <div className="relative mx-auto max-w-[560px] px-6 pb-28 pt-16">
+        {session?.endedUnexpectedly && (
+          <div className="mb-4 rounded-[14px] px-4 py-3 text-[13px] font-semibold" style={{ background: "rgba(232,80,58,0.12)", border: "1px solid rgba(232,80,58,0.30)", color: C.onKumkum }}>
+            The call was interrupted. Your transcript is safe.
+          </div>
+        )}
+        {!persisted && (
+          <div className="mb-4 rounded-[14px] px-4 py-3 text-[13px] font-semibold" style={{ background: "rgba(255,179,92,0.12)", border: "1px solid rgba(255,179,92,0.30)", color: C.sodium }}>
+            Your coach notes are ready, but they could not be saved to progress.
+          </div>
+        )}
         <div className="text-center">
           {status === "ready" && report?.coach_audio_b64 && (
             <button
@@ -835,6 +908,11 @@ function DebriefScreen({
           <p className="mt-1.5 text-[14px]" style={{ color: C.muted }}>
             {report ? `${report.duration_min} min with ${meta.name}. Here is how it went.` : `${meta.name}, ${meta.sceneLabel.split(",")[0].toLowerCase()}`}
           </p>
+          {status === "ready" && report && !report.coach_audio_b64 && (
+            <p className="mt-2 text-[12.5px]" style={{ color: C.mono }}>
+              The audio summary is unavailable. Your written coach notes are complete.
+            </p>
+          )}
         </div>
 
         {status === "pending" && (
@@ -1307,21 +1385,34 @@ export default function MaatuApp() {
     ? activePersona.startsWith("tutor-")
       ? teacherMeta(lang, null)
       : teacherMeta(lang, activePersona.split("-").slice(2).join("-"))
-    : PERSONAS[activePersona] ?? PERSONAS["kn-auto"];
+    : requirePersona(activePersona);
 
   const handleCallEnd = useCallback(
     (payload: SessionEnd) => {
       if (activePersona.startsWith("teacher-")) {
         const lessonId = activePersona.split("-").slice(2).join("-");
         const lesson = ALL_LESSONS.find((item) => item.id === lessonId);
-        // Check both the display transcript and the raw one: a romanization
-        // hiccup must never turn an honestly passed lesson into a fail.
-        const passed = lessonWasMastered([...payload.transcript, ...(payload.rawTranscript ?? [])]);
+        const raw = payload.rawTranscript ?? [];
+        const assessmentTranscript = Array.from(
+          { length: Math.max(payload.transcript.length, raw.length) },
+          (_, index) => {
+            const displayLine = payload.transcript[index];
+            const rawLine = raw[index];
+            return {
+              who: displayLine?.who ?? rawLine?.who ?? "learner",
+              text: `${displayLine?.text ?? ""} ${rawLine?.text ?? ""}`.trim(),
+            };
+          },
+        );
+        const passed = lesson
+          ? lessonWasMastered(assessmentTranscript, lesson, lang)
+          : false;
         if (passed) markDone(lang, lessonId);
         if (lesson) setLastLessonResult({ lesson, passed, transcript: payload.transcript });
         setScreen(lesson ? "lessonResult" : "school");
       } else if (activePersona.startsWith("tutor-")) {
-        setScreen(tutorOrigin);
+        setLastSession(payload);
+        setScreen("debrief");
       } else {
         setLastSession(payload);
         setScreen("debrief");
@@ -1333,6 +1424,7 @@ export default function MaatuApp() {
   // Next lesson label for the course-first home card.
   const done = ready ? getDone(lang) : new Set<string>();
   const completedLessonCount = ALL_LESSONS.filter((lesson) => done.has(lesson.id)).length;
+  const difficultyStage: DifficultyStage = completedLessonCount < 6 ? 1 : completedLessonCount < 12 ? 2 : 3;
   const nextIndex = ALL_LESSONS.findIndex((lesson) => !done.has(lesson.id));
   const nextLessonItem = nextIndex >= 0 ? ALL_LESSONS[nextIndex] : ALL_LESSONS[0];
   const nextLesson = { index: nextIndex >= 0 ? nextIndex + 1 : 1, title: nextLessonItem.title };
@@ -1354,15 +1446,23 @@ export default function MaatuApp() {
       <main className="relative flex-1 overflow-hidden">
         <div key={screen} className="absolute inset-0" style={{ animation: rm ? undefined : "mtFade 420ms ease both" }}>
           {!ready ? null : screen === "onboarding" ? (
-            <Onboarding lang={lang} setLang={setLang} onEnter={() => setScreen("school")} rm={rm} />
+            <Onboarding
+              lang={lang}
+              setLang={setLang}
+              onEnter={() => {
+                setLang(lang);
+                setScreen("school");
+              }}
+              rm={rm}
+            />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} rm={rm} />
           ) : screen === "lessonPreview" ? (
             <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
-            <ScenarioDetail meta={meta} shop={pendingShop} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
+            <ScenarioDetail meta={meta} shop={pendingShop} difficultyStage={difficultyStage} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
           ) : screen === "call" ? (
-            <CallScreen meta={meta} lang={lang} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} />
+            <CallScreen meta={meta} lang={lang} difficultyStage={difficultyStage} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} />
           ) : screen === "lessonResult" && lastLessonResult ? (
             <LessonResultScreen
               lang={lang}
@@ -1374,7 +1474,7 @@ export default function MaatuApp() {
               onRetry={() => startLesson(lastLessonResult.lesson.id)}
             />
           ) : screen === "debrief" ? (
-            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen("hub")} onAgain={() => setScreen("call")} />
+            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen(activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} onAgain={() => setScreen("call")} />
           ) : screen === "progress" ? (
             <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (

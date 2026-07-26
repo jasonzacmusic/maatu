@@ -1,5 +1,5 @@
 import curriculum from "@/curriculum.json";
-import type { PersonaMeta } from "./personas.generated";
+import { PERSONAS, type PersonaMeta } from "./personas.generated";
 import type { Lang } from "./maatu-design";
 
 // Classroom mode: structured lessons and a free-conversation tutor, taught by a
@@ -42,8 +42,19 @@ export function teacherMeta(lang: Lang, lessonId: string | null): PersonaMeta {
     level: 0,
     sceneLabel: label,
     teachMode: false,
-    rubric: [],
+    rubric: isTutor
+      ? ["what the learner asked for", "meaning communicated", "one useful next step"]
+      : ["lesson goal", "meaning communicated", "final speaking check"],
   };
+}
+
+export function personaMeta(personaId: string): PersonaMeta | null {
+  if (PERSONAS[personaId]) return PERSONAS[personaId];
+  const tutor = /^tutor-(kn|hi|ta)$/.exec(personaId);
+  if (tutor) return teacherMeta(tutor[1] as Lang, null);
+  const teacher = /^teacher-(kn|hi|ta)-(.+)$/.exec(personaId);
+  if (!teacher || !ALL_LESSONS.some((lesson) => lesson.id === teacher[2])) return null;
+  return teacherMeta(teacher[1] as Lang, teacher[2]);
 }
 
 // Per-device lesson completion, so the syllabus can show progress honestly
@@ -91,8 +102,42 @@ export function courseStatus(lang: Lang) {
   };
 }
 
-export function lessonWasMastered(transcript: { who: "character" | "learner"; text: string }[]) {
-  return transcript.some(
-    (line) => line.who === "character" && /\blesson\s+complete\b/i.test(line.text),
+export function lessonWasMastered(
+  transcript: { who: "character" | "learner"; text: string }[],
+  lesson: Lesson,
+  lang: Lang,
+) {
+  const normalized = transcript.filter(
+    (line, index, rows) =>
+      index === 0 || line.who !== rows[index - 1].who || line.text !== rows[index - 1].text,
   );
+  const checkStarted = normalized.findIndex(
+    (line) => line.who === "character" && /\bfinal\s+speaking\s+check\b/i.test(line.text),
+  );
+  const completed = normalized.findIndex(
+    (line, index) =>
+      index > checkStarted && line.who === "character" && /\blesson\s+complete\b/i.test(line.text),
+  );
+  if (checkStarted < 0 || completed < 0) return false;
+
+  const attempts = normalized
+    .slice(checkStarted + 1, completed)
+    .filter((line) => line.who === "learner" && line.text.trim().length >= 2);
+  if (attempts.length < 3) return false;
+
+  const targetTokens = new Set(
+    lesson.lexicon[lang]
+      .filter((entry) => !entry.startsWith("note:"))
+      .flatMap((entry) => (entry.split("=", 2)[1] ?? "").split(/[(),\s]+/))
+      .map((token) => token.toLowerCase().replace(/[^a-z]/g, ""))
+      .filter((token) => token.length >= 3),
+  );
+  const meaningfulAttempts = attempts.filter((line) =>
+    /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u.test(line.text) ||
+    line.text
+      .toLowerCase()
+      .split(/[^a-z]+/)
+      .some((token) => targetTokens.has(token)),
+  );
+  return meaningfulAttempts.length >= 2;
 }

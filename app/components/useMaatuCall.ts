@@ -21,7 +21,7 @@ export type Line = { who: "character" | "learner"; text: string };
 const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u;
 
 function safeRomanizedText(text: string) {
-  return NATIVE_SCRIPT.test(text) ? "Romanizing speech..." : text;
+  return NATIVE_SCRIPT.test(text) ? "Romanizing speech..." : text.replace(/\u2014/gu, ",");
 }
 
 function languageCode(persona: string) {
@@ -42,6 +42,8 @@ export interface MaatuCall {
   roomName: string | null;
   needsAudioUnlock: boolean;
   slowerPace: boolean;
+  connectionIssue: string | null;
+  endedUnexpectedly: boolean;
   connect: () => Promise<void>;
   hangUp: () => Promise<void>;
   toggleMute: () => Promise<void>;
@@ -51,9 +53,12 @@ export interface MaatuCall {
   // line exactly as transcribed, so the lesson pass check can never be broken
   // by a romanization failure.
   recordTranscript: () => Line[];
+  recordDisplayTranscript: () => Line[];
 }
 
-export function useMaatuCall(persona: string): MaatuCall {
+type PendingLine = Omit<Line, "text"> & { key: string; text: string | null };
+
+export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2): MaatuCall {
   const [phase, setPhase] = useState<CallPhase>("idle");
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
@@ -65,11 +70,34 @@ export function useMaatuCall(persona: string): MaatuCall {
   const [roomName, setRoomName] = useState<string | null>(null);
   const [needsAudioUnlock, setNeedsAudioUnlock] = useState(false);
   const [slowerPace, setSlowerPace] = useState(false);
+  const [connectionIssue, setConnectionIssue] = useState<string | null>(null);
+  const [endedUnexpectedly, setEndedUnexpectedly] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const rawRef = useRef<Line[]>([]);
   const displayRef = useRef<Line[]>([]);
+  const pendingRef = useRef<PendingLine[]>([]);
+  const seenFinalRef = useRef<Set<string>>(new Set());
+  const romanizationTasksRef = useRef<Set<Promise<void>>>(new Set());
+
+  const flushDisplay = useCallback(() => {
+    let changed = false;
+    while (pendingRef.current[0]?.text !== null) {
+      const ready = pendingRef.current.shift();
+      if (!ready?.text) continue;
+      displayRef.current.push({ who: ready.who, text: ready.text });
+      changed = true;
+    }
+    if (changed) setTranscript([...displayRef.current]);
+  }, []);
+
+  const settlePendingFallbacks = useCallback(() => {
+    for (const line of pendingRef.current) {
+      if (line.text === null) line.text = "Romanization unavailable";
+    }
+    flushDisplay();
+  }, [flushDisplay]);
 
   const ensureAudioEl = useCallback(() => {
     if (typeof document === "undefined") return null;
@@ -97,12 +125,17 @@ export function useMaatuCall(persona: string): MaatuCall {
   }, []);
 
   const hangUp = useCallback(async () => {
+    await Promise.race([
+      Promise.allSettled([...romanizationTasksRef.current]),
+      new Promise((resolve) => setTimeout(resolve, 2500)),
+    ]);
+    settlePendingFallbacks();
     const room = roomRef.current;
     roomRef.current = null;
     if (room) await room.disconnect();
     setSpeaker(null);
     setPhase("ended");
-  }, []);
+  }, [settlePendingFallbacks]);
 
   const connect = useCallback(async () => {
     setPhase("connecting");
@@ -112,10 +145,19 @@ export function useMaatuCall(persona: string): MaatuCall {
     setSlowerPace(false);
     setCharacterHeard(false);
     setMicIssue(null);
+    setConnectionIssue(null);
+    setEndedUnexpectedly(false);
     rawRef.current = [];
     displayRef.current = [];
+    pendingRef.current = [];
+    seenFinalRef.current = new Set();
+    romanizationTasksRef.current = new Set();
     try {
-      const res = await fetch(`/api/token?persona=${encodeURIComponent(persona)}`);
+      const callPersona =
+        persona.startsWith("teacher-") || persona.startsWith("tutor-")
+          ? persona
+          : `${persona}-d${difficultyStage}`;
+      const res = await fetch(`/api/token?persona=${encodeURIComponent(callPersona)}`);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Could not reach the character.");
@@ -129,7 +171,6 @@ export function useMaatuCall(persona: string): MaatuCall {
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
         const el = ensureAudioEl();
         if (track.kind === Track.Kind.Audio && el) {
-          setCharacterHeard(true);
           track.attach(el);
           el.play().catch(() => setNeedsAudioUnlock(!room.canPlaybackAudio));
         }
@@ -151,45 +192,31 @@ export function useMaatuCall(persona: string): MaatuCall {
         else if (speakers.some((sp) => !sp.isLocal)) setSpeaker("character");
         else setSpeaker("learner");
       });
+      room.on(RoomEvent.Reconnecting, () => {
+        setConnectionIssue("Connection lost. Reconnecting now...");
+      });
+      room.on(RoomEvent.Reconnected, () => {
+        setConnectionIssue(null);
+      });
       room.on(
         RoomEvent.TranscriptionReceived,
         (segments: TranscriptionSegment[], participant?: Participant) => {
           const who: "character" | "learner" = participant?.isLocal ? "learner" : "character";
           if (who === "character") setCharacterHeard(true);
-          const appendFinal = (text: string) => {
-            setTranscript((prev) => {
-              const last = prev[prev.length - 1];
-              let next: Line[];
-              if (last && last.who === who && (text === last.text || last.text.startsWith(text))) {
-                next = prev;
-              } else if (last && last.who === who && text.startsWith(last.text)) {
-                // An extended re-emit of the same utterance replaces it.
-                next = [...prev.slice(0, -1), { who, text }].slice(-40);
-              } else {
-                next = [...prev.slice(-40), { who, text }];
-              }
-              displayRef.current = next;
-              return next;
-            });
-          };
-          const appendRaw = (text: string) => {
-            const last = rawRef.current[rawRef.current.length - 1];
-            if (last && last.who === who && (text === last.text || last.text.startsWith(text))) return;
-            if (last && last.who === who && text.startsWith(last.text)) {
-              rawRef.current = [...rawRef.current.slice(0, -1), { who, text }];
-            } else {
-              rawRef.current = [...rawRef.current.slice(-80), { who, text }];
-            }
-          };
           for (const seg of segments) {
             if (!seg.text?.trim()) continue;
             const raw = seg.text.trim();
             const text = safeRomanizedText(raw);
             setCaption({ who, text });
             if (seg.final) {
-              appendRaw(raw);
+              const key = seg.id || `${who}-${seg.startTime}-${seg.endTime}`;
+              if (seenFinalRef.current.has(key)) continue;
+              seenFinalRef.current.add(key);
+              rawRef.current.push({ who, text: raw });
+              const pending: PendingLine = { key, who, text: null };
+              pendingRef.current.push(pending);
               if (NATIVE_SCRIPT.test(raw)) {
-                void fetch("/api/romanize", {
+                const task = fetch("/api/romanize", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ text: raw, languageCode: languageCode(persona) }),
@@ -198,11 +225,18 @@ export function useMaatuCall(persona: string): MaatuCall {
                   .then((data) => {
                     const romanized = safeRomanizedText(typeof data.text === "string" ? data.text : "Romanization unavailable");
                     setCaption({ who, text: romanized });
-                    appendFinal(romanized);
+                    pending.text = romanized;
+                    flushDisplay();
                   })
-                  .catch(() => appendFinal("Romanization unavailable"));
+                  .catch(() => {
+                    pending.text = "Romanization unavailable";
+                    flushDisplay();
+                  });
+                romanizationTasksRef.current.add(task);
+                void task.finally(() => romanizationTasksRef.current.delete(task));
               } else {
-                appendFinal(text);
+                pending.text = text;
+                flushDisplay();
               }
             }
           }
@@ -212,6 +246,9 @@ export function useMaatuCall(persona: string): MaatuCall {
         if (roomRef.current) {
           roomRef.current = null;
           setSpeaker(null);
+          setConnectionIssue("The call dropped. Your transcript is safe.");
+          setEndedUnexpectedly(true);
+          settlePendingFallbacks();
           setPhase("ended");
         }
       });
@@ -237,9 +274,10 @@ export function useMaatuCall(persona: string): MaatuCall {
     } catch (e) {
       roomRef.current = null;
       setError(e instanceof Error ? e.message : "Could not connect.");
+      setConnectionIssue(null);
       setPhase("error");
     }
-  }, [persona, ensureAudioEl]);
+  }, [persona, difficultyStage, ensureAudioEl, flushDisplay, settlePendingFallbacks]);
 
   const toggleMute = useCallback(async () => {
     const room = roomRef.current;
@@ -256,6 +294,7 @@ export function useMaatuCall(persona: string): MaatuCall {
   }, [muted]);
 
   const recordTranscript = useCallback(() => [...rawRef.current], []);
+  const recordDisplayTranscript = useCallback(() => [...displayRef.current], []);
 
   const requestSlowDown = useCallback(async () => {
     const room = roomRef.current;
@@ -290,11 +329,14 @@ export function useMaatuCall(persona: string): MaatuCall {
     roomName,
     needsAudioUnlock,
     slowerPace,
+    connectionIssue,
+    endedUnexpectedly,
     connect,
     hangUp,
     toggleMute,
     unlockAudio,
     requestSlowDown,
     recordTranscript,
+    recordDisplayTranscript,
   };
 }
