@@ -80,7 +80,12 @@ async def entrypoint(ctx: agents.JobContext):
     except ValueError as exc:
         logger.error("rejecting room=%s error=%s", ctx.room.name, exc)
         return
-    agenda, agenda_updated_at = await asyncio.to_thread(fetch_active_agenda, persona.id)
+    classroom_mode = persona.id.startswith("teacher-") or persona.id.startswith("tutor-")
+    agenda, agenda_updated_at = (
+        (None, None)
+        if classroom_mode
+        else await asyncio.to_thread(fetch_active_agenda, persona.id)
+    )
     if agenda:
         persona = apply_secret_agenda(persona, agenda)
     logger.info(

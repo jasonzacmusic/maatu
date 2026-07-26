@@ -2,6 +2,7 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-07-26: Teacher and companion calls skip the scenario-only nightly agenda lookup. Reason: those persona IDs have no agenda rows, so every classroom opening paid for a 404 before using its built-in curriculum anyway.
 - 2026-07-26: Persist the currently selected language when onboarding is completed, even if the learner accepts the default Kannada choice without tapping it first. Reason: production browser verification showed the default choice otherwise returned to onboarding after reload.
 - 2026-07-26: A lesson coach may call the final check complete only when the exact start marker, three learner replies, and exact completion marker appear in the transcript. Reason: a production report incorrectly inferred completion from one corrected retry until this evidence rule was added.
 - 2026-07-26: Keep `gemini-flash-lite-latest` with no `thinking_config`, and do not ship the faster pinned-model experiment. Reason: the verified production contract in this audit explicitly forbids model-specific thinking parameters on a mutable alias.
