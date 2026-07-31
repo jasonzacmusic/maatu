@@ -125,9 +125,8 @@ async def entrypoint(ctx: agents.JobContext):
             # Sarvam's own end-of-speech detection was the single biggest slice
             # of the turn: measured transcription_delay of 785 to 875 ms before
             # the final transcript arrived, which the brain must wait for. High
-            # sensitivity finalizes sooner. Kept moderate on purpose: a beginner
-            # pauses mid-sentence to think, and cutting them off is worse than a
-            # slightly later reply.
+            # sensitivity finalizes sooner. The endpointing grace window below
+            # still keeps a beginner's short thinking pause inside one turn.
             high_vad_sensitivity=True,
             api_key=SARVAM_API_KEY,
         ),
@@ -138,7 +137,7 @@ async def entrypoint(ctx: agents.JobContext):
         # teacher speaks. Do not lower this while the turn detector is in use.
         vad=silero.VAD.load(min_silence_duration=0.25),
         turn_handling={
-            "endpointing": {"min_delay": 0.1, "max_delay": 0.4},
+            "endpointing": {"min_delay": 0.4, "max_delay": 0.7},
             "interruption": {
                 "enabled": True,
                 "mode": "vad",
