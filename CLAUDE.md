@@ -44,3 +44,19 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 - DB: Neon Postgres + Drizzle.
 - Latency budget: under 1.5s from user speech end to agent audio start. Log per turn.
 - Personas are JSON data. `secret_agenda` is rewritten nightly. Characters NEVER correct the learner in scene.
+
+## Teaching quality outranks latency (Jason's standing decision, 2026-07-31)
+
+**Never shorten, thin, or strip the teacher and companion prompts in `agent/teacher.py` to buy speed.** Prompt size does cost time (measured: Gemini ttft 978ms at 1534 system tokens vs 711ms at 99), and that trade is explicitly refused. Chase latency in the pipeline instead: STT endpointing, VAD, TTS buffering, model choice.
+
+Rewriting a prompt to be *clearer* is allowed. Removing teaching behaviour is not. Any prompt edit must still pass all of these, verified by running a real call, not by reading the code:
+- a close-but-imperfect attempt is accepted as correct, not drilled again
+- a wrong answer gets one warm correction, one retry, then moves on
+- an English question gets the English meaning FIRST, never a pronunciation drill
+- control phrases work: wait, stop, slow down, say that again, what does that mean, go back
+- romanized Latin only, never native script
+- short turns that always end by asking the learner to say something
+
+### Hard floors that crash the call if crossed
+- `silero.VAD.load(min_silence_duration=...)` must be **>= 0.25**. Lower and `session.start` raises ValueError, so every call dies before the teacher speaks.
+- `sarvam.TTS(min_buffer_size=...)` must be **>= 30**. Lower crashes the call.
