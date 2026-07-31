@@ -73,7 +73,7 @@ cat > "$PLIST" << PL
   <key>WorkingDirectory</key><string>$RT/agent</string>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
-  <key>ProcessType</key><string>Background</string>
+  <key>ProcessType</key><string>Interactive</string>
   <key>EnvironmentVariables</key><dict><key>PYTHONUNBUFFERED</key><string>1</string></dict>
 </dict>
 </plist>

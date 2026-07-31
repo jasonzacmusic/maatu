@@ -2,6 +2,9 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-07-31: Derive caption transliteration language from scenario, teacher, and tutor persona IDs. Reason: teacher-hi and tutor-ta IDs do not begin with a language code, so the old prefix check incorrectly sent their native-script captions to Sarvam as Kannada.
+- 2026-07-31: Use Sarvam high-sensitivity endpointing, shorter equivalent teacher prompts, and the plugin minimum 30-character TTS buffer. Reason: endpointing and prompt size improved the six-turn median from 2,108 ms to 1,169 ms, while a lower TTS buffer is rejected by the installed plugin.
+- 2026-07-31: Run the LaunchAgent as an Interactive process instead of Background. Reason: macOS documented throttling made the live voice job unresponsive under ordinary desktop load, while call responsiveness cannot use XPC-based Adaptive promotion.
 - 2026-07-26: Teacher and companion calls skip the scenario-only nightly agenda lookup. Reason: those persona IDs have no agenda rows, so every classroom opening paid for a 404 before using its built-in curriculum anyway.
 - 2026-07-26: Persist the currently selected language when onboarding is completed, even if the learner accepts the default Kannada choice without tapping it first. Reason: production browser verification showed the default choice otherwise returned to onboarding after reload.
 - 2026-07-26: A lesson coach may call the final check complete only when the exact start marker, three learner replies, and exact completion marker appear in the transcript. Reason: a production report incorrectly inferred completion from one corrected retry until this evidence rule was added.

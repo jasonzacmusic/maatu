@@ -25,8 +25,9 @@ function safeRomanizedText(text: string) {
 }
 
 function languageCode(persona: string) {
-  if (persona.startsWith("hi-")) return "hi-IN";
-  if (persona.startsWith("ta-")) return "ta-IN";
+  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta)(?:-|$)/)?.[1];
+  if (language === "hi") return "hi-IN";
+  if (language === "ta") return "ta-IN";
   return "kn-IN";
 }
 
