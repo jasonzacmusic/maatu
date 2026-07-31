@@ -104,6 +104,8 @@ async def entrypoint(ctx: agents.JobContext):
         model="bulbul:v3",
         speaker=persona.voice,
         pace=persona.pace,
+        # The installed Sarvam plugin enforces 30 as the minimum. Lower values
+        # crash the call before the teacher can speak.
         min_buffer_size=30,
         max_chunk_length=50,
         output_audio_codec="mp3",
@@ -120,10 +122,20 @@ async def entrypoint(ctx: agents.JobContext):
             # returns clean romanized text for mixed speech.
             language="unknown",
             model="saarika:v2.5",
+            # Sarvam's own end-of-speech detection was the single biggest slice
+            # of the turn: measured transcription_delay of 785 to 875 ms before
+            # the final transcript arrived, which the brain must wait for. High
+            # sensitivity finalizes sooner. Kept moderate on purpose: a beginner
+            # pauses mid-sentence to think, and cutting them off is worse than a
+            # slightly later reply.
+            high_vad_sensitivity=True,
             api_key=SARVAM_API_KEY,
         ),
         llm=build_brain(),
         tts=tts_engine,
+        # 0.25 is the FLOOR the TurnDetector allows. Anything lower makes
+        # session.start raise ValueError and every call crashes before the
+        # teacher speaks. Do not lower this while the turn detector is in use.
         vad=silero.VAD.load(min_silence_duration=0.25),
         turn_handling={
             "endpointing": {"min_delay": 0.1, "max_delay": 0.4},
@@ -243,6 +255,28 @@ async def entrypoint(ctx: agents.JobContext):
             )
             turn["user_stopped_at"] = None
             turn["awaiting_first_audio"] = False
+
+    # Per-stage breakdown, so a latency regression can be blamed on the right
+    # stage instead of guessed at. EOU is how long after the learner stops
+    # before the turn is judged complete, ttft is the brain, ttfb is the voice.
+    @session.on("metrics_collected")
+    def _on_metrics(ev):
+        m = ev.metrics
+        name = type(m).__name__
+        if name == "EOUMetrics":
+            logger.info(
+                "stage eou: end_of_utterance_delay=%.0f ms transcription_delay=%.0f ms",
+                getattr(m, "end_of_utterance_delay", 0) * 1000,
+                getattr(m, "transcription_delay", 0) * 1000,
+            )
+        elif name == "LLMMetrics":
+            logger.info(
+                "stage llm: ttft=%.0f ms prompt_tokens=%s",
+                getattr(m, "ttft", 0) * 1000,
+                getattr(m, "prompt_tokens", "?"),
+            )
+        elif name == "TTSMetrics":
+            logger.info("stage tts: ttfb=%.0f ms", getattr(m, "ttfb", 0) * 1000)
 
     await session.start(
         room=ctx.room,
