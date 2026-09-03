@@ -90,63 +90,63 @@ def _load_grammar() -> dict | None:
         return None
 
 
-_PERSON_INDEX = ["i", "you", "youp", "he", "she", "we", "they"]
-
-
-def _forms(lang: str, verb: dict, suffix: dict) -> tuple[list[str], list[str], list[str]]:
-    """Present, past, future forms for the seven persons, same tables as lib/grammar.ts."""
-    v = verb[lang]
-    if lang == "kn":
-        pres = [v["pres"] + x for x in suffix["pres"]]
-        past = [v["past"] + x for x in suffix["past"]]
-        return pres, past, pres
-    if lang == "hi":
-        hab = suffix["habM"]
-        pres = [f"{v['stem']}{hab[i]} {suffix['aux'][i]}" for i in range(7)]
-        perf = v["perf"]
-        if v.get("ne"):
-            past = [perf["m"]] * 7
-        else:
-            past = [perf["m"], perf["pl"], perf["pl"], perf["m"], perf["f"], perf["pl"], perf["pl"]]
-        fut = v["fut"]["m"] if v.get("fut") else [v["stem"] + x for x in suffix["futM"]]
-        return pres, past, fut
-    pres = [v["pres"] + x for x in suffix["pres"]]
-    past = [v["past"] + x for x in suffix["pastFut"]]
-    fut = [v["fut"] + x for x in suffix["pastFut"]]
-    return pres, past, fut
-
-
 def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
-    """Vetted spoken grammar for the teacher: rules, verb tables for every
-    person and tense, music vocabulary. Same data as the Sentence Studio on
-    the web, so the voice class and the text studio never disagree."""
+    """Compact vetted spoken grammar for the teacher: persons, the ending
+    tables, one line per verb with its stems, the rules, and the music words.
+    Endings plus stems instead of full conjugation tables, on purpose: the
+    full tables doubled the prompt (5.3k tokens, 3.1 s turns) and the brain
+    still slipped on a verb. Same data as the Sentence Studio (grammar.json)."""
     g = _load_grammar()
     if not g or lang not in g.get("persons", {}):
         return ""
     persons = g["persons"][lang]
-    suffix = g["suffix"][lang]
+    sfx = g["suffix"][lang]
     who = ", ".join(f"{p['sub']} ({p['en']}{', ' + p['hint'] if p.get('hint') else ''})" for p in persons)
-    lines = [
-        f"GRAMMAR REFERENCE (vetted spoken forms; use these exactly when the student asks about any person or tense):",
-        f"Persons in order: {who}.",
-    ]
-    for r in g["rules"][lang]:
-        lines.append(f"- {r['title']}: {r['body']} Example: {r['example']}")
-    lines.append("Verb tables, persons in the order above (present / past / future):")
-    for verb in g["verbs"][:verb_limit]:
-        pres, past, fut = _forms(lang, verb, suffix)
-        v = verb[lang]
-        extra = ""
-        if lang == "hi":
-            extra = " (a woman replaces ta with ti, raha with rahi, unga with ungi; ne verbs match the thing in the past)"
+    lines = ["GRAMMAR REFERENCE, vetted spoken forms. Use these exactly for any person or tense:", f"Persons, in this order: {who}."]
+    verbs = g["verbs"][:verb_limit]
+    if lang == "kn":
         lines.append(
-            f"- {verb['en']['base']} = {v['dict']}: present {', '.join(pres)}; past {', '.join(past)}; future {', '.join(fut)}{extra}"
+            "Endings in the same person order. Present and future: -" + " -".join(sfx["pres"]) + " on the present stem. "
+            "Past: -" + " -".join(sfx["past"]) + " on the past stem. Doing now: doing stem + " + " ".join(sfx["contAux"]) + ". "
+            "Not (now or future): the not-form, same for every person. Did not: the did-not form, same for every person. "
+            "Question: stretch the last vowel to aa. Want to: nanage + want-form. Know how to: nanage + to-form + barutte."
         )
+        lines.append("Verbs (dictionary: present stem / past stem / doing stem / not / did not / to-form / want-form):")
+        for v in verbs:
+            k = v[lang]
+            lines.append(
+                f"- {v['en']['base']} = {k['dict']}: {k['pres']}- / {k['past']}- / {k['cont']} / {k['neg']} / {k['pastNeg']} / {k['inf']} / {k['want']}"
+            )
+        lines.append("Worked examples: she plays the piano every day = avalu dina piano nudistale. I played yesterday = naanu nenne nudiside. Do you sing? = neevu haadtiraa? I want to learn = nanage kalibeku. I know how to play = nanage nudisakke barutte.")
+    elif lang == "hi":
+        lines.append(
+            "Helper words in the same person order: " + " ".join(sfx["aux"]) + ". Present: stem + ta (man) or ti (woman), te for tum, aap, hum, ve when men, then the helper word. "
+            "Doing now: doing stem + raha (man) / rahi (woman) / rahe (plural men) + helper. Future: stem + " + " ".join(sfx["futM"]) + " (a woman: " + " ".join(sfx["futF"]) + "). "
+            "Past: ne-verbs take maine, tumne, aapne, usne, humne, unhonne and the past form matches the THING (bajaaya for piano, bajaayi for chai); go, come, sleep skip ne and match the person (gaya, gayi, gaye). "
+            "Not: nahin before the verb. Question: kya at the start. Want to: dictionary form + chaahta/chaahti + helper. Know how to: mujhe + dictionary form + aata hai."
+        )
+        lines.append("Verbs (dictionary: stem / doing stem / past m, f, plural / ne?):")
+        for v in verbs:
+            h = v[lang]
+            fut = f" / future {h['fut']['m'][0]}" if h.get("fut") else ""
+            lines.append(
+                f"- {v['en']['base']} = {h['dict']}: {h['stem']}- / {h.get('contStem', h['stem'])} raha / {h['perf']['m']}, {h['perf']['f']}, {h['perf']['pl']} / {'ne' if h.get('ne') else 'no ne'}{fut}"
+            )
+        lines.append("Worked examples: she plays the piano every day = voh roz piano bajaati hai. I played yesterday = maine kal piano bajaaya. Do you sing? = kya aap gaate hain? I want to learn = main seekhna chaahta hoon. I know how to play = mujhe bajaana aata hai.")
+    else:
+        lines.append(
+            "Endings in the same person order. Present: -" + " -".join(sfx["pres"]) + " on the present stem. "
+            "Past and future: -" + " -".join(sfx["pastFut"]) + " on the past stem or the future stem. Doing now: doing stem + " + " ".join(sfx["contAux"]) + ". "
+            "Will not or do not: to-form + " + " ".join(sfx["wont"]) + ". Did not: to-form + la, same for every person. "
+            "Question: add aa at the end. Want to: to-form + num. Know how to: enakku + to-form + theriyum."
+        )
+        lines.append("Verbs (dictionary: present stem / past stem / future stem / doing stem / to-form):")
+        for v in verbs:
+            t = v[lang]
+            lines.append(f"- {v['en']['base']} = {t['dict']}: {t['pres']}- / {t['past']}- / {t['fut']}- / {t['cont']} / {t['inf']}")
+        lines.append("Worked examples: she plays the piano every day = ava daily piano vaasikkiraa. I played yesterday = naan nethu vaasichen. Do you sing? = neenga paadureengalaa? I want to learn = naan kathukkanum. I know how to play = enakku vaasikka theriyum.")
+    lines.append("Rules: " + " ".join(f"{r['title']}: {r['example']}." for r in g["rules"][lang]))
     lines.append("Music words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["music"]))
-    lines.append(
-        "Objects: "
-        + "; ".join(f"{o.get('enByLang', {}).get(lang, o['en'])} = {o[lang]}" for o in g["objects"])
-    )
     lines.append("Time words: " + "; ".join(f"{t['en']} = {t[lang]}" for t in g["times"]))
     return "\n".join(lines)
 
@@ -231,7 +231,7 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
             f"GENERALIZE THE GRAMMAR. The lexicon above teaches the I form. If the student asks "
             f"about you, he, she, we, they, another tense, not, or a question, answer from this "
             f"reference in the same vetted spelling, one form at a time, then return to the lesson.\n"
-            f"{grammar_reference(lang, verb_limit=9)}\n\n"
+            f"{grammar_reference(lang)}\n\n"
             if lesson_number >= 11
             else ""
         )
