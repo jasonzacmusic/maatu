@@ -76,8 +76,79 @@ _CORE_RULES = (
 )
 
 
+GRAMMAR = ROOT / "grammar.json"
+
+
 def _load_curriculum() -> dict:
     return json.loads(CURRICULUM.read_text())
+
+
+def _load_grammar() -> dict | None:
+    try:
+        return json.loads(GRAMMAR.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+_PERSON_INDEX = ["i", "you", "youp", "he", "she", "we", "they"]
+
+
+def _forms(lang: str, verb: dict, suffix: dict) -> tuple[list[str], list[str], list[str]]:
+    """Present, past, future forms for the seven persons, same tables as lib/grammar.ts."""
+    v = verb[lang]
+    if lang == "kn":
+        pres = [v["pres"] + x for x in suffix["pres"]]
+        past = [v["past"] + x for x in suffix["past"]]
+        return pres, past, pres
+    if lang == "hi":
+        hab = suffix["habM"]
+        pres = [f"{v['stem']}{hab[i]} {suffix['aux'][i]}" for i in range(7)]
+        perf = v["perf"]
+        if v.get("ne"):
+            past = [perf["m"]] * 7
+        else:
+            past = [perf["m"], perf["pl"], perf["pl"], perf["m"], perf["f"], perf["pl"], perf["pl"]]
+        fut = v["fut"]["m"] if v.get("fut") else [v["stem"] + x for x in suffix["futM"]]
+        return pres, past, fut
+    pres = [v["pres"] + x for x in suffix["pres"]]
+    past = [v["past"] + x for x in suffix["pastFut"]]
+    fut = [v["fut"] + x for x in suffix["pastFut"]]
+    return pres, past, fut
+
+
+def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
+    """Vetted spoken grammar for the teacher: rules, verb tables for every
+    person and tense, music vocabulary. Same data as the Sentence Studio on
+    the web, so the voice class and the text studio never disagree."""
+    g = _load_grammar()
+    if not g or lang not in g.get("persons", {}):
+        return ""
+    persons = g["persons"][lang]
+    suffix = g["suffix"][lang]
+    who = ", ".join(f"{p['sub']} ({p['en']}{', ' + p['hint'] if p.get('hint') else ''})" for p in persons)
+    lines = [
+        f"GRAMMAR REFERENCE (vetted spoken forms; use these exactly when the student asks about any person or tense):",
+        f"Persons in order: {who}.",
+    ]
+    for r in g["rules"][lang]:
+        lines.append(f"- {r['title']}: {r['body']} Example: {r['example']}")
+    lines.append("Verb tables, persons in the order above (present / past / future):")
+    for verb in g["verbs"][:verb_limit]:
+        pres, past, fut = _forms(lang, verb, suffix)
+        v = verb[lang]
+        extra = ""
+        if lang == "hi":
+            extra = " (a woman replaces ta with ti, raha with rahi, unga with ungi; ne verbs match the thing in the past)"
+        lines.append(
+            f"- {verb['en']['base']} = {v['dict']}: present {', '.join(pres)}; past {', '.join(past)}; future {', '.join(fut)}{extra}"
+        )
+    lines.append("Music words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["music"]))
+    lines.append(
+        "Objects: "
+        + "; ".join(f"{o.get('enByLang', {}).get(lang, o['en'])} = {o[lang]}" for o in g["objects"])
+    )
+    lines.append("Time words: " + "; ".join(f"{t['en']} = {t[lang]}" for t in g["times"]))
+    return "\n".join(lines)
 
 
 def _load_lesson(lesson_id: str):
@@ -155,7 +226,16 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
         f"say 'Lesson complete' until they pass.\n"
         f"6. After a pass, recap in two spoken sentences what they can now say, then a warm "
         f"goodbye.\n"
-        f"Practice ideas you can use in steps 3 and 4: {practice}.\n\n" + rules
+        f"Practice ideas you can use in steps 3 and 4: {practice}.\n\n"
+        + (
+            f"GENERALIZE THE GRAMMAR. The lexicon above teaches the I form. If the student asks "
+            f"about you, he, she, we, they, another tense, not, or a question, answer from this "
+            f"reference in the same vetted spelling, one form at a time, then return to the lesson.\n"
+            f"{grammar_reference(lang, verb_limit=9)}\n\n"
+            if lesson_number >= 11
+            else ""
+        )
+        + rules
     )
 
     opening = (
@@ -243,7 +323,13 @@ def _tutor_fields(lang: str) -> dict | None:
         f"{vocab}\n"
         f"If the conversation truly needs a word outside this list, give it in its most "
         f"common everyday spoken form with a quick English meaning, at most one new word "
-        f"per turn."
+        f"per turn.\n\n"
+        f"{grammar_reference(lang)}\n"
+        f"The learner is a musician and music teacher. When they ask how to say something "
+        f"about music, playing, singing, practising, teaching, or a class, use the music words "
+        f"above first. When they ask about a tense or a person (you, he, she, we, they), give "
+        f"the exact form from the verb tables, say the ending rule in one plain sentence, and "
+        f"have them build one more sentence with a different verb so the rule generalizes."
     )
 
     system = (

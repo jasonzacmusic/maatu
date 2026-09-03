@@ -6,6 +6,7 @@ import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import { ALL_LESSONS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
 import { ClassroomScreen } from "./ClassroomScreen";
+import { BuildScreen } from "./BuildScreen";
 import { CourseProgressCard } from "./CourseProgressCard";
 import { LessonPreviewScreen } from "./LessonPreviewScreen";
 import { LessonResultScreen } from "./LessonResultScreen";
@@ -42,8 +43,9 @@ type Screen =
   | "school"
   | "lessonPreview"
   | "lessonResult"
+  | "build"
   | "settings";
-type Tab = "hub" | "school" | "progress" | "settings";
+type Tab = "hub" | "school" | "build" | "progress" | "settings";
 type SessionEnd = {
   room: string | null;
   transcript: Line[];
@@ -151,6 +153,14 @@ function NavIcon({ tab, active }: { tab: Tab; active: boolean }) {
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M10 3 18 7l-8 4-8-4 8-4Z" stroke={s} strokeWidth="1.6" strokeLinejoin="round" />
         <path d="M5 8.6V13c0 1.2 2.2 2.4 5 2.4s5-1.2 5-2.4V8.6" stroke={s} strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+    );
+  if (tab === "build")
+    return (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.5" y="4" width="6" height="5" rx="1.4" stroke={s} strokeWidth="1.6" />
+        <rect x="11.5" y="4" width="6" height="5" rx="1.4" stroke={s} strokeWidth="1.6" />
+        <rect x="7" y="11" width="6" height="5" rx="1.4" stroke={s} strokeWidth="1.6" />
       </svg>
     );
   if (tab === "progress")
@@ -350,6 +360,7 @@ function Hub({
   onScenario,
   onSchool,
   onTutor,
+  onBuild,
   rm,
 }: {
   lang: Lang;
@@ -360,6 +371,7 @@ function Hub({
   onScenario: (shop: ShopId) => void;
   onSchool: () => void;
   onTutor: () => void;
+  onBuild: () => void;
   rm: boolean;
 }) {
   const host = HOST[lang];
@@ -427,6 +439,25 @@ function Hub({
             </span>
           </span>
           <span className="text-[24px]" style={{ color: C.tube }} aria-hidden="true">›</span>
+        </button>
+
+        <button
+          onClick={onBuild}
+          className="mt-3 flex w-full items-center gap-4 rounded-[18px] p-5 text-left focus-visible:outline focus-visible:outline-2"
+          style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: C.sodium }}
+        >
+          <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full text-[20px]" style={{ background: "rgba(255,179,92,0.10)" }} aria-hidden="true">
+            ✎
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[17px] font-bold" style={{ color: C.milk }}>
+              Sentence Studio
+            </span>
+            <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
+              Type or say any line and get it fixed with the rule. Tap words together, flip verbs, hear it in {host.name}&apos;s voice. Music words first.
+            </span>
+          </span>
+          <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>
         </button>
 
         <div className="mb-3 mt-7 flex items-end justify-between">
@@ -1196,6 +1227,7 @@ function SettingsScreen({
 const TABS: { tab: Tab; label: string }[] = [
   { tab: "hub", label: "Practice" },
   { tab: "school", label: "Learn" },
+  { tab: "build", label: "Build" },
   { tab: "progress", label: "Progress" },
   { tab: "settings", label: "Settings" },
 ];
@@ -1431,7 +1463,7 @@ export default function MaatuApp() {
   const pendingLesson = ALL_LESSONS.find((lesson) => lesson.id === pendingLessonId) ?? ALL_LESSONS[0];
 
   const immersive = screen === "onboarding" || screen === "scenario" || screen === "call" || screen === "debrief" || screen === "lessonPreview" || screen === "lessonResult";
-  const activeTab: Tab = (["hub", "school", "progress", "settings"].includes(screen) ? screen : "hub") as Tab;
+  const activeTab: Tab = (["hub", "school", "build", "progress", "settings"].includes(screen) ? screen : "hub") as Tab;
   const goTab = (t: Tab) => setScreen(t);
 
   const doInstall = () => {
@@ -1456,7 +1488,7 @@ export default function MaatuApp() {
               rm={rm}
             />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} onBuild={() => setScreen("build")} rm={rm} />
           ) : screen === "lessonPreview" ? (
             <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
@@ -1478,7 +1510,9 @@ export default function MaatuApp() {
           ) : screen === "progress" ? (
             <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (
-            <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} />
+            <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} onBuild={() => setScreen("build")} />
+          ) : screen === "build" ? (
+            <BuildScreen lang={lang} onLanguageChange={setLang} />
           ) : screen === "settings" ? (
             <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}
