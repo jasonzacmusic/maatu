@@ -709,7 +709,7 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
                   {check.corrections.map((c, i) => {
                     const tag = TAG[c.type] ?? TAG["word-choice"];
                     return (
-                      <div key={i} className="rounded-[12px] p-3" style={{ background: C.tar, border: `1px solid ${LINE_SOFT}`, borderLeft: `3px solid ${tag.color}` }}>
+                      <div key={i} className="rounded-[12px] p-3" style={{ background: C.tar, border: `1px solid ${tag.color}33` }}>
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="rounded-full px-2 py-0.5 text-[10.5px] font-bold" style={{ background: `${tag.color}22`, color: tag.color, letterSpacing: 0.8 }}>
                             {tag.label.toUpperCase()}
