@@ -66,6 +66,11 @@ type StreetStats = {
 const EMPTY_STATS: StreetStats = { totalSeconds: 0, thisWeekSeconds: 0, sessionCount: 0, nights: 0, scenarios: [] };
 const LANGS: Lang[] = ["kn", "hi", "ta"];
 
+function greeting() {
+  const hour = new Date().getHours();
+  return hour < 5 ? "Still up?" : hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+}
+
 function minutes(seconds: number) {
   return Math.round(seconds / 60);
 }
@@ -384,7 +389,7 @@ function Hub({
             <div className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.3 }}>
               LEARN, THEN PRACTISE
             </div>
-            <div className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>Good evening</div>
+            <div className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>{greeting()}</div>
             <div className="mt-2 text-[13.5px]" style={{ color: C.muted, maxWidth: 380 }}>
               Build your {LANG_NAME[lang]} with {host.name}, then use it with people around {host.place.split(",")[0]}.
             </div>

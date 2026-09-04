@@ -52,7 +52,7 @@ export SSL_CERT_FILE="$CERT_BUNDLE"
 export REQUESTS_CA_BUNDLE="$CERT_BUNDLE"
 echo "=== maatu agent starting $(date) ===" >> "$LOG"
 if command -v caffeinate >/dev/null 2>&1; then
-  exec caffeinate -s ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
+  exec caffeinate -i -s ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
 fi
 exec ./.venv/bin/python worker.py dev --no-reload >> "$LOG" 2>&1
 SH

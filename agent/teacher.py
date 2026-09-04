@@ -146,6 +146,18 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
             lines.append(f"- {v['en']['base']} = {t['dict']}: {t['pres']}- / {t['past']}- / {t['fut']}- / {t['cont']} / {t['inf']}")
         lines.append("Worked examples: she plays the piano every day = ava daily piano vaasikkiraa. I played yesterday = naan nethu vaasichen. Do you sing? = neenga paadureengalaa? I want to learn = naan kathukkanum. I know how to play = enakku vaasikka theriyum.")
     lines.append("Rules: " + " ".join(f"{r['title']}: {r['example']}." for r in g["rules"][lang]))
+    frames = g.get("frames", [])
+    if frames:
+        lines.append(
+            "Sentence frames (drop any noun in the slot): "
+            + "; ".join(f"{f['en']} = {f[lang]}" + (f" (a woman: {f['hiF']})" if lang == "hi" and f.get("hiF") else "") for f in frames)
+        )
+    commands = g.get("commands", [])
+    if commands:
+        lines.append("Commands, polite / to a friend: " + "; ".join(f"{c['en']} = {c[lang][0]} / {c[lang][1]}" for c in commands))
+        lines.append(g.get("commandNote", {}).get(lang, ""))
+    if "questions" in g["decks"]:
+        lines.append("Question words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["questions"]))
     lines.append("Music words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["music"]))
     lines.append("Time words: " + "; ".join(f"{t['en']} = {t[lang]}" for t in g["times"]))
     return "\n".join(lines)

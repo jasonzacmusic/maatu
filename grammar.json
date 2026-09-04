@@ -1,2093 +1,3752 @@
 {
-  "note": "Sentence Studio data. Colloquial spoken forms only (Bangalore Kannada, Delhi Hindi, Chennai Tamil), romanized Latin, never native script, no plural suffixes for beginners. Verb forms are built as stem plus ending in lib/grammar.ts and agent/teacher.py from the tables below. Music verbs and vocabulary come first on purpose. No em dashes anywhere.",
-  "persons": {
-    "kn": [
-      {
-        "id": "i",
-        "en": "I",
-        "sub": "naanu",
-        "dat": "nanage"
-      },
-      {
-        "id": "you",
-        "en": "you",
-        "sub": "neenu",
-        "dat": "ninage",
-        "hint": "a friend"
-      },
-      {
-        "id": "youp",
-        "en": "you",
-        "sub": "neevu",
-        "dat": "nimage",
-        "hint": "polite"
-      },
-      {
-        "id": "he",
-        "en": "he",
-        "sub": "avanu",
-        "dat": "avanige"
-      },
-      {
-        "id": "she",
-        "en": "she",
-        "sub": "avalu",
-        "dat": "avalige"
-      },
-      {
-        "id": "we",
-        "en": "we",
-        "sub": "naavu",
-        "dat": "namage"
-      },
-      {
-        "id": "they",
-        "en": "they",
-        "sub": "avru",
-        "dat": "avrige"
-      }
-    ],
-    "hi": [
-      {
-        "id": "i",
-        "en": "I",
-        "sub": "main",
-        "dat": "mujhe",
-        "ne": "maine"
-      },
-      {
-        "id": "you",
-        "en": "you",
-        "sub": "tum",
-        "dat": "tumhe",
-        "ne": "tumne",
-        "hint": "a friend"
-      },
-      {
-        "id": "youp",
-        "en": "you",
-        "sub": "aap",
-        "dat": "aapko",
-        "ne": "aapne",
-        "hint": "polite"
-      },
-      {
-        "id": "he",
-        "en": "he",
-        "sub": "voh",
-        "dat": "use",
-        "ne": "usne"
-      },
-      {
-        "id": "she",
-        "en": "she",
-        "sub": "voh",
-        "dat": "use",
-        "ne": "usne"
-      },
-      {
-        "id": "we",
-        "en": "we",
-        "sub": "hum",
-        "dat": "humein",
-        "ne": "humne"
-      },
-      {
-        "id": "they",
-        "en": "they",
-        "sub": "ve",
-        "dat": "unhe",
-        "ne": "unhonne"
-      }
-    ],
-    "ta": [
-      {
-        "id": "i",
-        "en": "I",
-        "sub": "naan",
-        "dat": "enakku"
-      },
-      {
-        "id": "you",
-        "en": "you",
-        "sub": "nee",
-        "dat": "unakku",
-        "hint": "a friend"
-      },
-      {
-        "id": "youp",
-        "en": "you",
-        "sub": "neenga",
-        "dat": "ungalukku",
-        "hint": "polite"
-      },
-      {
-        "id": "he",
-        "en": "he",
-        "sub": "avan",
-        "dat": "avanukku"
-      },
-      {
-        "id": "she",
-        "en": "she",
-        "sub": "ava",
-        "dat": "avalukku"
-      },
-      {
-        "id": "we",
-        "en": "we",
-        "sub": "naanga",
-        "dat": "engalukku"
-      },
-      {
-        "id": "they",
-        "en": "they",
-        "sub": "avanga",
-        "dat": "avangalukku"
-      }
-    ]
-  },
-  "suffix": {
-    "kn": {
-      "pres": [
-        "tini",
-        "tiya",
-        "tira",
-        "tane",
-        "tale",
-        "tivi",
-        "tare"
-      ],
-      "past": [
-        "e",
-        "e",
-        "ri",
-        "a",
-        "lu",
-        "vi",
-        "ru"
-      ],
-      "contAux": [
-        "iddini",
-        "iddiya",
-        "iddira",
-        "iddane",
-        "iddale",
-        "iddivi",
-        "iddare"
-      ]
-    },
-    "hi": {
-      "aux": [
-        "hoon",
-        "ho",
-        "hain",
-        "hai",
-        "hai",
-        "hain",
-        "hain"
-      ],
-      "habM": [
-        "ta",
-        "te",
-        "te",
-        "ta",
-        "ti",
-        "te",
-        "te"
-      ],
-      "habF": [
-        "ti",
-        "ti",
-        "ti",
-        "ti",
-        "ti",
-        "ti",
-        "ti"
-      ],
-      "contM": [
-        "raha",
-        "rahe",
-        "rahe",
-        "raha",
-        "rahi",
-        "rahe",
-        "rahe"
-      ],
-      "contF": [
-        "rahi",
-        "rahi",
-        "rahi",
-        "rahi",
-        "rahi",
-        "rahi",
-        "rahi"
-      ],
-      "futM": [
-        "unga",
-        "oge",
-        "enge",
-        "ega",
-        "egi",
-        "enge",
-        "enge"
-      ],
-      "futF": [
-        "ungi",
-        "ogi",
-        "engi",
-        "egi",
-        "egi",
-        "engi",
-        "engi"
-      ],
-      "wantM": [
-        "chaahta",
-        "chaahte",
-        "chaahte",
-        "chaahta",
-        "chaahti",
-        "chaahte",
-        "chaahte"
-      ],
-      "wantF": [
-        "chaahti",
-        "chaahti",
-        "chaahti",
-        "chaahti",
-        "chaahti",
-        "chaahti",
-        "chaahti"
-      ]
-    },
-    "ta": {
-      "pres": [
-        "ren",
-        "re",
-        "reenga",
-        "raan",
-        "raa",
-        "rom",
-        "raanga"
-      ],
-      "pastFut": [
-        "en",
-        "e",
-        "eenga",
-        "aan",
-        "aa",
-        "om",
-        "aanga"
-      ],
-      "contAux": [
-        "irukken",
-        "irukke",
-        "irukkeenga",
-        "irukkaan",
-        "irukkaa",
-        "irukkom",
-        "irukkaanga"
-      ],
-      "wont": [
-        "maatten",
-        "maatte",
-        "maatteenga",
-        "maattaan",
-        "maattaa",
-        "maattom",
-        "maattaanga"
-      ]
-    }
-  },
-  "verbs": [
-    {
-      "id": "play",
-      "group": "music",
-      "en": {
-        "base": "play",
-        "past": "played",
-        "ing": "playing",
-        "s": "plays"
-      },
-      "note": "an instrument. In Bangalore people also say piano play maadtini; in Chennai piano play pannuren.",
-      "kn": {
-        "dict": "nudisu",
-        "pres": "nudis",
-        "past": "nudisid",
-        "cont": "nudista",
-        "neg": "nudisalla",
-        "pastNeg": "nudislilla",
-        "inf": "nudisakke",
-        "want": "nudisbeku"
-      },
-      "hi": {
-        "dict": "bajaana",
-        "stem": "bajaa",
-        "perf": {
-          "m": "bajaaya",
-          "f": "bajaayi",
-          "pl": "bajaaye"
-        },
-        "ne": true,
-        "contStem": "baja"
-      },
-      "ta": {
-        "dict": "vaasi",
-        "pres": "vaasikki",
-        "past": "vaasich",
-        "fut": "vaasipp",
-        "cont": "vaasichittu",
-        "inf": "vaasikka"
-      }
-    },
-    {
-      "id": "sing",
-      "group": "music",
-      "en": {
-        "base": "sing",
-        "past": "sang",
-        "ing": "singing",
-        "s": "sings"
-      },
-      "note": "In Kannada and Hindi the word for song and the verb sing are the same word.",
-      "kn": {
-        "dict": "haadu",
-        "pres": "haad",
-        "past": "haadid",
-        "cont": "haadta",
-        "neg": "haadalla",
-        "pastNeg": "haadlilla",
-        "inf": "haadakke",
-        "want": "haadbeku"
-      },
-      "hi": {
-        "dict": "gaana",
-        "stem": "gaa",
-        "perf": {
-          "m": "gaaya",
-          "f": "gaayi",
-          "pl": "gaaye"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "paadu",
-        "pres": "paad",
-        "past": "paadin",
-        "fut": "paaduv",
-        "cont": "paadittu",
-        "inf": "paada"
-      }
-    },
-    {
-      "id": "practise",
-      "group": "music",
-      "en": {
-        "base": "practise",
-        "past": "practised",
-        "ing": "practising",
-        "s": "practises"
-      },
-      "note": "English word plus the do-verb. This pattern works for hundreds of actions.",
-      "kn": {
-        "dict": "practice maadu",
-        "pres": "practice maad",
-        "past": "practice maadid",
-        "cont": "practice maadta",
-        "neg": "practice maadalla",
-        "pastNeg": "practice maadlilla",
-        "inf": "practice maadakke",
-        "want": "practice maadbeku"
-      },
-      "hi": {
-        "dict": "practice karna",
-        "stem": "practice kar",
-        "perf": {
-          "m": "practice kiya",
-          "f": "practice ki",
-          "pl": "practice kiye"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "practice pannu",
-        "pres": "practice pannu",
-        "past": "practice pann",
-        "fut": "practice pannuv",
-        "cont": "practice pannittu",
-        "inf": "practice panna"
-      }
-    },
-    {
-      "id": "listen",
-      "group": "music",
-      "en": {
-        "base": "listen to",
-        "past": "listened to",
-        "ing": "listening to",
-        "s": "listens to"
-      },
-      "note": "kelu is the same word in Kannada and Tamil.",
-      "kn": {
-        "dict": "kelu",
-        "pres": "kel",
-        "past": "kelid",
-        "cont": "kelta",
-        "neg": "kelalla",
-        "pastNeg": "kellilla",
-        "inf": "kelakke",
-        "want": "kelbeku"
-      },
-      "hi": {
-        "dict": "sunna",
-        "stem": "sun",
-        "perf": {
-          "m": "suna",
-          "f": "suni",
-          "pl": "sune"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "kelu",
-        "pres": "kekku",
-        "past": "kaett",
-        "fut": "kepp",
-        "cont": "kaettuttu",
-        "inf": "kekka"
-      }
-    },
-    {
-      "id": "learn",
-      "group": "music",
-      "en": {
-        "base": "learn",
-        "past": "learnt",
-        "ing": "learning",
-        "s": "learns"
-      },
-      "kn": {
-        "dict": "kali",
-        "pres": "kal",
-        "past": "kalt",
-        "cont": "kalita",
-        "neg": "kaliyalla",
-        "pastNeg": "kalilla",
-        "inf": "kaliyakke",
-        "want": "kalibeku"
-      },
-      "hi": {
-        "dict": "seekhna",
-        "stem": "seekh",
-        "perf": {
-          "m": "seekha",
-          "f": "seekhi",
-          "pl": "seekhe"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "kathukko",
-        "pres": "kathukku",
-        "past": "kathukitt",
-        "fut": "kathukkuv",
-        "cont": "kathukittu",
-        "inf": "kathukka"
-      }
-    },
-    {
-      "id": "teach",
-      "group": "music",
-      "en": {
-        "base": "teach",
-        "past": "taught",
-        "ing": "teaching",
-        "s": "teaches"
-      },
-      "kn": {
-        "dict": "helikodu",
-        "pres": "helikod",
-        "past": "helikott",
-        "cont": "helikodta",
-        "neg": "helikodalla",
-        "pastNeg": "helikodlilla",
-        "inf": "helikodakke",
-        "want": "helikodbeku"
-      },
-      "hi": {
-        "dict": "sikhaana",
-        "stem": "sikhaa",
-        "perf": {
-          "m": "sikhaaya",
-          "f": "sikhaayi",
-          "pl": "sikhaaye"
-        },
-        "ne": true,
-        "contStem": "sikha"
-      },
-      "ta": {
-        "dict": "solli kodu",
-        "pres": "solli kodukku",
-        "past": "solli kodutt",
-        "fut": "solli kodupp",
-        "cont": "solli koduttu",
-        "inf": "solli kodukka"
-      }
-    },
-    {
-      "id": "do",
-      "group": "core",
-      "en": {
-        "base": "do",
-        "past": "did",
-        "ing": "doing",
-        "s": "does"
-      },
-      "note": "The master verb. English word plus this verb makes almost any action.",
-      "kn": {
-        "dict": "maadu",
-        "pres": "maad",
-        "past": "maadid",
-        "cont": "maadta",
-        "neg": "maadalla",
-        "pastNeg": "maadlilla",
-        "inf": "maadakke",
-        "want": "maadbeku"
-      },
-      "hi": {
-        "dict": "karna",
-        "stem": "kar",
-        "perf": {
-          "m": "kiya",
-          "f": "ki",
-          "pl": "kiye"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "pannu",
-        "pres": "pannu",
-        "past": "pann",
-        "fut": "pannuv",
-        "cont": "pannittu",
-        "inf": "panna"
-      }
-    },
-    {
-      "id": "go",
-      "group": "core",
-      "en": {
-        "base": "go",
-        "past": "went",
-        "ing": "going",
-        "s": "goes"
-      },
-      "kn": {
-        "dict": "hogu",
-        "pres": "hog",
-        "past": "hod",
-        "cont": "hogta",
-        "neg": "hogalla",
-        "pastNeg": "hoglilla",
-        "inf": "hogakke",
-        "want": "hogbeku"
-      },
-      "hi": {
-        "dict": "jaana",
-        "stem": "jaa",
-        "perf": {
-          "m": "gaya",
-          "f": "gayi",
-          "pl": "gaye"
-        },
-        "ne": false
-      },
-      "ta": {
-        "dict": "po",
-        "pres": "po",
-        "past": "pon",
-        "fut": "pov",
-        "cont": "poyittu",
-        "inf": "poga"
-      }
-    },
-    {
-      "id": "come",
-      "group": "core",
-      "en": {
-        "base": "come",
-        "past": "came",
-        "ing": "coming",
-        "s": "comes"
-      },
-      "kn": {
-        "dict": "baa",
-        "pres": "bar",
-        "past": "band",
-        "cont": "barta",
-        "neg": "baralla",
-        "pastNeg": "barlilla",
-        "inf": "barakke",
-        "want": "barbeku"
-      },
-      "hi": {
-        "dict": "aana",
-        "stem": "aa",
-        "perf": {
-          "m": "aaya",
-          "f": "aayi",
-          "pl": "aaye"
-        },
-        "ne": false
-      },
-      "ta": {
-        "dict": "vaa",
-        "pres": "va",
-        "past": "vandh",
-        "fut": "varuv",
-        "cont": "vandhuttu",
-        "inf": "vara"
-      }
-    },
-    {
-      "id": "think",
-      "group": "core",
-      "en": {
-        "base": "think",
-        "past": "thought",
-        "ing": "thinking",
-        "s": "thinks"
-      },
-      "kn": {
-        "dict": "yochne maadu",
-        "pres": "yochne maad",
-        "past": "yochne maadid",
-        "cont": "yochne maadta",
-        "neg": "yochne maadalla",
-        "pastNeg": "yochne maadlilla",
-        "inf": "yochne maadakke",
-        "want": "yochne maadbeku"
-      },
-      "hi": {
-        "dict": "sochna",
-        "stem": "soch",
-        "perf": {
-          "m": "socha",
-          "f": "sochi",
-          "pl": "soche"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "yosi",
-        "pres": "yosikki",
-        "past": "yosich",
-        "fut": "yosipp",
-        "cont": "yosichittu",
-        "inf": "yosikka"
-      }
-    },
-    {
-      "id": "travel",
-      "group": "core",
-      "en": {
-        "base": "travel",
-        "past": "travelled",
-        "ing": "travelling",
-        "s": "travels"
-      },
-      "note": "The formal words are pravaasa (kn), safar (hi), payanam (ta); on the street everyone says travel.",
-      "kn": {
-        "dict": "travel maadu",
-        "pres": "travel maad",
-        "past": "travel maadid",
-        "cont": "travel maadta",
-        "neg": "travel maadalla",
-        "pastNeg": "travel maadlilla",
-        "inf": "travel maadakke",
-        "want": "travel maadbeku"
-      },
-      "hi": {
-        "dict": "travel karna",
-        "stem": "travel kar",
-        "perf": {
-          "m": "travel kiya",
-          "f": "travel ki",
-          "pl": "travel kiye"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "travel pannu",
-        "pres": "travel pannu",
-        "past": "travel pann",
-        "fut": "travel pannuv",
-        "cont": "travel pannittu",
-        "inf": "travel panna"
-      }
-    },
-    {
-      "id": "speak",
-      "group": "core",
-      "en": {
-        "base": "speak",
-        "past": "spoke",
-        "ing": "speaking",
-        "s": "speaks"
-      },
-      "kn": {
-        "dict": "maatadu",
-        "pres": "maatad",
-        "past": "maatadid",
-        "cont": "maatadta",
-        "neg": "maatadalla",
-        "pastNeg": "maatadlilla",
-        "inf": "maatadakke",
-        "want": "maatadbeku"
-      },
-      "hi": {
-        "dict": "bolna",
-        "stem": "bol",
-        "perf": {
-          "m": "bola",
-          "f": "boli",
-          "pl": "bole"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "pesu",
-        "pres": "pesu",
-        "past": "pesin",
-        "fut": "pesuv",
-        "cont": "pesittu",
-        "inf": "pesa"
-      }
-    },
-    {
-      "id": "eat",
-      "group": "core",
-      "en": {
-        "base": "eat",
-        "past": "ate",
-        "ing": "eating",
-        "s": "eats"
-      },
-      "kn": {
-        "dict": "tinnu",
-        "pres": "tin",
-        "past": "tind",
-        "cont": "tinta",
-        "neg": "tinnalla",
-        "pastNeg": "tinlilla",
-        "inf": "tinnakke",
-        "want": "tinbeku"
-      },
-      "hi": {
-        "dict": "khaana",
-        "stem": "khaa",
-        "perf": {
-          "m": "khaaya",
-          "f": "khaayi",
-          "pl": "khaaye"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "saapdu",
-        "pres": "saapd",
-        "past": "saapt",
-        "fut": "saapduv",
-        "cont": "saaptuttu",
-        "inf": "saapda"
-      }
-    },
-    {
-      "id": "drink",
-      "group": "core",
-      "en": {
-        "base": "drink",
-        "past": "drank",
-        "ing": "drinking",
-        "s": "drinks"
-      },
-      "kn": {
-        "dict": "kudi",
-        "pres": "kudi",
-        "past": "kudid",
-        "cont": "kudita",
-        "neg": "kudiyalla",
-        "pastNeg": "kudilla",
-        "inf": "kudiyakke",
-        "want": "kudibeku"
-      },
-      "hi": {
-        "dict": "peena",
-        "stem": "pee",
-        "perf": {
-          "m": "piya",
-          "f": "pi",
-          "pl": "piye"
-        },
-        "ne": true,
-        "fut": {
-          "m": [
-            "piyunga",
-            "piyoge",
-            "piyenge",
-            "piyega",
-            "piyegi",
-            "piyenge",
-            "piyenge"
-          ],
-          "f": [
-            "piyungi",
-            "piyogi",
-            "piyengi",
-            "piyegi",
-            "piyegi",
-            "piyengi",
-            "piyengi"
-          ]
-        }
-      },
-      "ta": {
-        "dict": "kudi",
-        "pres": "kudikku",
-        "past": "kudich",
-        "fut": "kudipp",
-        "cont": "kudichittu",
-        "inf": "kudikka"
-      }
-    },
-    {
-      "id": "see",
-      "group": "core",
-      "en": {
-        "base": "see",
-        "past": "saw",
-        "ing": "seeing",
-        "s": "sees"
-      },
-      "kn": {
-        "dict": "nodu",
-        "pres": "nod",
-        "past": "nodid",
-        "cont": "nodta",
-        "neg": "nodalla",
-        "pastNeg": "nodlilla",
-        "inf": "nodakke",
-        "want": "nodbeku"
-      },
-      "hi": {
-        "dict": "dekhna",
-        "stem": "dekh",
-        "perf": {
-          "m": "dekha",
-          "f": "dekhi",
-          "pl": "dekhe"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "paaru",
-        "pres": "paakku",
-        "past": "paath",
-        "fut": "paapp",
-        "cont": "paathuttu",
-        "inf": "paakka"
-      }
-    },
-    {
-      "id": "read",
-      "group": "core",
-      "en": {
-        "base": "read",
-        "past": "read",
-        "ing": "reading",
-        "s": "reads"
-      },
-      "kn": {
-        "dict": "odu",
-        "pres": "od",
-        "past": "odid",
-        "cont": "odta",
-        "neg": "odalla",
-        "pastNeg": "odlilla",
-        "inf": "odakke",
-        "want": "odbeku"
-      },
-      "hi": {
-        "dict": "padhna",
-        "stem": "padh",
-        "perf": {
-          "m": "padha",
-          "f": "padhi",
-          "pl": "padhe"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "padi",
-        "pres": "padikki",
-        "past": "padich",
-        "fut": "padipp",
-        "cont": "padichittu",
-        "inf": "padikka"
-      }
-    },
-    {
-      "id": "write",
-      "group": "core",
-      "en": {
-        "base": "write",
-        "past": "wrote",
-        "ing": "writing",
-        "s": "writes"
-      },
-      "kn": {
-        "dict": "bari",
-        "pres": "bari",
-        "past": "bared",
-        "cont": "barita",
-        "neg": "bariyalla",
-        "pastNeg": "barilla",
-        "inf": "bariyakke",
-        "want": "baribeku"
-      },
-      "hi": {
-        "dict": "likhna",
-        "stem": "likh",
-        "perf": {
-          "m": "likha",
-          "f": "likhi",
-          "pl": "likhe"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "ezhudhu",
-        "pres": "ezhudhu",
-        "past": "ezhudhin",
-        "fut": "ezhudhuv",
-        "cont": "ezhudhittu",
-        "inf": "ezhudha"
-      }
-    },
-    {
-      "id": "work",
-      "group": "core",
-      "en": {
-        "base": "work",
-        "past": "worked",
-        "ing": "working",
-        "s": "works"
-      },
-      "kn": {
-        "dict": "kelsa maadu",
-        "pres": "kelsa maad",
-        "past": "kelsa maadid",
-        "cont": "kelsa maadta",
-        "neg": "kelsa maadalla",
-        "pastNeg": "kelsa maadlilla",
-        "inf": "kelsa maadakke",
-        "want": "kelsa maadbeku"
-      },
-      "hi": {
-        "dict": "kaam karna",
-        "stem": "kaam kar",
-        "perf": {
-          "m": "kaam kiya",
-          "f": "kaam kiya",
-          "pl": "kaam kiya"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "velai pannu",
-        "pres": "velai pannu",
-        "past": "velai pann",
-        "fut": "velai pannuv",
-        "cont": "velai pannittu",
-        "inf": "velai panna"
-      }
-    },
-    {
-      "id": "sleep",
-      "group": "core",
-      "en": {
-        "base": "sleep",
-        "past": "slept",
-        "ing": "sleeping",
-        "s": "sleeps"
-      },
-      "kn": {
-        "dict": "malagu",
-        "pres": "malag",
-        "past": "malagid",
-        "cont": "malagta",
-        "neg": "malagalla",
-        "pastNeg": "malaglilla",
-        "inf": "malagakke",
-        "want": "malagbeku"
-      },
-      "hi": {
-        "dict": "sona",
-        "stem": "so",
-        "perf": {
-          "m": "soya",
-          "f": "soyi",
-          "pl": "soye"
-        },
-        "ne": false,
-        "fut": {
-          "m": [
-            "soonga",
-            "sooge",
-            "soenge",
-            "soega",
-            "soegi",
-            "soenge",
-            "soenge"
-          ],
-          "f": [
-            "soongi",
-            "soogi",
-            "soengi",
-            "soegi",
-            "soegi",
-            "soengi",
-            "soengi"
-          ]
-        }
-      },
-      "ta": {
-        "dict": "thoongu",
-        "pres": "thoongu",
-        "past": "thoongin",
-        "fut": "thoonguv",
-        "cont": "thoongittu",
-        "inf": "thoonga"
-      }
-    },
-    {
-      "id": "playgame",
-      "group": "core",
-      "en": {
-        "base": "play",
-        "past": "played",
-        "ing": "playing",
-        "s": "plays"
-      },
-      "note": "a game or sport, not an instrument",
-      "kn": {
-        "dict": "aadu",
-        "pres": "aad",
-        "past": "aadid",
-        "cont": "aadta",
-        "neg": "aadalla",
-        "pastNeg": "aadlilla",
-        "inf": "aadakke",
-        "want": "aadbeku"
-      },
-      "hi": {
-        "dict": "khelna",
-        "stem": "khel",
-        "perf": {
-          "m": "khela",
-          "f": "kheli",
-          "pl": "khele"
-        },
-        "ne": true
-      },
-      "ta": {
-        "dict": "velaiyaadu",
-        "pres": "velaiyaad",
-        "past": "velaiyaadin",
-        "fut": "velaiyaaduv",
-        "cont": "velaiyaadittu",
-        "inf": "velaiyaada"
-      }
-    }
+ "note": "Sentence Studio data. Colloquial spoken forms only (Bangalore Kannada, Delhi Hindi, Chennai Tamil), romanized Latin, never native script, no plural suffixes for beginners. Verb forms are built as stem plus ending in lib/grammar.ts and agent/teacher.py from the tables below. Music verbs and vocabulary come first on purpose. No em dashes anywhere.",
+ "persons": {
+  "kn": [
+   {
+    "id": "i",
+    "en": "I",
+    "sub": "naanu",
+    "dat": "nanage"
+   },
+   {
+    "id": "you",
+    "en": "you",
+    "sub": "neenu",
+    "dat": "ninage",
+    "hint": "a friend"
+   },
+   {
+    "id": "youp",
+    "en": "you",
+    "sub": "neevu",
+    "dat": "nimage",
+    "hint": "polite"
+   },
+   {
+    "id": "he",
+    "en": "he",
+    "sub": "avanu",
+    "dat": "avanige"
+   },
+   {
+    "id": "she",
+    "en": "she",
+    "sub": "avalu",
+    "dat": "avalige"
+   },
+   {
+    "id": "we",
+    "en": "we",
+    "sub": "naavu",
+    "dat": "namage"
+   },
+   {
+    "id": "they",
+    "en": "they",
+    "sub": "avru",
+    "dat": "avrige"
+   }
   ],
-  "objects": [
-    {
-      "id": "piano",
-      "en": "the piano",
-      "kn": "piano",
-      "hi": "piano",
-      "hiG": "m",
-      "ta": "piano",
-      "kind": "thing"
-    },
-    {
-      "id": "guitar",
-      "en": "the guitar",
-      "kn": "guitar",
-      "hi": "guitar",
-      "hiG": "m",
-      "ta": "guitar",
-      "kind": "thing"
-    },
-    {
-      "id": "violin",
-      "en": "the violin",
-      "kn": "violin",
-      "hi": "violin",
-      "hiG": "m",
-      "ta": "violin",
-      "kind": "thing"
-    },
-    {
-      "id": "drums",
-      "en": "the drums",
-      "kn": "drums",
-      "hi": "drums",
-      "hiG": "m",
-      "ta": "drums",
-      "kind": "thing"
-    },
-    {
-      "id": "song",
-      "en": "a song",
-      "kn": "ondu haadu",
-      "hi": "ek gaana",
-      "hiG": "m",
-      "ta": "oru paattu",
-      "kind": "thing"
-    },
-    {
-      "id": "thissong",
-      "en": "this song",
-      "kn": "ee haadu",
-      "hi": "yeh gaana",
-      "hiG": "m",
-      "ta": "indha paattu",
-      "kind": "thing"
-    },
-    {
-      "id": "music",
-      "en": "music",
-      "kn": "music",
-      "hi": "music",
-      "hiG": "m",
-      "ta": "music",
-      "kind": "thing"
-    },
-    {
-      "id": "language",
-      "en": "Kannada",
-      "kn": "Kannada",
-      "hi": "Hindi",
-      "hiG": "f",
-      "ta": "Tamil",
-      "kind": "language",
-      "enByLang": {
-        "kn": "Kannada",
-        "hi": "Hindi",
-        "ta": "Tamil"
-      }
-    },
-    {
-      "id": "english",
-      "en": "English",
-      "kn": "English",
-      "hi": "English",
-      "hiG": "f",
-      "ta": "English",
-      "kind": "language"
-    },
-    {
-      "id": "rice",
-      "en": "rice",
-      "kn": "anna",
-      "hi": "chaawal",
-      "hiG": "m",
-      "ta": "saadham",
-      "kind": "thing"
-    },
-    {
-      "id": "tea",
-      "en": "tea",
-      "kn": "tea",
-      "hi": "chai",
-      "hiG": "f",
-      "ta": "tea",
-      "kind": "thing"
-    },
-    {
-      "id": "water",
-      "en": "water",
-      "kn": "neeru",
-      "hi": "paani",
-      "hiG": "m",
-      "ta": "thanni",
-      "kind": "thing"
-    },
-    {
-      "id": "movie",
-      "en": "a movie",
-      "kn": "ondu film",
-      "hi": "ek film",
-      "hiG": "f",
-      "ta": "oru padam",
-      "kind": "thing"
-    },
-    {
-      "id": "book",
-      "en": "a book",
-      "kn": "ondu pustaka",
-      "hi": "ek kitaab",
-      "hiG": "f",
-      "ta": "oru puthagam",
-      "kind": "thing"
-    },
-    {
-      "id": "home",
-      "en": "home",
-      "kn": "manege",
-      "hi": "ghar",
-      "hiG": "m",
-      "ta": "veetukku",
-      "kind": "place"
-    },
-    {
-      "id": "class",
-      "en": "to class",
-      "kn": "class-ge",
-      "hi": "class",
-      "hiG": "f",
-      "ta": "class-ku",
-      "kind": "place"
-    },
-    {
-      "id": "concert",
-      "en": "to the concert",
-      "kn": "concert-ge",
-      "hi": "concert mein",
-      "hiG": "m",
-      "ta": "concert-ku",
-      "kind": "place"
-    },
-    {
-      "id": "city",
-      "en": "to Bangalore",
-      "kn": "Bangalore-ge",
-      "hi": "Bangalore",
-      "hiG": "m",
-      "ta": "Bangalore-ku",
-      "kind": "place"
-    }
+  "hi": [
+   {
+    "id": "i",
+    "en": "I",
+    "sub": "main",
+    "dat": "mujhe",
+    "ne": "maine"
+   },
+   {
+    "id": "you",
+    "en": "you",
+    "sub": "tum",
+    "dat": "tumhe",
+    "ne": "tumne",
+    "hint": "a friend"
+   },
+   {
+    "id": "youp",
+    "en": "you",
+    "sub": "aap",
+    "dat": "aapko",
+    "ne": "aapne",
+    "hint": "polite"
+   },
+   {
+    "id": "he",
+    "en": "he",
+    "sub": "voh",
+    "dat": "use",
+    "ne": "usne"
+   },
+   {
+    "id": "she",
+    "en": "she",
+    "sub": "voh",
+    "dat": "use",
+    "ne": "usne"
+   },
+   {
+    "id": "we",
+    "en": "we",
+    "sub": "hum",
+    "dat": "humein",
+    "ne": "humne"
+   },
+   {
+    "id": "they",
+    "en": "they",
+    "sub": "ve",
+    "dat": "unhe",
+    "ne": "unhonne"
+   }
   ],
-  "times": [
-    {
-      "id": "yesterday",
-      "en": "yesterday",
-      "kn": "nenne",
-      "hi": "kal",
-      "ta": "nethu",
-      "tense": "past"
-    },
-    {
-      "id": "today",
-      "en": "today",
-      "kn": "ivattu",
-      "hi": "aaj",
-      "ta": "innikki"
-    },
-    {
-      "id": "tomorrow",
-      "en": "tomorrow",
-      "kn": "naale",
-      "hi": "kal",
-      "ta": "naalaikku",
-      "tense": "future"
-    },
-    {
-      "id": "everyday",
-      "en": "every day",
-      "kn": "dina",
-      "hi": "roz",
-      "ta": "daily",
-      "tense": "present"
-    },
-    {
-      "id": "now",
-      "en": "now",
-      "kn": "eega",
-      "hi": "abhi",
-      "ta": "ippo",
-      "tense": "cont"
-    },
-    {
-      "id": "evening",
-      "en": "in the evening",
-      "kn": "sanje",
-      "hi": "shaam ko",
-      "ta": "saayangaalam"
-    },
-    {
-      "id": "morning",
-      "en": "in the morning",
-      "kn": "belagge",
-      "hi": "subah",
-      "ta": "kaalaila"
-    }
-  ],
-  "decks": {
-    "music": [
-      {
-        "en": "song",
-        "kn": "haadu",
-        "hi": "gaana",
-        "ta": "paattu",
-        "trick": "haadu sounds like had to: a song you HAD to sing. paattu: PUT two hands together and sing."
-      },
-      {
-        "en": "to sing",
-        "kn": "haadu",
-        "hi": "gaana",
-        "ta": "paadu",
-        "trick": "Kannada and Hindi use the same word for song and sing. Tamil flips one letter: paattu (song), paadu (sing)."
-      },
-      {
-        "en": "to play (an instrument)",
-        "kn": "nudisu (or play maadu)",
-        "hi": "bajaana",
-        "ta": "vaasi (or play pannu)",
-        "trick": "bajaana sounds like bhajan: you play for a bhajan. vaasi: VAAsi sounds like vibe-see."
-      },
-      {
-        "en": "music",
-        "kn": "music (sangeeta)",
-        "hi": "music (sangeet)",
-        "ta": "music (isai)",
-        "trick": "Everyone says music. Sangeeta and sangeet are the formal words; isai is the Tamil one you see on posters."
-      },
-      {
-        "en": "note, swara",
-        "kn": "swara",
-        "hi": "sur",
-        "ta": "swaram",
-        "trick": "Sa Re Ga Ma is the same in every Indian language. Sur is the short Hindi form: sur mein means in tune."
-      },
-      {
-        "en": "rhythm, beat cycle",
-        "kn": "taala",
-        "hi": "taal",
-        "ta": "thaalam",
-        "trick": "Taala means clap. Keep the taala means keep the beat."
-      },
-      {
-        "en": "raga, melody frame",
-        "kn": "raaga",
-        "hi": "raag",
-        "ta": "raagam",
-        "trick": "Same root everywhere. Kannada and Tamil add a vowel or an m at the end, Hindi drops it."
-      },
-      {
-        "en": "tune, melody",
-        "kn": "tune (raaga)",
-        "hi": "dhun",
-        "ta": "tune (raagam)",
-        "trick": "dhun sounds like done: once the dhun is stuck in your head, you are done."
-      },
-      {
-        "en": "voice",
-        "kn": "voice (dhwani)",
-        "hi": "awaaz",
-        "ta": "kural",
-        "trick": "awaaz: a-VOICE with the v softened. kural: the voice that CURLs out of your throat."
-      },
-      {
-        "en": "fast",
-        "kn": "bega (speed aagi)",
-        "hi": "tez (jaldi)",
-        "ta": "vegama (seekkiram)",
-        "trick": "bega and vegama share a root: be quick. tez means sharp and fast, like a knife."
-      },
-      {
-        "en": "slow",
-        "kn": "nidhaana (slow aagi)",
-        "hi": "dheere",
-        "ta": "medhuva",
-        "trick": "dheere dheere is the famous Bollywood slowly slowly. medhuva sounds like mellow."
-      },
-      {
-        "en": "loud",
-        "kn": "jorage",
-        "hi": "zor se",
-        "ta": "saththama",
-        "trick": "jor and zor both mean force. saththama: with SOUND."
-      },
-      {
-        "en": "soft, quiet",
-        "kn": "mellage",
-        "hi": "dheere se",
-        "ta": "medhuva",
-        "trick": "mellage: MELLOW-ge. Hindi and Tamil reuse their slow word for soft."
-      },
-      {
-        "en": "again, once more",
-        "kn": "innomme",
-        "hi": "phir se",
-        "ta": "thirumba",
-        "trick": "innomme is innu plus omme: one more. thirumba means turn back."
-      },
-      {
-        "en": "from the beginning",
-        "kn": "modalinda",
-        "hi": "shuru se",
-        "ta": "modhalla irundhu",
-        "trick": "modalu and modhal both mean first. shuru is start, like shuru karo, let us start."
-      },
-      {
-        "en": "practice",
-        "kn": "practice (abhyaasa)",
-        "hi": "practice (riyaaz)",
-        "ta": "practice (payirchi)",
-        "trick": "Everyone says practice. Riyaaz is the classical musician's word in Hindi and you will hear it in music circles."
-      },
-      {
-        "en": "to listen",
-        "kn": "kelu",
-        "hi": "sunna",
-        "ta": "kelu",
-        "trick": "kelu is identical in Kannada and Tamil. sunna: sounds like soon-ah, listen soon."
-      },
-      {
-        "en": "listen carefully",
-        "kn": "sariyaagi keli",
-        "hi": "dhyaan se suno",
-        "ta": "ozhunga kelunga",
-        "trick": "dhyaan is attention, the same word as meditation."
-      },
-      {
-        "en": "high (pitch)",
-        "kn": "high (mele)",
-        "hi": "ooncha (upar)",
-        "ta": "high (mela)",
-        "trick": "mele and mela both mean up or above. Music teachers in India mostly say high in English."
-      },
-      {
-        "en": "low (pitch)",
-        "kn": "low (kelage)",
-        "hi": "neecha (neeche)",
-        "ta": "low (keezha)",
-        "trick": "neeche means below. kelage and keezha mean down."
-      },
-      {
-        "en": "teacher",
-        "kn": "teacher (sir, miss)",
-        "hi": "teacher (guru ji)",
-        "ta": "teacher (sir, miss)",
-        "trick": "Students say sir or miss in all three languages. Guru ji is warm and respectful in Hindi."
-      },
-      {
-        "en": "student",
-        "kn": "student (vidyaarthi)",
-        "hi": "student (shishya)",
-        "ta": "student (maanavan)",
-        "trick": "Everyone says student. Shishya is the classical guru-shishya word."
-      },
-      {
-        "en": "class",
-        "kn": "class",
-        "hi": "class",
-        "ta": "class",
-        "trick": "Same word. To class: class-ge (kn), class (hi), class-ku (ta)."
-      },
-      {
-        "en": "concert",
-        "kn": "concert (kacheri)",
-        "hi": "concert",
-        "ta": "kacheri (concert)",
-        "trick": "Kacheri is the Carnatic word for a concert in both Kannada and Tamil."
-      },
-      {
-        "en": "flute",
-        "kn": "kolalu (flute)",
-        "hi": "baansuri",
-        "ta": "pullaanguzhal (flute)",
-        "trick": "baansuri comes from baans, bamboo. Kannada and Tamil speakers mostly say flute."
-      },
-      {
-        "en": "piano, guitar, violin, drums, keyboard",
-        "kn": "same words",
-        "hi": "same words",
-        "ta": "same words",
-        "trick": "Instrument names are the same everywhere. Only the verb changes: nudisu, bajaana, vaasi."
-      },
-      {
-        "en": "well done",
-        "kn": "chennaagi maadidri",
-        "hi": "bahut achhe",
-        "ta": "nalla panneenga",
-        "trick": "chennaagi and nalla both mean well. Say it after a good take."
-      },
-      {
-        "en": "that sounds nice",
-        "kn": "chennaagide",
-        "hi": "bahut achha hai",
-        "ta": "nalla irukku",
-        "trick": "chennaagide is the all-purpose Kannada word for it is good. nalla irukku is the Tamil twin."
-      },
-      {
-        "en": "once more, a little slower",
-        "kn": "innomme, swalpa slow aagi",
-        "hi": "ek baar aur, thoda dheere",
-        "ta": "innoru thadava, konjam medhuva",
-        "trick": "swalpa, thoda, konjam all mean a little. The teacher's most useful word."
-      },
-      {
-        "en": "stop",
-        "kn": "nillisi",
-        "hi": "ruko",
-        "ta": "niruthunga",
-        "trick": "nillisi and niruthunga share the nil root, to stand still."
-      },
-      {
-        "en": "wait a moment",
-        "kn": "swalpa iri",
-        "hi": "ek minute ruko",
-        "ta": "konjam irunga",
-        "trick": "iri and irunga both come from iru, to be or stay."
-      },
-      {
-        "en": "count",
-        "kn": "count maadi (enisi)",
-        "hi": "gino",
-        "ta": "count pannunga (ennunga)",
-        "trick": "gino sounds like gin-oh: count the gin bottles."
-      },
-      {
-        "en": "one two three four",
-        "kn": "ondu eradu mooru naalku",
-        "hi": "ek do teen chaar",
-        "ta": "onnu rendu moonu naalu",
-        "trick": "Count in before every take. ek do teen chaar is the count-in every Bollywood drummer knows."
-      }
-    ],
-    "numbers": [
-      {
-        "en": "one",
-        "kn": "ondu",
-        "hi": "ek",
-        "ta": "onnu",
-        "trick": "ondu and onnu both start like ONE."
-      },
-      {
-        "en": "two",
-        "kn": "eradu",
-        "hi": "do",
-        "ta": "rendu",
-        "trick": "Hindi do: two things to DO. eradu and rendu rhyme."
-      },
-      {
-        "en": "three",
-        "kn": "mooru",
-        "hi": "teen",
-        "ta": "moonu",
-        "trick": "teen as in thirTEEN. mooru and moonu are twins."
-      },
-      {
-        "en": "four",
-        "kn": "naalku",
-        "hi": "chaar",
-        "ta": "naalu",
-        "trick": "naal in Kannada and Tamil. chaar sounds like char: four charred toast slices."
-      },
-      {
-        "en": "five",
-        "kn": "aidu",
-        "hi": "paanch",
-        "ta": "anju",
-        "trick": "paanch: a PUNCH with five fingers."
-      },
-      {
-        "en": "six",
-        "kn": "aaru",
-        "hi": "chhe",
-        "ta": "aaru",
-        "trick": "aaru is identical in Kannada and Tamil. chhe: six is what you say when you sneeze, chhe."
-      },
-      {
-        "en": "seven",
-        "kn": "elu",
-        "hi": "saat",
-        "ta": "ezhu",
-        "trick": "saat: seven friends SAT together."
-      },
-      {
-        "en": "eight",
-        "kn": "entu",
-        "hi": "aath",
-        "ta": "ettu",
-        "trick": "aath and eight sound almost the same. entu and ettu too."
-      },
-      {
-        "en": "nine",
-        "kn": "ombattu",
-        "hi": "nau",
-        "ta": "onbadhu",
-        "trick": "nau is nine with the vowel bent. ombattu and onbadhu are twins."
-      },
-      {
-        "en": "ten",
-        "kn": "hattu",
-        "hi": "das",
-        "ta": "patthu",
-        "trick": "das like decimal. hattu and patthu differ by one letter."
-      },
-      {
-        "en": "twenty",
-        "kn": "ippattu",
-        "hi": "bees",
-        "ta": "irubadhu",
-        "trick": "bees: twenty bees. ippattu is two tens squeezed together."
-      },
-      {
-        "en": "thirty",
-        "kn": "muvattu",
-        "hi": "tees",
-        "ta": "muppadhu",
-        "trick": "mu (three) plus the tens ending in both Kannada and Tamil."
-      },
-      {
-        "en": "fifty",
-        "kn": "aivattu",
-        "hi": "pachaas",
-        "ta": "ambadhu",
-        "trick": "pachaas: pach (five) plus aas. A fifty rupee note is pachaas ka note."
-      },
-      {
-        "en": "hundred",
-        "kn": "nooru",
-        "hi": "sau",
-        "ta": "nooru",
-        "trick": "nooru is identical in Kannada and Tamil. sau sounds like so: so many, a hundred."
-      },
-      {
-        "en": "how many",
-        "kn": "eshtu",
-        "hi": "kitne",
-        "ta": "ethana",
-        "trick": "eshtu is also how much. kitne: kit-nay, how many kits?"
-      }
-    ],
-    "fruits": [
-      {
-        "en": "fruit",
-        "kn": "hannu",
-        "hi": "phal",
-        "ta": "pazham",
-        "trick": "hannu and pazham end many fruit names: maavina hannu, maampazham."
-      },
-      {
-        "en": "banana",
-        "kn": "baalehannu",
-        "hi": "kela",
-        "ta": "vaazhaipazham",
-        "trick": "kela sounds like kayla with a banana. baale and vaazhai are the same word said in two accents."
-      },
-      {
-        "en": "mango",
-        "kn": "maavina hannu",
-        "hi": "aam",
-        "ta": "maampazham",
-        "trick": "aam: I AM the king of fruits. maa is the root in Kannada and Tamil."
-      },
-      {
-        "en": "apple",
-        "kn": "sebu (apple)",
-        "hi": "seb",
-        "ta": "apple",
-        "trick": "seb and sebu are cousins. Tamils just say apple."
-      },
-      {
-        "en": "orange",
-        "kn": "kittale (orange)",
-        "hi": "santra",
-        "ta": "orange",
-        "trick": "santra: SANTa brought oranges. Most people say orange."
-      },
-      {
-        "en": "grapes",
-        "kn": "draakshi",
-        "hi": "angoor",
-        "ta": "dhraatchai",
-        "trick": "draakshi and dhraatchai share one root. angoor: on-GOOR, hang on the vine."
-      },
-      {
-        "en": "papaya",
-        "kn": "parangi hannu",
-        "hi": "papeeta",
-        "ta": "pappaali",
-        "trick": "papeeta and pappaali both keep the pap sound."
-      },
-      {
-        "en": "watermelon",
-        "kn": "kallangadi",
-        "hi": "tarbooz",
-        "ta": "tharboosani",
-        "trick": "tarbooz and tharboosani are twins. kallangadi is the odd one out."
-      },
-      {
-        "en": "coconut",
-        "kn": "tenginakaayi",
-        "hi": "naariyal",
-        "ta": "thengaai",
-        "trick": "thenga is coconut in the south; kaayi means the raw fruit."
-      },
-      {
-        "en": "lemon",
-        "kn": "nimbe hannu",
-        "hi": "nimbu",
-        "ta": "elumichai",
-        "trick": "nimbe and nimbu are cousins. elumichai is the Tamil one you hear at every juice stall."
-      },
-      {
-        "en": "pomegranate",
-        "kn": "daalimbe",
-        "hi": "anaar",
-        "ta": "maadhulai",
-        "trick": "anaar: an ARR of ruby seeds."
-      },
-      {
-        "en": "guava",
-        "kn": "seebe hannu",
-        "hi": "amrood",
-        "ta": "koyya",
-        "trick": "amrood: am-ROOD, a rude green fruit."
-      },
-      {
-        "en": "jackfruit",
-        "kn": "halasina hannu",
-        "hi": "kathal",
-        "ta": "palaa pazham",
-        "trick": "halasu and palaa share the la sound; the jackfruit is huge, so the word is short."
-      }
-    ],
-    "vegetables": [
-      {
-        "en": "vegetables",
-        "kn": "tarkaari",
-        "hi": "sabzi",
-        "ta": "kaai (kaaigari)",
-        "trick": "kaayi at the end of a Kannada or Tamil word usually means a raw vegetable."
-      },
-      {
-        "en": "onion",
-        "kn": "eerulli",
-        "hi": "pyaaz",
-        "ta": "vengaayam",
-        "trick": "pyaaz: PIE-aaz. eerulli: EAR-ulli, an onion in your ear."
-      },
-      {
-        "en": "tomato",
-        "kn": "tomato",
-        "hi": "tamaatar",
-        "ta": "thakkaali",
-        "trick": "tamaatar is tomato with an Indian accent. thakkaali sounds like tackle-y."
-      },
-      {
-        "en": "potato",
-        "kn": "aalugadde (potato)",
-        "hi": "aaloo",
-        "ta": "urulaikizhangu (potato)",
-        "trick": "aaloo: everyone knows aaloo paratha. Kannada aalu plus gadde, a root."
-      },
-      {
-        "en": "carrot",
-        "kn": "carrot",
-        "hi": "gaajar",
-        "ta": "carrot",
-        "trick": "gaajar ka halwa is the dessert. Kannada and Tamil just say carrot."
-      },
-      {
-        "en": "beans",
-        "kn": "beans",
-        "hi": "beans (sem)",
-        "ta": "beans",
-        "trick": "Same word everywhere."
-      },
-      {
-        "en": "brinjal",
-        "kn": "badnekaayi",
-        "hi": "baingan",
-        "ta": "kathirikkaai",
-        "trick": "baingan bharta is the dish. kathirikkaai: cat-tree-kaai."
-      },
-      {
-        "en": "chilli",
-        "kn": "menasinakaayi",
-        "hi": "mirch",
-        "ta": "milagaai",
-        "trick": "mirch is hot, like mirchi. milagu is pepper, milagaai is chilli."
-      },
-      {
-        "en": "ginger",
-        "kn": "shunti",
-        "hi": "adrak",
-        "ta": "inji",
-        "trick": "adrak chai is ginger tea. inji sounds like ginger with the g dropped."
-      },
-      {
-        "en": "garlic",
-        "kn": "bellulli",
-        "hi": "lehsun",
-        "ta": "poondu",
-        "trick": "ulli means onion family: eerulli onion, bellulli garlic (white onion)."
-      },
-      {
-        "en": "greens",
-        "kn": "soppu",
-        "hi": "saag",
-        "ta": "keerai",
-        "trick": "saag paneer is the dish. soppu and keerai are the leafy bundles at the market."
-      },
-      {
-        "en": "coriander",
-        "kn": "kottambari soppu",
-        "hi": "dhaniya",
-        "ta": "kothamalli",
-        "trick": "kottambari and kothamalli are twins. dhaniya: DUN-ya, sprinkle on everything."
-      },
-      {
-        "en": "cabbage",
-        "kn": "cabbage",
-        "hi": "patta gobhi",
-        "ta": "cabbage",
-        "trick": "patta means leaf, gobhi means the cauliflower family."
-      },
-      {
-        "en": "cauliflower",
-        "kn": "cauliflower (hookosu)",
-        "hi": "gobhi",
-        "ta": "cauliflower",
-        "trick": "gobhi manchurian is the street snack."
-      },
-      {
-        "en": "peas",
-        "kn": "batani",
-        "hi": "matar",
-        "ta": "pattaani",
-        "trick": "matar paneer. batani and pattaani are cousins."
-      },
-      {
-        "en": "okra, ladies finger",
-        "kn": "bendekaayi",
-        "hi": "bhindi",
-        "ta": "vendakkaai",
-        "trick": "bende and venda are the same word in two accents. bhindi masala."
-      },
-      {
-        "en": "drumstick",
-        "kn": "nuggekaayi",
-        "hi": "sahjan",
-        "ta": "murungakkaai",
-        "trick": "murungakkaai sambar: the long green stick in your sambar."
-      }
-    ],
-    "countries": [
-      {
-        "en": "country",
-        "kn": "desha",
-        "hi": "desh",
-        "ta": "naadu",
-        "trick": "desha and desh are the same word. naadu is in Tamil Nadu itself: the Tamil country."
-      },
-      {
-        "en": "which country",
-        "kn": "yaava desha",
-        "hi": "kaun sa desh",
-        "ta": "endha naadu",
-        "trick": "yaava, kaun sa, endha all mean which. The first question any stranger asks."
-      },
-      {
-        "en": "India",
-        "kn": "India (Bhaarata)",
-        "hi": "India (Bhaarat)",
-        "ta": "India (Indhiya)",
-        "trick": "Everyone says India. Bhaarat is the formal name you hear in the news."
-      },
-      {
-        "en": "I am from India",
-        "kn": "naanu India-dinda",
-        "hi": "main India se hoon",
-        "ta": "naan India-la irundhu",
-        "trick": "dinda, se, la irundhu all mean from. Swap the country and the line works for anywhere."
-      },
-      {
-        "en": "America, England, Australia, Germany, Japan, China, Dubai, Singapore",
-        "kn": "same words",
-        "hi": "same words",
-        "ta": "same words",
-        "trick": "Country names stay English in daily speech. Only the word for country and from changes."
-      },
-      {
-        "en": "abroad, foreign country",
-        "kn": "foreign (videsha)",
-        "hi": "videsh",
-        "ta": "foreign (veli naadu)",
-        "trick": "vi plus desh: another country. veli means outside in Tamil."
-      },
-      {
-        "en": "foreigner",
-        "kn": "foreigner (videshi)",
-        "hi": "videshi",
-        "ta": "foreigner",
-        "trick": "videshi is what the auto driver calls a tourist."
-      },
-      {
-        "en": "city",
-        "kn": "city (nagara)",
-        "hi": "shehar",
-        "ta": "city (nagaram)",
-        "trick": "shehar: shah-hair, the city of the shah. nagara is in Bengaluru's Jayanagar."
-      },
-      {
-        "en": "village",
-        "kn": "halli",
-        "hi": "gaanv",
-        "ta": "graamam",
-        "trick": "halli ends many Kannada place names: Marathahalli, Nagarbhavi halli."
-      },
-      {
-        "en": "language",
-        "kn": "bhaashe",
-        "hi": "bhaasha",
-        "ta": "mozhi",
-        "trick": "bhaashe and bhaasha are twins. mozhi is the Tamil word, as in Tamil mozhi."
-      }
-    ]
+  "ta": [
+   {
+    "id": "i",
+    "en": "I",
+    "sub": "naan",
+    "dat": "enakku"
+   },
+   {
+    "id": "you",
+    "en": "you",
+    "sub": "nee",
+    "dat": "unakku",
+    "hint": "a friend"
+   },
+   {
+    "id": "youp",
+    "en": "you",
+    "sub": "neenga",
+    "dat": "ungalukku",
+    "hint": "polite"
+   },
+   {
+    "id": "he",
+    "en": "he",
+    "sub": "avan",
+    "dat": "avanukku"
+   },
+   {
+    "id": "she",
+    "en": "she",
+    "sub": "ava",
+    "dat": "avalukku"
+   },
+   {
+    "id": "we",
+    "en": "we",
+    "sub": "naanga",
+    "dat": "engalukku"
+   },
+   {
+    "id": "they",
+    "en": "they",
+    "sub": "avanga",
+    "dat": "avangalukku"
+   }
+  ]
+ },
+ "suffix": {
+  "kn": {
+   "pres": [
+    "tini",
+    "tiya",
+    "tira",
+    "tane",
+    "tale",
+    "tivi",
+    "tare"
+   ],
+   "past": [
+    "e",
+    "e",
+    "ri",
+    "a",
+    "lu",
+    "vi",
+    "ru"
+   ],
+   "contAux": [
+    "iddini",
+    "iddiya",
+    "iddira",
+    "iddane",
+    "iddale",
+    "iddivi",
+    "iddare"
+   ]
   },
-  "rules": {
-    "kn": [
-      {
-        "title": "The verb goes last",
-        "body": "Say who, then what, then the action. English word order is I play piano; Kannada is I piano play.",
-        "example": "naanu piano nudistini"
-      },
-      {
-        "title": "One ending per person",
-        "body": "Learn the ending once and put it on every verb: tini (I), tiya (you), tira (you polite), tane (he), tale (she), tivi (we), tare (they).",
-        "example": "nudistini, nudistira, nudistane, nudistale"
-      },
-      {
-        "title": "Future is free",
-        "body": "Spoken Kannada uses the present form for the future. The time word does the work.",
-        "example": "naale nudistini = I will play tomorrow"
-      },
-      {
-        "title": "Past endings",
-        "body": "Past stem plus e (I and you), ri (you polite), a (he), lu (she), vi (we), ru (they).",
-        "example": "nudiside, nudisidri, nudisida, nudisidlu"
-      },
-      {
-        "title": "Not: alla and lilla",
-        "body": "Now or future: verb plus alla. Past: verb plus lilla. Same word for every person, no endings to learn.",
-        "example": "nudisalla (do not play), nudislilla (did not play)"
-      },
-      {
-        "title": "Question: stretch the last sound",
-        "body": "Turn the last vowel into aa and it becomes a question. No extra word needed.",
-        "example": "nudistiraa? = do you play?"
-      },
-      {
-        "title": "The Bangalore shortcut",
-        "body": "English word plus maadu works for almost any action. Locals do it all day.",
-        "example": "practice maadtini, travel maadtini"
-      },
-      {
-        "title": "To and in",
-        "body": "ge means to, alli means in or at. No gender on I, you, or we. Keep nouns singular; beginners do not need plural endings.",
-        "example": "manege (home), class-ge, Bangalore-alli"
-      }
-    ],
-    "hi": [
-      {
-        "title": "The verb goes last",
-        "body": "Who, then what, then the action, then the little helper word.",
-        "example": "main piano bajaata hoon"
-      },
-      {
-        "title": "Gender is yours",
-        "body": "A man says bajaata, karta, jaata. A woman says bajaati, karti, jaati. This is the ending people notice first.",
-        "example": "main gaati hoon (woman), main gaata hoon (man)"
-      },
-      {
-        "title": "The helper word closes it",
-        "body": "hoon with main, ho with tum, hain with aap, hum, ve, hai with he or she.",
-        "example": "tum bajaate ho, voh bajaata hai"
-      },
-      {
-        "title": "Past with ne",
-        "body": "Doing-verbs take ne in the past and the verb matches the thing: maine piano bajaaya, maine chai pi. Go and come skip ne: main gaya, main gayi.",
-        "example": "maine gaana gaaya"
-      },
-      {
-        "title": "Future endings",
-        "body": "unga or ungi (I), oge (tum), enge (aap, hum, ve), ega or egi (he, she).",
-        "example": "main kal bajaaunga"
-      },
-      {
-        "title": "Not and question",
-        "body": "Put nahin before the verb for not. Put kya at the start for a yes or no question.",
-        "example": "kya tum piano bajaate ho?"
-      },
-      {
-        "title": "Right now",
-        "body": "raha or rahi plus the helper word means doing it at this moment.",
-        "example": "main piano baja raha hoon"
-      },
-      {
-        "title": "Want and can",
-        "body": "mujhe X chaahiye for a thing, main X karna chaahta hoon for an action, mujhe X aata hai for I know how.",
-        "example": "mujhe piano bajaana aata hai"
-      }
-    ],
-    "ta": [
-      {
-        "title": "The verb goes last",
-        "body": "Who, then what, then the action.",
-        "example": "naan piano vaasikkiren"
-      },
-      {
-        "title": "One ending per person",
-        "body": "ren (I), re (nee), reenga (neenga), raan (he), raa (she), rom (we), raanga (they). Put it on every verb.",
-        "example": "vaasikkiren, vaasikkireenga, vaasikkiraan"
-      },
-      {
-        "title": "Past endings",
-        "body": "Past stem plus en, e, eenga, aan, aa, om, aanga.",
-        "example": "vaasichen, vaasicheenga, vaasichaan, vaasichaa"
-      },
-      {
-        "title": "Future endings",
-        "body": "A v or pp sound, then the same endings as the past.",
-        "example": "vaasippen, paaduven, poven"
-      },
-      {
-        "title": "Not: maatten and la",
-        "body": "Will not or do not: the to-form plus maatten. Did not: the to-form plus la. Same for every person.",
-        "example": "vaasikka maatten, vaasikkala"
-      },
-      {
-        "title": "Question: add aa",
-        "body": "Add aa to the end of the verb. Politeness lives in nga: use neenga and the eenga ending with anyone older or unknown.",
-        "example": "vaasippeengalaa?"
-      },
-      {
-        "title": "The Chennai shortcut",
-        "body": "English word plus pannu works for almost any action.",
-        "example": "practice pannuren, travel pannuren"
-      },
-      {
-        "title": "To and in",
-        "body": "ku means to, la means in or at. No gender on I, you, or we. Keep nouns singular.",
-        "example": "veetukku (home), class-ku, Chennai-la"
-      }
-    ]
+  "hi": {
+   "aux": [
+    "hoon",
+    "ho",
+    "hain",
+    "hai",
+    "hai",
+    "hain",
+    "hain"
+   ],
+   "habM": [
+    "ta",
+    "te",
+    "te",
+    "ta",
+    "ti",
+    "te",
+    "te"
+   ],
+   "habF": [
+    "ti",
+    "ti",
+    "ti",
+    "ti",
+    "ti",
+    "ti",
+    "ti"
+   ],
+   "contM": [
+    "raha",
+    "rahe",
+    "rahe",
+    "raha",
+    "rahi",
+    "rahe",
+    "rahe"
+   ],
+   "contF": [
+    "rahi",
+    "rahi",
+    "rahi",
+    "rahi",
+    "rahi",
+    "rahi",
+    "rahi"
+   ],
+   "futM": [
+    "unga",
+    "oge",
+    "enge",
+    "ega",
+    "egi",
+    "enge",
+    "enge"
+   ],
+   "futF": [
+    "ungi",
+    "ogi",
+    "engi",
+    "egi",
+    "egi",
+    "engi",
+    "engi"
+   ],
+   "wantM": [
+    "chaahta",
+    "chaahte",
+    "chaahte",
+    "chaahta",
+    "chaahti",
+    "chaahte",
+    "chaahte"
+   ],
+   "wantF": [
+    "chaahti",
+    "chaahti",
+    "chaahti",
+    "chaahti",
+    "chaahti",
+    "chaahti",
+    "chaahti"
+   ]
+  },
+  "ta": {
+   "pres": [
+    "ren",
+    "re",
+    "reenga",
+    "raan",
+    "raa",
+    "rom",
+    "raanga"
+   ],
+   "pastFut": [
+    "en",
+    "e",
+    "eenga",
+    "aan",
+    "aa",
+    "om",
+    "aanga"
+   ],
+   "contAux": [
+    "irukken",
+    "irukke",
+    "irukkeenga",
+    "irukkaan",
+    "irukkaa",
+    "irukkom",
+    "irukkaanga"
+   ],
+   "wont": [
+    "maatten",
+    "maatte",
+    "maatteenga",
+    "maattaan",
+    "maattaa",
+    "maattom",
+    "maattaanga"
+   ]
   }
+ },
+ "verbs": [
+  {
+   "id": "play",
+   "group": "music",
+   "en": {
+    "base": "play",
+    "past": "played",
+    "ing": "playing",
+    "s": "plays"
+   },
+   "note": "an instrument. In Bangalore people also say piano play maadtini; in Chennai piano play pannuren.",
+   "kn": {
+    "dict": "nudisu",
+    "pres": "nudis",
+    "past": "nudisid",
+    "cont": "nudista",
+    "neg": "nudisalla",
+    "pastNeg": "nudislilla",
+    "inf": "nudisakke",
+    "want": "nudisbeku"
+   },
+   "hi": {
+    "dict": "bajaana",
+    "stem": "bajaa",
+    "perf": {
+     "m": "bajaaya",
+     "f": "bajaayi",
+     "pl": "bajaaye"
+    },
+    "ne": true,
+    "contStem": "baja"
+   },
+   "ta": {
+    "dict": "vaasi",
+    "pres": "vaasikki",
+    "past": "vaasich",
+    "fut": "vaasipp",
+    "cont": "vaasichittu",
+    "inf": "vaasikka"
+   }
+  },
+  {
+   "id": "sing",
+   "group": "music",
+   "en": {
+    "base": "sing",
+    "past": "sang",
+    "ing": "singing",
+    "s": "sings"
+   },
+   "note": "In Kannada and Hindi the word for song and the verb sing are the same word.",
+   "kn": {
+    "dict": "haadu",
+    "pres": "haad",
+    "past": "haadid",
+    "cont": "haadta",
+    "neg": "haadalla",
+    "pastNeg": "haadlilla",
+    "inf": "haadakke",
+    "want": "haadbeku"
+   },
+   "hi": {
+    "dict": "gaana",
+    "stem": "gaa",
+    "perf": {
+     "m": "gaaya",
+     "f": "gaayi",
+     "pl": "gaaye"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "paadu",
+    "pres": "paad",
+    "past": "paadin",
+    "fut": "paaduv",
+    "cont": "paadittu",
+    "inf": "paada"
+   }
+  },
+  {
+   "id": "practise",
+   "group": "music",
+   "en": {
+    "base": "practise",
+    "past": "practised",
+    "ing": "practising",
+    "s": "practises"
+   },
+   "note": "English word plus the do-verb. This pattern works for hundreds of actions.",
+   "kn": {
+    "dict": "practice maadu",
+    "pres": "practice maad",
+    "past": "practice maadid",
+    "cont": "practice maadta",
+    "neg": "practice maadalla",
+    "pastNeg": "practice maadlilla",
+    "inf": "practice maadakke",
+    "want": "practice maadbeku"
+   },
+   "hi": {
+    "dict": "practice karna",
+    "stem": "practice kar",
+    "perf": {
+     "m": "practice kiya",
+     "f": "practice ki",
+     "pl": "practice kiye"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "practice pannu",
+    "pres": "practice pannu",
+    "past": "practice pann",
+    "fut": "practice pannuv",
+    "cont": "practice pannittu",
+    "inf": "practice panna"
+   }
+  },
+  {
+   "id": "listen",
+   "group": "music",
+   "en": {
+    "base": "listen to",
+    "past": "listened to",
+    "ing": "listening to",
+    "s": "listens to"
+   },
+   "note": "kelu is the same word in Kannada and Tamil.",
+   "kn": {
+    "dict": "kelu",
+    "pres": "kel",
+    "past": "kelid",
+    "cont": "kelta",
+    "neg": "kelalla",
+    "pastNeg": "kellilla",
+    "inf": "kelakke",
+    "want": "kelbeku"
+   },
+   "hi": {
+    "dict": "sunna",
+    "stem": "sun",
+    "perf": {
+     "m": "suna",
+     "f": "suni",
+     "pl": "sune"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "kelu",
+    "pres": "kekku",
+    "past": "kaett",
+    "fut": "kepp",
+    "cont": "kaettuttu",
+    "inf": "kekka"
+   }
+  },
+  {
+   "id": "learn",
+   "group": "music",
+   "en": {
+    "base": "learn",
+    "past": "learnt",
+    "ing": "learning",
+    "s": "learns"
+   },
+   "kn": {
+    "dict": "kali",
+    "pres": "kal",
+    "past": "kalt",
+    "cont": "kalita",
+    "neg": "kaliyalla",
+    "pastNeg": "kalilla",
+    "inf": "kaliyakke",
+    "want": "kalibeku"
+   },
+   "hi": {
+    "dict": "seekhna",
+    "stem": "seekh",
+    "perf": {
+     "m": "seekha",
+     "f": "seekhi",
+     "pl": "seekhe"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "kathukko",
+    "pres": "kathukku",
+    "past": "kathukitt",
+    "fut": "kathukkuv",
+    "cont": "kathukittu",
+    "inf": "kathukka"
+   }
+  },
+  {
+   "id": "teach",
+   "group": "music",
+   "en": {
+    "base": "teach",
+    "past": "taught",
+    "ing": "teaching",
+    "s": "teaches"
+   },
+   "kn": {
+    "dict": "helikodu",
+    "pres": "helikod",
+    "past": "helikott",
+    "cont": "helikodta",
+    "neg": "helikodalla",
+    "pastNeg": "helikodlilla",
+    "inf": "helikodakke",
+    "want": "helikodbeku"
+   },
+   "hi": {
+    "dict": "sikhaana",
+    "stem": "sikhaa",
+    "perf": {
+     "m": "sikhaaya",
+     "f": "sikhaayi",
+     "pl": "sikhaaye"
+    },
+    "ne": true,
+    "contStem": "sikha"
+   },
+   "ta": {
+    "dict": "solli kodu",
+    "pres": "solli kodukku",
+    "past": "solli kodutt",
+    "fut": "solli kodupp",
+    "cont": "solli koduttu",
+    "inf": "solli kodukka"
+   }
+  },
+  {
+   "id": "dance",
+   "group": "music",
+   "en": {
+    "base": "dance",
+    "past": "danced",
+    "ing": "dancing",
+    "s": "dances"
+   },
+   "kn": {
+    "dict": "dance maadu",
+    "pres": "dance maad",
+    "past": "dance maadid",
+    "cont": "dance maadta",
+    "neg": "dance maadalla",
+    "pastNeg": "dance maadlilla",
+    "inf": "dance maadakke",
+    "want": "dance maadbeku"
+   },
+   "hi": {
+    "dict": "naachna",
+    "stem": "naach",
+    "perf": {
+     "m": "naacha",
+     "f": "naachi",
+     "pl": "naache"
+    },
+    "ne": false
+   },
+   "ta": {
+    "dict": "dance pannu",
+    "pres": "dance pannu",
+    "past": "dance pann",
+    "fut": "dance pannuv",
+    "cont": "dance pannittu",
+    "inf": "dance panna"
+   }
+  },
+  {
+   "id": "do",
+   "group": "core",
+   "en": {
+    "base": "do",
+    "past": "did",
+    "ing": "doing",
+    "s": "does"
+   },
+   "note": "The master verb. English word plus this verb makes almost any action.",
+   "kn": {
+    "dict": "maadu",
+    "pres": "maad",
+    "past": "maadid",
+    "cont": "maadta",
+    "neg": "maadalla",
+    "pastNeg": "maadlilla",
+    "inf": "maadakke",
+    "want": "maadbeku"
+   },
+   "hi": {
+    "dict": "karna",
+    "stem": "kar",
+    "perf": {
+     "m": "kiya",
+     "f": "ki",
+     "pl": "kiye"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "pannu",
+    "pres": "pannu",
+    "past": "pann",
+    "fut": "pannuv",
+    "cont": "pannittu",
+    "inf": "panna"
+   }
+  },
+  {
+   "id": "go",
+   "group": "core",
+   "en": {
+    "base": "go",
+    "past": "went",
+    "ing": "going",
+    "s": "goes"
+   },
+   "kn": {
+    "dict": "hogu",
+    "pres": "hog",
+    "past": "hod",
+    "cont": "hogta",
+    "neg": "hogalla",
+    "pastNeg": "hoglilla",
+    "inf": "hogakke",
+    "want": "hogbeku"
+   },
+   "hi": {
+    "dict": "jaana",
+    "stem": "jaa",
+    "perf": {
+     "m": "gaya",
+     "f": "gayi",
+     "pl": "gaye"
+    },
+    "ne": false
+   },
+   "ta": {
+    "dict": "po",
+    "pres": "po",
+    "past": "pon",
+    "fut": "pov",
+    "cont": "poyittu",
+    "inf": "poga"
+   }
+  },
+  {
+   "id": "come",
+   "group": "core",
+   "en": {
+    "base": "come",
+    "past": "came",
+    "ing": "coming",
+    "s": "comes"
+   },
+   "kn": {
+    "dict": "baa",
+    "pres": "bar",
+    "past": "band",
+    "cont": "barta",
+    "neg": "baralla",
+    "pastNeg": "barlilla",
+    "inf": "barakke",
+    "want": "barbeku"
+   },
+   "hi": {
+    "dict": "aana",
+    "stem": "aa",
+    "perf": {
+     "m": "aaya",
+     "f": "aayi",
+     "pl": "aaye"
+    },
+    "ne": false
+   },
+   "ta": {
+    "dict": "vaa",
+    "pres": "va",
+    "past": "vandh",
+    "fut": "varuv",
+    "cont": "vandhuttu",
+    "inf": "vara"
+   }
+  },
+  {
+   "id": "think",
+   "group": "core",
+   "en": {
+    "base": "think",
+    "past": "thought",
+    "ing": "thinking",
+    "s": "thinks"
+   },
+   "kn": {
+    "dict": "yochne maadu",
+    "pres": "yochne maad",
+    "past": "yochne maadid",
+    "cont": "yochne maadta",
+    "neg": "yochne maadalla",
+    "pastNeg": "yochne maadlilla",
+    "inf": "yochne maadakke",
+    "want": "yochne maadbeku"
+   },
+   "hi": {
+    "dict": "sochna",
+    "stem": "soch",
+    "perf": {
+     "m": "socha",
+     "f": "sochi",
+     "pl": "soche"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "yosi",
+    "pres": "yosikki",
+    "past": "yosich",
+    "fut": "yosipp",
+    "cont": "yosichittu",
+    "inf": "yosikka"
+   }
+  },
+  {
+   "id": "travel",
+   "group": "core",
+   "en": {
+    "base": "travel",
+    "past": "travelled",
+    "ing": "travelling",
+    "s": "travels"
+   },
+   "note": "The formal words are pravaasa (kn), safar (hi), payanam (ta); on the street everyone says travel.",
+   "kn": {
+    "dict": "travel maadu",
+    "pres": "travel maad",
+    "past": "travel maadid",
+    "cont": "travel maadta",
+    "neg": "travel maadalla",
+    "pastNeg": "travel maadlilla",
+    "inf": "travel maadakke",
+    "want": "travel maadbeku"
+   },
+   "hi": {
+    "dict": "travel karna",
+    "stem": "travel kar",
+    "perf": {
+     "m": "travel kiya",
+     "f": "travel ki",
+     "pl": "travel kiye"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "travel pannu",
+    "pres": "travel pannu",
+    "past": "travel pann",
+    "fut": "travel pannuv",
+    "cont": "travel pannittu",
+    "inf": "travel panna"
+   }
+  },
+  {
+   "id": "speak",
+   "group": "core",
+   "en": {
+    "base": "speak",
+    "past": "spoke",
+    "ing": "speaking",
+    "s": "speaks"
+   },
+   "kn": {
+    "dict": "maatadu",
+    "pres": "maatad",
+    "past": "maatadid",
+    "cont": "maatadta",
+    "neg": "maatadalla",
+    "pastNeg": "maatadlilla",
+    "inf": "maatadakke",
+    "want": "maatadbeku"
+   },
+   "hi": {
+    "dict": "bolna",
+    "stem": "bol",
+    "perf": {
+     "m": "bola",
+     "f": "boli",
+     "pl": "bole"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "pesu",
+    "pres": "pesu",
+    "past": "pesin",
+    "fut": "pesuv",
+    "cont": "pesittu",
+    "inf": "pesa"
+   }
+  },
+  {
+   "id": "eat",
+   "group": "core",
+   "en": {
+    "base": "eat",
+    "past": "ate",
+    "ing": "eating",
+    "s": "eats"
+   },
+   "kn": {
+    "dict": "tinnu",
+    "pres": "tin",
+    "past": "tind",
+    "cont": "tinta",
+    "neg": "tinnalla",
+    "pastNeg": "tinlilla",
+    "inf": "tinnakke",
+    "want": "tinbeku"
+   },
+   "hi": {
+    "dict": "khaana",
+    "stem": "khaa",
+    "perf": {
+     "m": "khaaya",
+     "f": "khaayi",
+     "pl": "khaaye"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "saapdu",
+    "pres": "saapd",
+    "past": "saapt",
+    "fut": "saapduv",
+    "cont": "saaptuttu",
+    "inf": "saapda"
+   }
+  },
+  {
+   "id": "drink",
+   "group": "core",
+   "en": {
+    "base": "drink",
+    "past": "drank",
+    "ing": "drinking",
+    "s": "drinks"
+   },
+   "kn": {
+    "dict": "kudi",
+    "pres": "kudi",
+    "past": "kudid",
+    "cont": "kudita",
+    "neg": "kudiyalla",
+    "pastNeg": "kudilla",
+    "inf": "kudiyakke",
+    "want": "kudibeku"
+   },
+   "hi": {
+    "dict": "peena",
+    "stem": "pee",
+    "perf": {
+     "m": "piya",
+     "f": "pi",
+     "pl": "piye"
+    },
+    "ne": true,
+    "fut": {
+     "m": [
+      "piyunga",
+      "piyoge",
+      "piyenge",
+      "piyega",
+      "piyegi",
+      "piyenge",
+      "piyenge"
+     ],
+     "f": [
+      "piyungi",
+      "piyogi",
+      "piyengi",
+      "piyegi",
+      "piyegi",
+      "piyengi",
+      "piyengi"
+     ]
+    }
+   },
+   "ta": {
+    "dict": "kudi",
+    "pres": "kudikku",
+    "past": "kudich",
+    "fut": "kudipp",
+    "cont": "kudichittu",
+    "inf": "kudikka"
+   }
+  },
+  {
+   "id": "see",
+   "group": "core",
+   "en": {
+    "base": "see",
+    "past": "saw",
+    "ing": "seeing",
+    "s": "sees"
+   },
+   "kn": {
+    "dict": "nodu",
+    "pres": "nod",
+    "past": "nodid",
+    "cont": "nodta",
+    "neg": "nodalla",
+    "pastNeg": "nodlilla",
+    "inf": "nodakke",
+    "want": "nodbeku"
+   },
+   "hi": {
+    "dict": "dekhna",
+    "stem": "dekh",
+    "perf": {
+     "m": "dekha",
+     "f": "dekhi",
+     "pl": "dekhe"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "paaru",
+    "pres": "paakku",
+    "past": "paath",
+    "fut": "paapp",
+    "cont": "paathuttu",
+    "inf": "paakka"
+   }
+  },
+  {
+   "id": "read",
+   "group": "core",
+   "en": {
+    "base": "read",
+    "past": "read",
+    "ing": "reading",
+    "s": "reads"
+   },
+   "kn": {
+    "dict": "odu",
+    "pres": "od",
+    "past": "odid",
+    "cont": "odta",
+    "neg": "odalla",
+    "pastNeg": "odlilla",
+    "inf": "odakke",
+    "want": "odbeku"
+   },
+   "hi": {
+    "dict": "padhna",
+    "stem": "padh",
+    "perf": {
+     "m": "padha",
+     "f": "padhi",
+     "pl": "padhe"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "padi",
+    "pres": "padikki",
+    "past": "padich",
+    "fut": "padipp",
+    "cont": "padichittu",
+    "inf": "padikka"
+   }
+  },
+  {
+   "id": "write",
+   "group": "core",
+   "en": {
+    "base": "write",
+    "past": "wrote",
+    "ing": "writing",
+    "s": "writes"
+   },
+   "kn": {
+    "dict": "bari",
+    "pres": "bari",
+    "past": "bared",
+    "cont": "barita",
+    "neg": "bariyalla",
+    "pastNeg": "barilla",
+    "inf": "bariyakke",
+    "want": "baribeku"
+   },
+   "hi": {
+    "dict": "likhna",
+    "stem": "likh",
+    "perf": {
+     "m": "likha",
+     "f": "likhi",
+     "pl": "likhe"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "ezhudhu",
+    "pres": "ezhudhu",
+    "past": "ezhudhin",
+    "fut": "ezhudhuv",
+    "cont": "ezhudhittu",
+    "inf": "ezhudha"
+   }
+  },
+  {
+   "id": "work",
+   "group": "core",
+   "en": {
+    "base": "work",
+    "past": "worked",
+    "ing": "working",
+    "s": "works"
+   },
+   "kn": {
+    "dict": "kelsa maadu",
+    "pres": "kelsa maad",
+    "past": "kelsa maadid",
+    "cont": "kelsa maadta",
+    "neg": "kelsa maadalla",
+    "pastNeg": "kelsa maadlilla",
+    "inf": "kelsa maadakke",
+    "want": "kelsa maadbeku"
+   },
+   "hi": {
+    "dict": "kaam karna",
+    "stem": "kaam kar",
+    "perf": {
+     "m": "kaam kiya",
+     "f": "kaam kiya",
+     "pl": "kaam kiya"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "velai pannu",
+    "pres": "velai pannu",
+    "past": "velai pann",
+    "fut": "velai pannuv",
+    "cont": "velai pannittu",
+    "inf": "velai panna"
+   }
+  },
+  {
+   "id": "sleep",
+   "group": "core",
+   "en": {
+    "base": "sleep",
+    "past": "slept",
+    "ing": "sleeping",
+    "s": "sleeps"
+   },
+   "kn": {
+    "dict": "malagu",
+    "pres": "malag",
+    "past": "malagid",
+    "cont": "malagta",
+    "neg": "malagalla",
+    "pastNeg": "malaglilla",
+    "inf": "malagakke",
+    "want": "malagbeku"
+   },
+   "hi": {
+    "dict": "sona",
+    "stem": "so",
+    "perf": {
+     "m": "soya",
+     "f": "soyi",
+     "pl": "soye"
+    },
+    "ne": false,
+    "fut": {
+     "m": [
+      "soonga",
+      "sooge",
+      "soenge",
+      "soega",
+      "soegi",
+      "soenge",
+      "soenge"
+     ],
+     "f": [
+      "soongi",
+      "soogi",
+      "soengi",
+      "soegi",
+      "soegi",
+      "soengi",
+      "soengi"
+     ]
+    }
+   },
+   "ta": {
+    "dict": "thoongu",
+    "pres": "thoongu",
+    "past": "thoongin",
+    "fut": "thoonguv",
+    "cont": "thoongittu",
+    "inf": "thoonga"
+   }
+  },
+  {
+   "id": "playgame",
+   "group": "core",
+   "en": {
+    "base": "play",
+    "past": "played",
+    "ing": "playing",
+    "s": "plays"
+   },
+   "note": "a game or sport, not an instrument",
+   "kn": {
+    "dict": "aadu",
+    "pres": "aad",
+    "past": "aadid",
+    "cont": "aadta",
+    "neg": "aadalla",
+    "pastNeg": "aadlilla",
+    "inf": "aadakke",
+    "want": "aadbeku"
+   },
+   "hi": {
+    "dict": "khelna",
+    "stem": "khel",
+    "perf": {
+     "m": "khela",
+     "f": "kheli",
+     "pl": "khele"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "velaiyaadu",
+    "pres": "velaiyaad",
+    "past": "velaiyaadin",
+    "fut": "velaiyaaduv",
+    "cont": "velaiyaadittu",
+    "inf": "velaiyaada"
+   }
+  },
+  {
+   "id": "give",
+   "group": "core",
+   "en": {
+    "base": "give",
+    "past": "gave",
+    "ing": "giving",
+    "s": "gives"
+   },
+   "kn": {
+    "dict": "kodu",
+    "pres": "kod",
+    "past": "kott",
+    "cont": "kodta",
+    "neg": "kodalla",
+    "pastNeg": "kodlilla",
+    "inf": "kodakke",
+    "want": "kodbeku"
+   },
+   "hi": {
+    "dict": "dena",
+    "stem": "de",
+    "perf": {
+     "m": "diya",
+     "f": "di",
+     "pl": "diye"
+    },
+    "ne": true,
+    "fut": {
+     "m": [
+      "dunga",
+      "doge",
+      "denge",
+      "dega",
+      "degi",
+      "denge",
+      "denge"
+     ],
+     "f": [
+      "dungi",
+      "dogi",
+      "dengi",
+      "degi",
+      "degi",
+      "dengi",
+      "dengi"
+     ]
+    }
+   },
+   "ta": {
+    "dict": "kudu",
+    "pres": "kudukku",
+    "past": "kudutt",
+    "fut": "kudupp",
+    "cont": "kuduttu",
+    "inf": "kudukka"
+   }
+  },
+  {
+   "id": "take",
+   "group": "core",
+   "en": {
+    "base": "take",
+    "past": "took",
+    "ing": "taking",
+    "s": "takes"
+   },
+   "kn": {
+    "dict": "togo",
+    "pres": "togo",
+    "past": "togond",
+    "cont": "togota",
+    "neg": "togolalla",
+    "pastNeg": "togollilla",
+    "inf": "togolakke",
+    "want": "togobeku"
+   },
+   "hi": {
+    "dict": "lena",
+    "stem": "le",
+    "perf": {
+     "m": "liya",
+     "f": "li",
+     "pl": "liye"
+    },
+    "ne": true,
+    "fut": {
+     "m": [
+      "lunga",
+      "loge",
+      "lenge",
+      "lega",
+      "legi",
+      "lenge",
+      "lenge"
+     ],
+     "f": [
+      "lungi",
+      "logi",
+      "lengi",
+      "legi",
+      "legi",
+      "lengi",
+      "lengi"
+     ]
+    }
+   },
+   "ta": {
+    "dict": "edu",
+    "pres": "edukku",
+    "past": "edutt",
+    "fut": "edupp",
+    "cont": "eduttu",
+    "inf": "edukka"
+   }
+  },
+  {
+   "id": "buy",
+   "group": "core",
+   "en": {
+    "base": "buy",
+    "past": "bought",
+    "ing": "buying",
+    "s": "buys"
+   },
+   "note": "togo (take) also means buy in Bangalore speech.",
+   "kn": {
+    "dict": "kharidi maadu",
+    "pres": "kharidi maad",
+    "past": "kharidi maadid",
+    "cont": "kharidi maadta",
+    "neg": "kharidi maadalla",
+    "pastNeg": "kharidi maadlilla",
+    "inf": "kharidi maadakke",
+    "want": "kharidi maadbeku"
+   },
+   "hi": {
+    "dict": "khareedna",
+    "stem": "khareed",
+    "perf": {
+     "m": "khareeda",
+     "f": "khareedi",
+     "pl": "khareede"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "vaangu",
+    "pres": "vaangu",
+    "past": "vaangin",
+    "fut": "vaanguv",
+    "cont": "vaangittu",
+    "inf": "vaanga"
+   }
+  },
+  {
+   "id": "say",
+   "group": "core",
+   "en": {
+    "base": "say",
+    "past": "said",
+    "ing": "saying",
+    "s": "says"
+   },
+   "kn": {
+    "dict": "helu",
+    "pres": "hel",
+    "past": "held",
+    "cont": "helta",
+    "neg": "helalla",
+    "pastNeg": "hellilla",
+    "inf": "helakke",
+    "want": "helbeku"
+   },
+   "hi": {
+    "dict": "kehna",
+    "stem": "keh",
+    "perf": {
+     "m": "kaha",
+     "f": "kahi",
+     "pl": "kahe"
+    },
+    "ne": true,
+    "fut": {
+     "m": [
+      "kahunga",
+      "kahoge",
+      "kahenge",
+      "kahega",
+      "kahegi",
+      "kahenge",
+      "kahenge"
+     ],
+     "f": [
+      "kahungi",
+      "kahogi",
+      "kahengi",
+      "kahegi",
+      "kahegi",
+      "kahengi",
+      "kahengi"
+     ]
+    }
+   },
+   "ta": {
+    "dict": "sollu",
+    "pres": "sol",
+    "past": "sonn",
+    "fut": "solluv",
+    "cont": "sollittu",
+    "inf": "solla"
+   }
+  },
+  {
+   "id": "wait",
+   "group": "core",
+   "en": {
+    "base": "wait",
+    "past": "waited",
+    "ing": "waiting",
+    "s": "waits"
+   },
+   "note": "wait maadu, wait karna, wait pannu are just as common.",
+   "kn": {
+    "dict": "kaayu",
+    "pres": "kaay",
+    "past": "kaayd",
+    "cont": "kaayta",
+    "neg": "kaayalla",
+    "pastNeg": "kaaylilla",
+    "inf": "kaayakke",
+    "want": "kaaybeku"
+   },
+   "hi": {
+    "dict": "wait karna",
+    "stem": "wait kar",
+    "perf": {
+     "m": "wait kiya",
+     "f": "wait kiya",
+     "pl": "wait kiya"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "wait pannu",
+    "pres": "wait pannu",
+    "past": "wait pann",
+    "fut": "wait pannuv",
+    "cont": "wait pannittu",
+    "inf": "wait panna"
+   }
+  },
+  {
+   "id": "sit",
+   "group": "core",
+   "en": {
+    "base": "sit",
+    "past": "sat",
+    "ing": "sitting",
+    "s": "sits"
+   },
+   "kn": {
+    "dict": "kootko",
+    "pres": "kootko",
+    "past": "kootkond",
+    "cont": "kootkota",
+    "neg": "kootkolalla",
+    "pastNeg": "kootkollilla",
+    "inf": "kootkolakke",
+    "want": "kootkobeku"
+   },
+   "hi": {
+    "dict": "baithna",
+    "stem": "baith",
+    "perf": {
+     "m": "baitha",
+     "f": "baithi",
+     "pl": "baithe"
+    },
+    "ne": false
+   },
+   "ta": {
+    "dict": "ukkaaru",
+    "pres": "ukkaar",
+    "past": "ukkaandh",
+    "fut": "ukkaaruv",
+    "cont": "ukkaandhuttu",
+    "inf": "ukkaara"
+   }
+  },
+  {
+   "id": "walk",
+   "group": "core",
+   "en": {
+    "base": "walk",
+    "past": "walked",
+    "ing": "walking",
+    "s": "walks"
+   },
+   "kn": {
+    "dict": "nadi",
+    "pres": "nadi",
+    "past": "nadad",
+    "cont": "nadita",
+    "neg": "nadiyalla",
+    "pastNeg": "nadilla",
+    "inf": "nadiyakke",
+    "want": "nadibeku"
+   },
+   "hi": {
+    "dict": "chalna",
+    "stem": "chal",
+    "perf": {
+     "m": "chala",
+     "f": "chali",
+     "pl": "chale"
+    },
+    "ne": false
+   },
+   "ta": {
+    "dict": "nada",
+    "pres": "nadakku",
+    "past": "nadandh",
+    "fut": "nadapp",
+    "cont": "nadandhuttu",
+    "inf": "nadakka"
+   }
+  },
+  {
+   "id": "cook",
+   "group": "core",
+   "en": {
+    "base": "cook",
+    "past": "cooked",
+    "ing": "cooking",
+    "s": "cooks"
+   },
+   "kn": {
+    "dict": "adige maadu",
+    "pres": "adige maad",
+    "past": "adige maadid",
+    "cont": "adige maadta",
+    "neg": "adige maadalla",
+    "pastNeg": "adige maadlilla",
+    "inf": "adige maadakke",
+    "want": "adige maadbeku"
+   },
+   "hi": {
+    "dict": "khaana banaana",
+    "stem": "khaana banaa",
+    "perf": {
+     "m": "khaana banaaya",
+     "f": "khaana banaaya",
+     "pl": "khaana banaaya"
+    },
+    "ne": true,
+    "contStem": "khaana bana"
+   },
+   "ta": {
+    "dict": "samai",
+    "pres": "samaikki",
+    "past": "samaich",
+    "fut": "samaipp",
+    "cont": "samaichittu",
+    "inf": "samaikka"
+   }
+  },
+  {
+   "id": "help",
+   "group": "core",
+   "en": {
+    "base": "help",
+    "past": "helped",
+    "ing": "helping",
+    "s": "helps"
+   },
+   "kn": {
+    "dict": "help maadu",
+    "pres": "help maad",
+    "past": "help maadid",
+    "cont": "help maadta",
+    "neg": "help maadalla",
+    "pastNeg": "help maadlilla",
+    "inf": "help maadakke",
+    "want": "help maadbeku"
+   },
+   "hi": {
+    "dict": "help karna",
+    "stem": "help kar",
+    "perf": {
+     "m": "help ki",
+     "f": "help ki",
+     "pl": "help ki"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "help pannu",
+    "pres": "help pannu",
+    "past": "help pann",
+    "fut": "help pannuv",
+    "cont": "help pannittu",
+    "inf": "help panna"
+   }
+  },
+  {
+   "id": "call",
+   "group": "core",
+   "en": {
+    "base": "call",
+    "past": "called",
+    "ing": "calling",
+    "s": "calls"
+   },
+   "note": "on the phone",
+   "kn": {
+    "dict": "call maadu",
+    "pres": "call maad",
+    "past": "call maadid",
+    "cont": "call maadta",
+    "neg": "call maadalla",
+    "pastNeg": "call maadlilla",
+    "inf": "call maadakke",
+    "want": "call maadbeku"
+   },
+   "hi": {
+    "dict": "call karna",
+    "stem": "call kar",
+    "perf": {
+     "m": "call kiya",
+     "f": "call kiya",
+     "pl": "call kiya"
+    },
+    "ne": true
+   },
+   "ta": {
+    "dict": "call pannu",
+    "pres": "call pannu",
+    "past": "call pann",
+    "fut": "call pannuv",
+    "cont": "call pannittu",
+    "inf": "call panna"
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "piano",
+   "en": "the piano",
+   "kn": "piano",
+   "hi": "piano",
+   "hiG": "m",
+   "ta": "piano",
+   "kind": "thing"
+  },
+  {
+   "id": "guitar",
+   "en": "the guitar",
+   "kn": "guitar",
+   "hi": "guitar",
+   "hiG": "m",
+   "ta": "guitar",
+   "kind": "thing"
+  },
+  {
+   "id": "violin",
+   "en": "the violin",
+   "kn": "violin",
+   "hi": "violin",
+   "hiG": "m",
+   "ta": "violin",
+   "kind": "thing"
+  },
+  {
+   "id": "drums",
+   "en": "the drums",
+   "kn": "drums",
+   "hi": "drums",
+   "hiG": "m",
+   "ta": "drums",
+   "kind": "thing"
+  },
+  {
+   "id": "song",
+   "en": "a song",
+   "kn": "ondu haadu",
+   "hi": "ek gaana",
+   "hiG": "m",
+   "ta": "oru paattu",
+   "kind": "thing"
+  },
+  {
+   "id": "thissong",
+   "en": "this song",
+   "kn": "ee haadu",
+   "hi": "yeh gaana",
+   "hiG": "m",
+   "ta": "indha paattu",
+   "kind": "thing"
+  },
+  {
+   "id": "music",
+   "en": "music",
+   "kn": "music",
+   "hi": "music",
+   "hiG": "m",
+   "ta": "music",
+   "kind": "thing"
+  },
+  {
+   "id": "language",
+   "en": "Kannada",
+   "kn": "Kannada",
+   "hi": "Hindi",
+   "hiG": "f",
+   "ta": "Tamil",
+   "kind": "language",
+   "enByLang": {
+    "kn": "Kannada",
+    "hi": "Hindi",
+    "ta": "Tamil"
+   }
+  },
+  {
+   "id": "english",
+   "en": "English",
+   "kn": "English",
+   "hi": "English",
+   "hiG": "f",
+   "ta": "English",
+   "kind": "language"
+  },
+  {
+   "id": "rice",
+   "en": "rice",
+   "kn": "anna",
+   "hi": "chaawal",
+   "hiG": "m",
+   "ta": "saadham",
+   "kind": "thing"
+  },
+  {
+   "id": "tea",
+   "en": "tea",
+   "kn": "tea",
+   "hi": "chai",
+   "hiG": "f",
+   "ta": "tea",
+   "kind": "thing"
+  },
+  {
+   "id": "water",
+   "en": "water",
+   "kn": "neeru",
+   "hi": "paani",
+   "hiG": "m",
+   "ta": "thanni",
+   "kind": "thing"
+  },
+  {
+   "id": "movie",
+   "en": "a movie",
+   "kn": "ondu film",
+   "hi": "ek film",
+   "hiG": "f",
+   "ta": "oru padam",
+   "kind": "thing"
+  },
+  {
+   "id": "book",
+   "en": "a book",
+   "kn": "ondu pustaka",
+   "hi": "ek kitaab",
+   "hiG": "f",
+   "ta": "oru puthagam",
+   "kind": "thing"
+  },
+  {
+   "id": "home",
+   "en": "home",
+   "kn": "manege",
+   "hi": "ghar",
+   "hiG": "m",
+   "ta": "veetukku",
+   "kind": "place"
+  },
+  {
+   "id": "class",
+   "en": "to class",
+   "kn": "class-ge",
+   "hi": "class",
+   "hiG": "f",
+   "ta": "class-ku",
+   "kind": "place"
+  },
+  {
+   "id": "concert",
+   "en": "to the concert",
+   "kn": "concert-ge",
+   "hi": "concert mein",
+   "hiG": "m",
+   "ta": "concert-ku",
+   "kind": "place"
+  },
+  {
+   "id": "city",
+   "en": "to Bangalore",
+   "kn": "Bangalore-ge",
+   "hi": "Bangalore",
+   "hiG": "m",
+   "ta": "Bangalore-ku",
+   "kind": "place"
+  },
+  {
+   "id": "money",
+   "en": "money",
+   "kn": "duddu",
+   "hi": "paise",
+   "hiG": "m",
+   "ta": "kaasu",
+   "kind": "thing"
+  },
+  {
+   "id": "coffee",
+   "en": "coffee",
+   "kn": "coffee",
+   "hi": "coffee",
+   "hiG": "f",
+   "ta": "coffee",
+   "kind": "thing"
+  },
+  {
+   "id": "food",
+   "en": "food",
+   "kn": "oota",
+   "hi": "khaana",
+   "hiG": "m",
+   "ta": "saapaadu",
+   "kind": "thing"
+  },
+  {
+   "id": "phone",
+   "en": "the phone",
+   "kn": "phone",
+   "hi": "phone",
+   "hiG": "m",
+   "ta": "phone",
+   "kind": "thing"
+  },
+  {
+   "id": "chair",
+   "en": "a chair",
+   "kn": "kurchi",
+   "hi": "kursi",
+   "hiG": "f",
+   "ta": "naarkaali",
+   "kind": "thing"
+  },
+  {
+   "id": "key",
+   "en": "the key",
+   "kn": "key",
+   "hi": "chaabi",
+   "hiG": "f",
+   "ta": "saavi",
+   "kind": "thing"
+  },
+  {
+   "id": "time",
+   "en": "time",
+   "kn": "time",
+   "hi": "time",
+   "hiG": "m",
+   "ta": "time",
+   "kind": "thing"
+  },
+  {
+   "id": "shop",
+   "en": "to the shop",
+   "kn": "angadige",
+   "hi": "dukaan",
+   "hiG": "f",
+   "ta": "kadaikku",
+   "kind": "place"
+  },
+  {
+   "id": "school",
+   "en": "to school",
+   "kn": "school-ge",
+   "hi": "school",
+   "hiG": "m",
+   "ta": "school-ku",
+   "kind": "place"
+  }
+ ],
+ "times": [
+  {
+   "id": "yesterday",
+   "en": "yesterday",
+   "kn": "nenne",
+   "hi": "kal",
+   "ta": "nethu",
+   "tense": "past"
+  },
+  {
+   "id": "today",
+   "en": "today",
+   "kn": "ivattu",
+   "hi": "aaj",
+   "ta": "innikki"
+  },
+  {
+   "id": "tomorrow",
+   "en": "tomorrow",
+   "kn": "naale",
+   "hi": "kal",
+   "ta": "naalaikku",
+   "tense": "future"
+  },
+  {
+   "id": "everyday",
+   "en": "every day",
+   "kn": "dina",
+   "hi": "roz",
+   "ta": "daily",
+   "tense": "present"
+  },
+  {
+   "id": "now",
+   "en": "now",
+   "kn": "eega",
+   "hi": "abhi",
+   "ta": "ippo",
+   "tense": "cont"
+  },
+  {
+   "id": "evening",
+   "en": "in the evening",
+   "kn": "sanje",
+   "hi": "shaam ko",
+   "ta": "saayangaalam"
+  },
+  {
+   "id": "morning",
+   "en": "in the morning",
+   "kn": "belagge",
+   "hi": "subah",
+   "ta": "kaalaila"
+  }
+ ],
+ "decks": {
+  "music": [
+   {
+    "en": "song",
+    "kn": "haadu",
+    "hi": "gaana",
+    "ta": "paattu",
+    "trick": "haadu sounds like had to: a song you HAD to sing. paattu: PUT two hands together and sing."
+   },
+   {
+    "en": "to sing",
+    "kn": "haadu",
+    "hi": "gaana",
+    "ta": "paadu",
+    "trick": "Kannada and Hindi use the same word for song and sing. Tamil flips one letter: paattu (song), paadu (sing)."
+   },
+   {
+    "en": "to play (an instrument)",
+    "kn": "nudisu (or play maadu)",
+    "hi": "bajaana",
+    "ta": "vaasi (or play pannu)",
+    "trick": "bajaana sounds like bhajan: you play for a bhajan. vaasi: VAAsi sounds like vibe-see."
+   },
+   {
+    "en": "music",
+    "kn": "music (sangeeta)",
+    "hi": "music (sangeet)",
+    "ta": "music (isai)",
+    "trick": "Everyone says music. Sangeeta and sangeet are the formal words; isai is the Tamil one you see on posters."
+   },
+   {
+    "en": "note, swara",
+    "kn": "swara",
+    "hi": "sur",
+    "ta": "swaram",
+    "trick": "Sa Re Ga Ma is the same in every Indian language. Sur is the short Hindi form: sur mein means in tune."
+   },
+   {
+    "en": "rhythm, beat cycle",
+    "kn": "taala",
+    "hi": "taal",
+    "ta": "thaalam",
+    "trick": "Taala means clap. Keep the taala means keep the beat."
+   },
+   {
+    "en": "raga, melody frame",
+    "kn": "raaga",
+    "hi": "raag",
+    "ta": "raagam",
+    "trick": "Same root everywhere. Kannada and Tamil add a vowel or an m at the end, Hindi drops it."
+   },
+   {
+    "en": "tune, melody",
+    "kn": "tune (raaga)",
+    "hi": "dhun",
+    "ta": "tune (raagam)",
+    "trick": "dhun sounds like done: once the dhun is stuck in your head, you are done."
+   },
+   {
+    "en": "voice",
+    "kn": "voice (dhwani)",
+    "hi": "awaaz",
+    "ta": "kural",
+    "trick": "awaaz: a-VOICE with the v softened. kural: the voice that CURLs out of your throat."
+   },
+   {
+    "en": "fast",
+    "kn": "bega (speed aagi)",
+    "hi": "tez (jaldi)",
+    "ta": "vegama (seekkiram)",
+    "trick": "bega and vegama share a root: be quick. tez means sharp and fast, like a knife."
+   },
+   {
+    "en": "slow",
+    "kn": "nidhaana (slow aagi)",
+    "hi": "dheere",
+    "ta": "medhuva",
+    "trick": "dheere dheere is the famous Bollywood slowly slowly. medhuva sounds like mellow."
+   },
+   {
+    "en": "loud",
+    "kn": "jorage",
+    "hi": "zor se",
+    "ta": "saththama",
+    "trick": "jor and zor both mean force. saththama: with SOUND."
+   },
+   {
+    "en": "soft, quiet",
+    "kn": "mellage",
+    "hi": "dheere se",
+    "ta": "medhuva",
+    "trick": "mellage: MELLOW-ge. Hindi and Tamil reuse their slow word for soft."
+   },
+   {
+    "en": "again, once more",
+    "kn": "innomme",
+    "hi": "phir se",
+    "ta": "thirumba",
+    "trick": "innomme is innu plus omme: one more. thirumba means turn back."
+   },
+   {
+    "en": "from the beginning",
+    "kn": "modalinda",
+    "hi": "shuru se",
+    "ta": "modhalla irundhu",
+    "trick": "modalu and modhal both mean first. shuru is start, like shuru karo, let us start."
+   },
+   {
+    "en": "practice",
+    "kn": "practice (abhyaasa)",
+    "hi": "practice (riyaaz)",
+    "ta": "practice (payirchi)",
+    "trick": "Everyone says practice. Riyaaz is the classical musician's word in Hindi and you will hear it in music circles."
+   },
+   {
+    "en": "to listen",
+    "kn": "kelu",
+    "hi": "sunna",
+    "ta": "kelu",
+    "trick": "kelu is identical in Kannada and Tamil. sunna: sounds like soon-ah, listen soon."
+   },
+   {
+    "en": "listen carefully",
+    "kn": "sariyaagi keli",
+    "hi": "dhyaan se suno",
+    "ta": "ozhunga kelunga",
+    "trick": "dhyaan is attention, the same word as meditation."
+   },
+   {
+    "en": "high (pitch)",
+    "kn": "high (mele)",
+    "hi": "ooncha (upar)",
+    "ta": "high (mela)",
+    "trick": "mele and mela both mean up or above. Music teachers in India mostly say high in English."
+   },
+   {
+    "en": "low (pitch)",
+    "kn": "low (kelage)",
+    "hi": "neecha (neeche)",
+    "ta": "low (keezha)",
+    "trick": "neeche means below. kelage and keezha mean down."
+   },
+   {
+    "en": "teacher",
+    "kn": "teacher (sir, miss)",
+    "hi": "teacher (guru ji)",
+    "ta": "teacher (sir, miss)",
+    "trick": "Students say sir or miss in all three languages. Guru ji is warm and respectful in Hindi."
+   },
+   {
+    "en": "student",
+    "kn": "student (vidyaarthi)",
+    "hi": "student (shishya)",
+    "ta": "student (maanavan)",
+    "trick": "Everyone says student. Shishya is the classical guru-shishya word."
+   },
+   {
+    "en": "class",
+    "kn": "class",
+    "hi": "class",
+    "ta": "class",
+    "trick": "Same word. To class: class-ge (kn), class (hi), class-ku (ta)."
+   },
+   {
+    "en": "concert",
+    "kn": "concert (kacheri)",
+    "hi": "concert",
+    "ta": "kacheri (concert)",
+    "trick": "Kacheri is the Carnatic word for a concert in both Kannada and Tamil."
+   },
+   {
+    "en": "flute",
+    "kn": "kolalu (flute)",
+    "hi": "baansuri",
+    "ta": "pullaanguzhal (flute)",
+    "trick": "baansuri comes from baans, bamboo. Kannada and Tamil speakers mostly say flute."
+   },
+   {
+    "en": "piano, guitar, violin, drums, keyboard",
+    "kn": "same words",
+    "hi": "same words",
+    "ta": "same words",
+    "trick": "Instrument names are the same everywhere. Only the verb changes: nudisu, bajaana, vaasi."
+   },
+   {
+    "en": "well done",
+    "kn": "chennaagi maadidri",
+    "hi": "bahut achhe",
+    "ta": "nalla panneenga",
+    "trick": "chennaagi and nalla both mean well. Say it after a good take."
+   },
+   {
+    "en": "that sounds nice",
+    "kn": "chennaagide",
+    "hi": "bahut achha hai",
+    "ta": "nalla irukku",
+    "trick": "chennaagide is the all-purpose Kannada word for it is good. nalla irukku is the Tamil twin."
+   },
+   {
+    "en": "once more, a little slower",
+    "kn": "innomme, swalpa slow aagi",
+    "hi": "ek baar aur, thoda dheere",
+    "ta": "innoru thadava, konjam medhuva",
+    "trick": "swalpa, thoda, konjam all mean a little. The teacher's most useful word."
+   },
+   {
+    "en": "stop",
+    "kn": "nillisi",
+    "hi": "ruko",
+    "ta": "niruthunga",
+    "trick": "nillisi and niruthunga share the nil root, to stand still."
+   },
+   {
+    "en": "wait a moment",
+    "kn": "swalpa iri",
+    "hi": "ek minute ruko",
+    "ta": "konjam irunga",
+    "trick": "iri and irunga both come from iru, to be or stay."
+   },
+   {
+    "en": "count",
+    "kn": "count maadi (enisi)",
+    "hi": "gino",
+    "ta": "count pannunga (ennunga)",
+    "trick": "gino sounds like gin-oh: count the gin bottles."
+   },
+   {
+    "en": "one two three four",
+    "kn": "ondu eradu mooru naalku",
+    "hi": "ek do teen chaar",
+    "ta": "onnu rendu moonu naalu",
+    "trick": "Count in before every take. ek do teen chaar is the count-in every Bollywood drummer knows."
+   }
+  ],
+  "numbers": [
+   {
+    "en": "one",
+    "kn": "ondu",
+    "hi": "ek",
+    "ta": "onnu",
+    "trick": "ondu and onnu both start like ONE."
+   },
+   {
+    "en": "two",
+    "kn": "eradu",
+    "hi": "do",
+    "ta": "rendu",
+    "trick": "Hindi do: two things to DO. eradu and rendu rhyme."
+   },
+   {
+    "en": "three",
+    "kn": "mooru",
+    "hi": "teen",
+    "ta": "moonu",
+    "trick": "teen as in thirTEEN. mooru and moonu are twins."
+   },
+   {
+    "en": "four",
+    "kn": "naalku",
+    "hi": "chaar",
+    "ta": "naalu",
+    "trick": "naal in Kannada and Tamil. chaar sounds like char: four charred toast slices."
+   },
+   {
+    "en": "five",
+    "kn": "aidu",
+    "hi": "paanch",
+    "ta": "anju",
+    "trick": "paanch: a PUNCH with five fingers."
+   },
+   {
+    "en": "six",
+    "kn": "aaru",
+    "hi": "chhe",
+    "ta": "aaru",
+    "trick": "aaru is identical in Kannada and Tamil. chhe: six is what you say when you sneeze, chhe."
+   },
+   {
+    "en": "seven",
+    "kn": "elu",
+    "hi": "saat",
+    "ta": "ezhu",
+    "trick": "saat: seven friends SAT together."
+   },
+   {
+    "en": "eight",
+    "kn": "entu",
+    "hi": "aath",
+    "ta": "ettu",
+    "trick": "aath and eight sound almost the same. entu and ettu too."
+   },
+   {
+    "en": "nine",
+    "kn": "ombattu",
+    "hi": "nau",
+    "ta": "onbadhu",
+    "trick": "nau is nine with the vowel bent. ombattu and onbadhu are twins."
+   },
+   {
+    "en": "ten",
+    "kn": "hattu",
+    "hi": "das",
+    "ta": "patthu",
+    "trick": "das like decimal. hattu and patthu differ by one letter."
+   },
+   {
+    "en": "twenty",
+    "kn": "ippattu",
+    "hi": "bees",
+    "ta": "irubadhu",
+    "trick": "bees: twenty bees. ippattu is two tens squeezed together."
+   },
+   {
+    "en": "thirty",
+    "kn": "muvattu",
+    "hi": "tees",
+    "ta": "muppadhu",
+    "trick": "mu (three) plus the tens ending in both Kannada and Tamil."
+   },
+   {
+    "en": "fifty",
+    "kn": "aivattu",
+    "hi": "pachaas",
+    "ta": "ambadhu",
+    "trick": "pachaas: pach (five) plus aas. A fifty rupee note is pachaas ka note."
+   },
+   {
+    "en": "hundred",
+    "kn": "nooru",
+    "hi": "sau",
+    "ta": "nooru",
+    "trick": "nooru is identical in Kannada and Tamil. sau sounds like so: so many, a hundred."
+   },
+   {
+    "en": "how many",
+    "kn": "eshtu",
+    "hi": "kitne",
+    "ta": "ethana",
+    "trick": "eshtu is also how much. kitne: kit-nay, how many kits?"
+   }
+  ],
+  "fruits": [
+   {
+    "en": "fruit",
+    "kn": "hannu",
+    "hi": "phal",
+    "ta": "pazham",
+    "trick": "hannu and pazham end many fruit names: maavina hannu, maampazham."
+   },
+   {
+    "en": "banana",
+    "kn": "baalehannu",
+    "hi": "kela",
+    "ta": "vaazhaipazham",
+    "trick": "kela sounds like kayla with a banana. baale and vaazhai are the same word said in two accents."
+   },
+   {
+    "en": "mango",
+    "kn": "maavina hannu",
+    "hi": "aam",
+    "ta": "maampazham",
+    "trick": "aam: I AM the king of fruits. maa is the root in Kannada and Tamil."
+   },
+   {
+    "en": "apple",
+    "kn": "sebu (apple)",
+    "hi": "seb",
+    "ta": "apple",
+    "trick": "seb and sebu are cousins. Tamils just say apple."
+   },
+   {
+    "en": "orange",
+    "kn": "kittale (orange)",
+    "hi": "santra",
+    "ta": "orange",
+    "trick": "santra: SANTa brought oranges. Most people say orange."
+   },
+   {
+    "en": "grapes",
+    "kn": "draakshi",
+    "hi": "angoor",
+    "ta": "dhraatchai",
+    "trick": "draakshi and dhraatchai share one root. angoor: on-GOOR, hang on the vine."
+   },
+   {
+    "en": "papaya",
+    "kn": "parangi hannu",
+    "hi": "papeeta",
+    "ta": "pappaali",
+    "trick": "papeeta and pappaali both keep the pap sound."
+   },
+   {
+    "en": "watermelon",
+    "kn": "kallangadi",
+    "hi": "tarbooz",
+    "ta": "tharboosani",
+    "trick": "tarbooz and tharboosani are twins. kallangadi is the odd one out."
+   },
+   {
+    "en": "coconut",
+    "kn": "tenginakaayi",
+    "hi": "naariyal",
+    "ta": "thengaai",
+    "trick": "thenga is coconut in the south; kaayi means the raw fruit."
+   },
+   {
+    "en": "lemon",
+    "kn": "nimbe hannu",
+    "hi": "nimbu",
+    "ta": "elumichai",
+    "trick": "nimbe and nimbu are cousins. elumichai is the Tamil one you hear at every juice stall."
+   },
+   {
+    "en": "pomegranate",
+    "kn": "daalimbe",
+    "hi": "anaar",
+    "ta": "maadhulai",
+    "trick": "anaar: an ARR of ruby seeds."
+   },
+   {
+    "en": "guava",
+    "kn": "seebe hannu",
+    "hi": "amrood",
+    "ta": "koyya",
+    "trick": "amrood: am-ROOD, a rude green fruit."
+   },
+   {
+    "en": "jackfruit",
+    "kn": "halasina hannu",
+    "hi": "kathal",
+    "ta": "palaa pazham",
+    "trick": "halasu and palaa share the la sound; the jackfruit is huge, so the word is short."
+   }
+  ],
+  "vegetables": [
+   {
+    "en": "vegetables",
+    "kn": "tarkaari",
+    "hi": "sabzi",
+    "ta": "kaai (kaaigari)",
+    "trick": "kaayi at the end of a Kannada or Tamil word usually means a raw vegetable."
+   },
+   {
+    "en": "onion",
+    "kn": "eerulli",
+    "hi": "pyaaz",
+    "ta": "vengaayam",
+    "trick": "pyaaz: PIE-aaz. eerulli: EAR-ulli, an onion in your ear."
+   },
+   {
+    "en": "tomato",
+    "kn": "tomato",
+    "hi": "tamaatar",
+    "ta": "thakkaali",
+    "trick": "tamaatar is tomato with an Indian accent. thakkaali sounds like tackle-y."
+   },
+   {
+    "en": "potato",
+    "kn": "aalugadde (potato)",
+    "hi": "aaloo",
+    "ta": "urulaikizhangu (potato)",
+    "trick": "aaloo: everyone knows aaloo paratha. Kannada aalu plus gadde, a root."
+   },
+   {
+    "en": "carrot",
+    "kn": "carrot",
+    "hi": "gaajar",
+    "ta": "carrot",
+    "trick": "gaajar ka halwa is the dessert. Kannada and Tamil just say carrot."
+   },
+   {
+    "en": "beans",
+    "kn": "beans",
+    "hi": "beans (sem)",
+    "ta": "beans",
+    "trick": "Same word everywhere."
+   },
+   {
+    "en": "brinjal",
+    "kn": "badnekaayi",
+    "hi": "baingan",
+    "ta": "kathirikkaai",
+    "trick": "baingan bharta is the dish. kathirikkaai: cat-tree-kaai."
+   },
+   {
+    "en": "chilli",
+    "kn": "menasinakaayi",
+    "hi": "mirch",
+    "ta": "milagaai",
+    "trick": "mirch is hot, like mirchi. milagu is pepper, milagaai is chilli."
+   },
+   {
+    "en": "ginger",
+    "kn": "shunti",
+    "hi": "adrak",
+    "ta": "inji",
+    "trick": "adrak chai is ginger tea. inji sounds like ginger with the g dropped."
+   },
+   {
+    "en": "garlic",
+    "kn": "bellulli",
+    "hi": "lehsun",
+    "ta": "poondu",
+    "trick": "ulli means onion family: eerulli onion, bellulli garlic (white onion)."
+   },
+   {
+    "en": "greens",
+    "kn": "soppu",
+    "hi": "saag",
+    "ta": "keerai",
+    "trick": "saag paneer is the dish. soppu and keerai are the leafy bundles at the market."
+   },
+   {
+    "en": "coriander",
+    "kn": "kottambari soppu",
+    "hi": "dhaniya",
+    "ta": "kothamalli",
+    "trick": "kottambari and kothamalli are twins. dhaniya: DUN-ya, sprinkle on everything."
+   },
+   {
+    "en": "cabbage",
+    "kn": "cabbage",
+    "hi": "patta gobhi",
+    "ta": "cabbage",
+    "trick": "patta means leaf, gobhi means the cauliflower family."
+   },
+   {
+    "en": "cauliflower",
+    "kn": "cauliflower (hookosu)",
+    "hi": "gobhi",
+    "ta": "cauliflower",
+    "trick": "gobhi manchurian is the street snack."
+   },
+   {
+    "en": "peas",
+    "kn": "batani",
+    "hi": "matar",
+    "ta": "pattaani",
+    "trick": "matar paneer. batani and pattaani are cousins."
+   },
+   {
+    "en": "okra, ladies finger",
+    "kn": "bendekaayi",
+    "hi": "bhindi",
+    "ta": "vendakkaai",
+    "trick": "bende and venda are the same word in two accents. bhindi masala."
+   },
+   {
+    "en": "drumstick",
+    "kn": "nuggekaayi",
+    "hi": "sahjan",
+    "ta": "murungakkaai",
+    "trick": "murungakkaai sambar: the long green stick in your sambar."
+   }
+  ],
+  "countries": [
+   {
+    "en": "country",
+    "kn": "desha",
+    "hi": "desh",
+    "ta": "naadu",
+    "trick": "desha and desh are the same word. naadu is in Tamil Nadu itself: the Tamil country."
+   },
+   {
+    "en": "which country",
+    "kn": "yaava desha",
+    "hi": "kaun sa desh",
+    "ta": "endha naadu",
+    "trick": "yaava, kaun sa, endha all mean which. The first question any stranger asks."
+   },
+   {
+    "en": "India",
+    "kn": "India (Bhaarata)",
+    "hi": "India (Bhaarat)",
+    "ta": "India (Indhiya)",
+    "trick": "Everyone says India. Bhaarat is the formal name you hear in the news."
+   },
+   {
+    "en": "I am from India",
+    "kn": "naanu India-dinda",
+    "hi": "main India se hoon",
+    "ta": "naan India-la irundhu",
+    "trick": "dinda, se, la irundhu all mean from. Swap the country and the line works for anywhere."
+   },
+   {
+    "en": "America, England, Australia, Germany, Japan, China, Dubai, Singapore",
+    "kn": "same words",
+    "hi": "same words",
+    "ta": "same words",
+    "trick": "Country names stay English in daily speech. Only the word for country and from changes."
+   },
+   {
+    "en": "abroad, foreign country",
+    "kn": "foreign (videsha)",
+    "hi": "videsh",
+    "ta": "foreign (veli naadu)",
+    "trick": "vi plus desh: another country. veli means outside in Tamil."
+   },
+   {
+    "en": "foreigner",
+    "kn": "foreigner (videshi)",
+    "hi": "videshi",
+    "ta": "foreigner",
+    "trick": "videshi is what the auto driver calls a tourist."
+   },
+   {
+    "en": "city",
+    "kn": "city (nagara)",
+    "hi": "shehar",
+    "ta": "city (nagaram)",
+    "trick": "shehar: shah-hair, the city of the shah. nagara is in Bengaluru's Jayanagar."
+   },
+   {
+    "en": "village",
+    "kn": "halli",
+    "hi": "gaanv",
+    "ta": "graamam",
+    "trick": "halli ends many Kannada place names: Marathahalli, Nagarbhavi halli."
+   },
+   {
+    "en": "language",
+    "kn": "bhaashe",
+    "hi": "bhaasha",
+    "ta": "mozhi",
+    "trick": "bhaashe and bhaasha are twins. mozhi is the Tamil word, as in Tamil mozhi."
+   }
+  ],
+  "questions": [
+   {
+    "en": "what",
+    "kn": "enu",
+    "hi": "kya",
+    "ta": "enna",
+    "trick": "idu enu, yeh kya hai, idhu enna: point at anything and ask."
+   },
+   {
+    "en": "where",
+    "kn": "elli",
+    "hi": "kahaan",
+    "ta": "enga",
+    "trick": "elli and enga end in the same open sound. kahaan: ka-HAAN, where oh where."
+   },
+   {
+    "en": "when",
+    "kn": "yaavaga",
+    "hi": "kab",
+    "ta": "eppo",
+    "trick": "kab: as in cab, when is the cab coming. eppo: e-PO, when do we go."
+   },
+   {
+    "en": "who",
+    "kn": "yaaru",
+    "hi": "kaun",
+    "ta": "yaaru",
+    "trick": "yaaru is the same in Kannada and Tamil."
+   },
+   {
+    "en": "why",
+    "kn": "yaake",
+    "hi": "kyun",
+    "ta": "aen",
+    "trick": "yaake: ya-KAY, why. kyun rhymes with soon."
+   },
+   {
+    "en": "how",
+    "kn": "hege",
+    "hi": "kaise",
+    "ta": "eppadi",
+    "trick": "hege: heh-GAY. eppadi: e-PADI, how did you paddle here."
+   },
+   {
+    "en": "how much",
+    "kn": "eshtu",
+    "hi": "kitna",
+    "ta": "evlo",
+    "trick": "eshtu and evlo are your market words."
+   },
+   {
+    "en": "how many",
+    "kn": "eshtu",
+    "hi": "kitne",
+    "ta": "ethana",
+    "trick": "Kannada reuses eshtu; Hindi bends kitna to kitne; Tamil has ethana."
+   },
+   {
+    "en": "which",
+    "kn": "yaavudu",
+    "hi": "kaun sa",
+    "ta": "edhu",
+    "trick": "yaavudu: which one of these. kaun sa: who-ish one."
+   },
+   {
+    "en": "what time",
+    "kn": "eshtu gante",
+    "hi": "kitne baje",
+    "ta": "ethana mani",
+    "trick": "gante, baje, mani all mean the bell, o clock."
+   },
+   {
+    "en": "what happened",
+    "kn": "enu aaytu",
+    "hi": "kya hua",
+    "ta": "enna aachu",
+    "trick": "aaytu and aachu both mean it became."
+   },
+   {
+    "en": "what does ___ mean",
+    "kn": "___ andre enu",
+    "hi": "___ ka matlab kya hai",
+    "ta": "___ na enna",
+    "trick": "Your rescue line in every class. andre = if you say."
+   },
+   {
+    "en": "how do you say ___",
+    "kn": "___ ge enu heltare",
+    "hi": "___ ko kya kehte hain",
+    "ta": "___ ku enna solluvaanga",
+    "trick": "Literally what do they say for ___."
+   },
+   {
+    "en": "is it? really?",
+    "kn": "howdaa?",
+    "hi": "achha?",
+    "ta": "aamaa?",
+    "trick": "howdu (yes) plus aa becomes really? Say it with raised eyebrows."
+   }
+  ],
+  "little": [
+   {
+    "en": "my",
+    "kn": "nanna",
+    "hi": "mera, meri",
+    "ta": "en",
+    "trick": "nanna piano, mera piano, en piano. Hindi picks mera or meri by the thing."
+   },
+   {
+    "en": "your (polite)",
+    "kn": "nimma",
+    "hi": "aapka",
+    "ta": "unga",
+    "trick": "nimma hesaru enu, aapka naam kya hai, unga peru enna."
+   },
+   {
+    "en": "your (friend)",
+    "kn": "ninna",
+    "hi": "tumhara",
+    "ta": "un",
+    "trick": "One letter shorter than the polite form in Kannada and Tamil."
+   },
+   {
+    "en": "his",
+    "kn": "avana",
+    "hi": "uska",
+    "ta": "avan-oda",
+    "trick": "avan (he) plus a or oda."
+   },
+   {
+    "en": "her",
+    "kn": "avala",
+    "hi": "uska",
+    "ta": "ava-oda",
+    "trick": "Hindi uska covers both his and her."
+   },
+   {
+    "en": "our",
+    "kn": "namma",
+    "hi": "hamara",
+    "ta": "enga",
+    "trick": "namma Bengaluru, namma metro: you already know this one."
+   },
+   {
+    "en": "their",
+    "kn": "avra",
+    "hi": "unka",
+    "ta": "avanga-oda",
+    "trick": "avru (they) plus a."
+   },
+   {
+    "en": "to",
+    "kn": "-ge",
+    "hi": "ko",
+    "ta": "-ku",
+    "trick": "manege, ghar ko, veetukku: to home."
+   },
+   {
+    "en": "in, at",
+    "kn": "-alli",
+    "hi": "mein",
+    "ta": "-la",
+    "trick": "Bangalore-alli, Delhi mein, Chennai-la."
+   },
+   {
+    "en": "from",
+    "kn": "-inda",
+    "hi": "se",
+    "ta": "-la irundhu",
+    "trick": "India-inda, India se, India-la irundhu."
+   },
+   {
+    "en": "with",
+    "kn": "jote",
+    "hi": "ke saath",
+    "ta": "kooda",
+    "trick": "nanna jote, mere saath, en kooda: with me."
+   },
+   {
+    "en": "for",
+    "kn": "-ge, -gaagi",
+    "hi": "ke liye",
+    "ta": "-kku, -kkaaga",
+    "trick": "nanagaagi, mere liye, enakkaaga: for me."
+   },
+   {
+    "en": "and",
+    "kn": "mattu (or just and)",
+    "hi": "aur",
+    "ta": "-um -um",
+    "trick": "tea mattu coffee, chai aur coffee, tea-um coffee-um."
+   },
+   {
+    "en": "but",
+    "kn": "aadre",
+    "hi": "lekin",
+    "ta": "aana",
+    "trick": "aadre: AH-dray. aana: but also means elephant, say it fast."
+   },
+   {
+    "en": "because",
+    "kn": "yaakandre",
+    "hi": "kyunki",
+    "ta": "aenna",
+    "trick": "why plus if-you-say: yaake plus andre."
+   },
+   {
+    "en": "also",
+    "kn": "koodaa",
+    "hi": "bhi",
+    "ta": "-um",
+    "trick": "naanu koodaa, main bhi, naan-um: me too."
+   },
+   {
+    "en": "only",
+    "kn": "maatra",
+    "hi": "sirf",
+    "ta": "mattum",
+    "trick": "maatra and mattum are cousins."
+   },
+   {
+    "en": "very",
+    "kn": "tumba",
+    "hi": "bahut",
+    "ta": "romba",
+    "trick": "tumba chennaagide, bahut achha, romba nalla."
+   },
+   {
+    "en": "a little",
+    "kn": "swalpa",
+    "hi": "thoda",
+    "ta": "konjam",
+    "trick": "The politeness word. Put it in front of any request."
+   },
+   {
+    "en": "now",
+    "kn": "eega",
+    "hi": "abhi",
+    "ta": "ippo",
+    "trick": "eega: EE-ga, now. ippo: ip-PO, now."
+   },
+   {
+    "en": "later",
+    "kn": "aamele",
+    "hi": "baad mein",
+    "ta": "apram",
+    "trick": "aamele: after that."
+   },
+   {
+    "en": "always",
+    "kn": "yaavaagalu",
+    "hi": "hamesha",
+    "ta": "eppavum",
+    "trick": "when plus also: yaavaga plus lu, eppo plus um."
+   },
+   {
+    "en": "never",
+    "kn": "yaavaagalu illa",
+    "hi": "kabhi nahin",
+    "ta": "eppavum illa",
+    "trick": "always plus not."
+   }
+  ],
+  "describe": [
+   {
+    "en": "big",
+    "kn": "dodda (it is big: doddadu)",
+    "hi": "bada, badi",
+    "ta": "periya (it is big: perisu)",
+    "trick": "dodda mane, bada ghar, periya veedu: before the noun."
+   },
+   {
+    "en": "small",
+    "kn": "chikka (chikkadu)",
+    "hi": "chhota, chhoti",
+    "ta": "chinna (chinnadhu)",
+    "trick": "chikka and chinna are cousins."
+   },
+   {
+    "en": "good",
+    "kn": "olle (it is good: chennaagide)",
+    "hi": "achha, achhi",
+    "ta": "nalla (nalla irukku)",
+    "trick": "olle kelsa, achha kaam, nalla velai: good work."
+   },
+   {
+    "en": "bad, not good",
+    "kn": "chennaagilla",
+    "hi": "achha nahin, kharaab",
+    "ta": "nalla illa, mosam",
+    "trick": "Say it is not good rather than bad; it is what natives do."
+   },
+   {
+    "en": "hot",
+    "kn": "bisi",
+    "hi": "garam",
+    "ta": "soodu",
+    "trick": "bisi bele bath is hot lentil rice. garam masala."
+   },
+   {
+    "en": "cold",
+    "kn": "tampu",
+    "hi": "thanda",
+    "ta": "kulir (cold water: jillunu thanni)",
+    "trick": "thanda paani, cold water."
+   },
+   {
+    "en": "new",
+    "kn": "hosa",
+    "hi": "naya, nayi",
+    "ta": "pudhu",
+    "trick": "hosa varsha, naya saal, pudhu varusham: new year."
+   },
+   {
+    "en": "old",
+    "kn": "hale",
+    "hi": "puraana",
+    "ta": "pazhaya",
+    "trick": "hale and pazhaya are the same word said two ways."
+   },
+   {
+    "en": "beautiful",
+    "kn": "chennaagide (it looks good)",
+    "hi": "sundar, khoobsurat",
+    "ta": "azhagu (azhagaa irukku)",
+    "trick": "azhagu: a-ZHA-gu, beauty."
+   },
+   {
+    "en": "expensive",
+    "kn": "jaasti, costly",
+    "hi": "mehenga",
+    "ta": "jaasti, costly",
+    "trick": "Everyone says costly in the south."
+   },
+   {
+    "en": "cheap",
+    "kn": "kammi",
+    "hi": "sasta",
+    "ta": "kammi",
+    "trick": "kammi means less; kammi maadi = reduce it."
+   },
+   {
+    "en": "easy",
+    "kn": "easy (sulabha)",
+    "hi": "aasaan",
+    "ta": "easy (sulabham)",
+    "trick": "aasaan: ah-SAAN, easy."
+   },
+   {
+    "en": "difficult",
+    "kn": "kashta",
+    "hi": "mushkil",
+    "ta": "kashtam",
+    "trick": "kashta and kashtam: hard, trouble."
+   },
+   {
+    "en": "correct",
+    "kn": "sari",
+    "hi": "sahi",
+    "ta": "sari",
+    "trick": "sari also means okay. Sari sari = okay okay."
+   },
+   {
+    "en": "wrong",
+    "kn": "tappu",
+    "hi": "galat",
+    "ta": "thappu",
+    "trick": "tappu and thappu: a mistake."
+   },
+   {
+    "en": "fast",
+    "kn": "bega",
+    "hi": "tez, jaldi",
+    "ta": "vegama, seekkiram",
+    "trick": "jaldi jaldi: quickly quickly."
+   },
+   {
+    "en": "slow",
+    "kn": "nidhaana",
+    "hi": "dheere",
+    "ta": "medhuva",
+    "trick": "The music room word."
+   },
+   {
+    "en": "enough",
+    "kn": "saaku",
+    "hi": "bas",
+    "ta": "podhum",
+    "trick": "saaku, bas, podhum: stop pouring."
+   }
+  ],
+  "time": [
+   {
+    "en": "morning",
+    "kn": "belagge",
+    "hi": "subah",
+    "ta": "kaalaila",
+    "trick": "belagge: be-LAG-gay, when light comes."
+   },
+   {
+    "en": "afternoon",
+    "kn": "madhyaahna",
+    "hi": "dopahar",
+    "ta": "madhyaanam",
+    "trick": "do pahar: two watches of the day."
+   },
+   {
+    "en": "evening",
+    "kn": "sanje",
+    "hi": "shaam",
+    "ta": "saayangaalam",
+    "trick": "sanje: SAN-jay. shaam: like the name Sham."
+   },
+   {
+    "en": "night",
+    "kn": "raatri",
+    "hi": "raat",
+    "ta": "raathiri",
+    "trick": "One root in all three."
+   },
+   {
+    "en": "today",
+    "kn": "ivattu",
+    "hi": "aaj",
+    "ta": "innikki",
+    "trick": "aaj: AHJ, today."
+   },
+   {
+    "en": "yesterday",
+    "kn": "nenne",
+    "hi": "kal",
+    "ta": "nethu",
+    "trick": "Hindi kal is both yesterday and tomorrow; the verb tense tells you which."
+   },
+   {
+    "en": "tomorrow",
+    "kn": "naale",
+    "hi": "kal",
+    "ta": "naalaikku",
+    "trick": "naale and naalaikku share a root."
+   },
+   {
+    "en": "day after tomorrow",
+    "kn": "naadiddu",
+    "hi": "parson",
+    "ta": "naalannaikku",
+    "trick": "parson: PAR-son."
+   },
+   {
+    "en": "week",
+    "kn": "vaara",
+    "hi": "hafta",
+    "ta": "vaaram",
+    "trick": "hafta comes from haft, seven in Persian."
+   },
+   {
+    "en": "month",
+    "kn": "tingalu",
+    "hi": "mahina",
+    "ta": "maasam",
+    "trick": "tingalu also means moon."
+   },
+   {
+    "en": "year",
+    "kn": "varsha",
+    "hi": "saal",
+    "ta": "varusham",
+    "trick": "varsha and varusham are twins."
+   },
+   {
+    "en": "Monday",
+    "kn": "somavaara",
+    "hi": "somvaar",
+    "ta": "thingal",
+    "trick": "Days in Kannada and Hindi end in vaara. Most people just say Monday."
+   },
+   {
+    "en": "Tuesday",
+    "kn": "mangalavaara",
+    "hi": "mangalvaar",
+    "ta": "sevvaai",
+    "trick": "mangal is Mars."
+   },
+   {
+    "en": "Wednesday",
+    "kn": "budhavaara",
+    "hi": "budhvaar",
+    "ta": "budhan",
+    "trick": "budha is Mercury."
+   },
+   {
+    "en": "Thursday",
+    "kn": "guruvaara",
+    "hi": "guruvaar",
+    "ta": "viyaazhan",
+    "trick": "guru is Jupiter, the teacher planet."
+   },
+   {
+    "en": "Friday",
+    "kn": "shukravaara",
+    "hi": "shukravaar",
+    "ta": "velli",
+    "trick": "velli means silver in Tamil."
+   },
+   {
+    "en": "Saturday",
+    "kn": "shanivaara",
+    "hi": "shanivaar",
+    "ta": "sani",
+    "trick": "shani is Saturn."
+   },
+   {
+    "en": "Sunday",
+    "kn": "bhaanuvaara",
+    "hi": "ravivaar",
+    "ta": "gnaayiru",
+    "trick": "bhaanu and ravi both mean sun."
+   },
+   {
+    "en": "what time is it",
+    "kn": "eshtu gante",
+    "hi": "kitne baje hain",
+    "ta": "mani enna",
+    "trick": "gante, baje, mani: the bell."
+   },
+   {
+    "en": "at 5 o clock",
+    "kn": "aidu gantege",
+    "hi": "paanch baje",
+    "ta": "anju manikku",
+    "trick": "number plus the bell word."
+   },
+   {
+    "en": "one hour",
+    "kn": "ondu gante",
+    "hi": "ek ghanta",
+    "ta": "oru mani neram",
+    "trick": "The same bell word means hour."
+   },
+   {
+    "en": "one minute",
+    "kn": "ondu nimisha",
+    "hi": "ek minute",
+    "ta": "oru nimisham",
+    "trick": "nimisha and nimisham: a blink."
+   },
+   {
+    "en": "sometimes",
+    "kn": "ondondu sala",
+    "hi": "kabhi kabhi",
+    "ta": "sila samayam",
+    "trick": "kabhi kabhi is a famous film title."
+   },
+   {
+    "en": "every day",
+    "kn": "dina",
+    "hi": "roz",
+    "ta": "daily",
+    "trick": "dina dina, roz roz: day after day."
+   }
+  ]
+ },
+ "rules": {
+  "kn": [
+   {
+    "title": "The verb goes last",
+    "body": "Say who, then what, then the action. English word order is I play piano; Kannada is I piano play.",
+    "example": "naanu piano nudistini"
+   },
+   {
+    "title": "One ending per person",
+    "body": "Learn the ending once and put it on every verb: tini (I), tiya (you), tira (you polite), tane (he), tale (she), tivi (we), tare (they).",
+    "example": "nudistini, nudistira, nudistane, nudistale"
+   },
+   {
+    "title": "Future is free",
+    "body": "Spoken Kannada uses the present form for the future. The time word does the work.",
+    "example": "naale nudistini = I will play tomorrow"
+   },
+   {
+    "title": "Past endings",
+    "body": "Past stem plus e (I and you), ri (you polite), a (he), lu (she), vi (we), ru (they).",
+    "example": "nudiside, nudisidri, nudisida, nudisidlu"
+   },
+   {
+    "title": "Not: alla and lilla",
+    "body": "Now or future: verb plus alla. Past: verb plus lilla. Same word for every person, no endings to learn.",
+    "example": "nudisalla (do not play), nudislilla (did not play)"
+   },
+   {
+    "title": "Question: stretch the last sound",
+    "body": "Turn the last vowel into aa and it becomes a question. No extra word needed.",
+    "example": "nudistiraa? = do you play?"
+   },
+   {
+    "title": "The Bangalore shortcut",
+    "body": "English word plus maadu works for almost any action. Locals do it all day.",
+    "example": "practice maadtini, travel maadtini"
+   },
+   {
+    "title": "To and in",
+    "body": "ge means to, alli means in or at. No gender on I, you, or we. Keep nouns singular; beginners do not need plural endings.",
+    "example": "manege (home), class-ge, Bangalore-alli"
+   }
+  ],
+  "hi": [
+   {
+    "title": "The verb goes last",
+    "body": "Who, then what, then the action, then the little helper word.",
+    "example": "main piano bajaata hoon"
+   },
+   {
+    "title": "Gender is yours",
+    "body": "A man says bajaata, karta, jaata. A woman says bajaati, karti, jaati. This is the ending people notice first.",
+    "example": "main gaati hoon (woman), main gaata hoon (man)"
+   },
+   {
+    "title": "The helper word closes it",
+    "body": "hoon with main, ho with tum, hain with aap, hum, ve, hai with he or she.",
+    "example": "tum bajaate ho, voh bajaata hai"
+   },
+   {
+    "title": "Past with ne",
+    "body": "Doing-verbs take ne in the past and the verb matches the thing: maine piano bajaaya, maine chai pi. Go and come skip ne: main gaya, main gayi.",
+    "example": "maine gaana gaaya"
+   },
+   {
+    "title": "Future endings",
+    "body": "unga or ungi (I), oge (tum), enge (aap, hum, ve), ega or egi (he, she).",
+    "example": "main kal bajaaunga"
+   },
+   {
+    "title": "Not and question",
+    "body": "Put nahin before the verb for not. Put kya at the start for a yes or no question.",
+    "example": "kya tum piano bajaate ho?"
+   },
+   {
+    "title": "Right now",
+    "body": "raha or rahi plus the helper word means doing it at this moment.",
+    "example": "main piano baja raha hoon"
+   },
+   {
+    "title": "Want and can",
+    "body": "mujhe X chaahiye for a thing, main X karna chaahta hoon for an action, mujhe X aata hai for I know how.",
+    "example": "mujhe piano bajaana aata hai"
+   }
+  ],
+  "ta": [
+   {
+    "title": "The verb goes last",
+    "body": "Who, then what, then the action.",
+    "example": "naan piano vaasikkiren"
+   },
+   {
+    "title": "One ending per person",
+    "body": "ren (I), re (nee), reenga (neenga), raan (he), raa (she), rom (we), raanga (they). Put it on every verb.",
+    "example": "vaasikkiren, vaasikkireenga, vaasikkiraan"
+   },
+   {
+    "title": "Past endings",
+    "body": "Past stem plus en, e, eenga, aan, aa, om, aanga.",
+    "example": "vaasichen, vaasicheenga, vaasichaan, vaasichaa"
+   },
+   {
+    "title": "Future endings",
+    "body": "A v or pp sound, then the same endings as the past.",
+    "example": "vaasippen, paaduven, poven"
+   },
+   {
+    "title": "Not: maatten and la",
+    "body": "Will not or do not: the to-form plus maatten. Did not: the to-form plus la. Same for every person.",
+    "example": "vaasikka maatten, vaasikkala"
+   },
+   {
+    "title": "Question: add aa",
+    "body": "Add aa to the end of the verb. Politeness lives in nga: use neenga and the eenga ending with anyone older or unknown.",
+    "example": "vaasippeengalaa?"
+   },
+   {
+    "title": "The Chennai shortcut",
+    "body": "English word plus pannu works for almost any action.",
+    "example": "practice pannuren, travel pannuren"
+   },
+   {
+    "title": "To and in",
+    "body": "ku means to, la means in or at. No gender on I, you, or we. Keep nouns singular.",
+    "example": "veetukku (home), class-ku, Chennai-la"
+   }
+  ]
+ },
+ "frames": [
+  {
+   "id": "like",
+   "en": "I like ___",
+   "kn": "nanage ___ ishta",
+   "hi": "mujhe ___ pasand hai",
+   "ta": "enakku ___ pudikkum",
+   "slot": "thing",
+   "why": "Liking sits with the person: to-me ___ is liked. No verb ending to learn."
+  },
+  {
+   "id": "dislike",
+   "en": "I do not like ___",
+   "kn": "nanage ___ ishta illa",
+   "hi": "mujhe ___ pasand nahin",
+   "ta": "enakku ___ pudikkaadhu",
+   "slot": "thing",
+   "why": "Same frame, flipped with illa, nahin, or aadhu."
+  },
+  {
+   "id": "want",
+   "en": "I want ___",
+   "kn": "nanage ___ beku",
+   "hi": "mujhe ___ chaahiye",
+   "ta": "enakku ___ venum",
+   "slot": "thing",
+   "why": "Want and need share one word in Kannada and Tamil."
+  },
+  {
+   "id": "dontwant",
+   "en": "I do not want ___",
+   "kn": "nanage ___ beda",
+   "hi": "mujhe ___ nahin chaahiye",
+   "ta": "enakku ___ vendaam",
+   "slot": "thing",
+   "why": "beda and vendaam are the polite everyday no thanks."
+  },
+  {
+   "id": "have",
+   "en": "I have ___",
+   "kn": "nanna hatra ___ ide",
+   "hi": "mere paas ___ hai",
+   "ta": "en kitta ___ irukku",
+   "slot": "thing",
+   "why": "Having is near-me ___ exists. hatra, paas, kitta all mean near."
+  },
+  {
+   "id": "donthave",
+   "en": "I do not have ___",
+   "kn": "nanna hatra ___ illa",
+   "hi": "mere paas ___ nahin hai",
+   "ta": "en kitta ___ illa",
+   "slot": "thing",
+   "why": "illa and nahin hai turn any is into is not."
+  },
+  {
+   "id": "isthere",
+   "en": "Is there ___?",
+   "kn": "___ ideyaa?",
+   "hi": "kya ___ hai?",
+   "ta": "___ irukkaa?",
+   "slot": "thing",
+   "why": "Kannada and Tamil ask by stretching the last sound to aa; Hindi puts kya in front."
+  },
+  {
+   "id": "nothere",
+   "en": "There is no ___",
+   "kn": "___ illa",
+   "hi": "___ nahin hai",
+   "ta": "___ illa",
+   "slot": "thing",
+   "why": "The most useful word in the market."
+  },
+  {
+   "id": "where",
+   "en": "Where is ___?",
+   "kn": "___ elli ide?",
+   "hi": "___ kahaan hai?",
+   "ta": "___ enga irukku?",
+   "slot": "thing",
+   "why": "Thing first, then where, then is."
+  },
+  {
+   "id": "howmuch",
+   "en": "How much is ___?",
+   "kn": "___ eshtu?",
+   "hi": "___ kitne ka hai?",
+   "ta": "___ evlo?",
+   "slot": "thing",
+   "why": "Point and ask. eshtu and evlo also mean how many."
+  },
+  {
+   "id": "giveme",
+   "en": "Please give me ___",
+   "kn": "swalpa ___ kodi",
+   "hi": "thoda ___ dijiye",
+   "ta": "konjam ___ kudunga",
+   "slot": "thing",
+   "why": "swalpa, thoda, konjam soften any request into a please."
+  },
+  {
+   "id": "thisis",
+   "en": "This is ___",
+   "kn": "idu ___",
+   "hi": "yeh ___ hai",
+   "ta": "idhu ___",
+   "slot": "thing",
+   "why": "Kannada and Tamil need no word for is; this plus the thing is a full sentence."
+  },
+  {
+   "id": "isthis",
+   "en": "Is this ___?",
+   "kn": "idu ___ aa?",
+   "hi": "kya yeh ___ hai?",
+   "ta": "idhu ___ aa?",
+   "slot": "thing",
+   "why": "Add the aa sound to the noun to ask."
+  },
+  {
+   "id": "good",
+   "en": "___ is very good",
+   "kn": "___ tumba chennaagide",
+   "hi": "___ bahut achha hai",
+   "ta": "___ romba nalla irukku",
+   "slot": "thing",
+   "why": "tumba, bahut, romba mean very. Say it after a good take."
+  },
+  {
+   "id": "toomuch",
+   "en": "___ is too much",
+   "kn": "___ jaasti",
+   "hi": "___ bahut zyada hai",
+   "ta": "___ romba jaasti",
+   "slot": "thing",
+   "why": "Your bargaining line. jaasti is shared by Kannada and Tamil."
+  },
+  {
+   "id": "going",
+   "en": "I am going ___",
+   "kn": "naanu ___ hogtini",
+   "hi": "main ___ jaa raha hoon",
+   "hiF": "main ___ jaa rahi hoon",
+   "ta": "naan ___ poren",
+   "slot": "place",
+   "why": "Places carry their own to: manege, class-ge, veetukku, class-ku."
+  },
+  {
+   "id": "know",
+   "en": "I know ___",
+   "kn": "nanage ___ gottu",
+   "hi": "mujhe ___ aata hai",
+   "ta": "enakku ___ theriyum",
+   "slot": "thing",
+   "why": "Knowing sits with the person, like liking and wanting."
+  },
+  {
+   "id": "dontknow",
+   "en": "I do not know ___",
+   "kn": "nanage ___ gottilla",
+   "hi": "mujhe ___ nahin aata",
+   "ta": "enakku ___ theriyaadhu",
+   "slot": "thing",
+   "why": "gottilla and theriyaadhu are the honest beginner lines."
+  },
+  {
+   "id": "doyouknow",
+   "en": "Do you know ___?",
+   "kn": "nimage ___ gottaa?",
+   "hi": "kya aapko ___ aata hai?",
+   "ta": "ungalukku ___ theriyumaa?",
+   "slot": "thing",
+   "why": "Polite you: nimage, aapko, ungalukku."
+  },
+  {
+   "id": "lets",
+   "en": "Let us do ___",
+   "kn": "___ maadona",
+   "hi": "chalo ___ karte hain",
+   "ta": "___ pannalaam",
+   "slot": "thing",
+   "why": "ona, karte hain, laam turn any action into a let us. practice maadona, chalo practice karte hain, practice pannalaam."
+  }
+ ],
+ "commands": [
+  {
+   "en": "play",
+   "kn": [
+    "nudisi",
+    "nudisu"
+   ],
+   "hi": [
+    "bajaiye",
+    "bajaao"
+   ],
+   "ta": [
+    "vaasinga",
+    "vaasi"
+   ]
+  },
+  {
+   "en": "sing",
+   "kn": [
+    "haadi",
+    "haadu"
+   ],
+   "hi": [
+    "gaaiye",
+    "gaao"
+   ],
+   "ta": [
+    "paadunga",
+    "paadu"
+   ]
+  },
+  {
+   "en": "listen",
+   "kn": [
+    "keli",
+    "kelu"
+   ],
+   "hi": [
+    "suniye",
+    "suno"
+   ],
+   "ta": [
+    "kelunga",
+    "kelu"
+   ]
+  },
+  {
+   "en": "say it again",
+   "kn": [
+    "innomme heli",
+    "innomme helu"
+   ],
+   "hi": [
+    "phir se boliye",
+    "phir se bolo"
+   ],
+   "ta": [
+    "thirumba sollunga",
+    "thirumba sollu"
+   ]
+  },
+  {
+   "en": "speak slowly",
+   "kn": [
+    "nidhaanavaagi heli",
+    "nidhaanavaagi helu"
+   ],
+   "hi": [
+    "dheere boliye",
+    "dheere bolo"
+   ],
+   "ta": [
+    "medhuva pesunga",
+    "medhuva pesu"
+   ]
+  },
+  {
+   "en": "start",
+   "kn": [
+    "shuru maadi",
+    "shuru maadu"
+   ],
+   "hi": [
+    "shuru kijiye",
+    "shuru karo"
+   ],
+   "ta": [
+    "start pannunga",
+    "start pannu"
+   ]
+  },
+  {
+   "en": "stop",
+   "kn": [
+    "nillisi",
+    "nillisu"
+   ],
+   "hi": [
+    "rukiye",
+    "ruko"
+   ],
+   "ta": [
+    "niruthunga",
+    "niruthu"
+   ]
+  },
+  {
+   "en": "wait",
+   "kn": [
+    "iri",
+    "iru"
+   ],
+   "hi": [
+    "rukiye",
+    "ruko"
+   ],
+   "ta": [
+    "irunga",
+    "iru"
+   ]
+  },
+  {
+   "en": "count",
+   "kn": [
+    "count maadi",
+    "count maadu"
+   ],
+   "hi": [
+    "giniye",
+    "gino"
+   ],
+   "ta": [
+    "count pannunga",
+    "count pannu"
+   ]
+  },
+  {
+   "en": "practise",
+   "kn": [
+    "practice maadi",
+    "practice maadu"
+   ],
+   "hi": [
+    "practice kijiye",
+    "practice karo"
+   ],
+   "ta": [
+    "practice pannunga",
+    "practice pannu"
+   ]
+  },
+  {
+   "en": "try",
+   "kn": [
+    "try maadi",
+    "try maadu"
+   ],
+   "hi": [
+    "try kijiye",
+    "try karo"
+   ],
+   "ta": [
+    "try pannunga",
+    "try pannu"
+   ]
+  },
+  {
+   "en": "look",
+   "kn": [
+    "nodi",
+    "nodu"
+   ],
+   "hi": [
+    "dekhiye",
+    "dekho"
+   ],
+   "ta": [
+    "paarunga",
+    "paaru"
+   ]
+  },
+  {
+   "en": "come",
+   "kn": [
+    "banni",
+    "baa"
+   ],
+   "hi": [
+    "aaiye",
+    "aao"
+   ],
+   "ta": [
+    "vaanga",
+    "vaa"
+   ]
+  },
+  {
+   "en": "go",
+   "kn": [
+    "hogi",
+    "hogu"
+   ],
+   "hi": [
+    "jaaiye",
+    "jaao"
+   ],
+   "ta": [
+    "ponga",
+    "po"
+   ]
+  },
+  {
+   "en": "sit",
+   "kn": [
+    "kootkolli",
+    "kootko"
+   ],
+   "hi": [
+    "baithiye",
+    "baitho"
+   ],
+   "ta": [
+    "ukkaarunga",
+    "ukkaaru"
+   ]
+  },
+  {
+   "en": "stand up",
+   "kn": [
+    "eddu nilli",
+    "eddu nillu"
+   ],
+   "hi": [
+    "khade ho jaaiye",
+    "khade ho jaao"
+   ],
+   "ta": [
+    "ezhundhu nillunga",
+    "ezhundhu nillu"
+   ]
+  },
+  {
+   "en": "give",
+   "kn": [
+    "kodi",
+    "kodu"
+   ],
+   "hi": [
+    "dijiye",
+    "do"
+   ],
+   "ta": [
+    "kudunga",
+    "kudu"
+   ]
+  },
+  {
+   "en": "take",
+   "kn": [
+    "togolli",
+    "togo"
+   ],
+   "hi": [
+    "lijiye",
+    "lo"
+   ],
+   "ta": [
+    "edunga",
+    "edu"
+   ]
+  },
+  {
+   "en": "eat",
+   "kn": [
+    "tinni",
+    "tinnu"
+   ],
+   "hi": [
+    "khaaiye",
+    "khaao"
+   ],
+   "ta": [
+    "saapdunga",
+    "saapdu"
+   ]
+  },
+  {
+   "en": "drink",
+   "kn": [
+    "kudiri",
+    "kudi"
+   ],
+   "hi": [
+    "pijiye",
+    "piyo"
+   ],
+   "ta": [
+    "kudinga",
+    "kudi"
+   ]
+  },
+  {
+   "en": "open",
+   "kn": [
+    "tegiri",
+    "tegi"
+   ],
+   "hi": [
+    "kholiye",
+    "kholo"
+   ],
+   "ta": [
+    "thorangunga",
+    "thora"
+   ]
+  },
+  {
+   "en": "close",
+   "kn": [
+    "muchchi",
+    "muchchu"
+   ],
+   "hi": [
+    "band kijiye",
+    "band karo"
+   ],
+   "ta": [
+    "moodunga",
+    "moodu"
+   ]
+  },
+  {
+   "en": "do not play",
+   "kn": [
+    "nudisbeda",
+    "nudisbeda"
+   ],
+   "hi": [
+    "mat bajaiye",
+    "mat bajaao"
+   ],
+   "ta": [
+    "vaasikkaadheenga",
+    "vaasikkaadhe"
+   ]
+  }
+ ],
+ "commandNote": {
+  "kn": "Polite ends in i (nudisi, banni, kodi); a friend or a child gets the bare verb (nudisu, baa, kodu). Do not: verb plus beda (nudisbeda).",
+  "hi": "Polite ends in iye (bajaiye, aaiye, dijiye); friends get o (bajaao, aao, do). Do not: mat before the verb (mat bajaao).",
+  "ta": "Polite ends in nga (vaasinga, vaanga, kudunga); friends get the bare verb (vaasi, vaa, kudu). Do not: verb plus aadheenga (vaasikkaadheenga)."
+ }
 }

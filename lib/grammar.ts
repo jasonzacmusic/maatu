@@ -20,7 +20,9 @@ export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: 
 export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; tense?: Tense };
 export type DeckEntry = { en: string; kn: string; hi: string; ta: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
-export type DeckId = "music" | "numbers" | "fruits" | "vegetables" | "countries";
+export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; slot: "thing" | "place"; why: string };
+export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string] };
+export type DeckId = "music" | "numbers" | "fruits" | "vegetables" | "countries" | "questions" | "little" | "describe" | "time";
 
 type Data = {
   persons: Record<Lang, Person[]>;
@@ -32,6 +34,9 @@ type Data = {
   verbs: Verb[];
   objects: ObjectWord[];
   times: TimeWord[];
+  frames: Frame[];
+  commands: Command[];
+  commandNote: Record<Lang, string>;
   decks: Record<DeckId, DeckEntry[]>;
   rules: Record<Lang, Rule[]>;
 };
@@ -42,10 +47,17 @@ export const PERSONS = DATA.persons;
 export const VERBS: Verb[] = DATA.verbs;
 export const OBJECTS: ObjectWord[] = DATA.objects;
 export const TIMES: TimeWord[] = DATA.times;
+export const FRAMES: Frame[] = DATA.frames;
+export const COMMANDS: Command[] = DATA.commands;
+export const COMMAND_NOTE = DATA.commandNote;
 export const DECKS = DATA.decks;
 export const RULES = DATA.rules;
 export const DECK_ORDER: { id: DeckId; label: string; blurb: string }[] = [
   { id: "music", label: "Music", blurb: "The words you use every day in a music room." },
+  { id: "questions", label: "Questions", blurb: "Thirteen words that open every conversation." },
+  { id: "little", label: "Little words", blurb: "My, your, to, in, with, and, but, because. The glue." },
+  { id: "describe", label: "Describe", blurb: "Big, small, good, hot, new, fast, enough." },
+  { id: "time", label: "Time and days", blurb: "Morning to night, Monday to Sunday, o clock." },
   { id: "numbers", label: "Numbers", blurb: "Count, pay, and count in a band." },
   { id: "fruits", label: "Fruits", blurb: "Market words." },
   { id: "vegetables", label: "Vegetables", blurb: "Kaayi at the end means a raw vegetable." },
@@ -62,6 +74,7 @@ export const TENSES: { id: Tense; label: string; en: string }[] = [
 ];
 
 const PERSON_INDEX: Record<PersonId, number> = { i: 0, you: 1, youp: 2, he: 3, she: 4, we: 5, they: 6 };
+export const PERSON_ORDER: PersonId[] = ["i", "you", "youp", "he", "she", "we", "they"];
 
 export function person(lang: Lang, id: PersonId): Person {
   return PERSONS[lang][PERSON_INDEX[id]];
@@ -69,6 +82,10 @@ export function person(lang: Lang, id: PersonId): Person {
 
 export function verbById(id: string): Verb | undefined {
   return VERBS.find((v) => v.id === id);
+}
+
+export function objectLabel(o: ObjectWord, lang: Lang): string {
+  return o.enByLang ? o.enByLang[lang] : o.en;
 }
 
 export type Choice = {
@@ -84,7 +101,10 @@ export type Choice = {
   gender?: Gender;
 };
 
-export type Piece = { word: string; meaning: string; role: "time" | "subject" | "object" | "verb" | "helper" };
+// A verb form with the piece that stays (stem) and the piece that changes
+// (ending), so the UI can light up exactly what the learner must listen for.
+export type Form = { word: string; parts: string; stem?: string };
+export type Piece = { word: string; meaning: string; role: "time" | "subject" | "object" | "verb" | "helper"; stem?: string };
 export type Built = { sentence: string; english: string; pieces: Piece[]; note?: string };
 
 // ............................................................ Kannada
@@ -97,26 +117,26 @@ function knQuestion(word: string): string {
   return word + "aa";
 }
 
-function knVerb(v: VerbKn, p: PersonId, t: Tense, neg: boolean): { word: string; parts: string } {
+function knVerb(v: VerbKn, p: PersonId, t: Tense, neg: boolean): Form {
   const i = PERSON_INDEX[p];
   const s = DATA.suffix.kn;
   if (t === "present" || t === "future") {
-    return neg ? { word: v.neg, parts: `${v.dict} + alla` } : { word: v.pres + s.pres[i], parts: `${v.pres} + ${s.pres[i]}` };
+    return neg ? { word: v.neg, parts: `${v.dict} + alla (not, every person)`, stem: v.neg.slice(0, -4) } : { word: v.pres + s.pres[i], parts: `${v.pres} + ${s.pres[i]}`, stem: v.pres };
   }
   if (t === "past") {
-    return neg ? { word: v.pastNeg, parts: `${v.dict} + lilla` } : { word: v.past + s.past[i], parts: `${v.past} + ${s.past[i]}` };
+    return neg ? { word: v.pastNeg, parts: `${v.dict} + lilla (did not, every person)`, stem: v.pastNeg.slice(0, -5) } : { word: v.past + s.past[i], parts: `${v.past} + ${s.past[i]}`, stem: v.past };
   }
   if (t === "cont") {
-    return neg ? { word: `${v.cont} illa`, parts: `${v.cont} + illa` } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}` };
+    return neg ? { word: `${v.cont} illa`, parts: `${v.cont} + illa`, stem: v.cont } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}`, stem: v.cont };
   }
   if (t === "want") {
-    return neg ? { word: `${v.inf} ishta illa`, parts: `${v.inf} + ishta illa (no wish)` } : { word: v.want, parts: `${v.dict} + beku` };
+    return neg ? { word: `${v.inf} ishta illa`, parts: `${v.inf} + ishta illa (no wish)`, stem: v.inf } : { word: v.want, parts: `${v.dict} + beku`, stem: v.want.slice(0, -4) };
   }
-  return neg ? { word: `${v.inf} baralla`, parts: `${v.inf} + baralla` } : { word: `${v.inf} barutte`, parts: `${v.inf} + barutte` };
+  return neg ? { word: `${v.inf} baralla`, parts: `${v.inf} + baralla`, stem: v.inf } : { word: `${v.inf} barutte`, parts: `${v.inf} + barutte`, stem: v.inf };
 }
 
 // ............................................................ Hindi
-function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG: Gender | null): { word: string; parts: string } {
+function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG: Gender | null): Form {
   const i = PERSON_INDEX[p];
   const s = DATA.suffix.hi;
   const fem = p === "she" || (p !== "he" && g === "f");
@@ -124,12 +144,12 @@ function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
   const not = neg ? "nahin " : "";
   if (t === "present") {
     const hab = (fem ? s.habF : s.habM)[i];
-    return neg ? { word: `${not}${v.stem}${hab}`, parts: `nahin + ${v.stem} + ${hab}` } : { word: `${v.stem}${hab} ${s.aux[i]}`, parts: `${v.stem} + ${hab} + ${s.aux[i]}` };
+    return neg ? { word: `${not}${v.stem}${hab}`, parts: `nahin + ${v.stem} + ${hab}`, stem: `${not}${v.stem}` } : { word: `${v.stem}${hab} ${s.aux[i]}`, parts: `${v.stem} + ${hab} + ${s.aux[i]}`, stem: v.stem };
   }
   if (t === "cont") {
     const c = (fem ? s.contF : s.contM)[i];
     const stem = v.contStem ?? v.stem;
-    return { word: `${not}${stem} ${c} ${s.aux[i]}`, parts: `${stem} + ${c} + ${s.aux[i]}` };
+    return { word: `${not}${stem} ${c} ${s.aux[i]}`, parts: `${stem} + ${c} + ${s.aux[i]}`, stem: `${not}${stem}` };
   }
   if (t === "future") {
     if (v.fut) {
@@ -137,7 +157,7 @@ function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
       return { word: `${not}${irregular}`, parts: `${irregular} (irregular future)` };
     }
     const f = (fem ? s.futF : s.futM)[i];
-    return { word: `${not}${v.stem}${f}`, parts: `${v.stem} + ${f}` };
+    return { word: `${not}${v.stem}${f}`, parts: `${v.stem} + ${f}`, stem: `${not}${v.stem}` };
   }
   if (t === "past") {
     if (v.ne) {
@@ -149,9 +169,9 @@ function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
   }
   if (t === "want") {
     const w = (fem ? s.wantF : s.wantM)[i];
-    return neg ? { word: `${not}${v.dict} ${w}`, parts: `nahin + ${v.dict} + ${w}` } : { word: `${v.dict} ${w} ${s.aux[i]}`, parts: `${v.dict} + ${w} + ${s.aux[i]}` };
+    return neg ? { word: `${not}${v.dict} ${w}`, parts: `nahin + ${v.dict} + ${w}`, stem: `${not}${v.dict}` } : { word: `${v.dict} ${w} ${s.aux[i]}`, parts: `${v.dict} + ${w} + ${s.aux[i]}`, stem: v.dict };
   }
-  return neg ? { word: `${v.dict} nahin aata`, parts: `${v.dict} + nahin aata` } : { word: `${v.dict} aata hai`, parts: `${v.dict} + aata hai` };
+  return neg ? { word: `${v.dict} nahin aata`, parts: `${v.dict} + nahin aata`, stem: v.dict } : { word: `${v.dict} aata hai`, parts: `${v.dict} + aata hai`, stem: v.dict };
 }
 
 // ............................................................ Tamil
@@ -166,25 +186,31 @@ function taQuestion(word: string): string {
   return word + "aa";
 }
 
-function taVerb(v: VerbTa, p: PersonId, t: Tense, neg: boolean): { word: string; parts: string } {
+function taVerb(v: VerbTa, p: PersonId, t: Tense, neg: boolean): Form {
   const i = PERSON_INDEX[p];
   const s = DATA.suffix.ta;
   if (t === "present") {
-    return neg ? { word: `${v.inf} ${s.wont[i]}`, parts: `${v.inf} + ${s.wont[i]}` } : { word: v.pres + s.pres[i], parts: `${v.pres} + ${s.pres[i]}` };
+    return neg ? { word: `${v.inf} ${s.wont[i]}`, parts: `${v.inf} + ${s.wont[i]}`, stem: v.inf } : { word: v.pres + s.pres[i], parts: `${v.pres} + ${s.pres[i]}`, stem: v.pres };
   }
   if (t === "future") {
-    return neg ? { word: `${v.inf} ${s.wont[i]}`, parts: `${v.inf} + ${s.wont[i]}` } : { word: v.fut + s.pastFut[i], parts: `${v.fut} + ${s.pastFut[i]}` };
+    return neg ? { word: `${v.inf} ${s.wont[i]}`, parts: `${v.inf} + ${s.wont[i]}`, stem: v.inf } : { word: v.fut + s.pastFut[i], parts: `${v.fut} + ${s.pastFut[i]}`, stem: v.fut };
   }
   if (t === "past") {
-    return neg ? { word: `${v.inf}la`, parts: `${v.inf} + la` } : { word: v.past + s.pastFut[i], parts: `${v.past} + ${s.pastFut[i]}` };
+    return neg ? { word: `${v.inf}la`, parts: `${v.inf} + la (did not, every person)`, stem: v.inf } : { word: v.past + s.pastFut[i], parts: `${v.past} + ${s.pastFut[i]}`, stem: v.past };
   }
   if (t === "cont") {
-    return neg ? { word: `${v.inf}la`, parts: `${v.inf} + la` } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}` };
+    return neg ? { word: `${v.inf}la`, parts: `${v.inf} + la`, stem: v.inf } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}`, stem: v.cont };
   }
   if (t === "want") {
-    return neg ? { word: `${v.inf} vendaam`, parts: `${v.inf} + vendaam` } : { word: `${v.inf}num`, parts: `${v.inf} + num` };
+    return neg ? { word: `${v.inf} vendaam`, parts: `${v.inf} + vendaam`, stem: v.inf } : { word: `${v.inf}num`, parts: `${v.inf} + num`, stem: v.inf };
   }
-  return neg ? { word: `${v.inf} theriyaadhu`, parts: `${v.inf} + theriyaadhu` } : { word: `${v.inf} theriyum`, parts: `${v.inf} + theriyum` };
+  return neg ? { word: `${v.inf} theriyaadhu`, parts: `${v.inf} + theriyaadhu`, stem: v.inf } : { word: `${v.inf} theriyum`, parts: `${v.inf} + theriyum`, stem: v.inf };
+}
+
+export function verbForm(lang: Lang, verb: Verb, p: PersonId, t: Tense, neg = false, gender: Gender = "m", objG: Gender | null = null): Form {
+  if (lang === "kn") return knVerb(verb.kn, p, t, neg);
+  if (lang === "hi") return hiVerb(verb.hi, p, t, neg, gender, objG);
+  return taVerb(verb.ta, p, t, neg);
 }
 
 // ............................................................ English
@@ -192,7 +218,7 @@ function englishFor(c: Choice, verb: Verb, obj: ObjectWord | null, time: TimeWor
   const subj = person("kn", c.person).en;
   const third = c.person === "he" || c.person === "she";
   const be = c.person === "i" ? "am" : third ? "is" : "are";
-  const objEn = obj ? (obj.enByLang ? obj.enByLang[lang] : obj.en) : "";
+  const objEn = obj ? objectLabel(obj, lang) : "";
   const timeEn = time ? time.en : "";
   const tail = [objEn, timeEn].filter(Boolean).join(" ");
   const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -228,7 +254,7 @@ export function build(lang: Lang, c: Choice): Built | null {
   const pr = person(lang, c.person);
   const pieces: Piece[] = [];
   const objWord = obj ? obj[lang] : "";
-  const objEn = obj ? (obj.enByLang ? obj.enByLang[lang] : obj.en) : "";
+  const objEn = obj ? objectLabel(obj, lang) : "";
   const english = englishFor(c, verb, obj, time, lang);
   let note = verb.note;
 
@@ -241,7 +267,7 @@ export function build(lang: Lang, c: Choice): Built | null {
     pieces.push({ word: subj, meaning: dative ? `to ${pr.en} (wish or ability sits with the person)` : pr.en, role: "subject" });
     if (obj) pieces.push({ word: objWord, meaning: objEn, role: "object" });
     const word = q ? knQuestion(v.word) : v.word;
-    pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb" });
+    pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb", stem: v.stem });
     if (c.tense === "future" && !neg) note = "Spoken Kannada uses the present form for the future; the time word carries the meaning.";
     return { sentence: pieces.map((p) => p.word).join(" "), english, pieces, note };
   }
@@ -256,7 +282,7 @@ export function build(lang: Lang, c: Choice): Built | null {
       role: "subject",
     });
     if (obj) pieces.push({ word: objWord, meaning: `${objEn}${obj.kind === "thing" || obj.kind === "language" ? (obj.hiG === "f" ? " (feminine word)" : " (masculine word)") : ""}`, role: "object" });
-    pieces.push({ word: v.word, meaning: v.parts, role: "verb" });
+    pieces.push({ word: v.word, meaning: v.parts, role: "verb", stem: v.stem });
     const body = pieces.map((p) => p.word).join(" ");
     const sentence = q ? `kya ${body}` : body;
     if (q) pieces.unshift({ word: "kya", meaning: "question marker (yes or no question)", role: "helper" });
@@ -271,26 +297,64 @@ export function build(lang: Lang, c: Choice): Built | null {
   pieces.push({ word: subj, meaning: dative ? `to ${pr.en} (ability sits with the person)` : pr.en, role: "subject" });
   if (obj) pieces.push({ word: objWord, meaning: objEn, role: "object" });
   const word = q ? taQuestion(v.word) : v.word;
-  pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb" });
+  pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb", stem: v.stem });
   return { sentence: pieces.map((p) => p.word).join(" "), english, pieces, note };
+}
+
+// Split a verb word into the stem and the ending for display. Returns null when
+// the form is irregular (no clean stem).
+export function splitEnding(word: string, stem?: string): { stem: string; ending: string } | null {
+  if (!stem || !word.startsWith(stem) || word.length === stem.length) return null;
+  return { stem, ending: word.slice(stem.length) };
 }
 
 // Full person table for one verb, used by the flip card and by the checker
 // prompt so the model corrects against the exact vetted forms.
-export function table(lang: Lang, verbId: string, gender: Gender = "m"): { person: string; present: string; past: string; future: string }[] | null {
+export type TableRow = { person: string; sub: string; present: Form; past: Form; future: Form };
+export function table(lang: Lang, verbId: string, gender: Gender = "m"): TableRow[] | null {
   const verb = verbById(verbId);
   if (!verb) return null;
-  const ids: PersonId[] = ["i", "you", "youp", "he", "she", "we", "they"];
-  return ids.map((p) => {
+  return PERSON_ORDER.map((p) => {
     const pr = person(lang, p);
     const label = pr.hint ? `${pr.sub} (${pr.en}, ${pr.hint})` : `${pr.sub} (${pr.en})`;
-    const cell = (t: Tense) => {
-      if (lang === "kn") return knVerb(verb.kn, p, t, false).word;
-      if (lang === "hi") return hiVerb(verb.hi, p, t, false, gender, null).word;
-      return taVerb(verb.ta, p, t, false).word;
+    return {
+      person: label,
+      sub: pr.sub,
+      present: verbForm(lang, verb, p, "present", false, gender),
+      past: verbForm(lang, verb, p, "past", false, gender),
+      future: verbForm(lang, verb, p, "future", false, gender),
     };
-    return { person: label, present: cell("present"), past: cell("past"), future: cell("future") };
   });
+}
+
+// A frame with its slot filled: "I like ___" + piano.
+export function fillFrame(lang: Lang, frame: Frame, obj: ObjectWord, gender: Gender = "m"): { sentence: string; english: string } {
+  const template = lang === "hi" && gender === "f" && frame.hiF ? frame.hiF : frame[lang];
+  return {
+    sentence: template.replace("___", obj[lang]),
+    english: frame.en.replace("___", objectLabel(obj, lang)),
+  };
+}
+
+// Three lines for today, seeded by the date so they change every day but stay
+// stable through the day. Music verbs first, always.
+export function todaysLines(lang: Lang, gender: Gender = "m"): Built[] {
+  const day = Math.floor(Date.now() / 86_400_000);
+  const music = VERBS.filter((v) => v.group === "music");
+  const pick = <T,>(list: T[], salt: number) => list[(day * 7 + salt * 13) % list.length];
+  const tenses: Tense[] = ["present", "past", "future", "can", "want", "cont"];
+  const persons: PersonId[] = ["i", "she", "you", "we", "he", "they"];
+  const out: Built[] = [];
+  for (let n = 0; n < 3; n += 1) {
+    const verb = pick(music, n + 1);
+    const tense = pick(tenses, n + 2);
+    const objects = OBJECTS.filter((o) => o.kind === "thing");
+    const obj = verb.id === "listen" ? "music" : verb.id === "sing" ? "song" : verb.id === "learn" || verb.id === "teach" ? "language" : verb.id === "dance" ? null : pick(objects.filter((o) => ["piano", "guitar", "violin", "drums", "song", "music", "thissong"].includes(o.id)), n + 3).id;
+    const time = tense === "past" ? "yesterday" : tense === "future" ? "tomorrow" : tense === "present" ? "everyday" : tense === "cont" ? "now" : null;
+    const built = build(lang, { person: pick(persons, n + 4), verb: verb.id, tense, object: obj, time, gender, question: n === 2 });
+    if (built) out.push(built);
+  }
+  return out;
 }
 
 // Compact reference text for the Gemini checker and the voice tutor.
@@ -301,15 +365,17 @@ export function referenceText(lang: Lang): string {
   lines.push(`\nVERB TABLES (present / past / future, persons in order I, you, you polite, he, she, we, they):`);
   for (const verb of VERBS) {
     const rows = table(lang, verb.id) ?? [];
-    const pres = rows.map((r) => r.present).join(", ");
-    const past = rows.map((r) => r.past).join(", ");
-    const fut = rows.map((r) => r.future).join(", ");
+    const pres = rows.map((r) => r.present.word).join(", ");
+    const past = rows.map((r) => r.past.word).join(", ");
+    const fut = rows.map((r) => r.future.word).join(", ");
     const sample = build(lang, { person: "i", verb: verb.id, tense: "present", negative: true });
     const want = build(lang, { person: "i", verb: verb.id, tense: "want" });
     const can = build(lang, { person: "i", verb: verb.id, tense: "can" });
     lines.push(`- ${verb.en.base} (${verb[lang].dict}): present ${pres}; past ${past}; future ${fut}; not: ${sample?.sentence}; want to: ${want?.sentence}; know how to: ${can?.sentence}`);
   }
-  lines.push(`\nOBJECTS: ${OBJECTS.map((o) => `${o.enByLang ? o.enByLang[lang] : o.en} = ${o[lang]}${lang === "hi" && o.kind !== "place" ? ` (${o.hiG})` : ""}`).join("; ")}`);
+  lines.push(`\nFRAMES: ${FRAMES.map((f) => `${f.en} = ${f[lang]}${f.hiF && lang === "hi" ? ` (woman: ${f.hiF})` : ""}`).join("; ")}`);
+  lines.push(`COMMANDS (polite / friend): ${COMMANDS.map((c) => `${c.en} = ${c[lang][0]} / ${c[lang][1]}`).join("; ")}`);
+  lines.push(`OBJECTS: ${OBJECTS.map((o) => `${objectLabel(o, lang)} = ${o[lang]}${lang === "hi" && o.kind !== "place" ? ` (${o.hiG})` : ""}`).join("; ")}`);
   lines.push(`TIME WORDS: ${TIMES.map((t) => `${t.en} = ${t[lang]}`).join("; ")}`);
   for (const deck of DECK_ORDER) {
     lines.push(`${deck.label.toUpperCase()}: ${DECKS[deck.id].map((d) => `${d.en} = ${d[lang]}`).join("; ")}`);
