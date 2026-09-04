@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PERSON_ORDER, PERSONS, TENSES, VERBS, verbForm, type Gender, type Tense } from "@/lib/grammar";
 import { composeNumber, lineText, NUMBERS, SCENE_GROUPS, SCENES, SOUND_NOTE, SOUNDS, type Line, type SceneGroup } from "@/lib/playbooks";
 import { C, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
-import { Chip, Dock, Label, LILAC, Section, SKY, SpeakButton, type Speaker } from "./studio-bits";
+import { Chip, CopyButton, Dock, Label, LILAC, SaveButton, Section, SKY, SpeakButton, type Speaker } from "./studio-bits";
 
 // Two rooms of the Sentence Studio. Scenes: scripted conversations for real
 // Bengaluru situations and music teaching, with the lines you will hear as
@@ -15,8 +15,11 @@ import { Chip, Dock, Label, LILAC, Section, SKY, SpeakButton, type Speaker } fro
 export type Practice = { en: string; target: string };
 
 // ............................................................ scenes
-export function ScenesRoom({ lang, gender, speaker, anchor, onPractise }: { lang: Lang; gender: Gender; speaker: Speaker; anchor: (id: string, el: HTMLElement | null) => void; onPractise: (p: Practice) => void }) {
+export function ScenesRoom({ lang, gender, speaker, anchor, onPractise, onSaved }: { lang: Lang; gender: Gender; speaker: Speaker; anchor: (id: string, el: HTMLElement | null) => void; onPractise: (p: Practice) => void; onSaved: () => void }) {
   const [group, setGroup] = useState<SceneGroup>("music");
+  const [playingAll, setPlayingAll] = useState(false);
+  const stopRef = useRef(false);
+  useEffect(() => () => { stopRef.current = true; }, []);
   const [sceneId, setSceneId] = useState("majorscale");
   const [testMe, setTestMe] = useState(false);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());
@@ -30,6 +33,25 @@ export function ScenesRoom({ lang, gender, speaker, anchor, onPractise }: { lang
   };
   const reveal = (key: string) => setRevealed((prev) => new Set(prev).add(key));
   const total = scene.beats.reduce((n, b) => n + b.lines.length, 0);
+  const playAll = async () => {
+    if (playingAll) {
+      stopRef.current = true;
+      speaker.stop();
+      setPlayingAll(false);
+      return;
+    }
+    stopRef.current = false;
+    setPlayingAll(true);
+    for (const beat of scene.beats) {
+      for (const line of beat.lines) {
+        if (stopRef.current) break;
+        await speaker.speak(lineText(line, lang, gender));
+        if (stopRef.current) break;
+        await new Promise((r) => setTimeout(r, 450));
+      }
+    }
+    setPlayingAll(false);
+  };
   const yours = scene.beats.reduce((n, b) => n + b.lines.filter((l) => l.who === "you").length, 0);
 
   return (
@@ -55,9 +77,14 @@ export function ScenesRoom({ lang, gender, speaker, anchor, onPractise }: { lang
           <div className="text-[12.5px]" style={{ color: C.muted }}>{scene.place}. {scene.blurb}</div>
           <div className="mt-1 text-[11px]" style={{ color: C.faint }}>{yours} lines you say, {total - yours} you will hear</div>
         </div>
-        <Chip on={testMe} onClick={() => { setTestMe(!testMe); setRevealed(new Set()); }} tone="tube">
-          {testMe ? "testing: tap a line to reveal" : "test me"}
-        </Chip>
+        <div className="flex flex-wrap gap-2">
+          <Chip on={playingAll} onClick={() => void playAll()} tone="sodium">
+            {playingAll ? "◼ stop" : "▶ play the whole scene"}
+          </Chip>
+          <Chip on={testMe} onClick={() => { setTestMe(!testMe); setRevealed(new Set()); }} tone="tube">
+            {testMe ? "testing: tap a line to reveal" : "test me"}
+          </Chip>
+        </div>
       </div>
 
       <div className="mt-3 flex flex-col gap-4">
@@ -71,7 +98,7 @@ export function ScenesRoom({ lang, gender, speaker, anchor, onPractise }: { lang
                 const hidden = testMe && !revealed.has(key);
                 const you = line.who === "you";
                 return (
-                  <SceneLine key={key} line={line} target={target} hidden={hidden} you={you} speaker={speaker} onReveal={() => reveal(key)} onPractise={() => onPractise({ en: line.en, target })} />
+                  <SceneLine key={key} lang={lang} line={line} target={target} hidden={hidden} you={you} speaker={speaker} onReveal={() => reveal(key)} onPractise={() => onPractise({ en: line.en, target })} onSaved={onSaved} />
                 );
               })}
             </div>
@@ -82,7 +109,7 @@ export function ScenesRoom({ lang, gender, speaker, anchor, onPractise }: { lang
   );
 }
 
-function SceneLine({ line, target, hidden, you, speaker, onReveal, onPractise }: { line: Line; target: string; hidden: boolean; you: boolean; speaker: Speaker; onReveal: () => void; onPractise: () => void }) {
+function SceneLine({ lang, line, target, hidden, you, speaker, onReveal, onPractise, onSaved }: { lang: Lang; line: Line; target: string; hidden: boolean; you: boolean; speaker: Speaker; onReveal: () => void; onPractise: () => void; onSaved: () => void }) {
   const color = you ? C.tube : LILAC;
   const active = speaker.playing === target;
   return (
@@ -105,12 +132,18 @@ function SceneLine({ line, target, hidden, you, speaker, onReveal, onPractise }:
           )}
         </div>
         <div className="flex flex-none flex-col items-end gap-1.5">
-          <SpeakButton text={target} speaker={speaker} size="sm" label={hidden ? "Hear" : undefined} />
-          {you && (
-            <button type="button" onClick={onPractise} className="text-[11.5px] font-semibold" style={{ color: C.tube }}>
-              Practise ›
-            </button>
-          )}
+          <div className="flex gap-1.5">
+            <SaveButton lang={lang} en={line.en} target={target} onChange={onSaved} size="sm" />
+            <SpeakButton text={target} speaker={speaker} size="sm" label={hidden ? "Hear" : undefined} />
+          </div>
+          <div className="flex gap-3">
+            <CopyButton en={line.en} target={target} />
+            {you && (
+              <button type="button" onClick={onPractise} className="text-[11.5px] font-semibold" style={{ color: C.tube }}>
+                Practise ›
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

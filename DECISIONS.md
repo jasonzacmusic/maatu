@@ -113,3 +113,10 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Shapes room: a word is two docking blocks, the part that stays and the part that moves. Verbs (stem plus ending for every person and three tenses), numbers (tens block plus unit block for Kannada and Tamil with the sandhi applied; Hindi shows the full 21 to 99 table because each number is its own word), and sound pairs (short versus long vowels, four minimal pairs per language, tap to hear).
 - The voice companion's reference now also carries the four music scripts. Prompt about 5.5k tokens; measured after reinstall below.
 - 2026-09-04 (measure after music scripts): companion prompt 5,818 tokens, ttft 894 ms, live Kannada probe "tell my student a major scale has seven notes" answered major scale-alli elu swara ide at 2,363 ms external. Production deployment 10:19 IST is READY. Practise loop verified in the browser: a Tamil attempt missing one word was judged as working with the full line shown.
+
+## 2026-09-04 Closing set: review, slow voice, play the scene, links
+- Spaced review lives per device in localStorage (lib/review.ts), Leitner boxes with gaps of 0, 1, 3, 7, 14 days; a miss returns in ten minutes. No backend on purpose: the studio must work offline and the learner is one person on one phone. Any sentence, checker result, frame, or scene line has a Save bookmark; the Review room sits first in the studio with a due badge on its tab.
+- Slow voice is a per-device toggle (pace 0.72 versus 0.9) on the same Sarvam voice; audio is cached per pace so flipping is free.
+- Play the whole scene plays both sides in order with a short gap, as a listening exercise; Stop cuts it. The speaker hook now resolves when playback ends so sequences can chain.
+- Word decks gained the same test-me hiding as scenes. Scene lines gained Copy (English plus target) for pasting to a student on WhatsApp.
+- The post-call debrief's "try next time" lines now open the Studio with the native line already checked, so the voice call and the text studio form one loop. Progress shows studio counts (heard, checked, saved, due).

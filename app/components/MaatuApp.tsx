@@ -7,6 +7,7 @@ import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated"
 import { ALL_LESSONS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
 import { ClassroomScreen } from "./ClassroomScreen";
 import { BuildScreen } from "./BuildScreen";
+import { countFor } from "@/lib/review";
 import { CourseProgressCard } from "./CourseProgressCard";
 import { LessonPreviewScreen } from "./LessonPreviewScreen";
 import { LessonResultScreen } from "./LessonResultScreen";
@@ -845,6 +846,7 @@ function DebriefScreen({
   onReportReady,
   onHub,
   onAgain,
+  onStudio,
 }: {
   meta: PersonaMeta;
   session: SessionEnd | null;
@@ -852,6 +854,7 @@ function DebriefScreen({
   onReportReady: () => void;
   onHub: () => void;
   onAgain: () => void;
+  onStudio: (text: string) => void;
 }) {
   const [report, setReport] = useState<Report | null>(null);
   const [status, setStatus] = useState<"pending" | "ready" | "none">("pending");
@@ -993,6 +996,9 @@ function DebriefScreen({
                     {t.why}
                   </div>
                 )}
+                <button type="button" onClick={() => onStudio(t.native)} className="mt-2 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2" style={{ color: C.tube, outlineColor: C.tube }}>
+                  Practise this in the Studio ›
+                </button>
               </div>
             ))}
             {report.words.length > 0 && (
@@ -1056,6 +1062,23 @@ function StatTile({ value, label }: { value: number | string; label: string }) {
   );
 }
 
+function StudioStats({ lang }: { lang: Lang }) {
+  const [v, setV] = useState({ heard: 0, checked: 0, saved: 0, due: 0 });
+  useEffect(() => {
+    const n = (k: string) => Number(window.localStorage.getItem(k) || 0) || 0;
+    const r = countFor(lang);
+    setV({ heard: n("maatu-studio-heard"), checked: n("maatu-studio-checked"), saved: r.saved, due: r.due });
+  }, [lang]);
+  return (
+    <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <StatTile value={v.heard} label="studio lines heard" />
+      <StatTile value={v.checked} label="lines checked" />
+      <StatTile value={v.saved} label="saved for review" />
+      <StatTile value={v.due} label="due to review now" />
+    </div>
+  );
+}
+
 function ProgressScreen({ stats, loading, lang, onSchool }: { stats: StreetStats; loading: boolean; lang: Lang; onSchool: () => void }) {
   const hasSessions = stats.sessionCount > 0;
   return (
@@ -1097,6 +1120,7 @@ function ProgressScreen({ stats, loading, lang, onSchool }: { stats: StreetStats
               <StatTile value={stats.nights} label={stats.nights === 1 ? "night spoken" : "nights spoken"} />
               <StatTile value={minutes(stats.thisWeekSeconds)} label="minutes this week" />
             </div>
+            <StudioStats lang={lang} />
             <div className="mt-4 rounded-[16px] p-5" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
               <div className="text-[12px] font-bold" style={{ letterSpacing: 1, color: C.muted }}>
                 PLACES PRACTICED
@@ -1309,6 +1333,7 @@ export default function MaatuApp() {
   const [pendingLessonId, setPendingLessonId] = useState("l1");
   const [lastSession, setLastSession] = useState<SessionEnd | null>(null);
   const [lastLessonResult, setLastLessonResult] = useState<LessonResult | null>(null);
+  const [studioSeed, setStudioSeed] = useState<{ text: string; nonce: number } | null>(null);
   const [rm, setRm] = useState(false);
   const [caps, setCaps] = useState(true);
   const [userId, setUserId] = useState("");
@@ -1511,13 +1536,13 @@ export default function MaatuApp() {
               onRetry={() => startLesson(lastLessonResult.lesson.id)}
             />
           ) : screen === "debrief" ? (
-            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen(activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} onAgain={() => setScreen("call")} />
+            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen(activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} onAgain={() => setScreen("call")} onStudio={(text) => { setStudioSeed({ text, nonce: Date.now() }); setScreen("build"); }} />
           ) : screen === "progress" ? (
             <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (
             <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} onBuild={() => setScreen("build")} />
           ) : screen === "build" ? (
-            <BuildScreen lang={lang} onLanguageChange={setLang} />
+            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} />
           ) : screen === "settings" ? (
             <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}

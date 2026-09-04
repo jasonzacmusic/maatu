@@ -31,7 +31,9 @@ import {
 } from "@/lib/grammar";
 import { C, DISPLAY, HOST, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 import { LanguageSelector } from "./LanguageSelector";
-import { Chip, Label, LILAC, Lit, Section, SKY, SpeakButton, useSpeaker, type Speaker } from "./studio-bits";
+import { Chip, Label, LILAC, Lit, SaveButton, Section, SKY, SpeakButton, useSpeaker, type Speaker } from "./studio-bits";
+import { ReviewRoom } from "./ReviewRoom";
+import { countFor } from "@/lib/review";
 import { ScenesRoom, ShapesRoom, type Practice } from "./StudioRooms";
 
 // Sentence Studio. Text-first learning next to the voice calls. Seven rooms on
@@ -87,8 +89,9 @@ const DEFAULT_OBJECT: Record<string, string | null> = {
   wait: null, sit: null, walk: "home", cook: "rice", help: null, call: null,
 };
 
-type Room = "check" | "build" | "shapes" | "frames" | "scenes" | "commands" | "flip" | "rules" | "decks";
+type Room = "review" | "check" | "build" | "shapes" | "frames" | "scenes" | "commands" | "flip" | "rules" | "decks";
 const ROOMS: { id: Room; label: string }[] = [
+  { id: "review", label: "Review" },
   { id: "check", label: "Check" },
   { id: "build", label: "Build" },
   { id: "shapes", label: "Shapes" },
@@ -225,9 +228,9 @@ function WordRow({ word, meaning, role }: { word: string; meaning: string; role?
 }
 
 // ............................................................ screen
-type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void };
+type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null };
 
-export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
+export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) {
   const host = HOST[lang];
   const ln = LANG_NAME[lang];
   const scroller = useRef<HTMLDivElement | null>(null);
@@ -255,7 +258,23 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
     setFixes(readFixes());
   }, []);
   const onHeard = useCallback(() => setHeard(bump("maatu-studio-heard")), []);
-  const speaker = useSpeaker(lang, onHeard);
+  // Slow voice for learners, remembered per device.
+  const [slow, setSlowState] = useState(false);
+  useEffect(() => {
+    setSlowState(window.localStorage.getItem("maatu-studio-slow") === "true");
+  }, []);
+  const setSlow = (value: boolean) => {
+    setSlowState(value);
+    window.localStorage.setItem("maatu-studio-slow", String(value));
+  };
+  const speaker = useSpeaker(lang, onHeard, slow ? 0.72 : 0.9);
+  // Review bookkeeping: bumps whenever something is saved or graded.
+  const [reviewVersion, setReviewVersion] = useState(0);
+  const [reviewCounts, setReviewCounts] = useState({ saved: 0, due: 0 });
+  useEffect(() => {
+    setReviewCounts(countFor(lang));
+  }, [lang, reviewVersion]);
+  const touchReview = useCallback(() => setReviewVersion((v) => v + 1), []);
 
   // Gender is the speaker's own; it changes Hindi forms and is told to the
   // checker for every language.
@@ -320,6 +339,16 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
     setPractice(null);
   }, [lang]);
 
+  // A line handed over from the post-call debrief: check it straight away.
+  const seededRef = useRef(0);
+  useEffect(() => {
+    if (!seed || seed.nonce === seededRef.current) return;
+    seededRef.current = seed.nonce;
+    setPractice(null);
+    setText(seed.text);
+    void runCheck(seed.text);
+  }, [seed]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const startPractice = useCallback((p: Practice) => {
     setPractice(p);
     setShowPractice(false);
@@ -368,6 +397,8 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
   // Commands, decks, rules.
   const [polite, setPolite] = useState(true);
   const [deck, setDeck] = useState<DeckId>("music");
+  const [deckTest, setDeckTest] = useState(false);
+  const [deckShown, setDeckShown] = useState<Set<number>>(new Set());
   const [openRule, setOpenRule] = useState<number | null>(0);
   const openRuleFor = (type: string) => {
     setOpenRule(RULE_FOR[lang][type] ?? 0);
@@ -463,6 +494,9 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
                 style={{ background: on ? "rgba(255,179,92,0.14)" : "transparent", color: on ? C.sodium : C.muted, outlineColor: C.sodium, transition: "background 140ms ease" }}
               >
                 {r.label}
+                {r.id === "review" && reviewCounts.due > 0 && (
+                  <span className="ml-1.5 rounded-full px-1.5 text-[10px]" style={{ background: C.tube, color: C.ink }}>{reviewCounts.due}</span>
+                )}
               </button>
             );
           })}
@@ -481,8 +515,17 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
                 </Chip>
               ))}
             </div>
+            <div className="mt-3">
+              <Label>VOICE</Label>
+              <div className="grid grid-cols-2 gap-2" role="group" aria-label="Voice speed">
+                <Chip on={!slow} onClick={() => setSlow(false)} tone="sky">natural</Chip>
+                <Chip on={slow} onClick={() => setSlow(true)} tone="sky">slower</Chip>
+              </div>
+            </div>
           </div>
         </div>
+
+        <ReviewRoom lang={lang} speaker={speaker} anchor={anchor} version={reviewVersion} onChange={touchReview} />
 
         {/* ................................................. check */}
         <Section id="check" anchor={anchor} kicker="CHECK" title="Say it your way" blurb={`English, ${ln}, or a mix. Leave a ___ where you are hunting for a word. ${host.name} fixes one thing at a time and tells you the rule.`} tone="tube">
@@ -587,7 +630,10 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
                 <span className="text-[11px] font-bold" style={{ color: check.ok ? C.tube : C.sodium, letterSpacing: 1 }}>
                   {check.heard_as === "english" ? `IN ${ln.toUpperCase()}` : check.ok ? "THAT WORKS" : `${check.corrections.length} THING${check.corrections.length === 1 ? "" : "S"} TO FIX`}
                 </span>
-                <SpeakButton text={check.target} speaker={speaker} />
+                <div className="flex gap-2">
+                  <SaveButton lang={lang} en={check.english} target={check.target} onChange={touchReview} />
+                  <SpeakButton text={check.target} speaker={speaker} />
+                </div>
               </div>
               <div className="mt-2 text-[24px] font-semibold leading-snug" style={{ color: C.milk, fontFamily: MONO }}>
                 {check.target}
@@ -672,6 +718,9 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
           {built && (
             <div className="mt-4 rounded-[18px] p-5" style={{ background: "linear-gradient(135deg,rgba(255,179,92,0.13),rgba(232,80,58,0.04))", border: "1px solid rgba(255,179,92,0.32)" }}>
               <Stage built={built} speaker={speaker} />
+              <div className="mt-2">
+                <SaveButton lang={lang} en={built.english} target={built.sentence} onChange={touchReview} size="sm" />
+              </div>
               <div className="mt-4">
                 {built.pieces.map((p, i) => (
                   <WordRow key={i} word={p.word} meaning={p.meaning} role={p.role} />
@@ -778,7 +827,10 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
               </div>
               <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
                 <span className="text-[14px]" style={{ color: C.muted }}>{filled.english}</span>
-                <SpeakButton text={filled.sentence} speaker={speaker} size="lg" />
+                <div className="flex gap-2">
+                  <SaveButton lang={lang} en={filled.english} target={filled.sentence} onChange={touchReview} />
+                  <SpeakButton text={filled.sentence} speaker={speaker} size="lg" />
+                </div>
               </div>
             </div>
             <div className="mt-3 text-[12.5px] leading-relaxed" style={{ color: "rgba(245,194,255,0.85)" }}>
@@ -811,7 +863,7 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
           </div>
         </Section>
 
-        <ScenesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} onPractise={startPractice} />
+        <ScenesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} onPractise={startPractice} onSaved={touchReview} />
 
         {/* ................................................. commands */}
         <Section id="commands" anchor={anchor} kicker="COMMANDS" title="What a teacher says" blurb={COMMAND_NOTE[lang]} tone="sky">
@@ -923,8 +975,13 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
               </Chip>
             ))}
           </div>
-          <div className="mt-1.5 text-[12px]" style={{ color: C.faint }}>
-            {DECK_ORDER.find((d) => d.id === deck)?.blurb}
+          <div className="mt-1.5 flex flex-wrap items-center justify-between gap-2">
+            <span className="text-[12px]" style={{ color: C.faint }}>
+              {DECK_ORDER.find((d) => d.id === deck)?.blurb}
+            </span>
+            <Chip on={deckTest} onClick={() => { setDeckTest(!deckTest); setDeckShown(new Set()); }} tone="tube" small>
+              {deckTest ? "testing: tap to reveal" : "test me"}
+            </Chip>
           </div>
           <div className="mt-3 grid gap-x-4 sm:grid-cols-2">
             {DECKS[deck].map((row, i) => {
@@ -932,19 +989,27 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
               const speakable = word.replace(/\s*\(.*?\)\s*/g, " ").replace(/^-|\s-/g, " ").trim();
               const canSpeak = speakable && speakable !== "same words";
               const active = speaker.playing === speakable;
+              const hidden = deckTest && !deckShown.has(i);
               return (
                 <button
                   key={i}
                   type="button"
-                  onClick={() => (canSpeak ? void speaker.speak(speakable) : undefined)}
+                  onClick={() => {
+                    if (hidden) setDeckShown((prev) => new Set(prev).add(i));
+                    else if (canSpeak) void speaker.speak(speakable);
+                  }}
                   className="py-2.5 text-left focus-visible:outline focus-visible:outline-2"
                   style={{ borderTop: `1px solid ${LINE_SOFT}`, outlineColor: C.tube }}
                 >
                   <span className="flex items-baseline justify-between gap-3">
                     <span className="text-[12.5px]" style={{ color: C.muted }}>{row.en}</span>
-                    <span className="text-right text-[15px] font-semibold" style={{ color: active ? C.sodium : C.milk, fontFamily: MONO }}>{word}</span>
+                    {hidden ? (
+                      <span className="rounded-[7px] px-2 py-0.5 text-[11px] font-semibold" style={{ background: "rgba(191,239,219,0.10)", color: C.tube }}>tap to reveal</span>
+                    ) : (
+                      <span className="text-right text-[15px] font-semibold" style={{ color: active ? C.sodium : C.milk, fontFamily: MONO }}>{word}</span>
+                    )}
                   </span>
-                  {row.trick && (
+                  {row.trick && !hidden && (
                     <span className="mt-0.5 block text-[11.5px] leading-snug" style={{ color: C.faint }}>
                       {row.trick}
                     </span>

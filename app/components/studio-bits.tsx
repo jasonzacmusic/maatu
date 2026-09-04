@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitEnding } from "@/lib/grammar";
+import { isSaved, toggleSaved } from "@/lib/review";
 import { C, DISPLAY, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 
 // Shared pieces of the Sentence Studio: the voice hook, the hear button, chips,
@@ -19,7 +20,7 @@ function toneRgb(tone: Tone) {
 }
 
 // ............................................................ voice
-export function useSpeaker(lang: Lang, onHeard: () => void) {
+export function useSpeaker(lang: Lang, onHeard: () => void, pace = 0.9) {
   const cache = useRef<Map<string, string>>(new Map());
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<string | null>(null);
@@ -31,12 +32,12 @@ export function useSpeaker(lang: Lang, onHeard: () => void) {
       const clean = text.trim();
       if (!clean) return;
       setError(null);
-      const key = `${lang}:${clean}`;
+      const key = `${lang}:${pace}:${clean}`;
       let src = cache.current.get(key);
       if (!src) {
         setLoading(clean);
         try {
-          const res = await fetch("/api/say", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: clean, lang }) });
+          const res = await fetch("/api/say", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: clean, lang, pace }) });
           const data = await res.json();
           if (!res.ok || !data.audio) throw new Error(data.error ?? "No voice");
           src = `data:${data.mime ?? "audio/wav"};base64,${data.audio}`;
@@ -52,21 +53,85 @@ export function useSpeaker(lang: Lang, onHeard: () => void) {
       const el = new Audio(src);
       audio.current = el;
       setPlaying(clean);
-      el.onended = () => setPlaying(null);
-      el.onerror = () => setPlaying(null);
+      const finished = new Promise<void>((resolve) => {
+        el.onended = () => {
+          setPlaying(null);
+          resolve();
+        };
+        el.onerror = () => {
+          setPlaying(null);
+          resolve();
+        };
+        el.onpause = () => resolve();
+      });
       try {
         await el.play();
         onHeard();
       } catch {
         setPlaying(null);
         setError("Tap again to allow sound.");
+        return;
       }
+      return finished;
     },
-    [lang, onHeard],
+    [lang, onHeard, pace],
   );
 
+  const stop = useCallback(() => {
+    audio.current?.pause();
+    setPlaying(null);
+  }, []);
+
   useEffect(() => () => audio.current?.pause(), []);
-  return { speak, playing, loading, error };
+  return { speak, stop, playing, loading, error };
+}
+
+// Bookmark: saves a line for spaced review, or removes it.
+export function SaveButton({ lang, en, target, onChange, size = "md" }: { lang: Lang; en: string; target: string; onChange?: () => void; size?: "sm" | "md" }) {
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    setSaved(isSaved(lang, target));
+  }, [lang, target]);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        setSaved(toggleSaved(lang, en, target));
+        onChange?.();
+      }}
+      aria-pressed={saved}
+      aria-label={saved ? `Remove from review: ${target}` : `Save for review: ${target}`}
+      className={`inline-flex flex-none items-center gap-1.5 rounded-full font-semibold focus-visible:outline focus-visible:outline-2 ${size === "sm" ? "px-2.5 py-1.5 text-[12px]" : "px-3.5 py-2 text-[13px]"}`}
+      style={{ background: saved ? C.tube : "rgba(191,239,219,0.10)", color: saved ? C.ink : C.tube, border: "1px solid rgba(191,239,219,0.32)", outlineColor: C.milk, transition: "background 160ms ease, color 160ms ease" }}
+    >
+      <span aria-hidden="true">{saved ? "✓" : "+"}</span>
+      {saved ? "Saved" : "Save"}
+    </button>
+  );
+}
+
+// Copy a line as English plus the target, ready to paste into WhatsApp.
+export function CopyButton({ en, target }: { en: string; target: string }) {
+  const [done, setDone] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(`${en}\n${target}`);
+          setDone(true);
+          setTimeout(() => setDone(false), 1400);
+        } catch {
+          // clipboard blocked; nothing to do
+        }
+      }}
+      aria-label={`Copy: ${target}`}
+      className="text-[11.5px] font-semibold focus-visible:outline focus-visible:outline-2"
+      style={{ color: done ? C.tube : C.faint, outlineColor: C.tube }}
+    >
+      {done ? "Copied" : "Copy"}
+    </button>
+  );
 }
 export type Speaker = ReturnType<typeof useSpeaker>;
 
