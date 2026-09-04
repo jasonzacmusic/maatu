@@ -27,7 +27,7 @@ export type CheckResult = {
   tip: string;
 };
 
-function prompt(lang: Lang, text: string, gender: "m" | "f"): string {
+function prompt(lang: Lang, text: string, gender: "m" | "f", expected: string | null): string {
   const ln = LANG_NAME[lang];
   const city = HOST[lang].place.split(",").pop()?.trim() ?? "the city";
   return `You are the Maatu grammar checker for SPOKEN ${ln}, the way people talk in ${city} today.
@@ -49,6 +49,7 @@ Hard rules:
 REFERENCE (vetted, ${ln}):
 ${referenceText(lang)}
 
+${expected ? `THE LEARNER WAS ASKED TO SAY THIS EXACT LINE: ${JSON.stringify(expected)}. Judge the attempt against it: if the meaning is right and most words match, ok is true and target is that line. Hyphens, commas, full stops, capitals, spelling variants, and the order of two separate sentences never count as differences. Tag only real differences that change meaning or grammar, and mention any missing word by type missing-word.\n` : ""}
 LEARNER LINE: ${JSON.stringify(text)}
 
 Return STRICT JSON only, no markdown:
@@ -99,10 +100,11 @@ export async function POST(request: Request) {
   const text = typeof body.text === "string" ? body.text.replace(/\u2014/gu, ",").trim().slice(0, 300) : "";
   const lang: Lang = LANGS.includes(body.lang) ? body.lang : "kn";
   const gender: "m" | "f" = body.gender === "f" ? "f" : "m";
+  const expected = typeof body.expected === "string" && body.expected.trim() ? body.expected.trim().slice(0, 200) : null;
   if (!text) return NextResponse.json({ error: "Type or say one sentence first." }, { status: 400 });
   if (!GEMINI_KEY) return NextResponse.json({ error: "The checker is not configured." }, { status: 500 });
 
-  const raw = await callGemini(prompt(lang, text, gender));
+  const raw = await callGemini(prompt(lang, text, gender, expected));
   if (!raw) return NextResponse.json({ error: "The checker did not answer. Try again." }, { status: 502 });
   const code = CODE[lang];
   const correctionsIn = Array.isArray(raw.corrections) ? (raw.corrections as Correction[]).slice(0, 3) : [];

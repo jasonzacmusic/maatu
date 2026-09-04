@@ -1,0 +1,1825 @@
+{
+ "note": "Sentence Studio scenes, number blocks and sound pairs. Colloquial spoken forms, romanized, no native script, no em dashes. who: you = what you say, them = what you will hear. hiF = the same line spoken by a woman in Hindi.",
+ "scenes": [
+  {
+   "id": "auto",
+   "group": "street",
+   "title": "Auto rickshaw",
+   "place": "Jayanagar, Bengaluru",
+   "blurb": "Flagging one down, the meter argument, directions, paying.",
+   "beats": [
+    {
+     "beat": "Stopping one",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Will you come to Jayanagar?",
+       "kn": "Jayanagar barteera?",
+       "hi": "Jayanagar chaloge?",
+       "ta": "Jayanagar vareengalaa?"
+      },
+      {
+       "who": "them",
+       "en": "Where do you want to go?",
+       "kn": "elli hogbeku?",
+       "hi": "kahaan jaana hai?",
+       "ta": "enga poganum?"
+      },
+      {
+       "who": "you",
+       "en": "Please put the meter.",
+       "kn": "meter haaki.",
+       "hi": "meter se chaliye.",
+       "ta": "meter podunga."
+      },
+      {
+       "who": "them",
+       "en": "Meter plus twenty.",
+       "kn": "meter mele ippattu.",
+       "hi": "meter se bees zyada.",
+       "ta": "meter mela irubadhu."
+      },
+      {
+       "who": "you",
+       "en": "No, meter only.",
+       "kn": "illa, meter maatra.",
+       "hi": "nahin, meter se hi.",
+       "ta": "illa, meter mattum."
+      },
+      {
+       "who": "you",
+       "en": "How much to Indiranagar?",
+       "kn": "Indiranagar-ge eshtu?",
+       "hi": "Indiranagar ka kitna?",
+       "ta": "Indiranagar-ku evlo?"
+      },
+      {
+       "who": "them",
+       "en": "One hundred and fifty.",
+       "kn": "nooru aivattu.",
+       "hi": "dedh sau.",
+       "ta": "nooti ambadhu."
+      },
+      {
+       "who": "you",
+       "en": "That is too much. Make it a hundred.",
+       "kn": "jaasti. nooru maadi.",
+       "hi": "bahut zyada hai. sau kar do.",
+       "ta": "romba jaasti. nooru pannunga."
+      },
+      {
+       "who": "them",
+       "en": "Okay, get in.",
+       "kn": "sari, banni.",
+       "hi": "theek hai, baitho.",
+       "ta": "sari, ukkaarunga."
+      }
+     ]
+    },
+    {
+     "beat": "On the way",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Go straight.",
+       "kn": "nera hogi.",
+       "hi": "seedha chaliye.",
+       "ta": "neraa ponga."
+      },
+      {
+       "who": "you",
+       "en": "Turn left.",
+       "kn": "edakke tirugi.",
+       "hi": "baayein mudiye.",
+       "ta": "idadhu pakkam thirumbunga."
+      },
+      {
+       "who": "you",
+       "en": "Turn right.",
+       "kn": "balakke tirugi.",
+       "hi": "daayein mudiye.",
+       "ta": "valadhu pakkam thirumbunga."
+      },
+      {
+       "who": "you",
+       "en": "A little slowly, please.",
+       "kn": "swalpa nidhaana.",
+       "hi": "thoda dheere.",
+       "ta": "konjam medhuva."
+      },
+      {
+       "who": "them",
+       "en": "Which side?",
+       "kn": "yaava side?",
+       "hi": "kaun si taraf?",
+       "ta": "endha pakkam?"
+      },
+      {
+       "who": "you",
+       "en": "Near the signal.",
+       "kn": "signal hatra.",
+       "hi": "signal ke paas.",
+       "ta": "signal pakkathula."
+      },
+      {
+       "who": "them",
+       "en": "Is it here?",
+       "kn": "illena?",
+       "hi": "yahin hai?",
+       "ta": "ingayaa?"
+      },
+      {
+       "who": "you",
+       "en": "Stop here.",
+       "kn": "illi nilsi.",
+       "hi": "yahaan rok dijiye.",
+       "ta": "inga niruthunga."
+      }
+     ]
+    },
+    {
+     "beat": "Paying",
+     "lines": [
+      {
+       "who": "you",
+       "en": "How much?",
+       "kn": "eshtu?",
+       "hi": "kitna hua?",
+       "ta": "evlo?"
+      },
+      {
+       "who": "them",
+       "en": "Eighty rupees.",
+       "kn": "embattu rupaayi.",
+       "hi": "assi rupaye.",
+       "ta": "embadhu roobaa."
+      },
+      {
+       "who": "you",
+       "en": "Do you have change?",
+       "kn": "chillare ideyaa?",
+       "hi": "khulla hai?",
+       "ta": "change irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "Do you take Google Pay?",
+       "kn": "Google Pay ideyaa?",
+       "hi": "Google Pay hai?",
+       "ta": "Google Pay irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "Keep the change.",
+       "kn": "chillare itkolli.",
+       "hi": "khulla rakh lo.",
+       "ta": "change vechukkonga."
+      },
+      {
+       "who": "you",
+       "en": "Thanks, brother.",
+       "kn": "thanks anna.",
+       "hi": "shukriya bhaiya.",
+       "ta": "thanks anna."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cab",
+   "group": "street",
+   "title": "Cab driver",
+   "place": "Ola or Uber pickup",
+   "blurb": "OTP, finding each other, small talk, AC, the flyover, the rating.",
+   "beats": [
+    {
+     "beat": "Pickup",
+     "lines": [
+      {
+       "who": "them",
+       "en": "Are you Jason?",
+       "kn": "neevu Jason-aa?",
+       "hi": "aap Jason ho?",
+       "ta": "neenga Jason-aa?"
+      },
+      {
+       "who": "you",
+       "en": "Yes, that is me.",
+       "kn": "howdu, naane.",
+       "hi": "haan, main hi hoon.",
+       "ta": "aama, naan dhaan."
+      },
+      {
+       "who": "them",
+       "en": "Tell me the OTP.",
+       "kn": "OTP heli.",
+       "hi": "OTP bataiye.",
+       "ta": "OTP sollunga."
+      },
+      {
+       "who": "you",
+       "en": "Four five six seven.",
+       "kn": "naalku aidu aaru elu.",
+       "hi": "chaar paanch chhe saat.",
+       "ta": "naalu anju aaru ezhu."
+      },
+      {
+       "who": "them",
+       "en": "Where are you? I am at the gate.",
+       "kn": "elli iddira? naanu gate hatra iddini.",
+       "hi": "aap kahaan ho? main gate pe hoon.",
+       "ta": "enga irukkeenga? naan gate-la irukken."
+      },
+      {
+       "who": "you",
+       "en": "I am coming, two minutes.",
+       "kn": "bartini, eradu nimisha.",
+       "hi": "aa raha hoon, do minute.",
+       "ta": "varen, rendu nimisham.",
+       "hiF": "aa rahi hoon, do minute."
+      },
+      {
+       "who": "you",
+       "en": "Please open the boot.",
+       "kn": "dicky tegiri.",
+       "hi": "dicky kholiye.",
+       "ta": "dicky thorangunga."
+      }
+     ]
+    },
+    {
+     "beat": "Small talk",
+     "lines": [
+      {
+       "who": "them",
+       "en": "Where are you from, sir?",
+       "kn": "neevu yaava ooru sir?",
+       "hi": "aap kahaan se ho sir?",
+       "ta": "neenga endha ooru sir?"
+      },
+      {
+       "who": "you",
+       "en": "I am from Bangalore. I teach music.",
+       "kn": "naanu Bangalore-inda. naanu music teacher.",
+       "hi": "main Bangalore se hoon. main music sikhaata hoon.",
+       "ta": "naan Bangalore. naan music teacher.",
+       "hiF": "main Bangalore se hoon. main music sikhaati hoon."
+      },
+      {
+       "who": "them",
+       "en": "How many years in Bangalore?",
+       "kn": "Bangalore-alli eshtu varsha?",
+       "hi": "Bangalore mein kitne saal?",
+       "ta": "Bangalore-la ethana varusham?"
+      },
+      {
+       "who": "you",
+       "en": "Ten years.",
+       "kn": "hattu varsha.",
+       "hi": "das saal.",
+       "ta": "patthu varusham."
+      },
+      {
+       "who": "them",
+       "en": "Do you know Kannada?",
+       "kn": "Kannada gottaa?",
+       "hi": "Kannada aati hai?",
+       "ta": "Kannada theriyumaa?",
+       "note": "Swap the language name; the shape stays."
+      },
+      {
+       "who": "you",
+       "en": "A little. I am learning.",
+       "kn": "swalpa. kalitaa iddini.",
+       "hi": "thodi. seekh raha hoon.",
+       "ta": "konjam. kathukittu irukken.",
+       "hiF": "thodi. seekh rahi hoon."
+      },
+      {
+       "who": "you",
+       "en": "Please put the AC on.",
+       "kn": "AC haaki.",
+       "hi": "AC chala dijiye.",
+       "ta": "AC podunga."
+      },
+      {
+       "who": "you",
+       "en": "A little less music, please.",
+       "kn": "music swalpa kammi maadi.",
+       "hi": "music thoda kam kijiye.",
+       "ta": "music konjam kammi pannunga."
+      }
+     ]
+    },
+    {
+     "beat": "The road",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Take the flyover.",
+       "kn": "flyover mele hogi.",
+       "hi": "flyover se chaliye.",
+       "ta": "flyover mela ponga."
+      },
+      {
+       "who": "you",
+       "en": "There is traffic. Take the other road.",
+       "kn": "traffic ide. bere road-alli hogi.",
+       "hi": "traffic hai. doosre raaste se chaliye.",
+       "ta": "traffic irukku. vera road-la ponga."
+      },
+      {
+       "who": "you",
+       "en": "Drop me at the next left.",
+       "kn": "mundina left-alli bidi.",
+       "hi": "agle left pe chhod dijiye.",
+       "ta": "adutha left-la vidunga."
+      },
+      {
+       "who": "you",
+       "en": "I paid on the app.",
+       "kn": "app-alli pay maadide.",
+       "hi": "maine app pe pay kiya.",
+       "ta": "app-la pay pannitten."
+      },
+      {
+       "who": "them",
+       "en": "Please give a rating, sir.",
+       "kn": "rating kodi sir.",
+       "hi": "rating de dijiye sir.",
+       "ta": "rating kudunga sir."
+      },
+      {
+       "who": "you",
+       "en": "Sure. Drive safely.",
+       "kn": "khandita. hushaaragi hogi.",
+       "hi": "zaroor. dhyaan se chalaana.",
+       "ta": "kandippa. paathu ponga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cafe",
+   "group": "food",
+   "title": "Cafe, darshini",
+   "place": "A dosa and coffee place",
+   "blurb": "Ordering, spice level, sambar, the bill.",
+   "beats": [
+    {
+     "beat": "Ordering",
+     "lines": [
+      {
+       "who": "them",
+       "en": "What would you like?",
+       "kn": "enu beku?",
+       "hi": "kya loge?",
+       "ta": "enna venum?"
+      },
+      {
+       "who": "you",
+       "en": "One masala dosa and one filter coffee.",
+       "kn": "ondu masala dose, ondu filter coffee.",
+       "hi": "ek masala dosa aur ek filter coffee.",
+       "ta": "oru masala dosai, oru filter coffee."
+      },
+      {
+       "who": "you",
+       "en": "What is today's special?",
+       "kn": "ivattu special enu?",
+       "hi": "aaj ka special kya hai?",
+       "ta": "innikki special enna?"
+      },
+      {
+       "who": "them",
+       "en": "Bisi bele bath is good today.",
+       "kn": "ivattu bisi bele bath chennaagide.",
+       "hi": "aaj bisi bele bath achha hai.",
+       "ta": "innikki bisi bele bath nalla irukku."
+      },
+      {
+       "who": "you",
+       "en": "Is it spicy?",
+       "kn": "khaara ideyaa?",
+       "hi": "teekha hai?",
+       "ta": "kaaram-aa?"
+      },
+      {
+       "who": "you",
+       "en": "Less spicy, please.",
+       "kn": "khaara kammi.",
+       "hi": "kam teekha.",
+       "ta": "kaaram kammi."
+      },
+      {
+       "who": "you",
+       "en": "Without onion.",
+       "kn": "eerulli beda.",
+       "hi": "bina pyaaz.",
+       "ta": "vengaayam vendaam."
+      },
+      {
+       "who": "you",
+       "en": "Is this vegetarian?",
+       "kn": "idu veg-aa?",
+       "hi": "yeh veg hai?",
+       "ta": "idhu veg-aa?"
+      }
+     ]
+    },
+    {
+     "beat": "At the table",
+     "lines": [
+      {
+       "who": "you",
+       "en": "A little more sambar, please.",
+       "kn": "innu swalpa sambar kodi.",
+       "hi": "thoda aur sambar dijiye.",
+       "ta": "innum konjam sambar kudunga."
+      },
+      {
+       "who": "you",
+       "en": "Water, please.",
+       "kn": "neeru kodi.",
+       "hi": "paani dijiye.",
+       "ta": "thanni kudunga."
+      },
+      {
+       "who": "them",
+       "en": "Anything else?",
+       "kn": "innu enaadru beka?",
+       "hi": "aur kuchh?",
+       "ta": "vera edhaavadhu venumaa?"
+      },
+      {
+       "who": "you",
+       "en": "One more coffee.",
+       "kn": "innondu coffee.",
+       "hi": "ek aur coffee.",
+       "ta": "innoru coffee."
+      },
+      {
+       "who": "you",
+       "en": "It was very tasty.",
+       "kn": "tumba ruchi-yaagitthu.",
+       "hi": "bahut tasty tha.",
+       "ta": "romba tasty-aa irundhuchu."
+      }
+     ]
+    },
+    {
+     "beat": "Paying",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Bill, please.",
+       "kn": "bill kodi.",
+       "hi": "bill dijiye.",
+       "ta": "bill kudunga."
+      },
+      {
+       "who": "them",
+       "en": "Cash or card?",
+       "kn": "cash-aa card-aa?",
+       "hi": "cash ya card?",
+       "ta": "cash-aa card-aa?"
+      },
+      {
+       "who": "you",
+       "en": "UPI.",
+       "kn": "UPI.",
+       "hi": "UPI.",
+       "ta": "UPI."
+      },
+      {
+       "who": "you",
+       "en": "Parcel one dosa, please.",
+       "kn": "ondu dose parcel maadi.",
+       "hi": "ek dosa parcel kar dijiye.",
+       "ta": "oru dosai parcel pannunga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "biryani",
+   "group": "food",
+   "title": "Biryani shop",
+   "place": "Counter order, parcel",
+   "blurb": "Half or full, spice, boneless, how long, where to pay.",
+   "beats": [
+    {
+     "beat": "Ordering",
+     "lines": [
+      {
+       "who": "you",
+       "en": "One chicken biryani, one mutton biryani.",
+       "kn": "ondu chicken biryani, ondu mutton biryani.",
+       "hi": "ek chicken biryani, ek mutton biryani.",
+       "ta": "oru chicken biryani, oru mutton biryani."
+      },
+      {
+       "who": "them",
+       "en": "Half or full?",
+       "kn": "half-aa full-aa?",
+       "hi": "half ya full?",
+       "ta": "half-aa full-aa?"
+      },
+      {
+       "who": "you",
+       "en": "Full, with extra raita.",
+       "kn": "full, extra raita jote.",
+       "hi": "full, extra raita ke saath.",
+       "ta": "full, extra raita kooda."
+      },
+      {
+       "who": "you",
+       "en": "How much is one plate?",
+       "kn": "ondu plate eshtu?",
+       "hi": "ek plate kitne ka?",
+       "ta": "oru plate evlo?"
+      },
+      {
+       "who": "them",
+       "en": "Two hundred and twenty.",
+       "kn": "innooru ippattu.",
+       "hi": "do sau bees.",
+       "ta": "irunooru irubadhu."
+      },
+      {
+       "who": "you",
+       "en": "Is it very spicy?",
+       "kn": "tumba khaara ideyaa?",
+       "hi": "bahut teekha hai?",
+       "ta": "romba kaaram-aa?"
+      },
+      {
+       "who": "them",
+       "en": "Medium spicy.",
+       "kn": "medium khaara.",
+       "hi": "medium teekha.",
+       "ta": "medium kaaram."
+      },
+      {
+       "who": "you",
+       "en": "Boneless, please.",
+       "kn": "boneless kodi.",
+       "hi": "boneless dijiye.",
+       "ta": "boneless kudunga."
+      },
+      {
+       "who": "you",
+       "en": "Add one Coke also.",
+       "kn": "ondu Coke koodaa haaki.",
+       "hi": "ek Coke bhi daal do.",
+       "ta": "oru Coke-um podunga."
+      }
+     ]
+    },
+    {
+     "beat": "Waiting and paying",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Parcel, for two people.",
+       "kn": "parcel, eradu jana-ge.",
+       "hi": "parcel, do logon ke liye.",
+       "ta": "parcel, rendu peruku."
+      },
+      {
+       "who": "you",
+       "en": "How long will it take?",
+       "kn": "eshtu hottu aagutte?",
+       "hi": "kitna time lagega?",
+       "ta": "evlo neram aagum?"
+      },
+      {
+       "who": "them",
+       "en": "Ten minutes. Please sit.",
+       "kn": "hattu nimisha. kootkolli.",
+       "hi": "das minute. baithiye.",
+       "ta": "patthu nimisham. ukkaarunga."
+      },
+      {
+       "who": "you",
+       "en": "Where do I pay?",
+       "kn": "elli pay maadbeku?",
+       "hi": "payment kahaan karna hai?",
+       "ta": "enga pay pannanum?"
+      },
+      {
+       "who": "them",
+       "en": "At the counter.",
+       "kn": "counter-alli.",
+       "hi": "counter pe.",
+       "ta": "counter-la."
+      },
+      {
+       "who": "you",
+       "en": "Thank you, it smells great.",
+       "kn": "thanks, vaasane chennaagide.",
+       "hi": "shukriya, khushboo bahut achhi hai.",
+       "ta": "thanks, vaasanai nalla irukku."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "kirana",
+   "group": "shops",
+   "title": "Kirana store",
+   "place": "The corner provision shop",
+   "blurb": "Do you have, one kilo, a bag, that is all.",
+   "beats": [
+    {
+     "beat": "Buying",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Do you have milk?",
+       "kn": "haalu ideyaa?",
+       "hi": "doodh hai?",
+       "ta": "paal irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "One kilo rice, half a kilo sugar.",
+       "kn": "ondu kilo akki, ardha kilo sakkare.",
+       "hi": "ek kilo chaawal, aadha kilo cheeni.",
+       "ta": "oru kilo arisi, arai kilo sakkarai."
+      },
+      {
+       "who": "you",
+       "en": "How much is this?",
+       "kn": "idu eshtu?",
+       "hi": "yeh kitne ka hai?",
+       "ta": "idhu evlo?"
+      },
+      {
+       "who": "them",
+       "en": "Anything else?",
+       "kn": "innu enaadru beka?",
+       "hi": "aur kuchh?",
+       "ta": "vera edhaavadhu venumaa?"
+      },
+      {
+       "who": "you",
+       "en": "That is all.",
+       "kn": "ashte.",
+       "hi": "bas itna hi.",
+       "ta": "avlodhaan."
+      },
+      {
+       "who": "you",
+       "en": "Give me a bag, please.",
+       "kn": "cover kodi.",
+       "hi": "thaili dijiye.",
+       "ta": "cover kudunga."
+      },
+      {
+       "who": "you",
+       "en": "I will pay by UPI.",
+       "kn": "UPI-alli kodtini.",
+       "hi": "UPI se de doonga.",
+       "ta": "UPI-la kudukkuren.",
+       "hiF": "UPI se de doongi."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "market",
+   "group": "shops",
+   "title": "Vegetable market",
+   "place": "Gandhi Bazaar",
+   "blurb": "Price per kilo, fresh, reduce a little.",
+   "beats": [
+    {
+     "beat": "Bargaining",
+     "lines": [
+      {
+       "who": "you",
+       "en": "How much for a kilo of tomatoes?",
+       "kn": "tomato kilo eshtu?",
+       "hi": "tamaatar kilo kitna?",
+       "ta": "thakkaali kilo evlo?"
+      },
+      {
+       "who": "them",
+       "en": "Forty rupees.",
+       "kn": "nalavattu.",
+       "hi": "chaalees.",
+       "ta": "naapadhu."
+      },
+      {
+       "who": "you",
+       "en": "Are these fresh?",
+       "kn": "fresh ideyaa?",
+       "hi": "taaze hain?",
+       "ta": "fresh-aa?"
+      },
+      {
+       "who": "them",
+       "en": "Came this morning.",
+       "kn": "ivattu belagge bantu.",
+       "hi": "aaj subah aaye.",
+       "ta": "innikki kaalaila vandhuchu."
+      },
+      {
+       "who": "you",
+       "en": "Give me half a kilo.",
+       "kn": "ardha kilo kodi.",
+       "hi": "aadha kilo dijiye.",
+       "ta": "arai kilo kudunga."
+      },
+      {
+       "who": "you",
+       "en": "Reduce a little.",
+       "kn": "swalpa kammi maadi.",
+       "hi": "thoda kam kijiye.",
+       "ta": "konjam kammi pannunga."
+      },
+      {
+       "who": "them",
+       "en": "Fixed price, sir.",
+       "kn": "fixed rate sir.",
+       "hi": "fixed rate hai sir.",
+       "ta": "fixed rate sir."
+      },
+      {
+       "who": "you",
+       "en": "Okay, give me one kilo then.",
+       "kn": "sari, ondu kilo kodi.",
+       "hi": "theek hai, ek kilo dijiye.",
+       "ta": "sari, oru kilo kudunga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "delivery",
+   "group": "home",
+   "title": "Delivery at the gate",
+   "place": "The Swiggy call",
+   "blurb": "Where is the house, the OTP, leave it at the gate.",
+   "beats": [
+    {
+     "beat": "The call",
+     "lines": [
+      {
+       "who": "them",
+       "en": "Sir, your order. Where is the house?",
+       "kn": "sir, order bandide. mane elli?",
+       "hi": "sir, order aaya hai. ghar kahaan hai?",
+       "ta": "sir, order vandhuchu. veedu enga?"
+      },
+      {
+       "who": "you",
+       "en": "Second floor. Come up.",
+       "kn": "eradane floor. mele banni.",
+       "hi": "doosri manzil. upar aa jaaiye.",
+       "ta": "rendaavadhu floor. mela vaanga."
+      },
+      {
+       "who": "you",
+       "en": "Leave it at the gate.",
+       "kn": "gate hatra idi.",
+       "hi": "gate pe rakh dijiye.",
+       "ta": "gate-la vechudunga."
+      },
+      {
+       "who": "them",
+       "en": "Please tell me the OTP.",
+       "kn": "OTP heli.",
+       "hi": "OTP bataiye.",
+       "ta": "OTP sollunga."
+      },
+      {
+       "who": "you",
+       "en": "One minute, I am coming down.",
+       "kn": "ondu nimisha, kelage bartini.",
+       "hi": "ek minute, neeche aa raha hoon.",
+       "ta": "oru nimisham, keezha varen.",
+       "hiF": "ek minute, neeche aa rahi hoon."
+      },
+      {
+       "who": "you",
+       "en": "Thanks. Take care.",
+       "kn": "thanks. hushaaru.",
+       "hi": "shukriya. dhyaan se jaana.",
+       "ta": "thanks. paathu ponga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "doctor",
+   "group": "home",
+   "title": "Clinic and pharmacy",
+   "place": "Since when, any allergy, after food",
+   "blurb": "Fever, headache, the tablet instructions.",
+   "beats": [
+    {
+     "beat": "At the clinic",
+     "lines": [
+      {
+       "who": "you",
+       "en": "I have had a headache since yesterday.",
+       "kn": "nenne-inda tale novu.",
+       "hi": "kal se sar dard hai.",
+       "ta": "nethula irundhu thala vali."
+      },
+      {
+       "who": "you",
+       "en": "I have fever.",
+       "kn": "jwara ide.",
+       "hi": "bukhaar hai.",
+       "ta": "kaaichal irukku."
+      },
+      {
+       "who": "them",
+       "en": "Since when?",
+       "kn": "yaavaga-inda?",
+       "hi": "kab se?",
+       "ta": "eppo irundhu?"
+      },
+      {
+       "who": "them",
+       "en": "Any allergy?",
+       "kn": "allergy ideyaa?",
+       "hi": "koi allergy hai?",
+       "ta": "allergy irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "No allergy.",
+       "kn": "allergy illa.",
+       "hi": "koi allergy nahin.",
+       "ta": "allergy illa."
+      },
+      {
+       "who": "them",
+       "en": "One tablet after food, twice a day.",
+       "kn": "oota aada mele ondu tablet, dina eradu sala.",
+       "hi": "khaane ke baad ek goli, din mein do baar.",
+       "ta": "saapaadu aprom oru tablet, oru naalaikku rendu thadava."
+      }
+     ]
+    },
+    {
+     "beat": "At the pharmacy",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Give me this medicine, please.",
+       "kn": "ee medicine kodi.",
+       "hi": "yeh dawa dijiye.",
+       "ta": "indha maruntha kudunga."
+      },
+      {
+       "who": "you",
+       "en": "Do you have a cough syrup?",
+       "kn": "kemmu syrup ideyaa?",
+       "hi": "khaansi ka syrup hai?",
+       "ta": "irumal syrup irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "How many times a day?",
+       "kn": "dina eshtu sala?",
+       "hi": "din mein kitni baar?",
+       "ta": "oru naalaikku ethana thadava?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home",
+   "group": "home",
+   "title": "Landlord and neighbour",
+   "place": "The tap, the rent, the greeting",
+   "blurb": "Complaints, repairs, being a good neighbour.",
+   "beats": [
+    {
+     "beat": "Landlord",
+     "lines": [
+      {
+       "who": "you",
+       "en": "The tap is leaking.",
+       "kn": "tap leak aagta ide.",
+       "hi": "nal leak ho raha hai.",
+       "ta": "tap leak aagudhu."
+      },
+      {
+       "who": "you",
+       "en": "There is no water since morning.",
+       "kn": "belagge-inda neeru illa.",
+       "hi": "subah se paani nahin hai.",
+       "ta": "kaalaila irundhu thanni illa."
+      },
+      {
+       "who": "you",
+       "en": "Please send someone to fix it.",
+       "kn": "yaaradru kalisi repair maadakke.",
+       "hi": "koi bhej dijiye theek karne ke liye.",
+       "ta": "yaaraavadhu anuppunga repair panna."
+      },
+      {
+       "who": "them",
+       "en": "Is the room fine otherwise?",
+       "kn": "room sari ideyaa?",
+       "hi": "room theek hai?",
+       "ta": "room sari irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "I will pay the rent tomorrow.",
+       "kn": "naale rent kodtini.",
+       "hi": "kal rent de doonga.",
+       "ta": "naalaikku rent kudukkuren.",
+       "hiF": "kal rent de doongi."
+      }
+     ]
+    },
+    {
+     "beat": "Neighbour",
+     "lines": [
+      {
+       "who": "them",
+       "en": "Good morning. How is everyone at home?",
+       "kn": "namaskara. mane-alli ellaru hegiddare?",
+       "hi": "namaste. ghar mein sab kaise hain?",
+       "ta": "vanakkam. veetula ellaarum eppadi irukkaanga?"
+      },
+      {
+       "who": "you",
+       "en": "All fine, thank you. And you?",
+       "kn": "ellaru chennaagiddare. neevu hegiddira?",
+       "hi": "sab theek hain. aap kaise hain?",
+       "ta": "ellaarum nalla irukkaanga. neenga eppadi irukkeenga?"
+      },
+      {
+       "who": "you",
+       "en": "Sorry, was the music too loud?",
+       "kn": "sorry, music jaasti aaytaa?",
+       "hi": "sorry, music zyada tez tha kya?",
+       "ta": "sorry, music romba saththama irundhuchaa?"
+      },
+      {
+       "who": "them",
+       "en": "No problem at all.",
+       "kn": "enu problem illa.",
+       "hi": "koi baat nahin.",
+       "ta": "onnum problem illa."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "airport",
+   "group": "travel",
+   "title": "Airport",
+   "place": "Check-in and the gate",
+   "blurb": "Counter, window seat, one bag, which gate.",
+   "beats": [
+    {
+     "beat": "Check-in",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Where is the check-in counter?",
+       "kn": "check-in counter elli?",
+       "hi": "check-in counter kahaan hai?",
+       "ta": "check-in counter enga?"
+      },
+      {
+       "who": "them",
+       "en": "Passport and ticket, please.",
+       "kn": "passport, ticket kodi.",
+       "hi": "passport aur ticket dijiye.",
+       "ta": "passport, ticket kudunga."
+      },
+      {
+       "who": "you",
+       "en": "Window seat, please.",
+       "kn": "window seat kodi.",
+       "hi": "window seat dijiye.",
+       "ta": "window seat kudunga."
+      },
+      {
+       "who": "them",
+       "en": "Any bag to check in?",
+       "kn": "check-in bag ideyaa?",
+       "hi": "check-in ka bag hai?",
+       "ta": "check-in bag irukkaa?"
+      },
+      {
+       "who": "you",
+       "en": "One bag.",
+       "kn": "ondu bag.",
+       "hi": "ek bag.",
+       "ta": "oru bag."
+      },
+      {
+       "who": "you",
+       "en": "Which gate?",
+       "kn": "yaava gate?",
+       "hi": "kaun sa gate?",
+       "ta": "endha gate?"
+      },
+      {
+       "who": "you",
+       "en": "Is the flight on time?",
+       "kn": "flight time-ge ideyaa?",
+       "hi": "flight time pe hai?",
+       "ta": "flight time-ku irukkaa?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "care",
+   "group": "travel",
+   "title": "Customer care call",
+   "place": "Internet is down",
+   "blurb": "Say the problem, since when, send someone today.",
+   "beats": [
+    {
+     "beat": "The call",
+     "lines": [
+      {
+       "who": "them",
+       "en": "How can I help you?",
+       "kn": "enu help beku?",
+       "hi": "main kaise madad karoon?",
+       "ta": "enna help venum?"
+      },
+      {
+       "who": "you",
+       "en": "My internet is not working.",
+       "kn": "internet kelsa maadta illa.",
+       "hi": "mera internet kaam nahin kar raha.",
+       "ta": "internet velai seiyala."
+      },
+      {
+       "who": "them",
+       "en": "Since when?",
+       "kn": "yaavaga-inda?",
+       "hi": "kab se?",
+       "ta": "eppo irundhu?"
+      },
+      {
+       "who": "you",
+       "en": "Since this morning.",
+       "kn": "ivattu belagge-inda.",
+       "hi": "aaj subah se.",
+       "ta": "innikki kaalaila irundhu."
+      },
+      {
+       "who": "them",
+       "en": "Please tell me your number.",
+       "kn": "nimma number heli.",
+       "hi": "apna number bataiye.",
+       "ta": "unga number sollunga."
+      },
+      {
+       "who": "you",
+       "en": "Please send someone today.",
+       "kn": "ivatte yaaradru kalisi.",
+       "hi": "aaj hi kisi ko bhej dijiye.",
+       "ta": "innikke yaaraavadhu anuppunga."
+      },
+      {
+       "who": "you",
+       "en": "Please speak slowly.",
+       "kn": "nidhaanavaagi heli.",
+       "hi": "dheere boliye.",
+       "ta": "medhuva pesunga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "salon",
+   "group": "shops",
+   "title": "Salon",
+   "place": "Haircut and shave",
+   "blurb": "Short on the sides, a little only.",
+   "beats": [
+    {
+     "beat": "The chair",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Haircut, please. Short on the sides.",
+       "kn": "haircut. side-alli short.",
+       "hi": "haircut. side chhote.",
+       "ta": "haircut. side-la short."
+      },
+      {
+       "who": "them",
+       "en": "How much should I cut?",
+       "kn": "eshtu cut maadli?",
+       "hi": "kitna kaatun?",
+       "ta": "evlo cut pannanum?"
+      },
+      {
+       "who": "you",
+       "en": "A little only.",
+       "kn": "swalpa maatra.",
+       "hi": "thoda sa.",
+       "ta": "konjam mattum."
+      },
+      {
+       "who": "you",
+       "en": "Shave also.",
+       "kn": "shave koodaa.",
+       "hi": "shave bhi.",
+       "ta": "shave-um."
+      },
+      {
+       "who": "them",
+       "en": "Done, sir. Have a look.",
+       "kn": "aaytu sir. nodi.",
+       "hi": "ho gaya sir. dekh lijiye.",
+       "ta": "aachu sir. paarunga."
+      },
+      {
+       "who": "you",
+       "en": "Very nice. How much?",
+       "kn": "tumba chennaagide. eshtu?",
+       "hi": "bahut achha. kitna hua?",
+       "ta": "romba nalla irukku. evlo?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "majorscale",
+   "group": "music",
+   "title": "Teach the major scale",
+   "place": "Your student, your language",
+   "blurb": "Seven notes, whole and half steps, from C, sing it back.",
+   "beats": [
+    {
+     "beat": "Set it up",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Today we learn the major scale.",
+       "kn": "ivattu major scale kaliyona.",
+       "hi": "aaj hum major scale seekhenge.",
+       "ta": "innikki naama major scale kathukkalaam."
+      },
+      {
+       "who": "you",
+       "en": "A major scale has seven notes.",
+       "kn": "major scale-alli elu swara ide.",
+       "hi": "major scale mein saat sur hote hain.",
+       "ta": "major scale-la ezhu swaram irukku."
+      },
+      {
+       "who": "you",
+       "en": "Sa Re Ga Ma Pa Dha Ni, then Sa again.",
+       "kn": "Sa Re Ga Ma Pa Dha Ni, aamele innomme Sa.",
+       "hi": "Sa Re Ga Ma Pa Dha Ni, phir se Sa.",
+       "ta": "Sa Re Ga Ma Pa Dha Ni, apram thirumba Sa."
+      },
+      {
+       "who": "you",
+       "en": "The pattern is whole, whole, half, whole, whole, whole, half.",
+       "kn": "pattern: full, full, half, full, full, full, half.",
+       "hi": "pattern: full, full, half, full, full, full, half.",
+       "ta": "pattern: full, full, half, full, full, full, half.",
+       "note": "Musicians in all three cities say full step and half step in English."
+      },
+      {
+       "who": "you",
+       "en": "Listen to the difference.",
+       "kn": "difference keli.",
+       "hi": "fark suno.",
+       "ta": "difference kelunga."
+      }
+     ]
+    },
+    {
+     "beat": "Play and sing",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Play it from C.",
+       "kn": "C-inda nudisi.",
+       "hi": "C se bajaiye.",
+       "ta": "C-la irundhu vaasinga."
+      },
+      {
+       "who": "you",
+       "en": "Now sing it. Sa.",
+       "kn": "eega haadi. Sa.",
+       "hi": "ab gaao. Sa.",
+       "ta": "ippo paadunga. Sa."
+      },
+      {
+       "who": "you",
+       "en": "Your pitch is a little low. Go a little higher.",
+       "kn": "swalpa kelage ide. swalpa mele haadi.",
+       "hi": "thoda neeche hai. thoda upar gaao.",
+       "ta": "konjam keezha irukku. konjam mela paadunga."
+      },
+      {
+       "who": "you",
+       "en": "Good. Now the whole scale.",
+       "kn": "chennaagide. eega poorti scale.",
+       "hi": "achha. ab poora scale.",
+       "ta": "nalla irukku. ippo full scale."
+      },
+      {
+       "who": "you",
+       "en": "Major sounds happy, minor sounds sad.",
+       "kn": "major khushi-yaagi kelisutte, minor sad-aagi kelisutte.",
+       "hi": "major khush lagta hai, minor udaas lagta hai.",
+       "ta": "major santhoshama irukku, minor sad-aa irukku."
+      },
+      {
+       "who": "you",
+       "en": "Once more, a little slower.",
+       "kn": "innomme, swalpa slow aagi.",
+       "hi": "ek baar aur, thoda dheere.",
+       "ta": "innoru thadava, konjam medhuva."
+      }
+     ]
+    },
+    {
+     "beat": "What they will ask",
+     "lines": [
+      {
+       "who": "them",
+       "en": "Why is it called major?",
+       "kn": "major andre yaake?",
+       "hi": "ise major kyun kehte hain?",
+       "ta": "major-nu aen solraanga?"
+      },
+      {
+       "who": "them",
+       "en": "Which note is this?",
+       "kn": "idu yaava swara?",
+       "hi": "yeh kaun sa sur hai?",
+       "ta": "idhu endha swaram?"
+      },
+      {
+       "who": "them",
+       "en": "Can I play it on the guitar?",
+       "kn": "guitar-alli nudisbahuda?",
+       "hi": "kya main guitar pe baja sakta hoon?",
+       "ta": "guitar-la vaasikkalaamaa?"
+      },
+      {
+       "who": "them",
+       "en": "Can you play it once more?",
+       "kn": "innomme nudistiraa?",
+       "hi": "ek baar aur bajaaenge?",
+       "ta": "innoru thadava vaasippeengalaa?"
+      },
+      {
+       "who": "you",
+       "en": "Yes, of course. Listen.",
+       "kn": "howdu, khandita. keli.",
+       "hi": "haan, zaroor. suno.",
+       "ta": "aama, kandippa. kelunga."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fifths",
+   "group": "music",
+   "title": "Explain the circle of fifths",
+   "place": "One sharp per step",
+   "blurb": "Go up a fifth, add one sharp, come back home.",
+   "beats": [
+    {
+     "beat": "The idea",
+     "lines": [
+      {
+       "who": "you",
+       "en": "A fifth is five notes up.",
+       "kn": "fifth andre aidu swara mele.",
+       "hi": "fifth ka matlab paanch sur upar.",
+       "ta": "fifth-na anju swaram mela."
+      },
+      {
+       "who": "you",
+       "en": "From C, go up a fifth. That is G.",
+       "kn": "C-inda aidu swara mele hogi. adu G.",
+       "hi": "C se paanch sur upar jaao. voh G hai.",
+       "ta": "C-la irundhu anju swaram mela ponga. adhu G."
+      },
+      {
+       "who": "you",
+       "en": "Every step adds one sharp.",
+       "kn": "pratiyondu step-ge ondu sharp add aagutte.",
+       "hi": "har step pe ek sharp add hota hai.",
+       "ta": "ovvoru step-kum oru sharp add aagum."
+      },
+      {
+       "who": "you",
+       "en": "G has one sharp, D has two.",
+       "kn": "G-alli ondu sharp, D-alli eradu.",
+       "hi": "G mein ek sharp, D mein do.",
+       "ta": "G-la oru sharp, D-la rendu."
+      },
+      {
+       "who": "you",
+       "en": "Twelve steps and you come back home to C.",
+       "kn": "hanneradu step aada mele, waapas C-ge.",
+       "hi": "baarah step ke baad waapas C pe.",
+       "ta": "pannendu step aprom, thirumba C-ku."
+      },
+      {
+       "who": "you",
+       "en": "That is why it is a circle.",
+       "kn": "adakke idu circle.",
+       "hi": "isliye yeh circle hai.",
+       "ta": "adhaan idhu circle."
+      }
+     ]
+    },
+    {
+     "beat": "Try it",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Play C, then G, then D.",
+       "kn": "C nudisi, aamele G, aamele D.",
+       "hi": "C bajaao, phir G, phir D.",
+       "ta": "C vaasinga, apram G, apram D."
+      },
+      {
+       "who": "you",
+       "en": "Which key has three sharps?",
+       "kn": "yaava key-alli mooru sharp ide?",
+       "hi": "kaun si key mein teen sharp hain?",
+       "ta": "endha key-la moonu sharp irukku?"
+      },
+      {
+       "who": "them",
+       "en": "A?",
+       "kn": "A-aa?",
+       "hi": "A?",
+       "ta": "A-aa?"
+      },
+      {
+       "who": "you",
+       "en": "Correct. Well done.",
+       "kn": "sari. chennaagi maadidri.",
+       "hi": "sahi. bahut achhe.",
+       "ta": "sari. nalla panneenga."
+      },
+      {
+       "who": "them",
+       "en": "What about flats?",
+       "kn": "flats hege?",
+       "hi": "flats ka kya?",
+       "ta": "flats eppadi?"
+      },
+      {
+       "who": "you",
+       "en": "Go the other way, one flat each step.",
+       "kn": "bere kade hogi, pratiyondu step-ge ondu flat.",
+       "hi": "doosri taraf jaao, har step pe ek flat.",
+       "ta": "vera pakkam ponga, ovvoru step-kum oru flat."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rhythm",
+   "group": "music",
+   "title": "Run a rhythm drill",
+   "place": "Count in, keep the beat",
+   "blurb": "One two three four, do not drop the beat, slow then fast.",
+   "beats": [
+    {
+     "beat": "Counting",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Count with me. One two three four.",
+       "kn": "nanna jote count maadi. ondu eradu mooru naalku.",
+       "hi": "mere saath gino. ek do teen chaar.",
+       "ta": "en kooda count pannunga. onnu rendu moonu naalu."
+      },
+      {
+       "who": "you",
+       "en": "Clap on one.",
+       "kn": "ondu-ge chappale hodi.",
+       "hi": "ek pe taali bajaao.",
+       "ta": "onnu-la kai thattunga."
+      },
+      {
+       "who": "you",
+       "en": "Keep the beat steady. Do not drop the taala.",
+       "kn": "taala bidbedi.",
+       "hi": "taal mat chhodo.",
+       "ta": "thaalam vidaadheenga."
+      },
+      {
+       "who": "you",
+       "en": "First slowly, then fast.",
+       "kn": "modalu slow aagi, aamele fast aagi.",
+       "hi": "pehle dheere, phir tez.",
+       "ta": "modhalla medhuva, apram vegama."
+      },
+      {
+       "who": "you",
+       "en": "Again from the beginning.",
+       "kn": "innomme modalinda.",
+       "hi": "phir se shuru se.",
+       "ta": "thirumba modhalla irundhu."
+      },
+      {
+       "who": "them",
+       "en": "Is this too fast?",
+       "kn": "idu tumba fast-aa?",
+       "hi": "kya yeh bahut tez hai?",
+       "ta": "idhu romba fast-aa?"
+      },
+      {
+       "who": "you",
+       "en": "No, that is perfect.",
+       "kn": "illa, adu perfect.",
+       "hi": "nahin, yeh perfect hai.",
+       "ta": "illa, adhu perfect."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pitch",
+   "group": "music",
+   "title": "Tuning and pitch",
+   "place": "Higher, lower, in tune",
+   "blurb": "Hold the note, a little high, a little low, in tune.",
+   "beats": [
+    {
+     "beat": "Listening",
+     "lines": [
+      {
+       "who": "you",
+       "en": "Hold the note.",
+       "kn": "swara hidkolli.",
+       "hi": "sur pakdo.",
+       "ta": "swaram pidinga."
+      },
+      {
+       "who": "you",
+       "en": "That is a little high.",
+       "kn": "adu swalpa mele ide.",
+       "hi": "voh thoda upar hai.",
+       "ta": "adhu konjam mela irukku."
+      },
+      {
+       "who": "you",
+       "en": "That is a little low.",
+       "kn": "adu swalpa kelage ide.",
+       "hi": "voh thoda neeche hai.",
+       "ta": "adhu konjam keezha irukku."
+      },
+      {
+       "who": "you",
+       "en": "Now it is in tune.",
+       "kn": "eega sari ide.",
+       "hi": "ab sur mein hai.",
+       "ta": "ippo sari-aa irukku."
+      },
+      {
+       "who": "you",
+       "en": "Listen first, then sing.",
+       "kn": "modalu keli, aamele haadi.",
+       "hi": "pehle suno, phir gaao.",
+       "ta": "modhalla kelunga, apram paadunga."
+      },
+      {
+       "who": "them",
+       "en": "Was that right?",
+       "kn": "adu sari-yaa?",
+       "hi": "kya voh sahi tha?",
+       "ta": "adhu sari-yaa?"
+      },
+      {
+       "who": "you",
+       "en": "Almost. One more time.",
+       "kn": "hattira. innomme.",
+       "hi": "lagbhag. ek baar aur.",
+       "ta": "kitta. innoru thadava."
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "numbers": {
+  "kn": {
+   "units": [
+    "ondu",
+    "eradu",
+    "mooru",
+    "naalku",
+    "aidu",
+    "aaru",
+    "elu",
+    "entu",
+    "ombattu"
+   ],
+   "teens": [
+    "hattu",
+    "hannondu",
+    "hanneradu",
+    "hadimooru",
+    "hadinaalku",
+    "hadinaidu",
+    "hadinaaru",
+    "hadinelu",
+    "hadinentu",
+    "hattombattu"
+   ],
+   "tens": [
+    "ippattu",
+    "muvattu",
+    "nalavattu",
+    "aivattu",
+    "aravattu",
+    "eppattu",
+    "embattu",
+    "tombattu"
+   ],
+   "hundred": "nooru",
+   "rule": "Tens plus units: drop the tu, join the unit. ippattu + ondu = ippattondu; before mooru and naalku drop the whole ttu: ippatmooru."
+  },
+  "ta": {
+   "units": [
+    "onnu",
+    "rendu",
+    "moonu",
+    "naalu",
+    "anju",
+    "aaru",
+    "ezhu",
+    "ettu",
+    "onbadhu"
+   ],
+   "teens": [
+    "patthu",
+    "padhinonnu",
+    "pannendu",
+    "padhimoonu",
+    "padhinaalu",
+    "padhinanju",
+    "padhinaaru",
+    "padhinezhu",
+    "padhinettu",
+    "patthonbadhu"
+   ],
+   "tens": [
+    "irubadhu",
+    "muppadhu",
+    "naapadhu",
+    "ambadhu",
+    "arubadhu",
+    "ezhubadhu",
+    "embadhu",
+    "thonnooru"
+   ],
+   "tensJoin": [
+    "irubatthi",
+    "muppatthi",
+    "naapatthi",
+    "ambatthi",
+    "arubatthi",
+    "ezhubatthi",
+    "embatthi",
+    "thonnootri"
+   ],
+   "hundred": "nooru",
+   "rule": "Tens change their tail to tthi and the unit follows: irubatthi onnu. Ninety is thonnootri."
+  },
+  "hi": {
+   "units": [
+    "ek",
+    "do",
+    "teen",
+    "chaar",
+    "paanch",
+    "chhe",
+    "saat",
+    "aath",
+    "nau"
+   ],
+   "teens": [
+    "das",
+    "gyaarah",
+    "baarah",
+    "terah",
+    "chaudah",
+    "pandrah",
+    "solah",
+    "satrah",
+    "athaarah",
+    "unnees"
+   ],
+   "tens": [
+    "bees",
+    "tees",
+    "chaalees",
+    "pachaas",
+    "saath",
+    "sattar",
+    "assi",
+    "nabbe"
+   ],
+   "hundred": "sau",
+   "rule": "Every number from 21 to 99 is its own word. Hear the family: the unit sits in FRONT (ik, ba, tir, chau, pach, chhi, sat, ath) and nine is un plus the next ten.",
+   "table": [
+    "ikkees",
+    "baaees",
+    "teees",
+    "chaubees",
+    "pachees",
+    "chhabbees",
+    "sattaaees",
+    "atthaaees",
+    "untees",
+    "tees",
+    "ikattees",
+    "battees",
+    "taintees",
+    "chauntees",
+    "paintees",
+    "chhattees",
+    "saintees",
+    "adtees",
+    "untaalees",
+    "chaalees",
+    "iktaalees",
+    "bayaalees",
+    "taintaalees",
+    "chauvaalees",
+    "paintaalees",
+    "chhiyaalees",
+    "saintaalees",
+    "adtaalees",
+    "unchaas",
+    "pachaas",
+    "ikyaavan",
+    "baavan",
+    "tirpan",
+    "chauvan",
+    "pachpan",
+    "chhappan",
+    "sattaavan",
+    "atthaavan",
+    "unsath",
+    "saath",
+    "iksath",
+    "baasath",
+    "tirsath",
+    "chaunsath",
+    "painsath",
+    "chhiyaasath",
+    "sadsath",
+    "adsath",
+    "unhattar",
+    "sattar",
+    "ikhattar",
+    "bahattar",
+    "tihattar",
+    "chauhattar",
+    "pachhattar",
+    "chhihattar",
+    "sathattar",
+    "athhattar",
+    "unaasi",
+    "assi",
+    "ikyaasi",
+    "bayaasi",
+    "tiraasi",
+    "chauraasi",
+    "pachaasi",
+    "chhiyaasi",
+    "sattaasi",
+    "atthaasi",
+    "navaasi",
+    "nabbe",
+    "ikyaanve",
+    "baanve",
+    "tiraanve",
+    "chauraanve",
+    "pachaanve",
+    "chhiyaanve",
+    "sattaanve",
+    "atthaanve",
+    "ninyaanve"
+   ]
+  }
+ },
+ "sounds": {
+  "kn": [
+   {
+    "short": "hallu",
+    "shortEn": "tooth",
+    "long": "haalu",
+    "longEn": "milk"
+   },
+   {
+    "short": "kallu",
+    "shortEn": "stone",
+    "long": "kaalu",
+    "longEn": "leg"
+   },
+   {
+    "short": "beku",
+    "shortEn": "want",
+    "long": "bekku",
+    "longEn": "cat"
+   },
+   {
+    "short": "mane",
+    "shortEn": "house",
+    "long": "maane",
+    "longEn": "a deer"
+   }
+  ],
+  "hi": [
+   {
+    "short": "kal",
+    "shortEn": "yesterday, tomorrow",
+    "long": "kaal",
+    "longEn": "time, era"
+   },
+   {
+    "short": "man",
+    "shortEn": "mind",
+    "long": "maan",
+    "longEn": "respect"
+   },
+   {
+    "short": "chal",
+    "shortEn": "walk",
+    "long": "chaal",
+    "longEn": "gait"
+   },
+   {
+    "short": "din",
+    "shortEn": "day",
+    "long": "deen",
+    "longEn": "faith"
+   }
+  ],
+  "ta": [
+   {
+    "short": "pal",
+    "shortEn": "tooth",
+    "long": "paal",
+    "longEn": "milk"
+   },
+   {
+    "short": "kal",
+    "shortEn": "stone",
+    "long": "kaal",
+    "longEn": "leg"
+   },
+   {
+    "short": "vidu",
+    "shortEn": "leave it",
+    "long": "veedu",
+    "longEn": "house"
+   },
+   {
+    "short": "padi",
+    "shortEn": "study",
+    "long": "paadi",
+    "longEn": "having sung"
+   }
+  ]
+ },
+ "soundNote": {
+  "kn": "A doubled vowel is held about twice as long. Hold aa, ee, oo like a long note; a, i, u are short notes. Stretching the last vowel to aa also turns any sentence into a question.",
+  "hi": "A doubled vowel is held longer: kal versus kaal. Hindi also has a soft breath after some consonants (bh, dh, kh): bhaai, not baai.",
+  "ta": "A doubled vowel is held longer: pal versus paal. zh (as in Tamizh, vaazhai) is a soft rolled sound between l and r; most learners start with l and are understood."
+ }
+}

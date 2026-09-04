@@ -31,6 +31,8 @@ import {
 } from "@/lib/grammar";
 import { C, DISPLAY, HOST, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 import { LanguageSelector } from "./LanguageSelector";
+import { Chip, Label, LILAC, Lit, Section, SKY, SpeakButton, useSpeaker, type Speaker } from "./studio-bits";
+import { ScenesRoom, ShapesRoom, type Practice } from "./StudioRooms";
 
 // Sentence Studio. Text-first learning next to the voice calls. Seven rooms on
 // one scroll: Check (say or type a line, get the fix and the rule), Build (tap
@@ -51,8 +53,6 @@ type Check = {
   tip: string;
 };
 
-const SKY = "#9FD3FF";
-const LILAC = "#F5C2FF";
 const ROLE: Record<Piece["role"], { color: string; label: string }> = {
   time: { color: SKY, label: "when" },
   subject: { color: C.tube, label: "who" },
@@ -87,11 +87,13 @@ const DEFAULT_OBJECT: Record<string, string | null> = {
   wait: null, sit: null, walk: "home", cook: "rice", help: null, call: null,
 };
 
-type Room = "check" | "build" | "frames" | "commands" | "flip" | "rules" | "decks";
+type Room = "check" | "build" | "shapes" | "frames" | "scenes" | "commands" | "flip" | "rules" | "decks";
 const ROOMS: { id: Room; label: string }[] = [
   { id: "check", label: "Check" },
   { id: "build", label: "Build" },
+  { id: "shapes", label: "Shapes" },
   { id: "frames", label: "Frames" },
+  { id: "scenes", label: "Scenes" },
   { id: "commands", label: "Commands" },
   { id: "flip", label: "Flip" },
   { id: "rules", label: "Rules" },
@@ -121,84 +123,6 @@ function readFixes(): Record<string, number> {
   } catch {
     return {};
   }
-}
-
-// ............................................................ voice
-function useSpeaker(lang: Lang, onHeard: () => void) {
-  const cache = useRef<Map<string, string>>(new Map());
-  const audio = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState<string | null>(null);
-  const [loading, setLoading] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const speak = useCallback(
-    async (text: string) => {
-      const clean = text.trim();
-      if (!clean) return;
-      setError(null);
-      const key = `${lang}:${clean}`;
-      let src = cache.current.get(key);
-      if (!src) {
-        setLoading(clean);
-        try {
-          const res = await fetch("/api/say", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: clean, lang }) });
-          const data = await res.json();
-          if (!res.ok || !data.audio) throw new Error(data.error ?? "No voice");
-          src = `data:${data.mime ?? "audio/wav"};base64,${data.audio}`;
-          cache.current.set(key, src);
-        } catch (e) {
-          setError(e instanceof Error ? e.message : "The voice did not answer.");
-          setLoading(null);
-          return;
-        }
-        setLoading(null);
-      }
-      audio.current?.pause();
-      const el = new Audio(src);
-      audio.current = el;
-      setPlaying(clean);
-      el.onended = () => setPlaying(null);
-      el.onerror = () => setPlaying(null);
-      try {
-        await el.play();
-        onHeard();
-      } catch {
-        setPlaying(null);
-        setError("Tap again to allow sound.");
-      }
-    },
-    [lang, onHeard],
-  );
-
-  useEffect(() => () => audio.current?.pause(), []);
-  return { speak, playing, loading, error };
-}
-type Speaker = ReturnType<typeof useSpeaker>;
-
-function SpeakButton({ text, speaker, size = "md", label }: { text: string; speaker: Speaker; size?: "sm" | "md" | "lg"; label?: string }) {
-  const active = speaker.playing === text.trim();
-  const busy = speaker.loading === text.trim();
-  const pad = size === "lg" ? "px-5 py-3 text-[15px]" : size === "sm" ? "px-2.5 py-1.5 text-[12px]" : "px-3.5 py-2 text-[13px]";
-  return (
-    <button
-      type="button"
-      onClick={() => void speaker.speak(text)}
-      disabled={busy}
-      aria-label={label ? `${label}: ${text}` : `Hear ${text}`}
-      className={`inline-flex flex-none items-center gap-2 rounded-full font-semibold focus-visible:outline focus-visible:outline-2 ${pad}`}
-      style={{
-        background: active ? C.sodium : "rgba(255,179,92,0.12)",
-        color: active ? C.ink : C.sodium,
-        border: "1px solid rgba(255,179,92,0.34)",
-        outlineColor: C.milk,
-        opacity: busy ? 0.7 : 1,
-        transition: "background 160ms ease, color 160ms ease",
-      }}
-    >
-      <span aria-hidden="true" style={{ fontSize: size === "sm" ? 11 : 13 }}>{busy ? "…" : active ? "◼" : "▶"}</span>
-      {label ?? "Hear it"}
-    </button>
-  );
 }
 
 // ............................................................ ears
@@ -260,73 +184,6 @@ function useRecorder(lang: Lang, onText: (text: string) => void) {
 }
 
 // ............................................................ bits
-function Chip({ on, onClick, children, tone = "sodium", title, small }: { on: boolean; onClick: () => void; children: React.ReactNode; tone?: "sodium" | "tube" | "lilac" | "sky"; title?: string; small?: boolean }) {
-  const color = tone === "tube" ? C.tube : tone === "lilac" ? LILAC : tone === "sky" ? SKY : C.sodium;
-  const rgb = tone === "tube" ? "191,239,219" : tone === "lilac" ? "245,194,255" : tone === "sky" ? "159,211,255" : "255,179,92";
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      title={title}
-      className={`rounded-full font-semibold focus-visible:outline focus-visible:outline-2 ${small ? "px-2.5 py-1 text-[11.5px]" : "px-3 py-1.5 text-[12.5px]"}`}
-      style={{
-        background: on ? `rgba(${rgb},0.16)` : C.base,
-        color: on ? color : C.muted,
-        border: on ? `1px solid rgba(${rgb},0.5)` : `1px solid ${LINE}`,
-        outlineColor: color,
-        transition: "background 140ms ease, border-color 140ms ease, color 140ms ease",
-      }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Label({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
-  return (
-    <div className="mb-2 flex items-center justify-between">
-      <div className="text-[11px] font-bold" style={{ color: C.mono, letterSpacing: 1 }}>
-        {children}
-      </div>
-      {right}
-    </div>
-  );
-}
-
-function Section({ id, kicker, title, blurb, children, tone = "sodium", anchor }: { id: Room; kicker: string; title: string; blurb?: string; children: React.ReactNode; tone?: "sodium" | "tube" | "lilac" | "sky"; anchor: (id: Room, el: HTMLElement | null) => void }) {
-  const color = tone === "tube" ? C.tube : tone === "lilac" ? LILAC : tone === "sky" ? SKY : C.sodium;
-  return (
-    <section ref={(el) => anchor(id, el)} className="mt-5 scroll-mt-[76px] rounded-[20px] p-5" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
-      <div className="text-[11px] font-bold" style={{ color, letterSpacing: 1.3 }}>
-        {kicker}
-      </div>
-      <h2 className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 24, lineHeight: 1.1, color: C.milk }}>
-        {title}
-      </h2>
-      {blurb && (
-        <p className="mt-1.5 text-[12.5px] leading-relaxed" style={{ color: C.muted }}>
-          {blurb}
-        </p>
-      )}
-      {children}
-    </section>
-  );
-}
-
-// A verb with its ending lit up. The stem stays milk, the ending goes sodium,
-// because the ending is the only thing the learner must listen for.
-function Lit({ word, stem, color = C.sodium, size = 15 }: { word: string; stem?: string; color?: string; size?: number }) {
-  const split = splitEnding(word, stem);
-  if (!split) return <span style={{ color: C.milk, fontFamily: MONO, fontSize: size, fontWeight: 600 }}>{word}</span>;
-  return (
-    <span style={{ fontFamily: MONO, fontSize: size, fontWeight: 600 }}>
-      <span style={{ color: C.milk }}>{split.stem}</span>
-      <span style={{ color, borderBottom: `2px solid ${color}55` }}>{split.ending}</span>
-    </span>
-  );
-}
-
 function Stage({ built, speaker, big = true }: { built: Built; speaker: Speaker; big?: boolean }) {
   return (
     <div key={built.sentence} style={{ animation: "mtFade 320ms ease both" }}>
@@ -375,8 +232,8 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
   const ln = LANG_NAME[lang];
   const scroller = useRef<HTMLDivElement | null>(null);
   const anchors = useRef<Partial<Record<Room, HTMLElement | null>>>({});
-  const anchor = useCallback((id: Room, el: HTMLElement | null) => {
-    anchors.current[id] = el;
+  const anchor = useCallback((id: string, el: HTMLElement | null) => {
+    anchors.current[id as Room] = el;
   }, []);
   const jump = (id: Room) => {
     const root = scroller.current;
@@ -417,6 +274,9 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
   const [check, setCheck] = useState<Check | null>(null);
   const [checking, setChecking] = useState(false);
   const [checkError, setCheckError] = useState<string | null>(null);
+  // A scene line the learner is trying to say; the checker judges against it.
+  const [practice, setPractice] = useState<Practice | null>(null);
+  const [showPractice, setShowPractice] = useState(false);
   const onHeardText = useCallback((value: string) => {
     setText(value);
     setCheck(null);
@@ -430,7 +290,7 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
       setChecking(true);
       setCheckError(null);
       try {
-        const res = await fetch("/api/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: value, lang, gender }) });
+        const res = await fetch("/api/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: value, lang, gender, expected: practice ? practice.target : undefined }) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error ?? "The checker did not answer.");
         const result = data as Check;
@@ -452,12 +312,21 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
         setChecking(false);
       }
     },
-    [text, lang, gender],
+    [text, lang, gender, practice],
   );
 
   useEffect(() => {
     setCheck(null);
+    setPractice(null);
   }, [lang]);
+
+  const startPractice = useCallback((p: Practice) => {
+    setPractice(p);
+    setShowPractice(false);
+    setText("");
+    setCheck(null);
+    jump("check");
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Build.
   const [personId, setPersonId] = useState<PersonId>("i");
@@ -617,6 +486,29 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
 
         {/* ................................................. check */}
         <Section id="check" anchor={anchor} kicker="CHECK" title="Say it your way" blurb={`English, ${ln}, or a mix. Leave a ___ where you are hunting for a word. ${host.name} fixes one thing at a time and tells you the rule.`} tone="tube">
+          {practice && (
+            <div className="mt-4 rounded-[14px] p-4" style={{ background: "linear-gradient(135deg,rgba(245,194,255,0.12),rgba(191,239,219,0.05))", border: "1px solid rgba(245,194,255,0.32)", animation: "mtFade 260ms ease both" }}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="text-[10.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.2 }}>SAY THIS LINE</div>
+                  <div className="mt-1 text-[18px] font-semibold" style={{ color: C.milk }}>{practice.en}</div>
+                  {showPractice ? (
+                    <div className="mt-1 text-[15px] font-semibold" style={{ color: LILAC, fontFamily: MONO }}>{practice.target}</div>
+                  ) : (
+                    <button type="button" onClick={() => setShowPractice(true)} className="mt-1.5 text-[12px] font-semibold" style={{ color: C.faint }}>
+                      Stuck? Peek at the answer
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-none flex-col items-end gap-2">
+                  <SpeakButton text={practice.target} speaker={speaker} size="sm" label="Hear" />
+                  <button type="button" onClick={() => { setPractice(null); setCheck(null); }} className="text-[12px] font-semibold" style={{ color: C.faint }}>
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="mt-4 flex flex-col gap-3">
             <textarea
               value={text}
@@ -870,6 +762,8 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
           </div>
         </Section>
 
+        <ShapesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} verbId={verbId} onVerb={pickVerb} />
+
         {/* ................................................. frames */}
         <Section id="frames" anchor={anchor} kicker="FRAMES" title="Twenty shapes, any word" blurb="Learn the shape once, drop any word in the slot. This is how natives actually build most of what they say." tone="lilac">
           <div className="mt-4 rounded-[18px] p-5" style={{ background: "linear-gradient(135deg,rgba(245,194,255,0.12),rgba(159,211,255,0.04))", border: "1px solid rgba(245,194,255,0.3)" }}>
@@ -916,6 +810,8 @@ export function BuildScreen({ lang, onLanguageChange }: BuildScreenProps) {
             </div>
           </div>
         </Section>
+
+        <ScenesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} onPractise={startPractice} />
 
         {/* ................................................. commands */}
         <Section id="commands" anchor={anchor} kicker="COMMANDS" title="What a teacher says" blurb={COMMAND_NOTE[lang]} tone="sky">

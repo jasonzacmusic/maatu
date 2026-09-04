@@ -29,6 +29,7 @@ cp "$REPO/agent/.env" "$RT/agent/.env"
 cp "$REPO/personas/"*.json "$RT/personas/"
 cp "$REPO/curriculum.json" "$RT/curriculum.json"
 cp "$REPO/grammar.json" "$RT/grammar.json"
+cp "$REPO/playbooks.json" "$RT/playbooks.json"
 
 if [ ! -x "$RT/agent/.venv/bin/python" ]; then
   echo "Building venv (first run, a couple of minutes) ..."

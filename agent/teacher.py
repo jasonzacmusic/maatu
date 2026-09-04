@@ -77,6 +77,7 @@ _CORE_RULES = (
 
 
 GRAMMAR = ROOT / "grammar.json"
+PLAYBOOKS = ROOT / "playbooks.json"
 
 
 def _load_curriculum() -> dict:
@@ -156,6 +157,19 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
     if commands:
         lines.append("Commands, polite / to a friend: " + "; ".join(f"{c['en']} = {c[lang][0]} / {c[lang][1]}" for c in commands))
         lines.append(g.get("commandNote", {}).get(lang, ""))
+    try:
+        scenes = json.loads(PLAYBOOKS.read_text()).get("scenes", [])
+    except (OSError, json.JSONDecodeError):
+        scenes = []
+    for scene in scenes:
+        if scene.get("group") != "music":
+            continue
+        script = "; ".join(
+            f"{'teacher' if line['who'] == 'you' else 'student'}: {line['en']} = {line[lang]}"
+            for beat in scene["beats"]
+            for line in beat["lines"]
+        )
+        lines.append(f"Music script, {scene['title']}: {script}")
     if "questions" in g["decks"]:
         lines.append("Question words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["questions"]))
     lines.append("Music words: " + "; ".join(f"{d['en']} = {d[lang]}" for d in g["decks"]["music"]))
