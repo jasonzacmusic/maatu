@@ -183,6 +183,21 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
     await session.start(room=ctx.room, agent=Agent(instructions=instructions))
     await session.generate_reply(instructions=persona.opening)
 
+    # A learner whose microphone never arrives cannot talk; do not hold the
+    # call (and cloud minutes) open forever.
+    async def _close_if_no_mic():
+        await asyncio.sleep(90)
+        has_mic = any(
+            pub.kind == 1
+            for p in ctx.room.remote_participants.values()
+            for pub in p.track_publications.values()
+        )
+        if not has_mic:
+            logger.warning("no learner microphone after 90 s, closing room=%s", ctx.room.name)
+            ctx.shutdown(reason="no learner microphone")
+
+    asyncio.create_task(_close_if_no_mic())
+
 
 async def run_french(ctx: agents.JobContext) -> None:
     opening = FRENCH_OPENING
