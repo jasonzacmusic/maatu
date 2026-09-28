@@ -229,7 +229,7 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
             Your private speaking teacher, from the very first word.
           </h1>
           <p className="mx-auto mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 320 }}>
-            Learn Kannada, Hindi, or Tamil through guided voice lessons. Then practise in real conversations.
+            Speak Kannada, Hindi, or Tamil. Chat about anything, build any sentence yourself, or act out a real situation.
           </p>
         </div>
 
@@ -279,14 +279,14 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
 
         <div className="relative mt-auto pt-8">
           <div className="mb-3.5 flex items-center justify-center gap-2 text-center text-[12.5px]" style={{ color: C.muted }}>
-            <span aria-hidden="true">🎙</span> Your first lesson starts with hello. You can ask questions at any time.
+            <span aria-hidden="true">🎙</span> Everything is spoken, the everyday way. Ask anything, any time.
           </div>
           <button
             onClick={onEnter}
             className={"w-full rounded-[16px] text-[16px] font-bold focus-visible:outline focus-visible:outline-2" + (rm ? "" : " transition-transform active:scale-[0.99]")}
             style={{ padding: 16, background: C.sodium, color: C.ink, boxShadow: "0 10px 30px rgba(255,179,92,0.28)", outlineColor: C.milk }}
           >
-            Meet your teacher
+            Start speaking
           </button>
         </div>
       </div>
@@ -1519,7 +1519,7 @@ export default function MaatuApp() {
               setLang={setLang}
               onEnter={() => {
                 setLang(lang);
-                setScreen("school");
+                setScreen("hub");
               }}
               rm={rm}
             />
