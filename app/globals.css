@@ -281,3 +281,13 @@ body {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Sentence Path: the dashes between stops drift from A towards B. */
+@keyframes mtFlow {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+.mt-flow {
+  animation: mtFlow 900ms linear infinite;
+}

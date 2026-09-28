@@ -16,7 +16,7 @@ export type VerbKn = { dict: string; pres: string; past: string; cont: string; n
 export type VerbHi = { dict: string; stem: string; contStem?: string; fut?: { m: string[]; f: string[] }; perf: { m: string; f: string; pl: string }; ne: boolean };
 export type VerbTa = { dict: string; pres: string; past: string; fut: string; cont: string; inf: string };
 export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa };
-export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: Gender; ta: string; kind: "thing" | "place" | "language"; enByLang?: Record<Lang, string> };
+export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; kind: "thing" | "place" | "language"; enByLang?: Record<Lang, string> };
 export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; tense?: Tense };
 export type DeckEntry = { en: string; kn: string; hi: string; ta: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
@@ -136,7 +136,23 @@ function knVerb(v: VerbKn, p: PersonId, t: Tense, neg: boolean): Form {
 }
 
 // ............................................................ Hindi
-function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG: Gender | null): Form {
+// In a compound verb (practice karna, kaam karna, khaana banaana) "nahin" sits
+// right before the doing part: practice nahin karta, not nahin practice karta.
+function hiNot(phrase: string, v: VerbHi): string {
+  const lead = v.dict.split(" ").length - 1;
+  if (!phrase.startsWith("nahin ") || lead === 0) return phrase;
+  const words = phrase.slice(6).split(" ");
+  return [...words.slice(0, lead), "nahin", ...words.slice(lead)].join(" ");
+}
+
+function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG: Gender | "pl" | null): Form {
+  const f = hiForm(v, p, t, neg, g, objG);
+  if (!neg) return f;
+  const word = hiNot(f.word, v);
+  return word === f.word ? f : { word, parts: f.parts };
+}
+
+function hiForm(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG: Gender | "pl" | null): Form {
   const i = PERSON_INDEX[p];
   const s = DATA.suffix.hi;
   const fem = p === "she" || (p !== "he" && g === "f");
@@ -161,7 +177,7 @@ function hiVerb(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
   }
   if (t === "past") {
     if (v.ne) {
-      const perf = objG === "f" ? v.perf.f : v.perf.m;
+      const perf = objG === "pl" ? v.perf.pl : objG === "f" ? v.perf.f : v.perf.m;
       return { word: `${not}${perf}`, parts: `ne + ${perf} (matches the thing)` };
     }
     const perf = fem ? v.perf.f : plural ? v.perf.pl : v.perf.m;
@@ -207,7 +223,7 @@ function taVerb(v: VerbTa, p: PersonId, t: Tense, neg: boolean): Form {
   return neg ? { word: `${v.inf} theriyaadhu`, parts: `${v.inf} + theriyaadhu`, stem: v.inf } : { word: `${v.inf} theriyum`, parts: `${v.inf} + theriyum`, stem: v.inf };
 }
 
-export function verbForm(lang: Lang, verb: Verb, p: PersonId, t: Tense, neg = false, gender: Gender = "m", objG: Gender | null = null): Form {
+export function verbForm(lang: Lang, verb: Verb, p: PersonId, t: Tense, neg = false, gender: Gender = "m", objG: Gender | "pl" | null = null): Form {
   if (lang === "kn") return knVerb(verb.kn, p, t, neg);
   if (lang === "hi") return hiVerb(verb.hi, p, t, neg, gender, objG);
   return taVerb(verb.ta, p, t, neg);
@@ -275,7 +291,7 @@ export function build(lang: Lang, c: Choice): Built | null {
   if (lang === "hi") {
     const usesNe = c.tense === "past" && verb.hi.ne;
     const subj = c.tense === "can" ? pr.dat : usesNe ? pr.ne ?? pr.sub : pr.sub;
-    const v = hiVerb(verb.hi, c.person, c.tense, neg, g, obj ? obj.hiG : null);
+    const v = hiVerb(verb.hi, c.person, c.tense, neg, g, obj ? (obj.hiPl ? "pl" : obj.hiG) : null);
     pieces.push({
       word: subj,
       meaning: c.tense === "can" ? `to ${pr.en} (ability sits with the person)` : usesNe ? `${pr.en} + ne (past of a doing-verb)` : pr.en,
@@ -286,15 +302,17 @@ export function build(lang: Lang, c: Choice): Built | null {
     const body = pieces.map((p) => p.word).join(" ");
     const sentence = q ? `kya ${body}` : body;
     if (q) pieces.unshift({ word: "kya", meaning: "question marker (yes or no question)", role: "helper" });
-    if (usesNe && obj && obj.hiG === "f") note = `${objWord} is a feminine word, so the past verb ends in i.`;
+    if (usesNe && obj && obj.hiPl) note = `${objWord} counts as more than one, so the past verb ends in e.`;
+    else if (usesNe && obj && obj.hiG === "f") note = `${objWord} is a feminine word, so the past verb ends in i.`;
     else if (c.person !== "he" && c.person !== "she" && c.tense !== "past" && c.tense !== "can") note = `Gender is yours: a ${g === "f" ? "woman" : "man"} says it this way. Flip the toggle to hear the other form.`;
     return { sentence, english, pieces, note };
   }
 
   const v = taVerb(verb.ta, c.person, c.tense, neg);
-  const dative = c.tense === "can";
+  // Want and ability both sit with the person: enakku vaasikkanum, enakku vaasikka theriyum.
+  const dative = c.tense === "can" || c.tense === "want";
   const subj = dative ? pr.dat : pr.sub;
-  pieces.push({ word: subj, meaning: dative ? `to ${pr.en} (ability sits with the person)` : pr.en, role: "subject" });
+  pieces.push({ word: subj, meaning: dative ? `to ${pr.en} (${c.tense === "want" ? "a wish" : "ability"} sits with the person)` : pr.en, role: "subject" });
   if (obj) pieces.push({ word: objWord, meaning: objEn, role: "object" });
   const word = q ? taQuestion(v.word) : v.word;
   pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb", stem: v.stem });

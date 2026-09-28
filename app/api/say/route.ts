@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { hasNativeScript } from "@/lib/romanize";
 
+// Sarvam runs in India, so these calls run from Mumbai rather than the US.
+export const preferredRegion = "bom1";
+
 // Sentence Studio voice: speaks any romanized sentence the learner built or
 // corrected, in the same Sarvam Bulbul V3 teacher voice the live calls use.
 // Returns base64 audio (wav). No em dashes anywhere.

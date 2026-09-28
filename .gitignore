@@ -44,8 +44,8 @@ next-env.d.ts
 keys.txt
 agent/.env
 agent/.venv/
-agent/.venv/
 agent/__pycache__/
 
 # Classroom memory (agent-local, single user)
 progress.json
+scripts/__pycache__/

@@ -119,14 +119,14 @@ export function ClassroomScreen({ lang, onLanguageChange, onTutor, onLesson, onB
           style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: C.sodium }}
         >
           <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full text-[16px]" style={{ background: "rgba(255,179,92,0.10)" }} aria-hidden="true">
-            ✎
+            🧩
           </span>
           <span className="flex-1">
             <span className="block text-[15px] font-bold" style={{ color: C.milk }}>
-              Sentence Studio: grammar you can see
+              Build a sentence
             </span>
             <span className="mt-0.5 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              Type or say a line, get the fix and the rule. Build sentences by tapping, flip verbs, word decks with music first.
+              Tap who, the action, what, and when. The spoken line appears with the beats to say it, in any tense.
             </span>
           </span>
           <span className="text-[20px]" style={{ color: C.sodium }} aria-hidden="true">

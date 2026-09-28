@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LANG_NAME } from "@/lib/curriculum";
 import {
-  build,
   COMMANDS,
   COMMAND_NOTE,
   DECKS,
@@ -12,37 +11,25 @@ import {
   FRAMES,
   OBJECTS,
   objectLabel,
-  PERSON_ORDER,
-  PERSONS,
   RULES,
-  splitEnding,
-  table,
-  TENSES,
-  TIMES,
-  todaysLines,
-  VERBS,
-  type Built,
-  type Choice,
   type DeckId,
   type Gender,
   type Piece,
-  type PersonId,
-  type Tense,
 } from "@/lib/grammar";
 import { C, DISPLAY, HOST, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
-import { LanguageSelector } from "./LanguageSelector";
 import { Chip, Label, LILAC, Lit, SaveButton, Section, SKY, SpeakButton, useSpeaker, type Speaker } from "./studio-bits";
 import { ReviewRoom } from "./ReviewRoom";
 import { countFor } from "@/lib/review";
 import { ScenesRoom, ShapesRoom, type Practice } from "./StudioRooms";
+import { SentencePath } from "./SentencePath";
 
-// Sentence Studio. Text-first learning next to the voice calls. Seven rooms on
-// one scroll: Check (say or type a line, get the fix and the rule), Build (tap
-// the pieces together and watch the ending change), Frames (twenty everyday
-// sentence shapes with a slot), Commands (what a teacher says in a music
-// room), Flip (one verb through every person), Rules, and Decks (music first).
-// Every form comes from vetted tables; the brain is used only to check free
-// text. Romanized only, never native script. No em dashes anywhere.
+// Build: the second mode next to the voice calls. The Sentence Path sits on
+// top (pick who, action, what, when; see and hear the spoken line in Kannada,
+// Hindi, Tamil, or French). Below it, one practice tool at a time: Check (say
+// or type a line, get the fix and the rule), Review, Scenes, Frames, Commands,
+// Words, Shapes, Rules. Every form comes from vetted tables; the brain is used
+// only to check free text. Romanized only, never native script. No em dashes
+// anywhere.
 
 type Correction = { type: string; was: string; now: string; why: string };
 type Check = {
@@ -82,25 +69,16 @@ const RULE_FOR: Record<Lang, Record<string, number>> = {
   ta: { tense: 2, ending: 1, gender: 5, verb: 6, "word-order": 0, "missing-word": 7, "word-choice": 6, politeness: 5, spelling: 1 },
 };
 
-const DEFAULT_OBJECT: Record<string, string | null> = {
-  play: "piano", sing: "song", practise: "piano", listen: "music", learn: "language", teach: "language", dance: null,
-  do: null, go: "home", come: "home", think: null, travel: "city", speak: "language", eat: "rice", drink: "tea", see: "movie",
-  read: "book", write: "song", work: null, sleep: null, playgame: null, give: "money", take: "key", buy: "book", say: null,
-  wait: null, sit: null, walk: "home", cook: "rice", help: null, call: null,
-};
-
-type Room = "review" | "check" | "build" | "shapes" | "frames" | "scenes" | "commands" | "flip" | "rules" | "decks";
-const ROOMS: { id: Room; label: string }[] = [
-  { id: "review", label: "Review" },
-  { id: "check", label: "Check" },
-  { id: "build", label: "Build" },
-  { id: "shapes", label: "Shapes" },
-  { id: "frames", label: "Frames" },
-  { id: "scenes", label: "Scenes" },
-  { id: "commands", label: "Commands" },
-  { id: "flip", label: "Flip" },
-  { id: "rules", label: "Rules" },
-  { id: "decks", label: "Decks" },
+type Room = "review" | "check" | "shapes" | "frames" | "scenes" | "commands" | "rules" | "decks";
+const TOOLS: { id: Room; label: string; emoji: string }[] = [
+  { id: "check", label: "Check", emoji: "✍️" },
+  { id: "review", label: "Review", emoji: "🔁" },
+  { id: "scenes", label: "Scenes", emoji: "🎭" },
+  { id: "frames", label: "Frames", emoji: "🧩" },
+  { id: "commands", label: "Commands", emoji: "📣" },
+  { id: "decks", label: "Words", emoji: "🗂️" },
+  { id: "shapes", label: "Shapes", emoji: "🧱" },
+  { id: "rules", label: "Rules", emoji: "📏" },
 ];
 
 // ............................................................ local memory
@@ -187,33 +165,6 @@ function useRecorder(lang: Lang, onText: (text: string) => void) {
 }
 
 // ............................................................ bits
-function Stage({ built, speaker, big = true }: { built: Built; speaker: Speaker; big?: boolean }) {
-  return (
-    <div key={built.sentence} style={{ animation: "mtFade 320ms ease both" }}>
-      <div className="flex flex-wrap items-end gap-x-2.5 gap-y-3">
-        {built.pieces.map((p, i) => (
-          <span key={i} className="flex flex-col">
-            <span className="mb-1 text-[9.5px] font-bold" style={{ color: ROLE[p.role].color, letterSpacing: 1.2, opacity: 0.85 }}>
-              {ROLE[p.role].label.toUpperCase()}
-            </span>
-            {p.role === "verb" ? (
-              <Lit word={p.word} stem={p.stem} size={big ? 26 : 18} />
-            ) : (
-              <span style={{ color: C.milk, fontFamily: MONO, fontSize: big ? 26 : 18, fontWeight: 600 }}>{p.word}</span>
-            )}
-          </span>
-        ))}
-      </div>
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-        <span className="text-[14px]" style={{ color: C.muted }}>
-          {built.english}
-        </span>
-        <SpeakButton text={built.sentence} speaker={speaker} size={big ? "lg" : "md"} />
-      </div>
-    </div>
-  );
-}
-
 function WordRow({ word, meaning, role }: { word: string; meaning: string; role?: Piece["role"] }) {
   return (
     <div className="flex items-baseline gap-3 py-1.5" style={{ borderBottom: `1px solid ${LINE_SOFT}` }}>
@@ -228,36 +179,32 @@ function WordRow({ word, meaning, role }: { word: string; meaning: string; role?
 }
 
 // ............................................................ screen
-type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null };
+type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null; rm?: boolean };
 
-export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) {
+export function BuildScreen({ lang, onLanguageChange, seed, rm = false }: BuildScreenProps) {
   const host = HOST[lang];
   const ln = LANG_NAME[lang];
   const scroller = useRef<HTMLDivElement | null>(null);
-  const anchors = useRef<Partial<Record<Room, HTMLElement | null>>>({});
-  const anchor = useCallback((id: string, el: HTMLElement | null) => {
-    anchors.current[id as Room] = el;
-  }, []);
+  const toolsRef = useRef<HTMLDivElement | null>(null);
+  // Rooms used to sit on one long scroll; now one tool is open at a time.
+  const anchor = useCallback(() => undefined, []);
+  const [tool, setTool] = useState<Room>("check");
   const jump = (id: Room) => {
-    const root = scroller.current;
-    const el = anchors.current[id];
-    if (!root || !el) return;
-    const top = el.getBoundingClientRect().top - root.getBoundingClientRect().top + root.scrollTop - 64;
-    // Instant on purpose: smooth scrolling on a nested scroller was cut short
-    // in testing, and a jump that lands is better than a glide that stops.
-    root.scrollTo({ top });
+    setTool(id);
+    requestAnimationFrame(() => {
+      const root = scroller.current;
+      const el = toolsRef.current;
+      if (!root || !el) return;
+      root.scrollTo({ top: el.getBoundingClientRect().top - root.getBoundingClientRect().top + root.scrollTop - 12 });
+    });
   };
 
-  // Small memory: how much you have used the studio and what trips you up.
-  const [checked, setChecked] = useState(0);
-  const [heard, setHeard] = useState(0);
+  // Small memory: what trips you up.
   const [fixes, setFixes] = useState<Record<string, number>>({});
   useEffect(() => {
-    setChecked(readNumber("maatu-studio-checked"));
-    setHeard(readNumber("maatu-studio-heard"));
     setFixes(readFixes());
   }, []);
-  const onHeard = useCallback(() => setHeard(bump("maatu-studio-heard")), []);
+  const onHeard = useCallback(() => bump("maatu-studio-heard"), []);
   // Slow voice for learners, remembered per device.
   const [slow, setSlowState] = useState(false);
   useEffect(() => {
@@ -276,8 +223,8 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
   }, [lang, reviewVersion]);
   const touchReview = useCallback(() => setReviewVersion((v) => v + 1), []);
 
-  // Gender is the speaker's own; it changes Hindi forms and is told to the
-  // checker for every language.
+  // Gender is the speaker's own; it changes Hindi and French forms and is told
+  // to the checker for every language.
   const [gender, setGenderState] = useState<Gender>("m");
   useEffect(() => {
     const stored = window.localStorage.getItem("maatu-gender");
@@ -314,7 +261,7 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
         if (!res.ok) throw new Error(data.error ?? "The checker did not answer.");
         const result = data as Check;
         setCheck(result);
-        setChecked(bump("maatu-studio-checked"));
+        bump("maatu-studio-checked");
         if (result.corrections.length) {
           const tally = readFixes();
           for (const c of result.corrections) tally[c.type] = (tally[c.type] || 0) + 1;
@@ -346,6 +293,7 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
     seededRef.current = seed.nonce;
     setPractice(null);
     setText(seed.text);
+    jump("check");
     void runCheck(seed.text);
   }, [seed]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -357,34 +305,14 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
     jump("check");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Build.
-  const [personId, setPersonId] = useState<PersonId>("i");
+  // The verb the Shapes tool docks.
   const [verbId, setVerbId] = useState("play");
-  const [tense, setTense] = useState<Tense>("present");
-  const [objectId, setObjectId] = useState<string | null>("piano");
-  const [timeId, setTimeId] = useState<string | null>(null);
-  const [negative, setNegative] = useState(false);
-  const [question, setQuestion] = useState(false);
-  const pickVerb = (id: string) => {
-    setVerbId(id);
-    setObjectId(DEFAULT_OBJECT[id] ?? null);
-  };
-  const pickTime = (id: string | null) => {
-    setTimeId(id);
-    const t = TIMES.find((x) => x.id === id);
-    if (t?.tense) setTense(t.tense);
-  };
-  const choice: Choice = { person: personId, verb: verbId, tense, object: objectId, time: timeId, negative, question, gender };
-  const built = useMemo(() => build(lang, choice), [lang, personId, verbId, tense, objectId, timeId, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
-  const verb = VERBS.find((v) => v.id === verbId) ?? VERBS[0];
-  const flip = useMemo(() => table(lang, verbId, gender) ?? [], [lang, verbId, gender]);
-  const today = useMemo(() => todaysLines(lang, gender), [lang, gender]);
 
   // Frames.
   const [frameId, setFrameId] = useState("like");
   const [frameObj, setFrameObj] = useState("piano");
   const frame = FRAMES.find((f) => f.id === frameId) ?? FRAMES[0];
-  const frameObjects = OBJECTS.filter((o) => (frame.slot === "place" ? o.kind === "place" : o.kind !== "place"));
+  const frameObjects = OBJECTS.filter((o) => (frame.slot === "place" ? o.kind === "place" : o.kind === "thing" || o.kind === "language")).filter((o) => !["shopping", "exercise", "cooking", "cleaning", "homework", "order", "download", "ticket"].includes(o.id));
   const frameObject = frameObjects.find((o) => o.id === frameObj) ?? frameObjects[0];
   const filled = fillFrame(lang, frame, frameObject, gender);
   const pickFrame = (id: string) => {
@@ -404,130 +332,60 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
     setOpenRule(RULE_FOR[lang][type] ?? 0);
     jump("rules");
   };
-
-  const musicVerbs = VERBS.filter((v) => v.group === "music");
-  const coreVerbs = VERBS.filter((v) => v.group === "core");
-  const persons = PERSONS[lang];
   const topFixes = Object.entries(fixes).sort((a, b) => b[1] - a[1]).slice(0, 3);
-  const [activeRoom, setActiveRoom] = useState<Room>("check");
-
-  // Track which room is on screen for the sticky nav.
-  useEffect(() => {
-    const root = scroller.current;
-    if (!root || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        const id = (Object.entries(anchors.current).find(([, el]) => el === visible.target)?.[0] ?? null) as Room | null;
-        if (id) setActiveRoom(id);
-      },
-      { root, threshold: [0.2, 0.5], rootMargin: "-80px 0px -40% 0px" },
-    );
-    for (const el of Object.values(anchors.current)) if (el) io.observe(el);
-    return () => io.disconnect();
-  }, [lang]);
 
   return (
     <div ref={scroller} className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <div className="absolute inset-x-0 top-0 h-[360px] pointer-events-none" style={{ background: "radial-gradient(420px 220px at 20% 0, rgba(255,179,92,0.14), transparent 70%), radial-gradient(360px 200px at 85% 8%, rgba(191,239,219,0.10), transparent 70%)" }} aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-[820px] px-5 pt-11 sm:px-6 lg:pt-12">
+      <div className="relative mx-auto max-w-[1040px] px-5 pb-28 pt-10 sm:px-6 lg:pt-12">
         {/* ................................................. hero */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.4 }}>
-              SENTENCE STUDIO
-            </div>
-            <h1 className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 38, lineHeight: 1.0, color: C.milk, letterSpacing: -0.3 }}>
-              Say anything in {ln}.
-            </h1>
-            <p className="mt-2.5 max-w-[500px] text-[13.5px] leading-relaxed" style={{ color: C.muted }}>
-              Grammar you can see. Type or say a line and get the fix with the rule behind it. Tap the pieces together, watch the ending change, and let {host.name} say it back.
-            </p>
-          </div>
-          <div className="hidden flex-none flex-col items-end gap-1 sm:flex" aria-label="Studio activity">
-            <span className="text-[22px] font-semibold" style={{ color: C.milk, fontFamily: MONO }}>{heard}</span>
-            <span className="text-[10.5px]" style={{ color: C.faint, letterSpacing: 1 }}>LINES HEARD</span>
-            <span className="mt-2 text-[22px] font-semibold" style={{ color: C.milk, fontFamily: MONO }}>{checked}</span>
-            <span className="text-[10.5px]" style={{ color: C.faint, letterSpacing: 1 }}>LINES CHECKED</span>
-          </div>
+        <div className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.4 }}>
+          BUILD A SENTENCE
+        </div>
+        <h1 className="mt-1 text-[30px] sm:text-[36px]" style={{ fontFamily: DISPLAY, fontWeight: 500, lineHeight: 1.02, color: C.milk, letterSpacing: -0.3 }}>
+          From an idea to a spoken line.
+        </h1>
+        <p className="mt-2 max-w-[560px] text-[13.5px] leading-relaxed" style={{ color: C.muted }}>
+          Tap who, the action, what, and when. The line appears the way people actually say it.<span className="hidden sm:inline"> Then change one thing and hear only the ending move.</span>
+        </p>
+
+        <div className="mt-5">
+          <SentencePath lang={lang} onLanguageChange={onLanguageChange} gender={gender} setGender={setGender} slow={slow} setSlow={setSlow} onSaved={touchReview} rm={rm} />
         </div>
 
-        {/* ................................................. today's lines */}
-        <div className="mt-6">
-          <Label right={<span className="text-[11px]" style={{ color: C.faint }}>new every day</span>}>TODAY&apos;S THREE LINES</Label>
-          <div className="-mx-5 flex snap-x gap-3 overflow-x-auto px-5 pb-1 sm:-mx-6 sm:px-6" style={{ scrollbarWidth: "none" }}>
-            {today.map((line, i) => (
-              <div key={line.sentence} className="w-[280px] flex-none snap-start rounded-[16px] p-4 sm:w-[300px]" style={{ background: i === 0 ? "linear-gradient(135deg,rgba(255,179,92,0.16),rgba(232,80,58,0.05))" : C.tar, border: `1px solid ${i === 0 ? "rgba(255,179,92,0.34)" : LINE}` }}>
-                <div className="flex flex-wrap gap-x-1.5 text-[18px] leading-snug">
-                  {line.pieces.map((p, j) => (p.role === "verb" ? <Lit key={j} word={p.word} stem={p.stem} size={18} /> : <span key={j} style={{ color: C.milk, fontFamily: MONO, fontWeight: 600 }}>{p.word}</span>))}
-                </div>
-                <div className="mt-1.5 text-[12.5px]" style={{ color: C.muted }}>
-                  {line.english}
-                </div>
-                <div className="mt-3">
-                  <SpeakButton text={line.sentence} speaker={speaker} size="sm" />
-                </div>
-              </div>
-            ))}
+        {/* ................................................. toolbox */}
+        <div ref={toolsRef} className="mt-10">
+          <div className="text-[11px] font-bold" style={{ color: C.tube, letterSpacing: 1.4 }}>
+            MORE WAYS TO PRACTISE {ln.toUpperCase()}
           </div>
-        </div>
-      </div>
-
-      {/* ................................................. sticky rooms nav */}
-      <div className="sticky top-0 z-10 mt-5" style={{ background: "rgba(10,13,22,0.82)", backdropFilter: "blur(14px)", borderBottom: `1px solid ${LINE_SOFT}` }}>
-        <div className="mx-auto flex max-w-[820px] gap-1.5 overflow-x-auto px-5 py-2.5 sm:px-6" style={{ scrollbarWidth: "none" }} role="tablist" aria-label="Studio rooms">
-          {ROOMS.map((r) => {
-            const on = activeRoom === r.id;
-            return (
-              <button
-                key={r.id}
-                type="button"
-                role="tab"
-                aria-selected={on}
-                onClick={() => {
-                  setActiveRoom(r.id);
-                  jump(r.id);
-                }}
-                className="flex-none rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2"
-                style={{ background: on ? "rgba(255,179,92,0.14)" : "transparent", color: on ? C.sodium : C.muted, outlineColor: C.sodium, transition: "background 140ms ease" }}
-              >
-                {r.label}
-                {r.id === "review" && reviewCounts.due > 0 && (
-                  <span className="ml-1.5 rounded-full px-1.5 text-[10px]" style={{ background: C.tube, color: C.ink }}>{reviewCounts.due}</span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="relative mx-auto max-w-[820px] px-5 pb-28 sm:px-6">
-        <div className="mt-5 grid gap-3 rounded-[16px] p-4 sm:grid-cols-[1fr_auto]" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
-          <LanguageSelector lang={lang} onChange={onLanguageChange} label="Language" />
-          <div>
-            <Label>I AM</Label>
-            <div className="grid grid-cols-2 gap-2" role="group" aria-label="Your gender, for verb endings">
-              {(["m", "f"] as Gender[]).map((g) => (
-                <Chip key={g} on={gender === g} onClick={() => setGender(g)}>
-                  {g === "m" ? "a man" : "a woman"}
-                </Chip>
-              ))}
-            </div>
-            <div className="mt-3">
-              <Label>VOICE</Label>
-              <div className="grid grid-cols-2 gap-2" role="group" aria-label="Voice speed">
-                <Chip on={!slow} onClick={() => setSlow(false)} tone="sky">natural</Chip>
-                <Chip on={slow} onClick={() => setSlow(true)} tone="sky">slower</Chip>
-              </div>
-            </div>
+          <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-8" role="tablist" aria-label="Practice tools">
+            {TOOLS.map((t) => {
+              const on = tool === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => setTool(t.id)}
+                  className="relative flex flex-col items-center gap-1 rounded-[14px] px-1 py-2.5 focus-visible:outline focus-visible:outline-2"
+                  style={{ background: on ? "rgba(191,239,219,0.14)" : C.tar, border: `1px solid ${on ? "rgba(191,239,219,0.5)" : LINE}`, outlineColor: C.tube }}
+                >
+                  <span className="text-[20px] leading-none" aria-hidden="true">{t.emoji}</span>
+                  <span className="text-[11.5px] font-semibold" style={{ color: on ? C.milk : C.muted }}>{t.label}</span>
+                  {t.id === "review" && reviewCounts.due > 0 && (
+                    <span className="absolute -top-1.5 right-1.5 rounded-full px-1.5 text-[10px] font-bold" style={{ background: C.tube, color: C.ink }}>{reviewCounts.due}</span>
+                  )}
+                </button>
+              );
+            })}
           </div>
-        </div>
 
-        <ReviewRoom lang={lang} speaker={speaker} anchor={anchor} version={reviewVersion} onChange={touchReview} />
+        {tool === "review" && <ReviewRoom lang={lang} speaker={speaker} anchor={anchor} version={reviewVersion} onChange={touchReview} />}
 
         {/* ................................................. check */}
+        {tool === "check" && (
         <Section id="check" anchor={anchor} kicker="CHECK" title="Say it your way" blurb={`English, ${ln}, or a mix. Leave a ___ where you are hunting for a word. ${host.name} fixes one thing at a time and tells you the rule.`} tone="tube">
           {practice && (
             <div className="mt-4 rounded-[14px] p-4" style={{ background: "linear-gradient(135deg,rgba(245,194,255,0.12),rgba(191,239,219,0.05))", border: "1px solid rgba(245,194,255,0.32)", animation: "mtFade 260ms ease both" }}>
@@ -712,108 +570,12 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
             </div>
           )}
         </Section>
+        )}
 
-        {/* ................................................. build */}
-        <Section id="build" anchor={anchor} kicker="BUILD" title="Tap the pieces together" blurb="Who, what, when. Only the ending moves; the lit part of the verb is what to listen for.">
-          {built && (
-            <div className="mt-4 rounded-[18px] p-5" style={{ background: "linear-gradient(135deg,rgba(255,179,92,0.13),rgba(232,80,58,0.04))", border: "1px solid rgba(255,179,92,0.32)" }}>
-              <Stage built={built} speaker={speaker} />
-              <div className="mt-2">
-                <SaveButton lang={lang} en={built.english} target={built.sentence} onChange={touchReview} size="sm" />
-              </div>
-              <div className="mt-4">
-                {built.pieces.map((p, i) => (
-                  <WordRow key={i} word={p.word} meaning={p.meaning} role={p.role} />
-                ))}
-              </div>
-              {built.note && (
-                <div className="mt-3 text-[12.5px] leading-relaxed" style={{ color: "rgba(255,179,92,0.9)" }}>
-                  {built.note}
-                </div>
-              )}
-              {speaker.error && (
-                <div className="mt-2 text-[12px]" style={{ color: "#FFB3A6" }} role="alert">
-                  {speaker.error}
-                </div>
-              )}
-              <div className="mt-3">
-                <button type="button" onClick={() => { setText(built.sentence); void runCheck(built.sentence); jump("check"); }} className="text-[12.5px] font-semibold" style={{ color: C.tube }}>
-                  Send to the checker ›
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className="mt-5">
-            <Label>WHO</Label>
-            <div className="flex flex-wrap gap-2">
-              {PERSON_ORDER.map((id, i) => (
-                <Chip key={id} on={personId === id} onClick={() => setPersonId(id)} title={persons[i].hint} tone="tube">
-                  {persons[i].sub} <span style={{ opacity: 0.6 }}>{persons[i].en}{persons[i].hint ? `, ${persons[i].hint}` : ""}</span>
-                </Chip>
-              ))}
-            </div>
-          </div>
-          <div className="mt-4">
-            <Label right={<span className="text-[11px]" style={{ color: C.sodium }}>music first</span>}>ACTION</Label>
-            <div className="flex flex-wrap gap-2">
-              {musicVerbs.map((v) => (
-                <Chip key={v.id} on={verbId === v.id} onClick={() => pickVerb(v.id)}>
-                  {v.en.base} <span style={{ opacity: 0.6 }}>{v[lang].dict}</span>
-                </Chip>
-              ))}
-            </div>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {coreVerbs.map((v) => (
-                <Chip key={v.id} on={verbId === v.id} onClick={() => pickVerb(v.id)} small>
-                  {v.en.base}{v.id === "playgame" ? " (a game)" : ""} <span style={{ opacity: 0.6 }}>{v[lang].dict}</span>
-                </Chip>
-              ))}
-            </div>
-          </div>
-          <div className="mt-4">
-            <Label>WHAT OR WHERE</Label>
-            <div className="flex flex-wrap gap-2">
-              <Chip on={objectId === null} onClick={() => setObjectId(null)} tone="lilac" small>nothing</Chip>
-              {OBJECTS.map((o) => (
-                <Chip key={o.id} on={objectId === o.id} onClick={() => setObjectId(o.id)} tone="lilac" small>
-                  {objectLabel(o, lang)} <span style={{ opacity: 0.6 }}>{o[lang]}</span>
-                </Chip>
-              ))}
-            </div>
-          </div>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div>
-              <Label>WHEN</Label>
-              <div className="flex flex-wrap gap-2">
-                {TENSES.map((t) => (
-                  <Chip key={t.id} on={tense === t.id} onClick={() => setTense(t.id)} title={t.en}>
-                    {t.label}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-            <div>
-              <Label>TIME WORD</Label>
-              <div className="flex flex-wrap gap-2">
-                <Chip on={timeId === null} onClick={() => pickTime(null)} tone="sky" small>none</Chip>
-                {TIMES.map((t) => (
-                  <Chip key={t.id} on={timeId === t.id} onClick={() => pickTime(t.id)} tone="sky" small>
-                    {t.en} <span style={{ opacity: 0.6 }}>{t[lang]}</span>
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Chip on={negative} onClick={() => setNegative(!negative)} tone="tube">not</Chip>
-            <Chip on={question} onClick={() => setQuestion(!question)} tone="tube">question?</Chip>
-          </div>
-        </Section>
-
-        <ShapesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} verbId={verbId} onVerb={pickVerb} />
+        {tool === "shapes" && <ShapesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} verbId={verbId} onVerb={setVerbId} />}
 
         {/* ................................................. frames */}
+        {tool === "frames" && (
         <Section id="frames" anchor={anchor} kicker="FRAMES" title="Twenty shapes, any word" blurb="Learn the shape once, drop any word in the slot. This is how natives actually build most of what they say." tone="lilac">
           <div className="mt-4 rounded-[18px] p-5" style={{ background: "linear-gradient(135deg,rgba(245,194,255,0.12),rgba(159,211,255,0.04))", border: "1px solid rgba(245,194,255,0.3)" }}>
             <div key={filled.sentence} style={{ animation: "mtFade 320ms ease both" }}>
@@ -862,10 +624,12 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
             </div>
           </div>
         </Section>
+        )}
 
-        <ScenesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} onPractise={startPractice} onSaved={touchReview} />
+        {tool === "scenes" && <ScenesRoom lang={lang} gender={gender} speaker={speaker} anchor={anchor} onPractise={startPractice} onSaved={touchReview} />}
 
         {/* ................................................. commands */}
+        {tool === "commands" && (
         <Section id="commands" anchor={anchor} kicker="COMMANDS" title="What a teacher says" blurb={COMMAND_NOTE[lang]} tone="sky">
           <div className="mt-4 flex gap-2">
             <Chip on={polite} onClick={() => setPolite(true)} tone="sky">polite</Chip>
@@ -887,51 +651,10 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
             Tap any command to hear it.
           </div>
         </Section>
-
-        {/* ................................................. flip */}
-        <Section id="flip" anchor={anchor} kicker="FLIP" title={`${verb.en.base}: ${verb[lang].dict}`} blurb={verb.note ?? "One ending per person. Learn it on this verb and it works on every verb."}>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {VERBS.map((v) => (
-              <Chip key={v.id} on={verbId === v.id} onClick={() => pickVerb(v.id)} small>
-                {v.en.base}
-              </Chip>
-            ))}
-          </div>
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-[540px] border-collapse text-left text-[13px]">
-              <thead>
-                <tr style={{ color: C.mono }}>
-                  <th className="pb-2 pr-3 text-[11px] font-bold" style={{ letterSpacing: 1 }}>WHO</th>
-                  <th className="pb-2 pr-3 text-[11px] font-bold" style={{ letterSpacing: 1 }}>EVERY DAY</th>
-                  <th className="pb-2 pr-3 text-[11px] font-bold" style={{ letterSpacing: 1 }}>PAST</th>
-                  <th className="pb-2 text-[11px] font-bold" style={{ letterSpacing: 1 }}>FUTURE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {flip.map((row) => (
-                  <tr key={row.person} style={{ borderTop: `1px solid ${LINE_SOFT}` }}>
-                    <td className="py-2.5 pr-3" style={{ color: C.muted }}>{row.person}</td>
-                    {[row.present, row.past, row.future].map((cell, i) => {
-                      const line = `${row.sub} ${cell.word}`;
-                      return (
-                        <td key={i} className="py-2.5 pr-3">
-                          <button type="button" onClick={() => void speaker.speak(line)} className="text-left focus-visible:outline focus-visible:outline-2" style={{ outlineColor: C.sodium, opacity: speaker.playing === line ? 1 : 0.92 }} aria-label={`Hear ${line}`}>
-                            <Lit word={cell.word} stem={cell.stem} size={14} color={speaker.playing === line ? C.tube : C.sodium} />
-                          </button>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-2 text-[11.5px]" style={{ color: C.faint }}>
-            Tap any form to hear it with its subject.{lang === "kn" ? " Kannada uses the same form for every day and future." : lang === "hi" ? " Switch I am to hear the other gender." : ""}
-          </div>
-        </Section>
+        )}
 
         {/* ................................................. rules */}
+        {tool === "rules" && (
         <Section id="rules" anchor={anchor} kicker="RULES" title={`${ln} in ${RULES[lang].length} rules`} blurb="Learn these once and you can build sentences you have never heard.">
           <div className="mt-4 flex flex-col gap-2">
             {RULES[lang].map((r, i) => {
@@ -965,8 +688,10 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
             })}
           </div>
         </Section>
+        )}
 
         {/* ................................................. decks */}
+        {tool === "decks" && (
         <Section id="decks" anchor={anchor} kicker="DECKS" title="Words to keep in your pocket" blurb="Tap a row to hear it. The small line is how to remember it." tone="tube">
           <div className="mt-4 flex flex-wrap gap-2">
             {DECK_ORDER.map((d) => (
@@ -1019,9 +744,12 @@ export function BuildScreen({ lang, onLanguageChange, seed }: BuildScreenProps) 
             })}
           </div>
         </Section>
+        )}
+
+        </div>
 
         <div className="mt-6 text-center text-[11.5px]" style={{ color: C.faint }}>
-          Everything here is spoken {ln} the way people in {host.place.split(",").pop()?.trim()} talk. Romanized only, no script, no plural endings.
+          Everything here is spoken {ln} the way people in {host.place.split(",").pop()?.trim()} talk. Romanized only, no script, no plural endings. French is spoken Paris French.
         </div>
       </div>
     </div>

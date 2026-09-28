@@ -453,14 +453,14 @@ function Hub({
           style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: C.sodium }}
         >
           <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full text-[20px]" style={{ background: "rgba(255,179,92,0.10)" }} aria-hidden="true">
-            ✎
+            🧩
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-[17px] font-bold" style={{ color: C.milk }}>
-              Sentence Studio
+              Build a sentence
             </span>
             <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              Type or say any line and get it fixed with the rule. Tap words together, flip verbs, hear it in {host.name}&apos;s voice. Music words first.
+              Pick who, the action, what, and when. See it and hear it in {LANG_NAME[lang]}, then flip it to did, doing, and will do. French too.
             </span>
           </span>
           <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>
@@ -1254,7 +1254,7 @@ function SettingsScreen({
 
 // ....................................................... NAV SHELL
 const TABS: { tab: Tab; label: string }[] = [
-  { tab: "hub", label: "Practice" },
+  { tab: "hub", label: "Talk" },
   { tab: "school", label: "Learn" },
   { tab: "build", label: "Build" },
   { tab: "progress", label: "Progress" },
@@ -1542,7 +1542,7 @@ export default function MaatuApp() {
           ) : screen === "school" ? (
             <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} onBuild={() => setScreen("build")} />
           ) : screen === "build" ? (
-            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} />
+            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} rm={rm} />
           ) : screen === "settings" ? (
             <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}

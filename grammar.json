@@ -530,7 +530,7 @@
     "pres": "solli kodukku",
     "past": "solli kodutt",
     "fut": "solli kodupp",
-    "cont": "solli koduttu",
+    "cont": "solli kuduthuttu",
     "inf": "solli kodukka"
    }
   },
@@ -1201,7 +1201,7 @@
     "pres": "kudukku",
     "past": "kudutt",
     "fut": "kudupp",
-    "cont": "kuduttu",
+    "cont": "kuduthuttu",
     "inf": "kudukka"
    }
   },
@@ -1259,7 +1259,7 @@
     "pres": "edukku",
     "past": "edutt",
     "fut": "edupp",
-    "cont": "eduttu",
+    "cont": "eduthuttu",
     "inf": "edukka"
    }
   },
@@ -1626,6 +1626,7 @@
    "kn": "drums",
    "hi": "drums",
    "hiG": "m",
+   "hiPl": true,
    "ta": "drums",
    "kind": "thing"
   },
@@ -1766,6 +1767,7 @@
    "kn": "duddu",
    "hi": "paise",
    "hiG": "m",
+   "hiPl": true,
    "ta": "kaasu",
    "kind": "thing"
   },
@@ -1840,6 +1842,87 @@
    "hiG": "m",
    "ta": "school-ku",
    "kind": "place"
+  },
+  {
+   "id": "football",
+   "en": "football",
+   "kn": "football",
+   "hi": "football",
+   "hiG": "m",
+   "ta": "football",
+   "kind": "thing"
+  },
+  {
+   "id": "cricket",
+   "en": "cricket",
+   "kn": "cricket",
+   "hi": "cricket",
+   "hiG": "m",
+   "ta": "cricket",
+   "kind": "thing"
+  },
+  {
+   "id": "shopping",
+   "en": "shopping",
+   "kn": "shopping",
+   "hi": "shopping",
+   "hiG": "f",
+   "ta": "shopping",
+   "kind": "thing"
+  },
+  {
+   "id": "exercise",
+   "en": "exercise",
+   "kn": "exercise",
+   "hi": "exercise",
+   "hiG": "f",
+   "ta": "exercise",
+   "kind": "thing"
+  },
+  {
+   "id": "cleaning",
+   "en": "cleaning",
+   "kn": "clean",
+   "hi": "safaai",
+   "hiG": "f",
+   "ta": "clean",
+   "kind": "thing"
+  },
+  {
+   "id": "homework",
+   "en": "homework",
+   "kn": "homework",
+   "hi": "homework",
+   "hiG": "m",
+   "ta": "homework",
+   "kind": "thing"
+  },
+  {
+   "id": "order",
+   "en": "an order",
+   "kn": "order",
+   "hi": "order",
+   "hiG": "m",
+   "ta": "order",
+   "kind": "thing"
+  },
+  {
+   "id": "download",
+   "en": "a download",
+   "kn": "download",
+   "hi": "download",
+   "hiG": "m",
+   "ta": "download",
+   "kind": "thing"
+  },
+  {
+   "id": "ticket",
+   "en": "a ticket",
+   "kn": "ticket book",
+   "hi": "ticket book",
+   "hiG": "m",
+   "ta": "ticket book",
+   "kind": "thing"
   }
  ],
  "times": [

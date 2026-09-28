@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { hasNativeScript, romanizeText } from "@/lib/romanize";
 
+// Sarvam runs in India, so these calls run from Mumbai rather than the US.
+export const preferredRegion = "bom1";
+
 // Sentence Studio ears: takes one short browser recording, transcribes it with
 // Sarvam Saarika (auto-detect, so English and code-mixed speech survive), and
 // returns the romanized text ready for the checker. No em dashes anywhere.
