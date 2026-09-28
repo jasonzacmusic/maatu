@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
 import { useMaatuCall, type Speaker, type Line, type PracticeLine } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
-import { ALL_LESSONS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
+import { ALL_LESSONS, FRENCH_META, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
 import { ClassroomScreen } from "./ClassroomScreen";
 import { BuildScreen } from "./BuildScreen";
 import { countFor } from "@/lib/review";
@@ -366,6 +366,7 @@ function Hub({
   onScenario,
   onSchool,
   onTutor,
+  onFrench,
   onBuild,
   rm,
 }: {
@@ -377,6 +378,7 @@ function Hub({
   onScenario: (shop: ShopId) => void;
   onSchool: () => void;
   onTutor: () => void;
+  onFrench: () => void;
   onBuild: () => void;
   rm: boolean;
 }) {
@@ -418,6 +420,19 @@ function Hub({
             </span>
           </span>
           <span className="text-[24px]" style={{ color: C.tube }} aria-hidden="true">›</span>
+        </button>
+
+        <button
+          onClick={onFrench}
+          className="mt-2 flex w-full items-center gap-3 rounded-[16px] px-4 py-3 text-left focus-visible:outline focus-visible:outline-2"
+          style={{ background: "rgba(191,239,219,0.05)", border: "1px solid rgba(191,239,219,0.22)", outlineColor: C.tube }}
+        >
+          <span className="text-[20px]" aria-hidden="true">🥐</span>
+          <span className="min-w-0 flex-1 text-[14px] font-semibold" style={{ color: C.milk }}>
+            Or chat in French with Camille
+            <span className="block text-[11.5px] font-normal" style={{ color: C.muted }}>Same idea, everyday Paris French</span>
+          </span>
+          <span className="text-[18px]" style={{ color: C.tube }} aria-hidden="true">›</span>
         </button>
 
         <button
@@ -821,7 +836,7 @@ function CallScreen({
         )}
 
         {/* slow down */}
-        <div className="flex justify-center pb-1">
+        <div className={"flex justify-center pb-1" + (meta.id === "tutor-fr" ? " hidden" : "")}>
           <button
             onClick={pressSlow}
             disabled={call.phase !== "live" || call.slowerPace || slowPending}
@@ -1484,16 +1499,18 @@ export default function MaatuApp() {
   // Free talk is reachable from both the hub and the classroom, so remember
   // where it started and go back there when the call ends.
   const [practiceLine, setPracticeLine] = useState<PracticeLine | null>(null);
-  const startTutor = useCallback((line?: PracticeLine) => {
+  const startTutor = useCallback((line?: PracticeLine, french = false) => {
     setPracticeLine(line && line.target ? line : null);
     setTutorOrigin(screen === "school" ? "school" : screen === "build" ? "build" : "hub");
-    setActivePersona(`tutor-${lang}`);
+    setActivePersona(french ? "tutor-fr" : `tutor-${lang}`);
     setScreen("call");
   }, [lang, screen]);
 
   const isClassroom = activePersona.startsWith("teacher-") || activePersona.startsWith("tutor-");
   const meta: PersonaMeta = isClassroom
-    ? activePersona.startsWith("tutor-")
+    ? activePersona === "tutor-fr"
+      ? FRENCH_META
+      : activePersona.startsWith("tutor-")
       ? teacherMeta(lang, null)
       : teacherMeta(lang, activePersona.split("-").slice(2).join("-"))
     : requirePersona(activePersona);
@@ -1521,6 +1538,9 @@ export default function MaatuApp() {
         if (passed) markDone(lang, lessonId);
         if (lesson) setLastLessonResult({ lesson, passed, transcript: payload.transcript });
         setScreen(lesson ? "lessonResult" : "school");
+      } else if (activePersona === "tutor-fr") {
+        // No coach report for French yet: go straight back where they came from.
+        setScreen(tutorOrigin);
       } else if (activePersona.startsWith("tutor-")) {
         setLastSession(payload);
         setScreen("debrief");
@@ -1567,7 +1587,7 @@ export default function MaatuApp() {
               rm={rm}
             />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={() => startTutor()} onBuild={() => setScreen("build")} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={() => startTutor()} onFrench={() => startTutor(undefined, true)} onBuild={() => setScreen("build")} rm={rm} />
           ) : screen === "lessonPreview" ? (
             <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
@@ -1591,7 +1611,7 @@ export default function MaatuApp() {
           ) : screen === "school" ? (
             <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={() => startTutor()} onLesson={openLesson} onBuild={() => setScreen("build")} />
           ) : screen === "build" ? (
-            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} rm={rm} onTalk={(line) => startTutor(line)} />
+            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} rm={rm} onTalk={(line, french) => startTutor(line, french)} />
           ) : screen === "settings" ? (
             <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}

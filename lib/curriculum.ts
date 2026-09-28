@@ -25,6 +25,21 @@ export const LANG_CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "
 const TEACHER_NAME: Record<Lang, string> = { kn: "Meera", hi: "Anjali", ta: "Kavya" };
 
 // A synthetic PersonaMeta so the Call screen can render a class or tutor session.
+// The French companion: Chat only (no course or scenes), voiced by Gemini Live.
+export const FRENCH_META: PersonaMeta = {
+  id: "tutor-fr",
+  language: "kn",
+  languageCode: "fr-FR",
+  languageName: "French",
+  scenario: "tutor",
+  shop: "school",
+  name: "Camille",
+  level: 0,
+  sceneLabel: "French · just talking",
+  teachMode: false,
+  rubric: ["what the learner asked for", "meaning communicated", "one useful next step"],
+};
+
 export function teacherMeta(lang: Lang, lessonId: string | null): PersonaMeta {
   const isTutor = lessonId === null;
   const lesson = lessonId ? ALL_LESSONS.find((l) => l.id === lessonId) : null;

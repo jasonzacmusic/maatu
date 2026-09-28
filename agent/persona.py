@@ -60,7 +60,9 @@ def _build_system_prompt(p: dict) -> str:
         ),
         (
             "This is a live spoken phone conversation. Never spell things out, never read "
-            "out punctuation, never write in the native script. Keep every turn short, one "
+            "out punctuation. Write every word of your own language in its native script so "
+            "the voice sounds like a local; English words stay in English letters. Keep every "
+            "turn short, one "
             "or two sentences, the way people actually talk on the phone."
         ),
         (

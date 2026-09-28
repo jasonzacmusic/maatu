@@ -22,6 +22,7 @@ CURRICULUM = ROOT / "curriculum.json"
 
 LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
 LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
+CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai"}
 
 # Warm female teacher voices (valid bulbul:v3), distinct per language.
 TEACHER = {
@@ -35,9 +36,13 @@ _CORE_RULES = (
     "- This is a live voice call. Everything you write is spoken aloud by a "
     "text-to-speech voice. Write exactly what you would SAY and nothing else: no "
     "lists, no headings, no asterisks, no brackets, no emoji.\n"
-    "- Latin letters ONLY. Never write {ln} in its native script, not one "
-    "character, not even in brackets next to the romanized form. The student "
-    "learns by ear and reads only romanized Latin spelling.\n"
+    "- SCRIPT FOR THE VOICE: write every {ln} word in {ln} native script, so the "
+    "voice pronounces it like a native speaker from {city}. Write English words in "
+    "English letters. The student never reads your raw text: the app shows them "
+    "only romanized Latin captions. The vetted romanized forms in this prompt tell "
+    "you exactly WHICH words to say; say those same colloquial words, written in "
+    "{ln} script, never a formal written variant. Never add a romanized copy or "
+    "brackets.\n"
     "- Keep every turn SHORT: at most two short sentences plus one {ln} word or "
     "phrase. If your turn is getting longer, cut it and let the student speak.\n"
     "- One new thing per turn, never two. End nearly every turn by asking the "
@@ -207,7 +212,7 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
     if not lesson:
         return None
     t = TEACHER[lang]
-    rules = _CORE_RULES.format(ln=ln)
+    rules = _CORE_RULES.format(ln=ln, city=CITY[lang])
 
     teach = "; ".join(lesson["teach"])
     lexicon = "\n".join("- " + x for x in _lexicon_lines(lesson, lang))
@@ -299,9 +304,13 @@ _COMPANION_RULES = (
     "- This is a live voice call. Everything you write is spoken aloud by a "
     "text-to-speech voice. Write exactly what you would SAY and nothing else: no "
     "lists, no headings, no asterisks, no brackets, no emoji.\n"
-    "- Latin letters ONLY. Never write {ln} in its native script, not one "
-    "character. The learner learns by ear and reads only romanized Latin "
-    "spelling.\n"
+    "- SCRIPT FOR THE VOICE: write every {ln} word in {ln} native script, so the "
+    "voice pronounces it like a native speaker from {city}. Write English words in "
+    "English letters. The learner never reads your raw text: the app shows them "
+    "only romanized Latin captions. The vetted romanized forms in this prompt tell "
+    "you exactly WHICH words to say; say those same colloquial words, written in "
+    "{ln} script, never a formal written variant. Never add a romanized copy or "
+    "brackets.\n"
     "- Keep every turn SHORT: at most two short sentences plus one {ln} phrase. "
     "Across the call the learner must talk more than you.\n"
     "- The learner's speech reaches you as an imperfect machine transcript. "
@@ -340,7 +349,7 @@ def _tutor_fields(lang: str) -> dict | None:
     if not ln:
         return None
     t = TEACHER[lang]
-    rules = _COMPANION_RULES.format(ln=ln)
+    rules = _COMPANION_RULES.format(ln=ln, city=CITY[lang])
 
     # Ground open tutoring in the complete course so any chapter question can
     # be answered with the same vetted forms as a structured lesson.
@@ -406,7 +415,7 @@ def _tutor_fields(lang: str) -> dict | None:
         f"{coverage}\n\n" + rules
     )
     opening = (
-        f"Greet the learner warmly in romanized {ln}. Then, in one short friendly "
+        f"Greet the learner warmly in {ln}. Then, in one short friendly "
         f"sentence in simple English (they may be a beginner), offer the choice: we can just chat, I can teach you anything you "
         f"name, or we can act out any scene you invent. Ask what they feel like today. "
         f"One short turn, no exercise in this opening."
@@ -466,7 +475,7 @@ def apply_practice_line(fields: dict, lang: str, practice: str, practice_en: str
         f"the same verb. After that, carry on as the normal companion."
     )
     opening = (
-        f"Greet the learner warmly in one short romanized {ln} phrase. Then say in English "
+        f"Greet the learner warmly in one short {ln} phrase. Then say in English "
         f"that you will practise the sentence they just built together: '{meaning}'. Say the "
         f"{ln} line once, slowly: '{practice}'. Ask them to say it back to you. One short "
         f"turn, nothing else."

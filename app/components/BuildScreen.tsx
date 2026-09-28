@@ -179,7 +179,7 @@ function WordRow({ word, meaning, role }: { word: string; meaning: string; role?
 }
 
 // ............................................................ screen
-type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null; rm?: boolean; onTalk?: (line: { target: string; en: string }) => void };
+type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null; rm?: boolean; onTalk?: (line: { target: string; en: string }, french?: boolean) => void };
 
 export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }: BuildScreenProps) {
   const host = HOST[lang];

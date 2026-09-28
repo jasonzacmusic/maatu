@@ -35,11 +35,13 @@ PHRASES = {
     "tutor-kn": "What does hegiddira mean?",
     "tutor-hi": "What does aap kaise hain mean?",
     "tutor-ta": "What does eppadi irukkeenga mean?",
+    "tutor-fr": "Hello. What does bonjour mean?",
 }
 
 ACKNOWLEDGMENTS = {"sari", "theek hai", "seri", "okay"}
 
 LANGUAGE = {
+    "fr": "en-IN",
     "kn": "kn-IN",
     "hi": "hi-IN",
     "ta": "ta-IN",

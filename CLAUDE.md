@@ -40,7 +40,7 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 
 - Frontend: Next.js + Tailwind, PWA, Vercel.
 - Realtime: LiveKit Cloud, one room per session.
-- STT: Sarvam Saarika v2.5 streaming with `language="unknown"` auto-detect for every call, so English questions and code-mixed speech remain understandable. TTS: Sarvam Bulbul V3 (streaming WS, voice per persona). Brain: Gemini Flash class behind a `Brain` interface with Anthropic fallback.
+- Voice (since 2026-09-28): every Kannada, Hindi, Tamil and French call runs on Gemini Live (`gemini-3.8-live`, speech to speech) in `agent/worker.py` `run_live` / `run_french`, because Sarvam Bulbul reading romanized text sounded like an outsider and replies took 2 to 3 s. The Sarvam pipeline (saaras:v4 translit STT, Bulbul v3 TTS, Gemini flash-lite brain) stays in the code as the fallback: set `MAATU_LIVE_LANGS=""`. The agent is hosted on LiveKit Cloud (`PRODUCTION=1 scripts/deploy_cloud_agent.sh`). Learners only ever see romanized captions; the app romanizes native-script text.
 - DB: Neon Postgres + Drizzle.
 - Latency budget: under 1.5s from user speech end to agent audio start. Log per turn.
 - Personas are JSON data. `secret_agenda` is rewritten nightly. Characters NEVER correct the learner in scene.
@@ -54,7 +54,7 @@ Rewriting a prompt to be *clearer* is allowed. Removing teaching behaviour is no
 - a wrong answer gets one warm correction, one retry, then moves on
 - an English question gets the English meaning FIRST, never a pronunciation drill
 - control phrases work: wait, stop, slow down, say that again, what does that mean, go back
-- romanized Latin only, never native script
+- the learner only ever SEES romanized Latin (the app romanizes captions); the Sarvam fallback voice gets native script so it sounds local
 - short turns that always end by asking the learner to say something
 
 ### Hard floors that crash the call if crossed

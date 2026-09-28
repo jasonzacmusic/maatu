@@ -201,13 +201,35 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
 
   const refreshMics = useCallback(async (room: Room) => {
     try {
-      const list = await Room.getLocalDevices("audioinput");
-      setMics(list.filter((d) => d.deviceId).map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` })));
-      setMicId(room.getActiveDevice("audioinput") ?? null);
+      const list = (await Room.getLocalDevices("audioinput")).filter((d) => d.deviceId);
+      const mapped = list.map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` }));
+      setMics(mapped);
+      let active = room.getActiveDevice("audioinput") ?? null;
+      if (active === "default") active = list.find((d) => d.deviceId !== "default" && d.groupId === list.find((x) => x.deviceId === "default")?.groupId)?.deviceId ?? active;
+      setMicId(active);
+      // Studio Macs often default to a routing or virtual device that carries
+      // no voice (Sangam, BlackHole, Loopback, Zoom, Teams, capture cards).
+      // With no remembered choice, move to the first real microphone.
+      let stored: string | null = null;
+      try {
+        stored = window.localStorage.getItem("maatu-mic");
+      } catch {
+        stored = null;
+      }
+      const label = (list.find((d) => d.deviceId === active)?.label ?? list.find((d) => d.deviceId === "default")?.label ?? "").toLowerCase();
+      const virtual = /sangam|blackhole|loopback|soundflower|aggregate|zoom|teams|telestream|obs|camo|virtual|nph default|cam link|display|monitor|benq/;
+      if (!stored && virtual.test(label)) {
+        const real = mapped.find((m) => m.id !== "default" && m.id !== "communications" && !virtual.test(m.label.toLowerCase()));
+        if (real) {
+          await room.switchActiveDevice("audioinput", real.id);
+          setMicId(real.id);
+          startMeter(room);
+        }
+      }
     } catch {
       setMics([]);
     }
-  }, []);
+  }, [startMeter]);
 
   const switchMic = useCallback(
     async (id: string) => {

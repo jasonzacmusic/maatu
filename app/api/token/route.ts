@@ -18,7 +18,7 @@ function randomSuffix() {
 function isValidPersona(personaId: string) {
   const base = personaId.replace(/-d[123]$/, "");
   if (PERSONAS[base]) return personaId === base || /^.+-d[123]$/.test(personaId);
-  if (/^tutor-(kn|hi|ta)$/.test(personaId)) return true;
+  if (/^tutor-(kn|hi|ta|fr)$/.test(personaId)) return true;
   const teacher = /^teacher-(kn|hi|ta)-(.+)$/.exec(personaId);
   return Boolean(teacher && ALL_LESSONS.some((lesson) => lesson.id === teacher[2]));
 }
