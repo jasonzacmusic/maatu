@@ -179,9 +179,9 @@ function WordRow({ word, meaning, role }: { word: string; meaning: string; role?
 }
 
 // ............................................................ screen
-type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null; rm?: boolean };
+type BuildScreenProps = { lang: Lang; onLanguageChange: (lang: Lang) => void; seed?: { text: string; nonce: number } | null; rm?: boolean; onTalk?: (line: { target: string; en: string }) => void };
 
-export function BuildScreen({ lang, onLanguageChange, seed, rm = false }: BuildScreenProps) {
+export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }: BuildScreenProps) {
   const host = HOST[lang];
   const ln = LANG_NAME[lang];
   const scroller = useRef<HTMLDivElement | null>(null);
@@ -351,7 +351,7 @@ export function BuildScreen({ lang, onLanguageChange, seed, rm = false }: BuildS
         </p>
 
         <div className="mt-5">
-          <SentencePath lang={lang} onLanguageChange={onLanguageChange} gender={gender} setGender={setGender} slow={slow} setSlow={setSlow} onSaved={touchReview} rm={rm} />
+          <SentencePath lang={lang} onLanguageChange={onLanguageChange} gender={gender} setGender={setGender} slow={slow} setSlow={setSlow} onSaved={touchReview} rm={rm} onTalk={onTalk} />
         </div>
 
         {/* ................................................. toolbox */}

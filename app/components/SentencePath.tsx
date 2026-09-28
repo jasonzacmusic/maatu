@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { verbById, type Gender } from "@/lib/grammar";
-import { C, DISPLAY, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
+import { C, DISPLAY, HOST, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 import {
   buildPath,
   HOW_TO_SAY,
@@ -418,6 +418,7 @@ type Props = {
   setSlow: (v: boolean) => void;
   onSaved: () => void;
   rm: boolean;
+  onTalk?: (line: { target: string; en: string }) => void;
 };
 
 const DEFAULT_OBJECT: Record<string, string | null> = {
@@ -425,7 +426,7 @@ const DEFAULT_OBJECT: Record<string, string | null> = {
   eat: "rice", drink: "tea", playgame: "football", speak: "language", see: "movie", read: "book", write: "song", buy: "coffee", give: "money", take: "key",
 };
 
-export function SentencePath({ lang, onLanguageChange, gender, setGender, slow, setSlow, onSaved, rm }: Props) {
+export function SentencePath({ lang, onLanguageChange, gender, setGender, slow, setSlow, onSaved, rm, onTalk }: Props) {
   const [plang, setPlang] = useState<PathLang>(lang);
   useEffect(() => {
     setPlang((cur) => (cur === "fr" ? cur : lang));
@@ -705,6 +706,21 @@ export function SentencePath({ lang, onLanguageChange, gender, setGender, slow, 
                   <PlayButton voice={voice} text={res.sentence} lang={plang} big />
                   {plang !== "fr" && <SaveButton lang={plang} en={res.english} target={res.sentence} onChange={onSaved} />}
                 </div>
+                {plang !== "fr" && onTalk && (
+                  <button
+                    type="button"
+                    onClick={() => onTalk({ target: res.sentence, en: res.english })}
+                    className="mt-3 flex w-full items-center gap-3 rounded-[14px] px-4 py-3 text-left focus-visible:outline focus-visible:outline-2"
+                    style={{ background: "rgba(191,239,219,0.10)", border: "1px solid rgba(191,239,219,0.38)", outlineColor: C.tube }}
+                  >
+                    <span className="text-[20px]" aria-hidden="true">🗣️</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[14px] font-bold" style={{ color: C.milk }}>Say it out loud with {HOST[plang].name}</span>
+                      <span className="block text-[12px]" style={{ color: C.muted }}>A live call: she drills this line, then flips it to did, doing and will do.</span>
+                    </span>
+                    <span className="text-[20px]" style={{ color: C.tube }} aria-hidden="true">›</span>
+                  </button>
+                )}
                 {voice.error && (
                   <div className="mt-2 text-[12px]" style={{ color: "#FFB3A6" }} role="alert">
                     {voice.error}

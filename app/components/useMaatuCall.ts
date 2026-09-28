@@ -59,7 +59,10 @@ export interface MaatuCall {
 
 type PendingLine = Omit<Line, "text"> & { key: string; text: string | null };
 
-export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2): MaatuCall {
+// A sentence built in the Build tab that the companion should drill out loud.
+export type PracticeLine = { target: string; en: string };
+
+export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, practice: PracticeLine | null = null): MaatuCall {
   const [phase, setPhase] = useState<CallPhase>("idle");
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
@@ -158,7 +161,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2): M
         persona.startsWith("teacher-") || persona.startsWith("tutor-")
           ? persona
           : `${persona}-d${difficultyStage}`;
-      const res = await fetch(`/api/token?persona=${encodeURIComponent(callPersona)}`);
+      const extra = practice && persona.startsWith("tutor-") ? `&practice=${encodeURIComponent(practice.target)}&practiceEn=${encodeURIComponent(practice.en)}` : "";
+      const res = await fetch(`/api/token?persona=${encodeURIComponent(callPersona)}${extra}`);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Could not reach the character.");
@@ -278,7 +282,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2): M
       setConnectionIssue(null);
       setPhase("error");
     }
-  }, [persona, difficultyStage, ensureAudioEl, flushDisplay, settlePendingFallbacks]);
+  }, [persona, difficultyStage, ensureAudioEl, flushDisplay, settlePendingFallbacks, practice]);
 
   const toggleMute = useCallback(async () => {
     const room = roomRef.current;

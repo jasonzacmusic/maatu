@@ -23,7 +23,13 @@ function isValidPersona(personaId: string) {
   return Boolean(teacher && ALL_LESSONS.some((lesson) => lesson.id === teacher[2]));
 }
 
-async function mint(personaId: string, learner: string) {
+// A line from the Build tab for the companion to drill: romanized Latin only,
+// short, and carried to the agent as the learner's participant metadata.
+function cleanLine(value: string | null | undefined, max = 160) {
+  return (value ?? "").replace(/[^\p{Script=Latin}\p{N}\s'?.,!-]/gu, "").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+async function mint(personaId: string, learner: string, practice?: { target: string; en: string }) {
   if (!LIVEKIT_URL || !API_KEY || !API_SECRET) {
     return NextResponse.json(
       { error: "LiveKit is not configured on the server." },
@@ -41,9 +47,11 @@ async function mint(personaId: string, learner: string) {
   const room = `${safePersona}__${randomSuffix()}`;
   const identity = `learner-${learner || randomSuffix()}`;
 
+  const line = practice && safePersona.startsWith("tutor-") ? { practice: cleanLine(practice.target), practiceEn: cleanLine(practice.en) } : null;
   const at = new AccessToken(API_KEY, API_SECRET, {
     identity,
     ttl: "30m",
+    metadata: line && line.practice ? JSON.stringify(line) : undefined,
   });
   at.addGrant({
     room,
@@ -59,7 +67,7 @@ async function mint(personaId: string, learner: string) {
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
-  return mint(body.persona ?? "", body.learner ?? "");
+  return mint(body.persona ?? "", body.learner ?? "", { target: body.practice ?? "", en: body.practiceEn ?? "" });
 }
 
 export async function GET(request: Request) {
@@ -67,5 +75,6 @@ export async function GET(request: Request) {
   return mint(
     searchParams.get("persona") ?? "",
     searchParams.get("learner") ?? "",
+    { target: searchParams.get("practice") ?? "", en: searchParams.get("practiceEn") ?? "" },
   );
 }

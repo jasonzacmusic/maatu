@@ -32,12 +32,6 @@
 
 No credential setup is pending. A physical phone ear test remains useful as a device check, but the production audio path is covered by the repeatable LiveKit probe.
 
-## Waiting on other agents (briefs already written, in docs/plan/)
-
-- Grok: research pack (02_RESEARCH_BRIEF_GROK.md)
-- ChatGPT: dialogue corpora + vocab decks (03_CONTENT_BRIEF_CHATGPT.md)
-- Claude Design: design tokens + 4 screen mocks (04_DESIGN_BRIEF_CLAUDE_DESIGN.md)
-
 ## Coach's notes
 
 - Teacher-mode verification: all 45 language and lesson combinations validated against the curriculum. Live Lesson 1 rooms `teacher-kn-l1__e2e1783874470`, `teacher-hi-l1__e2e1783874507`, and `teacher-ta-l1__e2e1783874546` taught proactively; Tamil caught and corrected a pronunciation miss.

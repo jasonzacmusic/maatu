@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
-import { useMaatuCall, type Speaker, type Line } from "./useMaatuCall";
+import { useMaatuCall, type Speaker, type Line, type PracticeLine } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import { ALL_LESSONS, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
 import { ClassroomScreen } from "./ClassroomScreen";
@@ -569,6 +569,7 @@ function CallScreen({
   onEnd,
   onBack,
   rm,
+  practice = null,
 }: {
   meta: PersonaMeta;
   lang: Lang;
@@ -577,8 +578,9 @@ function CallScreen({
   onEnd: (payload: SessionEnd) => void;
   onBack: () => void;
   rm: boolean;
+  practice?: PracticeLine | null;
 }) {
-  const call = useMaatuCall(meta.id, difficultyStage);
+  const call = useMaatuCall(meta.id, difficultyStage, practice);
   const [caps, setCaps] = useState(captionsDefault);
   const [slowPending, setSlowPending] = useState(false);
   const [sec, setSec] = useState(0);
@@ -1436,8 +1438,10 @@ export default function MaatuApp() {
 
   // Free talk is reachable from both the hub and the classroom, so remember
   // where it started and go back there when the call ends.
-  const startTutor = useCallback(() => {
-    setTutorOrigin(screen === "school" ? "school" : "hub");
+  const [practiceLine, setPracticeLine] = useState<PracticeLine | null>(null);
+  const startTutor = useCallback((line?: PracticeLine) => {
+    setPracticeLine(line && line.target ? line : null);
+    setTutorOrigin(screen === "school" ? "school" : screen === "build" ? "build" : "hub");
     setActivePersona(`tutor-${lang}`);
     setScreen("call");
   }, [lang, screen]);
@@ -1518,13 +1522,13 @@ export default function MaatuApp() {
               rm={rm}
             />
           ) : screen === "hub" ? (
-            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={startTutor} onBuild={() => setScreen("build")} rm={rm} />
+            <Hub lang={lang} stats={stats} nextLesson={nextLesson} completedLessons={completedLessonCount} difficultyStage={difficultyStage} onScenario={openScenario} onSchool={() => setScreen("school")} onTutor={() => startTutor()} onBuild={() => setScreen("build")} rm={rm} />
           ) : screen === "lessonPreview" ? (
             <LessonPreviewScreen lang={lang} lesson={pendingLesson} onBack={() => setScreen("school")} onStart={() => startLesson(pendingLesson.id)} />
           ) : screen === "scenario" && pendingShop ? (
             <ScenarioDetail meta={meta} shop={pendingShop} difficultyStage={difficultyStage} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
           ) : screen === "call" ? (
-            <CallScreen meta={meta} lang={lang} difficultyStage={difficultyStage} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} />
+            <CallScreen meta={meta} lang={lang} difficultyStage={difficultyStage} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} practice={activePersona.startsWith("tutor-") ? practiceLine : null} />
           ) : screen === "lessonResult" && lastLessonResult ? (
             <LessonResultScreen
               lang={lang}
@@ -1540,9 +1544,9 @@ export default function MaatuApp() {
           ) : screen === "progress" ? (
             <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (
-            <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={startTutor} onLesson={openLesson} onBuild={() => setScreen("build")} />
+            <ClassroomScreen lang={lang} onLanguageChange={setLang} onTutor={() => startTutor()} onLesson={openLesson} onBuild={() => setScreen("build")} />
           ) : screen === "build" ? (
-            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} rm={rm} />
+            <BuildScreen lang={lang} onLanguageChange={setLang} seed={studioSeed} rm={rm} onTalk={(line) => startTutor(line)} />
           ) : screen === "settings" ? (
             <SettingsScreen lang={lang} setLang={setLang} caps={caps} setCaps={setCaptions} rm={rm} setRm={setReducedMotion} canInstall={canInstall} onInstall={doInstall} />
           ) : null}
