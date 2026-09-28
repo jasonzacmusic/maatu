@@ -25,7 +25,7 @@ from livekit import agents
 from livekit.agents import Agent, AgentSession
 from livekit.plugins import anthropic, google, sarvam, silero
 
-from persona import apply_secret_agenda, persona_from_room_name
+from persona import apply_practice_metadata, apply_secret_agenda, persona_from_room_name
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 
@@ -43,6 +43,13 @@ ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 # Gemini. Force one with BRAIN=anthropic or BRAIN=gemini.
 BRAIN = os.environ.get("BRAIN", "anthropic" if ANTHROPIC_API_KEY else "gemini")
 MAATU_APP_URL = os.environ.get("MAATU_APP_URL", "https://maatu.vercel.app")
+# Empty (the default) means automatic dispatch: this worker answers every
+# production room. A test worker sets a name so it only joins rooms that are
+# explicitly dispatched to it and never steals a real learner's call.
+# 'production' also means automatic dispatch (a cloud secret cannot be empty).
+AGENT_NAME = os.environ.get("MAATU_AGENT_NAME", "")
+if AGENT_NAME == "production":
+    AGENT_NAME = ""
 
 
 def build_brain():
@@ -75,11 +82,36 @@ logging.basicConfig(level=logging.INFO)
 async def entrypoint(ctx: agents.JobContext):
     await ctx.connect()
 
+    room_name = ctx.room.name
+    # A named test worker serves rooms called '<agent name>.<persona>__<id>'.
+    # The production worker rejects that prefix as an unknown persona, so a
+    # test call is answered by exactly one voice.
+    if AGENT_NAME and room_name.startswith(AGENT_NAME + "."):
+        room_name = room_name[len(AGENT_NAME) + 1 :]
     try:
-        persona = persona_from_room_name(ctx.room.name)
+        persona = persona_from_room_name(room_name)
     except ValueError as exc:
         logger.error("rejecting room=%s error=%s", ctx.room.name, exc)
         return
+    if persona.id.startswith("tutor-"):
+        # The Build tab starts a companion call with the sentence the learner
+        # just built in their participant metadata. Read it before the
+        # greeting so the companion opens on that line.
+        try:
+            learner = await asyncio.wait_for(ctx.wait_for_participant(), timeout=10)
+            persona = apply_practice_metadata(persona, learner.metadata)
+        except asyncio.TimeoutError:
+            logger.warning("no learner joined within 10 s room=%s", ctx.room.name)
+        except Exception:
+            logger.exception("practice metadata read failed room=%s", ctx.room.name)
+        line = persona.raw.get("practice_line")
+        if line:
+            logger.info(
+                "practice line room=%s practice=%s practice_en=%s",
+                ctx.room.name,
+                line["practice"],
+                line["practiceEn"],
+            )
     classroom_mode = persona.id.startswith("teacher-") or persona.id.startswith("tutor-")
     agenda, agenda_updated_at = (
         (None, None)
@@ -255,6 +287,21 @@ async def entrypoint(ctx: agents.JobContext):
             turn["user_stopped_at"] = None
             turn["awaiting_first_audio"] = False
 
+    # Spoken transcript in the log, so a teacher can audit what was actually
+    # said on a call (learner transcript as heard, and the agent's reply).
+    @session.on("conversation_item_added")
+    def _on_item(ev):
+        item = getattr(ev, "item", None)
+        role = getattr(item, "role", None)
+        text = getattr(item, "text_content", None)
+        if role in ("user", "assistant") and text:
+            logger.info(
+                "transcript room=%s %s: %s",
+                ctx.room.name,
+                "learner" if role == "user" else "agent",
+                " ".join(text.split()),
+            )
+
     # Per-stage breakdown, so a latency regression can be blamed on the right
     # stage instead of guessed at. EOU is how long after the learner stops
     # before the turn is judged complete, ttft is the brain, ttfb is the voice.
@@ -290,6 +337,7 @@ if __name__ == "__main__":
     agents.cli.run_app(
         agents.WorkerOptions(
             entrypoint_fnc=entrypoint,
+            agent_name=AGENT_NAME,
             job_executor_type=agents.JobExecutorType.THREAD,
             num_idle_processes=0,
         )

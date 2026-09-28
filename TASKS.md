@@ -2,6 +2,8 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
+- [x] **M18: 2026-09-28 Sentence Path, French, voice revived on the Mac mini.** Build opens on an emoji path (who, action, what, when) giving the spoken line in Kannada, Hindi, Tamil, or French with beats to say it, a tense ladder, every person, a word order map, all four languages, and a Venn. Grammar audited twice by Gemini 3.1 Pro (1,584 then 618 lines). Studio rooms folded into a one-at-a-time toolbox. "Say it out loud" opens a companion call that drills the built line (verified room tutor-kn__e2e1790584342). The voice worker was missing from this Mac; reinstalled here, probes answered in kn, hi, ta teacher, kn-auto and companion rooms; external turn latency 1.1 to 2.3 s, so the 1.5 s budget still fails on some turns. Free LiveKit Cloud copy CA_qEYzC3PqfR2e deployed for tests only.
+
 - [x] **M17: 2026-09-04 Closing set shipped; Maatu put to bed.** Review room with per-device spaced repetition (save any line, Leitner schedule, due badge), slow-voice toggle, play-the-whole-scene listening mode, test-me on word decks, copy-a-line for WhatsApp, studio counts on Progress, and a Practise-this-in-the-Studio link from every debrief takeaway. Verified in the browser: saving two lines showed 2 to review, grading moved it to 1, the slow voice fetched fresh audio, play-all advanced through the scene and stopped on tap, zero console errors. Remaining outside this Mac: host the voice worker on the Mac mini; on the phone: one thumb test of hold-to-speak.
 - [x] **M16: 2026-09-04 Scenes, music scripts, and word shapes shipped.** Nine studio rooms. Scenes: 16 scripted two-sided conversations (auto, cab, cafe, biryani, kirana, market, delivery, clinic, landlord and neighbour, airport, customer care, salon, plus teach the major scale, explain the circle of fifths, run a rhythm drill, tuning and pitch), 177 lines in all three languages, test-me hiding, and a Practise loop that sends the line to the checker as the expected target. Shapes: verb blocks that dock (stem plus ending), tens plus units number blocks with Kannada and Tamil sandhi and the full Hindi 21 to 99 table, and short versus long sound pairs. Voice companion reads the music scripts.
 - [x] **M15: 2026-09-04 Sentence Studio finished and redesigned.** Seven rooms on one scroll: Check (type or hold-to-speak, fixes tagged by type with a See the rule jump and a what-trips-you-up memory), Build (sentence stage with role colours and the verb ending lit), Frames (20 everyday shapes with a slot, 27 nouns), Commands (23 teacher commands, polite and friend, do-not rule), Flip (31 verbs, every person, three tenses, endings lit), Rules (8 per language), Decks (music, questions, little words, describe, time and days, numbers, fruits, vegetables, countries, each with a memory trick). Three daily lines seeded by the date. iPhone m4a recordings verified against Sarvam. Voice teacher reads the same frames, commands, and question words. Keep-awake now holds on battery.
@@ -24,7 +26,7 @@
 
 - URL: https://maatu.vercel.app (installable PWA)
 - Agent service: `launchctl print gui/$(id -u)/com.nsm.maatu.agent`; logs at ~/Library/Logs/maatu-agent.log; reinstall/update with agent/install_agent_service.sh
-- The Mac must be on for calls to work (the agent brain runs here). Vercel serves the app; LiveKit Cloud carries the audio; Neon stores debriefs.
+- The Mac mini must be on for calls to work (the agent brain runs here). Vercel serves the app; LiveKit Cloud carries the audio; Neon stores debriefs.
 
 ## Waiting on Jason
 

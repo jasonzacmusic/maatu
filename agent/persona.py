@@ -65,7 +65,10 @@ def _build_system_prompt(p: dict) -> str:
         ),
         (
             f"Speak ONLY in {lang}, using the natural code-mixing described above. Do not "
-            "answer in full English sentences."
+            "answer in full English sentences. Never borrow words from a different Indian "
+            "language (no Tamil words in Kannada, no Hindi words in Tamil). Once you state a "
+            "price, time, or fact, stay consistent with it unless the person bargains you "
+            "down."
         ),
     ]
     agenda = p.get("secret_agenda") or []
@@ -176,4 +179,22 @@ def apply_secret_agenda(persona: Persona, agenda: list[str]) -> Persona:
     data["secret_agenda"] = agenda
     persona.raw = data
     persona.system_prompt = _build_system_prompt(data)
+    return persona
+
+
+def apply_practice_metadata(persona: Persona, metadata: str | None) -> Persona:
+    """Add a Build tab practice line (from the learner's participant metadata)
+    to a tutor-<lang> companion. Other personas are returned unchanged."""
+    if not persona.id.startswith("tutor-"):
+        return persona
+    from teacher import apply_practice_line, practice_line_from_metadata
+
+    line = practice_line_from_metadata(metadata)
+    if not line:
+        return persona
+    lang = persona.id.split("-")[1]
+    fields = apply_practice_line(persona.raw, lang, line[0], line[1])
+    persona.raw = fields
+    persona.system_prompt = fields["system_prompt"]
+    persona.opening = fields["opening"]
     return persona

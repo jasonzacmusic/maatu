@@ -35,9 +35,9 @@ if [ ! -x "$RT/agent/.venv/bin/python" ]; then
   echo "Building venv (first run, a couple of minutes) ..."
   "$PYBIN" -m venv "$RT/agent/.venv"
   "$RT/agent/.venv/bin/pip" install --quiet --upgrade pip
-  "$RT/agent/.venv/bin/pip" install --quiet "livekit-agents>=1.0" \
-    livekit-plugins-sarvam livekit-plugins-google livekit-plugins-anthropic \
-    livekit-plugins-silero python-dotenv certifi
+  # Pinned to the versions verified live on 2026-09-28. Unpinned installs
+  # silently pull a newer livekit-agents whose API may differ from worker.py.
+  "$RT/agent/.venv/bin/pip" install --quiet -r "$RT/agent/requirements.txt"
 fi
 
 cat > "$RT/agent/run_worker.sh" << 'SH'

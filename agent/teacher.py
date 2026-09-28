@@ -49,6 +49,12 @@ _CORE_RULES = (
     "their attempt is close to the target, count it as CORRECT: praise briefly "
     "and move on. Only correct real mistakes: a wrong word, a wrong ending, or "
     "English where {ln} was asked for.\n"
+    "- The transcript often comes back in the wrong script or language: letters "
+    "of another Indian language, or English look-alike words (for example "
+    "'hey get there' for hegiddira, or 'David too' for dayavittu). Sound it out. "
+    "If it plausibly matches the sounds of the word you asked for, it IS correct: "
+    "praise briefly and move on, never ask for a retry because of spelling or "
+    "script.\n"
     "- The student is always SPEAKING, never typing. Never mention script, "
     "letters, typing, or romanization to the student. Judge only the meaning and "
     "the likely sounds.\n"
@@ -301,6 +307,10 @@ _COMPANION_RULES = (
     "- The learner's speech reaches you as an imperfect machine transcript. "
     "Never mention script, letters, typing, or romanization. Judge only the "
     "meaning and likely sounds, and count close attempts as correct.\n"
+    "- The transcript often comes back in the wrong script or language, or as "
+    "English look-alike words (for example 'hey get there' for hegiddira). Sound "
+    "it out, and if it plausibly matches what they were trying to say, treat it "
+    "as correct.\n"
     "- The transcriber auto-detects language, so the learner may switch between "
     "English and {ln} freely, even inside one sentence. Honor whatever they "
     "actually said: an English request (teach me something, let us do a scene, "
@@ -397,7 +407,7 @@ def _tutor_fields(lang: str) -> dict | None:
     )
     opening = (
         f"Greet the learner warmly in romanized {ln}. Then, in one short friendly "
-        f"sentence, offer the choice: we can just chat, I can teach you anything you "
+        f"sentence in simple English (they may be a beginner), offer the choice: we can just chat, I can teach you anything you "
         f"name, or we can act out any scene you invent. Ask what they feel like today. "
         f"One short turn, no exercise in this opening."
     )
@@ -414,6 +424,58 @@ def _tutor_fields(lang: str) -> dict | None:
         "teach_mode": False,
         "rubric": [],
     }
+
+
+def _clean_practice(text: object, limit: int = 160) -> str:
+    if not isinstance(text, str):
+        return ""
+    return " ".join(text.replace("\u2014", ",").split())[:limit]
+
+
+def practice_line_from_metadata(metadata: str | None) -> tuple[str, str] | None:
+    """Read the Build tab practice line the app puts in the learner's LiveKit
+    participant metadata: {"practice": romanized target, "practiceEn": English}.
+    Returns (practice, practice_en) or None when there is no usable line."""
+    if not metadata:
+        return None
+    try:
+        data = json.loads(metadata)
+    except (TypeError, ValueError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    practice = _clean_practice(data.get("practice"))
+    practice_en = _clean_practice(data.get("practiceEn"))
+    if not practice:
+        return None
+    return practice, practice_en
+
+
+def apply_practice_line(fields: dict, lang: str, practice: str, practice_en: str) -> dict:
+    """ADD a Build tab practice line to a companion session. Nothing in the
+    companion prompt is removed or shortened; the line is appended and the
+    greeting is rewritten to open on it."""
+    ln = LANG_NAME.get(lang, "the target language")
+    meaning = practice_en or "their own sentence"
+    addendum = (
+        f"\n\nPRACTICE LINE FROM THE BUILD TAB. The learner just built this sentence in the "
+        f"Build tab and wants to say it out loud: {meaning} = {practice}. Open by saying you "
+        f"will practise that line together, say it once slowly, ask them to repeat it, accept "
+        f"a close attempt, then flip it one step at a time (past, right now, every day, "
+        f"future; then another person like he or she) asking them to say each version, using "
+        f"the same verb. After that, carry on as the normal companion."
+    )
+    opening = (
+        f"Greet the learner warmly in one short romanized {ln} phrase. Then say in English "
+        f"that you will practise the sentence they just built together: '{meaning}'. Say the "
+        f"{ln} line once, slowly: '{practice}'. Ask them to say it back to you. One short "
+        f"turn, nothing else."
+    )
+    updated = dict(fields)
+    updated["system_prompt"] = fields["system_prompt"] + addendum
+    updated["opening"] = opening
+    updated["practice_line"] = {"practice": practice, "practiceEn": practice_en}
+    return updated
 
 
 def build_fields(persona_id: str) -> dict | None:

@@ -112,6 +112,7 @@ async def run_probe(
     timeout: float,
     barge_in: bool = False,
     turns: int = 1,
+    metadata: str | None = None,
 ) -> dict[str, object]:
     env = load_env(ROOT / "agent" / ".env")
     parts = persona.split("-")
@@ -129,6 +130,7 @@ async def run_probe(
             .with_identity(identity)
             .with_name("Maatu E2E Probe")
             .with_grants(api.VideoGrants(room_join=True, room=room_name))
+            .with_metadata(metadata or "")
             .to_jwt()
         )
 
@@ -177,6 +179,14 @@ async def run_probe(
                         reply_done.set()
 
         await room.connect(env["LIVEKIT_URL"], token)
+        # Publish the microphone at once, like the real app does, so the agent
+        # is already subscribed when the learner speaks. Publishing it after the
+        # opening clipped the first syllable of every probe turn.
+        source = rtc.AudioSource(16000, 1, queue_size_ms=200)
+        track = rtc.LocalAudioTrack.create_audio_track("probe-microphone", source)
+        options = rtc.TrackPublishOptions()
+        options.source = rtc.TrackSource.SOURCE_MICROPHONE
+        await room.local_participant.publish_track(track, options)
         try:
             if barge_in:
                 await asyncio.wait_for(opening_audio_started.wait(), timeout=timeout)
@@ -187,12 +197,6 @@ async def run_probe(
                 # final audio frame. Clear that tail so it cannot be mistaken for
                 # the first audio of the learner's reply.
                 await asyncio.sleep(1.5)
-
-            source = rtc.AudioSource(16000, 1, queue_size_ms=200)
-            track = rtc.LocalAudioTrack.create_audio_track("probe-microphone", source)
-            options = rtc.TrackPublishOptions()
-            options.source = rtc.TrackSource.SOURCE_MICROPHONE
-            await room.local_participant.publish_track(track, options)
 
             results: list[dict[str, object]] = []
             for turn_number in range(1, turns + 1):
@@ -251,6 +255,8 @@ def main() -> None:
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument("--barge-in", action="store_true")
     parser.add_argument("--turns", type=int, default=1)
+    parser.add_argument("--practice", help="tutor rooms: Build tab romanized practice line")
+    parser.add_argument("--practice-en", default="", help="English meaning of --practice")
     args = parser.parse_args()
     if args.turns < 1:
         parser.error("--turns must be at least 1")
@@ -261,6 +267,9 @@ def main() -> None:
             args.timeout,
             args.barge_in,
             args.turns,
+            json.dumps({"practice": args.practice, "practiceEn": args.practice_en})
+            if args.practice
+            else None,
         )
     )
     print(json.dumps(result, ensure_ascii=False))
