@@ -612,6 +612,20 @@ function french(c: PathChoice): PathResult {
   return { english, enParts: [], sentence, parts: all, say, note };
 }
 
+// ............................................................ surprise me
+// A random but sensible sentence: any action, a fitting object, any person, any
+// time. Used for the example chips and the dice, then the learner rebuilds it.
+export function randomChoice(gender: Gender, rnd: () => number = Math.random): PathChoice {
+  const pick = <T,>(list: T[]) => list[Math.floor(rnd() * list.length)];
+  const tile = pick(VERB_TILES);
+  const objects = tile.objects;
+  const object = objects.length ? (rnd() < 0.85 ? pick(objects) : null) : null;
+  const who = pick(WHO_TILES.filter((t) => t.id !== "name")).id;
+  const whens = WHEN_TILES.filter((w) => whenAllowed(tile.id, w.id, object)).map((w) => w.id);
+  const when = rnd() < 0.8 ? pick(LADDER) : pick(whens);
+  return { who, verb: tile.id, object, when: whenAllowed(tile.id, when, object) ? when : "present", timeWord: rnd() < 0.7, negative: rnd() < 0.2, question: rnd() < 0.15, gender };
+}
+
 // ............................................................ one call
 export function buildPath(lang: PathLang, c: PathChoice): PathResult | null {
   const enParts = englishParts(c, lang);

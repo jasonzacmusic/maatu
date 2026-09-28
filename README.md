@@ -26,7 +26,7 @@ Everything is romanized Latin, colloquial spoken register (Bangalore, Delhi, Che
 - Status and milestones: `TASKS.md`
 - Every default chosen without asking: `DECISIONS.md`
 - Frontend: Next.js PWA at the repo root, deploys to Vercel from the `redesign/night-bazaar` branch
-- Voice agent: `agent/` (Python, livekit-agents). It runs on the always-on Mac mini as a LaunchAgent from `~/.maatu-agent` (reinstall with `agent/install_agent_service.sh`). A free LiveKit Cloud copy is deployed for tests (`scripts/deploy_cloud_agent.sh`) and can take live calls with `PRODUCTION=1`.
+- Voice agent: `agent/` (Python, livekit-agents), hosted on LiveKit Cloud (agent CA_qEYzC3PqfR2e, India region, free Build plan). Redeploy with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`. The Mac mini LaunchAgent (`agent/install_agent_service.sh`) is a disabled fallback.
 
 Live at https://maatu.vercel.app
 

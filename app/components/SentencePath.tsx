@@ -11,6 +11,7 @@ import {
   objectEnglish,
   objectsFor,
   PATH_LANGS,
+  randomChoice,
   VERB_TILES,
   WHEN_TILES,
   whenAllowed,
@@ -468,6 +469,28 @@ export function SentencePath({ lang, onLanguageChange, gender, setGender, slow, 
   );
   const everyLang = useMemo(() => PATH_LANGS.map((l) => ({ l, r: buildPath(l.id, choice) })), [who, name, nameG, verb, object, when, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Example sentences to start from: tap one and it fills the path, then change
+  // any stop yourself. Fresh ones on every roll of the dice.
+  const [examples, setExamples] = useState<PathChoice[]>([]);
+  const rollExamples = useCallback(() => setExamples(Array.from({ length: 4 }, () => randomChoice(gender))), [gender]);
+  useEffect(() => {
+    rollExamples();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const load = (c: PathChoice) => {
+    setWho(c.who);
+    setVerb(c.verb);
+    setObject(c.object);
+    setWhen(c.when);
+    setTimeWord(c.timeWord);
+    setNegative(c.negative);
+    setQuestion(c.question);
+    setStep("who");
+  };
+  const surprise = () => {
+    load(randomChoice(gender));
+    rollExamples();
+  };
+
   const langInfo = PATH_LANGS.find((l) => l.id === plang)!;
   const objects = objectsFor(verb);
   const pickVerb = (id: string) => {
@@ -528,8 +551,42 @@ export function SentencePath({ lang, onLanguageChange, gender, setGender, slow, 
         </span>
       </div>
 
+      {/* ................................................. start from an example */}
+      <div className="mt-4">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[10.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>START FROM ANY SENTENCE, THEN MAKE IT YOURS</span>
+          <button
+            type="button"
+            onClick={surprise}
+            className="inline-flex flex-none items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-bold focus-visible:outline focus-visible:outline-2"
+            style={{ background: "rgba(245,194,255,0.14)", color: LILAC, border: "1px solid rgba(245,194,255,0.45)", outlineColor: LILAC }}
+          >
+            <span aria-hidden="true">🎲</span> Surprise me
+          </button>
+        </div>
+        <div className="-mx-5 mt-2 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" style={{ scrollbarWidth: "none" }}>
+          {examples.map((c, i) => {
+            const r = buildPath("kn", c);
+            if (!r) return null;
+            const v = VERB_TILES.find((t) => t.id === c.verb);
+            return (
+              <button
+                key={`${i}-${r.english}`}
+                type="button"
+                onClick={() => load(c)}
+                className="flex flex-none items-center gap-2 rounded-full px-3.5 py-2 text-left text-[12.5px] focus-visible:outline focus-visible:outline-2"
+                style={{ background: C.base, color: C.milk, border: `1px solid ${LINE}`, outlineColor: LILAC }}
+              >
+                <span aria-hidden="true">{v?.emoji}</span>
+                {r.english}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* ................................................. the path */}
-      <div className="mt-5">
+      <div className="mt-4">
         <PathStrip step={step} setStep={setStep} choice={choice} lang={plang} rm={rm} />
       </div>
 
