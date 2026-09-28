@@ -259,8 +259,13 @@ async def entrypoint(ctx: agents.JobContext):
         "awaiting_first_audio": False,
     }
 
+    @ctx.room.on("track_subscribed")
+    def _on_track(track, publication, participant):
+        logger.info("heard track room=%s kind=%s from=%s", ctx.room.name, getattr(track, "kind", "?"), getattr(participant, "identity", "?"))
+
     @session.on("user_state_changed")
     def _on_user_state(ev):
+        logger.info("learner state room=%s %s -> %s", ctx.room.name, getattr(ev, "old_state", None), getattr(ev, "new_state", None))
         speech_ended = (
             getattr(ev, "old_state", None) == "speaking"
             and getattr(ev, "new_state", None) == "listening"

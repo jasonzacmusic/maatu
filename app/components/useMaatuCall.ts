@@ -50,6 +50,13 @@ export interface MaatuCall {
   toggleMute: () => Promise<void>;
   unlockAudio: () => Promise<void>;
   requestSlowDown: () => Promise<boolean>;
+  // The learner's own microphone: live level (0 to 1), whether any sound has
+  // reached it lately, the mics on this device, and a way to switch.
+  micLevel: number;
+  micSilent: boolean;
+  mics: { id: string; label: string }[];
+  micId: string | null;
+  switchMic: (id: string) => Promise<void>;
   // Snapshot for records at hang-up time: the raw transcript keeps every final
   // line exactly as transcribed, so the lesson pass check can never be broken
   // by a romanization failure.
@@ -141,6 +148,88 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
     setPhase("ended");
   }, [settlePendingFallbacks]);
 
+  // ................................................ microphone meter
+  const [micLevel, setMicLevel] = useState(0);
+  const [micSilent, setMicSilent] = useState(false);
+  const [mics, setMics] = useState<{ id: string; label: string }[]>([]);
+  const [micId, setMicId] = useState<string | null>(null);
+  const meterRef = useRef<{ ctx: AudioContext; timer: ReturnType<typeof setInterval> } | null>(null);
+  const lastSoundRef = useRef(0);
+
+  const stopMeter = useCallback(() => {
+    if (meterRef.current) {
+      clearInterval(meterRef.current.timer);
+      void meterRef.current.ctx.close().catch(() => undefined);
+      meterRef.current = null;
+    }
+    setMicLevel(0);
+  }, []);
+
+  const startMeter = useCallback(
+    (room: Room) => {
+      stopMeter();
+      const pub = room.localParticipant.getTrackPublication(Track.Source.Microphone);
+      const media = pub?.track?.mediaStreamTrack;
+      if (!media || typeof AudioContext === "undefined") return;
+      try {
+        const ctx = new AudioContext();
+        const src = ctx.createMediaStreamSource(new MediaStream([media]));
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 512;
+        src.connect(analyser);
+        const buf = new Float32Array(analyser.fftSize);
+        lastSoundRef.current = Date.now();
+        const started = Date.now();
+        const timer = setInterval(() => {
+          analyser.getFloatTimeDomainData(buf);
+          let sum = 0;
+          for (let i = 0; i < buf.length; i += 1) sum += buf[i] * buf[i];
+          const level = Math.min(1, Math.sqrt(sum / buf.length) * 8);
+          setMicLevel(level);
+          if (level > 0.04) lastSoundRef.current = Date.now();
+          // Twelve seconds of dead silence from the mic means the wrong input
+          // (an interface channel, a virtual device) or a muted mic.
+          setMicSilent(Date.now() - started > 12000 && Date.now() - lastSoundRef.current > 12000);
+        }, 120);
+        meterRef.current = { ctx, timer };
+      } catch {
+        // meter is a convenience; the call still works without it
+      }
+    },
+    [stopMeter],
+  );
+
+  const refreshMics = useCallback(async (room: Room) => {
+    try {
+      const list = await Room.getLocalDevices("audioinput");
+      setMics(list.filter((d) => d.deviceId).map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` })));
+      setMicId(room.getActiveDevice("audioinput") ?? null);
+    } catch {
+      setMics([]);
+    }
+  }, []);
+
+  const switchMic = useCallback(
+    async (id: string) => {
+      const room = roomRef.current;
+      if (!room) return;
+      try {
+        await room.switchActiveDevice("audioinput", id);
+        setMicId(id);
+        try {
+          window.localStorage.setItem("maatu-mic", id);
+        } catch {
+          // remembering the choice is a convenience
+        }
+        setMicSilent(false);
+        startMeter(room);
+      } catch {
+        setMicIssue("That microphone could not be opened. Try another one.");
+      }
+    },
+    [startMeter],
+  );
+
   const connect = useCallback(async () => {
     setPhase("connecting");
     setError(null);
@@ -170,7 +259,13 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       const { token, url, room: roomId } = await res.json();
       setRoomName(roomId);
 
-      const room = new Room({ adaptiveStream: true, dynacast: true });
+      let storedMic: string | null = null;
+      try {
+        storedMic = window.localStorage.getItem("maatu-mic");
+      } catch {
+        storedMic = null;
+      }
+      const room = new Room({ adaptiveStream: true, dynacast: true, audioCaptureDefaults: storedMic ? { deviceId: storedMic } : undefined });
       roomRef.current = room;
 
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
@@ -270,6 +365,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       try {
         await room.localParticipant.setMicrophoneEnabled(true);
         setMuted(false);
+        startMeter(room);
+        void refreshMics(room);
       } catch {
         // Mic denied or unavailable: they can still listen. Not fatal.
         setMuted(true);
@@ -282,7 +379,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       setConnectionIssue(null);
       setPhase("error");
     }
-  }, [persona, difficultyStage, ensureAudioEl, flushDisplay, settlePendingFallbacks, practice]);
+  }, [persona, difficultyStage, ensureAudioEl, flushDisplay, settlePendingFallbacks, practice, startMeter, refreshMics]);
 
   const toggleMute = useCallback(async () => {
     const room = roomRef.current;
@@ -292,11 +389,13 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       await room.localParticipant.setMicrophoneEnabled(!next);
       setMuted(next);
       setMicIssue(null);
+      if (!next) startMeter(room);
+      else stopMeter();
     } catch {
       setMuted(true);
       setMicIssue("Your microphone is blocked. Allow the mic for this site in your browser settings, then tap the mic button.");
     }
-  }, [muted]);
+  }, [muted, startMeter, stopMeter]);
 
   const recordTranscript = useCallback(() => [...rawRef.current], []);
   const recordDisplayTranscript = useCallback(() => [...displayRef.current], []);
@@ -314,7 +413,12 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   }, []);
 
   useEffect(() => {
+    if (phase === "ended" || phase === "error") stopMeter();
+  }, [phase, stopMeter]);
+
+  useEffect(() => {
     return () => {
+      stopMeter();
       roomRef.current?.disconnect();
       roomRef.current = null;
       audioElRef.current?.remove();
@@ -341,6 +445,11 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
     toggleMute,
     unlockAudio,
     requestSlowDown,
+    micLevel,
+    micSilent,
+    mics,
+    micId,
+    switchMic,
     recordTranscript,
     recordDisplayTranscript,
   };

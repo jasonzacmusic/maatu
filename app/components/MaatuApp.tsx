@@ -516,7 +516,7 @@ function ScenarioDetail({
           style={{ height: 280, background: "radial-gradient(220px 170px at 68% 24%, rgba(255,179,92,0.32), transparent 70%), repeating-linear-gradient(135deg, rgba(255,179,92,0.07) 0 14px, transparent 14px 28px)" }}
         >
           <div className="absolute left-5 top-14">
-            <BackButton onClick={onBack} label="Back to the bazaar" />
+            <BackButton onClick={onBack} label="Back to Talk" />
           </div>
           <div
             className="absolute left-1/2 top-[120px] flex -translate-x-1/2 items-center justify-center rounded-full"
@@ -696,10 +696,15 @@ function CallScreen({
         {/* header */}
         <div className="flex items-center justify-between px-6 pt-14">
           <span className="flex items-center gap-2 text-[13px]" style={{ color: C.muted }}>
-            <button onClick={onBack} aria-label="Back" className="opacity-70 hover:opacity-100" style={{ color: C.muted }}>
-              ‹
+            <button
+              onClick={onBack}
+              aria-label="Leave the call and go back"
+              className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-semibold focus-visible:outline focus-visible:outline-2"
+              style={{ background: "rgba(242,237,226,0.08)", border: `1px solid ${LINE}`, color: C.milk, outlineColor: C.sodium }}
+            >
+              ‹ Back
             </button>
-            {isClass ? meta.sceneLabel : `${meta.name} · ${meta.sceneLabel.split(",")[0]}`}
+            <span className="hidden sm:inline">{isClass ? meta.sceneLabel : `${meta.name} · ${meta.sceneLabel.split(",")[0]}`}</span>
           </span>
           <span className="inline-flex items-center gap-2 text-[12.5px] font-semibold" style={{ color: C.kumkum }}>
             <span className={"rounded-full" + (rm ? "" : " mt-dotflash")} style={{ width: 7, height: 7, background: C.kumkum }} />
@@ -779,6 +784,42 @@ function CallScreen({
           )}
         </div>
 
+        {/* your microphone: live level, a loud warning when nothing arrives, and a picker */}
+        {call.phase === "live" && !call.muted && (
+          <div className="px-6 pb-2">
+            {call.micSilent && (
+              <div className="mb-2 rounded-[14px] px-4 py-3 text-[13px] leading-snug" role="alert" style={{ background: "rgba(232,80,58,0.14)", border: "1px solid rgba(232,80,58,0.45)", color: "#FFC2B6" }}>
+                {meta.name} can&apos;t hear you. Your browser is listening to &ldquo;{call.mics.find((m) => m.id === call.micId)?.label ?? "the default input"}&rdquo; and no sound is coming from it. Pick the mic you actually speak into below; Maatu remembers it.
+              </div>
+            )}
+            <div className="flex items-center gap-2.5 rounded-full px-3 py-2" style={{ background: "rgba(242,237,226,0.05)", border: `1px solid ${call.micSilent ? "rgba(232,80,58,0.5)" : LINE}` }}>
+              <span className="text-[14px]" aria-hidden="true">🎙</span>
+              <span className="flex h-3 flex-none items-end gap-[2px]" aria-label={call.micLevel > 0.04 ? `${meta.name} can hear you` : "No sound from your microphone"}>
+                {[0.05, 0.15, 0.3, 0.5, 0.7].map((t) => (
+                  <span key={t} style={{ width: 3, height: `${40 + t * 60}%`, borderRadius: 2, background: call.micLevel >= t ? C.tube : "rgba(242,237,226,0.15)", transition: "background 80ms linear" }} />
+                ))}
+              </span>
+              {call.mics.length > 0 ? (
+                <select
+                  value={call.micId ?? ""}
+                  onChange={(e) => void call.switchMic(e.target.value)}
+                  aria-label="Microphone"
+                  className="min-w-0 flex-1 truncate bg-transparent text-[12.5px] focus-visible:outline-none"
+                  style={{ color: C.muted }}
+                >
+                  {call.mics.map((m) => (
+                    <option key={m.id} value={m.id} style={{ color: "#111" }}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <span className="text-[12.5px]" style={{ color: C.muted }}>Your microphone</span>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* slow down */}
         <div className="flex justify-center pb-1">
           <button
@@ -851,6 +892,7 @@ function DebriefScreen({
   onHub,
   onAgain,
   onStudio,
+  backLabel = "Back to Talk",
 }: {
   meta: PersonaMeta;
   session: SessionEnd | null;
@@ -859,6 +901,7 @@ function DebriefScreen({
   onHub: () => void;
   onAgain: () => void;
   onStudio: (text: string) => void;
+  backLabel?: string;
 }) {
   const [report, setReport] = useState<Report | null>(null);
   const [status, setStatus] = useState<"pending" | "ready" | "none">("pending");
@@ -1046,7 +1089,7 @@ function DebriefScreen({
             Practice again
           </button>
           <button onClick={onHub} className="rounded-[16px] py-3.5 text-[15px] font-semibold focus-visible:outline focus-visible:outline-2" style={{ background: "transparent", color: C.milk, border: `1px solid ${LINE}`, outlineColor: C.tube }}>
-            Back to the bazaar
+            {backLabel}
           </button>
         </div>
       </div>
@@ -1542,7 +1585,7 @@ export default function MaatuApp() {
               onRetry={() => startLesson(lastLessonResult.lesson.id)}
             />
           ) : screen === "debrief" ? (
-            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen(activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} onAgain={() => setScreen("call")} onStudio={(text) => { setStudioSeed({ text, nonce: Date.now() }); setScreen("build"); }} />
+            <DebriefScreen meta={meta} session={lastSession} userId={userId} onReportReady={handleReportReady} onHub={() => setScreen(activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} onAgain={() => setScreen("call")} onStudio={(text) => { setStudioSeed({ text, nonce: Date.now() }); setScreen("build"); }} backLabel={activePersona.startsWith("tutor-") && tutorOrigin === "build" ? "Back to Build" : activePersona.startsWith("tutor-") && tutorOrigin === "school" ? "Back to the course" : "Back to Talk"} />
           ) : screen === "progress" ? (
             <ProgressScreen stats={stats} loading={statsLoading} lang={lang} onSchool={() => setScreen("school")} />
           ) : screen === "school" ? (
