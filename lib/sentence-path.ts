@@ -1,5 +1,5 @@
 import { build, OBJECTS, person as personOf, TIMES, verbById, type Gender, type PersonId, type Tense } from "./grammar";
-import type { Lang } from "./maatu-design";
+import type { IndianLang as Lang } from "./maatu-design";
 
 // Sentence Path: pick who, the action, what, and when with emoji tiles, get the
 // English line and the spoken line in Kannada, Hindi, Tamil, or French at once.
@@ -9,7 +9,7 @@ import type { Lang } from "./maatu-design";
 // Romanized only for the Indian languages. No em dashes anywhere.
 
 export type PathLang = Lang | "fr";
-export type Role = "who" | "action" | "what" | "when" | "helper";
+export type Role = "who" | "action" | "what" | "when" | "helper" | "describe";
 export type Part = { word: string; role: Role; stem?: string; say?: string };
 export type When = "past" | "cont" | "present" | "future" | "want" | "can";
 export type Who = PersonId | "name";
@@ -25,6 +25,7 @@ export type PathChoice = {
   negative: boolean;
   question: boolean;
   gender: Gender; // the speaker's own, for Hindi and French agreement
+  adjective?: string;
 };
 
 export type PathResult = {
@@ -43,6 +44,66 @@ export const PATH_LANGS: { id: PathLang; label: string; flag: string; city: stri
   { id: "ta", label: "Tamil", flag: "🌺", city: "Chennai" },
   { id: "fr", label: "French", flag: "🥐", city: "Paris" },
 ];
+
+export const ADJECTIVES = [
+  { id: "none", en: "No adjective", objects: [] },
+  { id: "good", en: "good", objects: ["piano", "guitar", "violin", "song", "thissong", "music", "rice", "tea", "coffee", "movie", "book", "school", "class", "concert"] },
+  { id: "new", en: "new", objects: ["piano", "guitar", "violin", "drums", "song", "thissong", "movie", "book", "phone", "key", "home", "school", "shop"] },
+  { id: "small", en: "small", objects: ["piano", "guitar", "violin", "book", "phone", "home", "school", "shop"] },
+  { id: "big", en: "big", objects: ["piano", "guitar", "book", "phone", "home", "school", "shop", "concert"] },
+  { id: "hot", en: "hot", objects: ["rice", "tea", "coffee", "water"] },
+  { id: "cold", en: "cold", objects: ["rice", "tea", "coffee", "water"] },
+  { id: "fresh", en: "fresh", objects: ["rice", "tea", "coffee", "water"] },
+];
+
+export function adjectiveAllowed(adjective: string, object: string | null) {
+  return adjective === "none" || !adjective || !!(object && ADJECTIVES.find((a) => a.id === adjective)?.objects.includes(object));
+}
+
+function describeObject(lang: PathLang, c: PathChoice, parts: Part[]): Part[] {
+  const a = c.adjective;
+  if (!a || a === "none" || !adjectiveAllowed(a, c.object)) return parts;
+  const out = parts.map((p) => ({ ...p }));
+  const index = out.findIndex((p) => p.role === "what");
+  if (index < 0) return out;
+  const object = out[index];
+  const adjective = ADJECTIVES.find((x) => x.id === a)!.en;
+  let word = adjective;
+  if (lang === "kn") word = ({ good: "olleya", new: "hosa", small: "chikka", big: "dodda", hot: "bisi", cold: "tannagina", fresh: "taaja" } as Record<string, string>)[a];
+  if (lang === "ta") word = ({ good: "nalla", new: "pudhu", small: "chinna", big: "periya", hot: "soodaana", cold: "kulirndha", fresh: "fresh-aana" } as Record<string, string>)[a];
+  if (lang === "hi") {
+    const noun = OBJECTS.find((o) => o.id === c.object);
+    const gender = noun?.hiG === "f" ? "f" : "m";
+    const oblique = noun?.hiPl || c.verb === "go" || c.verb === "come";
+    const forms: Record<string, string[]> = { good: ["achha", "achhi", "achhe"], new: ["naya", "nayi", "naye"], small: ["chhota", "chhoti", "chhote"], big: ["bada", "badi", "bade"], hot: ["garam", "garam", "garam"], cold: ["thanda", "thandi", "thande"], fresh: ["taaza", "taaza", "taaza"] };
+    word = forms[a][gender === "f" ? 1 : oblique ? 2 : 0];
+  }
+  if (lang !== "fr") {
+    const determiner = /^(ondu|ee|oru|indha|ek|yeh) (.+)$/.exec(object.word);
+    if (determiner) {
+      object.word = determiner[2];
+      out.splice(index, 0, { word: determiner[1], role: "what" }, { word, role: "describe" });
+    } else out.splice(index, 0, { word, role: "describe" });
+    return out;
+  }
+  const feminine = ["guitar", "drums", "song", "thissong", "music", "water", "key", "home", "school", "class"].includes(c.object ?? "");
+  const forms: Record<string, string[]> = { good: ["bon", "bonne"], new: ["nouveau", "nouvelle"], small: ["petit", "petite"], big: ["grand", "grande"], hot: ["chaud", "chaude"], cold: ["froid", "froide"], fresh: ["frais", "fraîche"] };
+  word = forms[a][feminine ? 1 : 0];
+  const say: Record<string, string[]> = { good: ["bohn", "bon"], new: ["noo-voh", "noo-vel"], small: ["puh-tee", "puh-teet"], big: ["grahn", "grahnd"], hot: ["shoh", "shohd"], cold: ["frwah", "frwahd"], fresh: ["freh", "fresh"] };
+  if (["hot", "cold", "fresh"].includes(a)) {
+    out.splice(index + 1, 0, { word, role: "describe", say: say[a][feminine ? 1 : 0] });
+  } else {
+    const match = /^(de la |du |de |au |à la |à l'|à |en |un |une |le |la |l'|cette |ce |d')(.+)$/.exec(object.word);
+    if (match) {
+      let prefix = match[1];
+      if (prefix === "à l'") prefix = "à la ";
+      if (prefix === "l'") prefix = feminine ? "la " : "le ";
+      object.word = match[2];
+      out.splice(index, 0, { word: prefix.trim(), role: "what" }, { word, role: "describe", say: say[a][feminine ? 1 : 0] });
+    }
+  }
+  return out;
+}
 
 // ............................................................ tiles
 export const WHO_TILES: { id: Who; emoji: string; en: string; hint?: string }[] = [
@@ -133,6 +194,7 @@ export function objectsFor(verb: string): string[] {
 }
 
 export function objectEnglish(id: string, lang: PathLang): string {
+  if (id === "city" && lang === "fr") return "to Paris";
   if (id === "language") return lang === "fr" ? "French" : lang === "hi" ? "Hindi" : lang === "ta" ? "Tamil" : "Kannada";
   const o = OBJECTS.find((x) => x.id === id);
   return o ? o.en : id;
@@ -337,6 +399,9 @@ function reg(stem: string, say: string, vousSay: string, ilsSay?: string, ppSay?
   };
 }
 const FR_VERBS: Record<string, FrVerb> = {
+  commander: { inf: "commander", infSay: "ko-mahn-day", aux: "a", ...reg("command", "ko-mahnd", "ko-mahn-day") },
+  telecharger: { inf: "télécharger", infSay: "tay-lay-shar-zhay", aux: "a", ...reg("télécharg", "tay-lay-sharzh", "tay-lay-shar-zhay") },
+  reserver: { inf: "réserver", infSay: "ray-zehr-vay", aux: "a", ...reg("réserv", "ray-zehrv", "ray-zehr-vay") },
   play: { inf: "jouer", infSay: "zhoo-ay", aux: "a", ...reg("jou", "zhoo", "zhoo-ay") },
   playgame: { inf: "jouer", infSay: "zhoo-ay", aux: "a", ...reg("jou", "zhoo", "zhoo-ay") },
   sing: { inf: "chanter", infSay: "shahn-tay", aux: "a", ...reg("chant", "shahnt", "shahn-tay") },
@@ -469,7 +534,7 @@ const FR_OBJ: Record<string, Partial<Record<"part" | "def" | "bare" | "place" | 
   school: { place: { w: "à l'école", say: "a lay-kol" } },
   shop: { place: { w: "au magasin", say: "oh ma-ga-zan" } },
   concert: { place: { w: "au concert", say: "oh kohn-sehr" } },
-  city: { place: { w: "à Bangalore", say: "a bahn-ga-lor" } },
+  city: { place: { w: "à Paris", say: "a pa-ree" } },
   shopping: { faire: { w: "les courses", say: "lay koors" } },
   exercise: { faire: { w: "du sport", say: "dew spor", neg: "de sport", negSay: "duh spor" } },
   cooking: { faire: { w: "la cuisine", say: "la kwee-zeen" } },
@@ -500,6 +565,8 @@ const startsVowel = (w: string) => /^[aeiouéèêh]/i.test(w);
 
 function frObject(c: PathChoice, idx: number, negForm: boolean): FrObj | null {
   if (!c.object) return null;
+  if (c.verb === "do" && ["order", "download"].includes(c.object)) return null;
+  if (c.verb === "do" && c.object === "ticket") return { w: c.negative ? "de billet" : "un billet", say: "uhn bee-yay" };
   const frame = FR_FRAME[c.verb];
   const forms = FR_OBJ[c.object] ?? {};
   // The verb's own frame first; otherwise the form the noun naturally takes.
@@ -517,10 +584,11 @@ function french(c: PathChoice): PathResult {
   const idx = FR_IDX[p];
   // Going or coming home is rentrer in French: je rentre à la maison.
   const home = (c.verb === "go" || c.verb === "come") && c.object === "home";
-  const v = FR_VERBS[home ? "rentrer" : c.verb];
+  const special = c.verb === "do" ? ({ order: "commander", download: "telecharger", ticket: "reserver" } as Record<string, string>)[c.object ?? ""] : null;
+  const v = FR_VERBS[special ?? (home ? "rentrer" : c.verb)];
   const english = "";
   if (!v) return { english, enParts: [], sentence: "", parts: [], say: "", unsupported: "This verb is not in the French set yet." };
-  if (c.verb === "do" && c.object && !FR_OBJ[c.object]?.faire) {
+  if (c.verb === "do" && c.object && !special && !FR_OBJ[c.object]?.faire) {
     return {
       english, enParts: [], sentence: "", parts: [], say: "",
       unsupported: "French has no magic verb for this one. The Indian trick (English word plus maadu, karna, pannu) does not work in French: ordering is commander, downloading is télécharger, booking is réserver, each its own verb.",
@@ -629,10 +697,21 @@ export function randomChoice(gender: Gender, rnd: () => number = Math.random): P
 // ............................................................ one call
 export function buildPath(lang: PathLang, c: PathChoice): PathResult | null {
   const enParts = englishParts(c, lang);
+  if (c.adjective && c.adjective !== "none" && adjectiveAllowed(c.adjective, c.object)) {
+    const obj = enParts.find((p) => p.role === "what");
+    if (obj) {
+      if (c.object === "home") obj.word = "to the home";
+      else if (c.object === "school" || c.object === "class") obj.word = `to the ${c.object}`;
+      obj.word = obj.word.replace(/^(to )?(the |a |an |this )?(.*)$/, (_, preposition, article, noun) => `${preposition ?? ""}${article ?? ""}${c.adjective} ${noun}`);
+    }
+  }
   const english = englishLine(enParts, c.question);
   const res = lang === "fr" ? french(c) : indian(lang, c);
   if (!res) return null;
-  return { ...res, english, enParts };
+  const parts = describeObject(lang, c, res.parts);
+  const sentence = parts.reduce((acc, part, i) => i === 0 ? part.word : acc.endsWith("\'") ? acc + part.word : `${acc} ${part.word}`, "") + (c.question ? "?" : "");
+  const say = c.adjective && c.adjective !== "none" ? (lang === "fr" ? "Listen for the phrase rhythm and word endings." : parts.map((p) => syllables(p.word)).join("  ")) : res.say;
+  return { ...res, sentence, parts, say, english, enParts };
 }
 
 // The same choice in every tense, for the "change one thing" ladder.

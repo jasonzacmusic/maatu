@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { PERSON_ORDER, PERSONS, TENSES, VERBS, verbForm, type Gender, type Tense } from "@/lib/grammar";
 import { composeNumber, lineText, NUMBERS, SCENE_GROUPS, SCENES, SOUND_NOTE, SOUNDS, type Line, type SceneGroup } from "@/lib/playbooks";
-import { C, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
+import { C, LINE, LINE_SOFT, MONO, type IndianLang as Lang } from "@/lib/maatu-design";
 import { Chip, CopyButton, Dock, Label, LILAC, SaveButton, Section, SKY, SpeakButton, type Speaker } from "./studio-bits";
 
 // Two rooms of the Sentence Studio. Scenes: scripted conversations for real

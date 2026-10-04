@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { countFor, dueNow, grade, loadReview, type ReviewItem } from "@/lib/review";
-import { C, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
+import { C, LINE, LINE_SOFT, MONO, type IndianLang as Lang } from "@/lib/maatu-design";
 import { Section, SpeakButton, type Speaker } from "./studio-bits";
 
 // The Review room: saved lines come back on a schedule. English first, reveal,

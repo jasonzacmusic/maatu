@@ -64,6 +64,15 @@
               "note: in daily life most people just say the English word sorry",
               "yes = aama",
               "no = illa"
+            ],
+            "fr": [
+              "hello = bonjour (salut with friends)",
+              "how are you = ça va",
+              "I am fine = ça va bien",
+              "thank you = merci",
+              "please = s’il vous plaît",
+              "sorry = désolé (désolée for a woman)",
+              "say it again = vous pouvez répéter"
             ]
           }
         },
@@ -107,6 +116,12 @@
               "I am from ___ (my home town is ___) = en ooru ___",
               "nice to meet you = ungala paathadhula romba sandhosham",
               "note: in daily life most people simply say nice to meet you in English; teach the Tamil form but mention this"
+            ],
+            "fr": [
+              "my name is ___ = je m’appelle ___",
+              "what is your name = vous vous appelez comment",
+              "I am from ___ = je viens de ___",
+              "I live in ___ = j’habite à ___"
             ]
           }
         },
@@ -152,6 +167,14 @@
               "eleven to fifteen = padhinonnu, pannendu, padhimoonu, padhinaalu, padhinanju",
               "sixteen to twenty = padhinaaru, padhinezhu, padhinettu, patthonbadhu, irubadhu",
               "how many = ethana"
+            ],
+            "fr": [
+              "one to five = un, deux, trois, quatre, cinq",
+              "six to ten = six, sept, huit, neuf, dix",
+              "eleven to fifteen = onze, douze, treize, quatorze, quinze",
+              "sixteen to twenty = seize, dix-sept, dix-huit, dix-neuf, vingt",
+              "how many = combien",
+              "I have three = j’en ai trois"
             ]
           }
         }
@@ -205,6 +228,14 @@
               "orange = orange (Tamils use the English word)",
               "grapes = dhraatchai",
               "this is ___ = idhu ___ (idhu maampazham = this is a mango)"
+            ],
+            "fr": [
+              "banana = une banane",
+              "mango = une mangue",
+              "apple = une pomme",
+              "grapes = du raisin",
+              "this is a mango = c’est une mangue",
+              "I like grapes = j’aime le raisin"
             ]
           }
         },
@@ -257,6 +288,14 @@
               "onion = vengaayam",
               "tomato = thakkaali",
               "I want ___ = enakku ___ venum (enakku tea venum = I want tea)"
+            ],
+            "fr": [
+              "rice = du riz",
+              "water = de l’eau",
+              "milk = du lait",
+              "tea = du thé",
+              "coffee = du café",
+              "I want tea = je voudrais du thé"
             ]
           }
         },
@@ -304,6 +343,13 @@
               "younger sister = thangachi (younger brother = thambi)",
               "child = kuzhandhai",
               "my mother = en amma"
+            ],
+            "fr": [
+              "mother = ma mère",
+              "father = mon père",
+              "brother = mon frère",
+              "sister = ma sœur",
+              "my father is at home = mon père est à la maison"
             ]
           }
         },
@@ -356,6 +402,14 @@
               "chair = naarkaali",
               "book = puthagam",
               "where is ___ = ___ enga irukku (phone enga irukku = where is the phone)"
+            ],
+            "fr": [
+              "house = la maison",
+              "door = la porte",
+              "phone = le téléphone",
+              "book = le livre",
+              "chair = la chaise",
+              "where is my phone = il est où, mon téléphone"
             ]
           }
         }
@@ -405,6 +459,13 @@
               "this is ___ = idhu ___ (idhu thanni = this is water)",
               "that is ___ = adhu ___ (adhu maampazham = that is a mango)",
               "is this ___? = idhu ___ aa? (idhu paalaa? = is this milk? just add the aa sound to the noun)"
+            ],
+            "fr": [
+              "this is ___ = c’est ___",
+              "that one = celui-là (celle-là for a feminine thing)",
+              "is this milk = c’est du lait",
+              "this book = ce livre",
+              "that chair = cette chaise-là"
             ]
           }
         },
@@ -447,6 +508,14 @@
               "I do not want ___ = enakku ___ vendam",
               "I have ___ = en kitta ___ irukku (en kitta kaasu irukku = I have money)",
               "I need ___ = enakku ___ venum (same word as want; Tamil does not separate them)"
+            ],
+            "fr": [
+              "I want ___ = je veux ___",
+              "I would like ___ = je voudrais ___",
+              "I have ___ = j’ai ___",
+              "I need ___ = j’ai besoin de ___",
+              "I do not want it = j’en veux pas",
+              "note: spoken French often drops ne; use de after a negative indefinite or partitive article"
             ]
           }
         },
@@ -492,6 +561,14 @@
               "how much = evvalavu (on the street it shortens to evlo: idhu evlo? = how much is this?)",
               "how many = ethana",
               "who = yaaru"
+            ],
+            "fr": [
+              "what is this = c’est quoi",
+              "where is ___ = ___ est où",
+              "how much is it = c’est combien",
+              "when = quand",
+              "why = pourquoi",
+              "how = comment"
             ]
           }
         }
@@ -542,6 +619,12 @@
               "I go = naan poren (naan veetukku poren = I go home)",
               "I speak = naan pesuren (naan konjam Tamil pesuren = I speak a little Tamil)",
               "I come = naan varen"
+            ],
+            "fr": [
+              "I eat = je mange",
+              "I drink = je bois",
+              "I go home = je rentre à la maison",
+              "I speak a little French = je parle un peu français"
             ]
           }
         },
@@ -588,6 +671,12 @@
               "I saw = naan paathen",
               "today = innikki, yesterday = nethu (nethu naan veetukku ponen = yesterday I went home)",
               "note: contrast pair to teach the ending: saapdren (I eat) vs saapten (I ate)"
+            ],
+            "fr": [
+              "I ate = j’ai mangé",
+              "I went home = je suis rentré (rentrée for a woman)",
+              "I came = je suis venu (venue for a woman)",
+              "I saw my friend = j’ai vu mon ami"
             ]
           }
         },
@@ -634,6 +723,13 @@
               "I will go = naan poven (naan naalaikku poven = I will go tomorrow)",
               "I will come = naan varuven",
               "I will speak = naan pesuven"
+            ],
+            "fr": [
+              "tomorrow = demain",
+              "I will eat = je vais manger",
+              "I will go = je vais aller",
+              "I will come = je vais venir",
+              "note: the near future with aller is normal everyday speech"
             ]
           }
         }
@@ -681,6 +777,13 @@
               "but = aana",
               "because = aenna (naan poren, aenna late aachu = I am going because it got late)",
               "note: word order is subject, object, verb: naan saadham saapdren = I rice eat"
+            ],
+            "fr": [
+              "and = et",
+              "but = mais",
+              "because = parce que",
+              "I want tea and rice = je veux du thé et du riz",
+              "I am tired but happy = je suis fatigué mais content (fatiguée, contente for a woman)"
             ]
           }
         },
@@ -726,6 +829,13 @@
               "can you say it again = thirumba sollunga",
               "there is no ___ = ___ illa (paal illa = there is no milk)",
               "I do not want = enakku vendam"
+            ],
+            "fr": [
+              "a little = un peu",
+              "please give me some water = un peu d’eau, s’il vous plaît",
+              "can you say it again = vous pouvez répéter",
+              "there is no milk = y a pas de lait",
+              "no thanks = non merci"
             ]
           }
         },
@@ -792,6 +902,15 @@
               "stop here = inga niruthunga",
               "I did not understand = enakku puriyala",
               "speak slowly = medhuva pesunga (people also say konjam slow a pesunga)"
+            ],
+            "fr": [
+              "thirty = trente, forty = quarante, fifty = cinquante",
+              "sixty = soixante, seventy = soixante-dix, eighty = quatre-vingts, ninety = quatre-vingt-dix",
+              "euros = euros",
+              "go straight = allez tout droit",
+              "then left = puis à gauche",
+              "I did not understand = j’ai pas compris",
+              "speak slowly please = parlez plus lentement, s’il vous plaît"
             ]
           }
         }

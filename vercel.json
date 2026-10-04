@@ -4,5 +4,38 @@
       "path": "/api/cron/nightly",
       "schedule": "30 20 * * *"
     }
-  ]
+  ],
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app/api/chat/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    },
+    "app/api/check/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    },
+    "app/api/hear/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    },
+    "app/api/romanize/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    },
+    "app/api/say/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    },
+    "app/api/token/route.ts": {
+      "regions": [
+        "bom1"
+      ]
+    }
+  }
 }

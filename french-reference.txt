@@ -1,0 +1,33 @@
+SPOKEN FRENCH REFERENCE. Same deterministic forms as Maatu's sentence flowchart.
+Persons: je (I), tu (friend), vous (polite), il, elle, on (we), ils. French does not share Indian-language word order. Keep articles, contractions and gender agreement. On uses a singular verb; plural participles can refer to the group. Negative speech drops ne. Near future uses aller plus infinitive. Questions can keep normal word order with rising intonation.
+play music: je joue du piano / j'ai joué du piano / je vais jouer du piano / je suis en train de jouer du piano
+sing: je chante une chanson / j'ai chanté une chanson / je vais chanter une chanson / je suis en train de chanter une chanson
+practise: je travaille le piano / j'ai travaillé le piano / je vais travailler le piano / je suis en train de travailler le piano
+listen: j'écoute de la musique / j'ai écouté de la musique / je vais écouter de la musique / je suis en train d'écouter de la musique
+learn: j'apprends le français / j'ai appris le français / je vais apprendre le français / je suis en train d'apprendre le français
+teach: j'enseigne le français / j'ai enseigné le français / je vais enseigner le français / je suis en train d'enseigner le français
+dance: je danse / j'ai dansé / je vais danser / je suis en train de danser
+do (the magic verb): je fais les courses / j'ai fait les courses / je vais faire les courses / je suis en train de faire les courses
+go: je rentre à la maison / je suis rentré à la maison / je vais rentrer à la maison / je rentre à la maison
+come: je rentre à la maison / je suis rentré à la maison / je vais rentrer à la maison / je rentre à la maison
+eat: je mange du riz / j'ai mangé du riz / je vais manger du riz / je suis en train de manger du riz
+drink: je bois du thé / j'ai bu du thé / je vais boire du thé / je suis en train de boire du thé
+play a game: je joue au foot / j'ai joué au foot / je vais jouer au foot / je suis en train de jouer au foot
+speak: je parle français / j'ai parlé français / je vais parler français / je suis en train de parler français
+watch: je regarde un film / j'ai regardé un film / je vais regarder un film / je suis en train de regarder un film
+read: je lis un livre / j'ai lu un livre / je vais lire un livre / je suis en train de lire un livre
+write: j'écris une chanson / j'ai écrit une chanson / je vais écrire une chanson / je suis en train d'écrire une chanson
+buy: j'achète un livre / j'ai acheté un livre / je vais acheter un livre / je suis en train d'acheter un livre
+give: je donne de l'argent / j'ai donné de l'argent / je vais donner de l'argent / je suis en train de donner de l'argent
+take: je prends la clé / j'ai pris la clé / je vais prendre la clé / je suis en train de prendre la clé
+call: j'appelle / j'ai appelé / je vais appeler / je suis en train d'appeler
+work: je travaille / j'ai travaillé / je vais travailler / je suis en train de travailler
+cook: je cuisine / j'ai cuisiné / je vais cuisiner / je suis en train de cuisiner
+help: j'aide / j'ai aidé / je vais aider / je suis en train d'aider
+wait: j'attends / j'ai attendu / je vais attendre / je suis en train d'attendre
+sleep: je dors / j'ai dormi / je vais dormir / je suis en train de dormir
+sit: je m'assois / je me suis assis / je vais m'asseoir / je suis assis
+walk: je marche / j'ai marché / je vais marcher / je suis en train de marcher
+think: je réfléchis / j'ai réfléchi / je vais réfléchir / je suis en train de réfléchir
+travel: je voyage / j'ai voyagé / je vais voyager / je suis en train de voyager
+Adjectives: bon/bonne, nouveau/nouvelle, petit/petite, grand/grande come before the noun. Chaud/chaude, froid/froide, frais/fraîche come after it. Example: je bois du café chaud; je joue de la nouvelle guitare. Masculine/feminine article, adjective and participle agreement must match the actual noun or subject.

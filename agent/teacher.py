@@ -20,15 +20,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CURRICULUM = ROOT / "curriculum.json"
 
-LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai"}
+LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "fr": "fr-FR"}
+LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "fr": "French"}
+CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "fr": "Paris"}
 
 # Warm female teacher voices (valid bulbul:v3), distinct per language.
 TEACHER = {
     "kn": {"name": "Meera", "voice": "shreya"},
     "hi": {"name": "Anjali", "voice": "pooja"},
     "ta": {"name": "Kavya", "voice": "ishita"},
+    "fr": {"name": "Camille", "voice": "Aoede"},
 }
 
 _CORE_RULES = (
@@ -76,6 +77,17 @@ _CORE_RULES = (
     "When they retry, accept it and move forward even if imperfect. Never drill "
     "the same word more than twice in a row, and never stack a correction and a "
     "new word in the same turn.\n"
+    "- THE RETRY LIMIT IS ABSOLUTE: the first wrong attempt gets ONE correction "
+    "and ONE invitation to retry. The very next learner attempt ends this item, "
+    "even if it is completely wrong or repeats the same unrelated word. Acknowledge "
+    "their effort without calling a wrong answer correct, then introduce the NEXT "
+    "different lesson item. Never ask a third time. Example: you ask for how are "
+    "you; they say banana; you model how are you and invite one retry; they say "
+    "banana again; you say thanks for trying, and teach the next word such as "
+    "thank you. The final speaking check still judges mastery honestly.\n"
+    "- A meaning question is NOT a repetition attempt. Give the requested English "
+    "meaning, then use a short English conversation question or resume the next "
+    "uncompleted lesson item. Do not ask them to repeat the phrase they asked about.\n"
     "- Vary your praise and keep it small and specific. Do not gush every turn.\n"
     "- Treat control phrases as instructions, never as pronunciation attempts. "
     "If they say wait or stop, stop the current activity and ask no new question. "
@@ -108,6 +120,8 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
     Endings plus stems instead of full conjugation tables, on purpose: the
     full tables doubled the prompt (5.3k tokens, 3.1 s turns) and the brain
     still slipped on a verb. Same data as the Sentence Studio (grammar.json)."""
+    if lang == "fr":
+        return (ROOT / "french-reference.txt").read_text() if (ROOT / "french-reference.txt").exists() else "Spoken French uses on for we, tu for friends, vous for strangers, and aller plus an infinitive for near future. Drop ne naturally in speech. Keep articles and gender agreement."
     g = _load_grammar()
     if not g or lang not in g.get("persons", {}):
         return ""
@@ -334,6 +348,9 @@ _COMPANION_RULES = (
     "- Correct at most ONE thing per turn, the mistake that most affects "
     "meaning. Give the natural form once, invite one retry, then accept it and "
     "respond to what the learner MEANT.\n"
+    "- A retry closes a correction even if the same wrong word comes back. "
+    "Acknowledge the effort without claiming it was correct, then continue the "
+    "topic with a different useful phrase. Never request a third attempt.\n"
     "- Treat control phrases as instructions, never as language attempts. For "
     "wait, pause and ask nothing new. For say that again, repeat only the last "
     "point. For what does that mean, give the plain English meaning first. For "
@@ -398,6 +415,7 @@ def _tutor_fields(lang: str) -> dict | None:
         f"in one sentence, take the other role, and stay in character in simple spoken "
         f"{ln}. If they get stuck, step half out, feed them the line they need in "
         f"romanized {ln}, and step back in. Stop the scene the moment they ask.\n\n"
+        f"CONTINUITY AND TEACHING. Remember the learner’s topic, names, goals, prices, and your last question. Answer their actual thought first. Build the next teaching opportunity from that topic, never reset to greetings or a random drill. Every few turns teach one reusable phrase and invite a natural answer using it. If the learner changes topic, follow that change. Do not end a chat unless they ask. For French use on for we, near future, and natural spoken contractions.\n\n"
         f"How to handle questions, in any mode:\n"
         f"- A meaning question has a fixed response order: first say '[phrase] means "
         f"[plain English meaning].' Only after answering may you give an example and ask "

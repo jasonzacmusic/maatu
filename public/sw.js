@@ -1,4 +1,5 @@
-const CACHE = "maatu-shell-v3";
+const CACHE = "maatu-studio-v5";
+const DEVELOPMENT = ["localhost", "127.0.0.1", "[::1]"].includes(self.location.hostname);
 const SHELL = [
   "/",
   "/manifest.webmanifest",
@@ -8,7 +9,7 @@ const SHELL = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(DEVELOPMENT ? [] : SHELL)));
   self.skipWaiting();
 });
 
@@ -22,6 +23,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  if (DEVELOPMENT) return;
   const request = event.request;
   if (request.method !== "GET") return;
 

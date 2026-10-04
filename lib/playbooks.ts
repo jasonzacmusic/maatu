@@ -1,5 +1,5 @@
 import playbooks from "@/playbooks.json";
-import type { Lang } from "./maatu-design";
+import type { IndianLang as Lang } from "./maatu-design";
 import type { Gender } from "./grammar";
 
 // Scenes (scripted conversations for real Bengaluru situations plus music

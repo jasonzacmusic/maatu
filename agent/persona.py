@@ -19,6 +19,7 @@ LANG_NAMES = {
     "hi-IN": "Hindi",
     "ta-IN": "Tamil",
     "en-IN": "Indian English",
+    "fr-FR": "French",
 }
 
 DIFFICULTY_SUFFIX = re.compile(r"^(?P<base>.+)-d(?P<stage>[123])$")
@@ -80,6 +81,7 @@ def _build_system_prompt(p: dict) -> str:
             "them: " + "; ".join(agenda) + "."
         )
     parts.append(f"How the scene ends: {p['end_condition']}")
+    parts.append("Conversation continuity: keep the people, destination, price, time and objective consistent with what was already said. Never restart the scene after a learner answer. Respond to their intended meaning and ask a natural next question. Teach through short useful models and natural recasts inside the scene. If they explicitly ask for help or a meaning, give one brief English explanation and the local phrase, then resume exactly where the scene paused. Wait, stop, repeat, go back and slow down are instructions. Accept close pronunciation. Do not end unless the learner asks or the scenario goal is naturally complete.")
     prompt = "\n\n".join(x for x in parts if x)
     stage = int(p.get("_difficulty_stage", 2))
     if stage == 1:
@@ -185,14 +187,19 @@ def apply_secret_agenda(persona: Persona, agenda: list[str]) -> Persona:
 
 
 def apply_practice_metadata(persona: Persona, metadata: str | None) -> Persona:
-    """Add a Build tab practice line (from the learner's participant metadata)
-    to a tutor-<lang> companion. Other personas are returned unchanged."""
-    if not persona.id.startswith("tutor-"):
-        return persona
+    """Continue a text conversation, or practice a builder line with a tutor."""
     from teacher import apply_practice_line, practice_line_from_metadata
 
     line = practice_line_from_metadata(metadata)
-    if not line:
+    try:
+        data = json.loads(metadata or "{}")
+        context = " ".join(str(data.get("context", "")).split())[:2400] if isinstance(data, dict) else ""
+    except (ValueError, TypeError):
+        context = ""
+    if context:
+        persona.system_prompt += "\n\nThe learner is continuing this conversation from the text chat. Treat it as the same conversation. Preserve the topic and facts, and ask the next natural question rather than greeting again. Previous conversation: " + context
+        persona.opening = "Continue the learner's previous text conversation in voice. Briefly acknowledge the last thing they said, and ask the next natural question in the same topic. Previous conversation: " + context
+    if not line or not persona.id.startswith("tutor-"):
         return persona
     lang = persona.id.split("-")[1]
     fields = apply_practice_line(persona.raw, lang, line[0], line[1])

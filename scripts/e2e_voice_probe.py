@@ -22,13 +22,16 @@ from livekit import api, rtc
 ROOT = Path(__file__).resolve().parent.parent
 
 PHRASES = {
-    "kn-auto": "Dayavittu Jayanagar hogi. Meter haaki.",
-    "hi-auto": "Bhaiya, Connaught Place chaliye. Meter lagaiye.",
-    "ta-auto": "Anna, T Nagar ponga. Meter podunga.",
+    "kn-auto": "ದಯವಿಟ್ಟು ಜಯನಗರಕ್ಕೆ ಹೋಗಿ. ಮೀಟರ್ ಹಾಕಿ.",
+    "hi-auto": "भैया, कनॉट प्लेस चलिए. मीटर लगाइए।",
+    "ta-auto": "அண்ணா, டி நகருக்கு போங்க. மீட்டர் போடுங்க.",
+    "fr-auto": "Bonjour. À la gare de Lyon, s'il vous plaît. Vous mettez le compteur ?",
+    "fr-chai": "Bonjour. Ça va bien, merci. Vous aimez la musique ?",
     "kn-teach": "Naanu nimge taala helthini. Modalu naalku beat ide.",
     "teacher-kn-l1": "Namaskara. Hegiddira?",
     "teacher-hi-l1": "Namaste. Aap kaise hain?",
     "teacher-ta-l1": "Vanakkam. Eppadi irukkeenga?",
+    "teacher-fr-l1": "Bonjour. Comment allez-vous ?",
     "teacher-kn-l16": "Aivattu rupaayi jaasti. Swalpa kammi maadi.",
     "teacher-hi-l16": "Pachaas rupaye bahut zyada hai. Thoda kam kijiye.",
     "teacher-ta-l16": "Ambadhu roobaa romba jaasti. Konjam kammi pannunga.",
@@ -41,7 +44,7 @@ PHRASES = {
 ACKNOWLEDGMENTS = {"sari", "theek hai", "seri", "okay"}
 
 LANGUAGE = {
-    "fr": "en-IN",
+    "fr": "fr-FR",
     "kn": "kn-IN",
     "hi": "hi-IN",
     "ta": "ta-IN",
@@ -59,7 +62,19 @@ def load_env(path: Path) -> dict[str, str]:
     return values
 
 
-def synthesize(text: str, language: str, key: str, output: Path) -> None:
+def synthesize(text: str, language: str, key: str, output: Path, site: str | None = None) -> None:
+    if language == "fr-FR":
+        request = urllib.request.Request(
+            (site or "http://127.0.0.1:3033").rstrip("/") + "/api/say",
+            data=json.dumps({"lang": "fr", "text": text}).encode(),
+            headers={"Content-Type": "application/json"}, method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=60) as response:
+            encoded = json.loads(response.read())["audio"]
+        source = output.with_suffix(".source")
+        source.write_bytes(base64.b64decode(encoded))
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(source), "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", str(output)], check=True)
+        return
     body = json.dumps(
         {
             "text": text,
@@ -115,17 +130,26 @@ async def run_probe(
     barge_in: bool = False,
     turns: int = 1,
     metadata: str | None = None,
+    agent_name: str = "maatu-studio",
+    controls: bool = False,
+    sequence: list[dict[str, str]] | None = None,
+    site: str | None = None,
 ) -> dict[str, object]:
     env = load_env(ROOT / "agent" / ".env")
     parts = persona.split("-")
     lang = parts[1] if parts[0] in {"teacher", "tutor"} else parts[0]
-    language = LANGUAGE[lang]
-    room_name = f"{persona}__e2e{int(time.time())}"
+    language = "en-IN" if phrase.startswith(("What ", "Hello", "Please ", "I ")) else LANGUAGE[lang]
+    room_name = f"{agent_name}.{persona}__e2e{time.time_ns()}"
     identity = f"e2e-probe-{int(time.time())}"
+    livekit_url = env["LIVEKIT_URL"]
 
     with tempfile.TemporaryDirectory(prefix="maatu-e2e-") as tmp:
-        audio_path = Path(tmp) / "probe.wav"
-        synthesize(phrase, language, env["SARVAM_API_KEY"], audio_path)
+        inputs = sequence or [{"text": phrase, "voice_language": language}] * turns
+        audio_paths = []
+        for index, item in enumerate(inputs):
+            audio_path = Path(tmp) / f"probe-{index}.wav"
+            synthesize(item["text"], item.get("voice_language", language), env["SARVAM_API_KEY"], audio_path, site)
+            audio_paths.append(audio_path)
 
         token = (
             api.AccessToken(env["LIVEKIT_API_KEY"], env["LIVEKIT_API_SECRET"])
@@ -133,8 +157,20 @@ async def run_probe(
             .with_name("Maatu E2E Probe")
             .with_grants(api.VideoGrants(room_join=True, room=room_name))
             .with_metadata(metadata or "")
+            .with_room_config(api.RoomConfiguration(agents=[api.RoomAgentDispatch(agent_name=agent_name)]))
             .to_jwt()
         )
+        if site:
+            practice = json.loads(metadata or "{}")
+            request = urllib.request.Request(
+                site.rstrip("/") + "/api/token",
+                data=json.dumps({"persona": persona, "learner": identity, "practice": practice.get("practice", ""), "practiceEn": practice.get("practiceEn", ""), "context": practice.get("context", "")}).encode(),
+                headers={"Content-Type": "application/json"}, method="POST",
+            )
+            with urllib.request.urlopen(request, timeout=30) as response:
+                call = json.load(response)
+            token, room_name, livekit_url = call["token"], call["room"], call["url"]
+            identity = f"learner-{identity}"
 
         room = rtc.Room()
         opening_audio_started = asyncio.Event()
@@ -144,6 +180,19 @@ async def run_probe(
         remote_lines: list[str] = []
         learner_lines: list[str] = []
         timing: dict[str, float] = {}
+        control_events: dict[str, asyncio.Event] = {}
+        control_acks: list[dict] = []
+        control_active = False
+
+        @room.on("data_received")
+        def on_data(packet):
+            if packet.topic != "maatu.control": return
+            try: data = json.loads(bytes(packet.data).decode())
+            except (ValueError, UnicodeDecodeError): return
+            if data.get("action") in {"control-applied", "slow-down-applied"}:
+                control_acks.append(data)
+                key = data.get("control", "slow-down")
+                if key in control_events: control_events[key].set()
         ready_for_reply = False
         stream_tasks: set[asyncio.Task[None]] = set()
 
@@ -177,10 +226,10 @@ async def run_probe(
                     remote_lines.append(text)
                     if not opening_done.is_set():
                         opening_done.set()
-                    elif ready_for_reply and text.rstrip(".").lower() not in ACKNOWLEDGMENTS:
+                    elif ready_for_reply and (control_active or text.rstrip(".").lower() not in ACKNOWLEDGMENTS):
                         reply_done.set()
 
-        await room.connect(env["LIVEKIT_URL"], token)
+        await room.connect(livekit_url, token)
         # Publish the microphone at once, like the real app does, so the agent
         # is already subscribed when the learner speaks. Publishing it after the
         # opening clipped the first syllable of every probe turn.
@@ -201,7 +250,7 @@ async def run_probe(
                 await asyncio.sleep(1.5)
 
             results: list[dict[str, object]] = []
-            for turn_number in range(1, turns + 1):
+            for turn_number, audio_path in enumerate(audio_paths, 1):
                 reply_audio = asyncio.Event()
                 reply_done = asyncio.Event()
                 ready_for_reply = False
@@ -229,6 +278,7 @@ async def run_probe(
                 results.append(
                     {
                         "turn": turn_number,
+                        "input": inputs[turn_number - 1]["text"],
                         "learner_transcript": learner_lines[-1] if len(learner_lines) > learner_start else None,
                         "reply": remote_lines[-1] if len(remote_lines) > remote_start else None,
                         "external_speech_end_to_audio_ms": latency_ms,
@@ -236,6 +286,20 @@ async def run_probe(
                 )
                 await asyncio.sleep(0.8)
 
+            control_results = []
+            if controls:
+                for action in ["repeat", "explain", "slow-down", "pause", "resume"]:
+                    await asyncio.sleep(1.5)
+                    start = len(remote_lines)
+                    control_events[action] = asyncio.Event()
+                    reply_done = asyncio.Event()
+                    ready_for_reply = True
+                    control_active = True
+                    await room.local_participant.publish_data(json.dumps({"action": action}), reliable=True, topic="maatu.control")
+                    await asyncio.wait_for(control_events[action].wait(), timeout=12)
+                    await asyncio.wait_for(reply_done.wait(), timeout=30)
+                    ready_for_reply = False
+                    control_results.append({"action": action, "acknowledged": True, "reply": remote_lines[start:]})
             return {
                 "room": room_name,
                 "persona": persona,
@@ -243,6 +307,7 @@ async def run_probe(
                 "opening": remote_lines[0] if remote_lines else None,
                 "turns": results,
                 "barge_in": barge_in,
+                "controls": control_results,
             }
         finally:
             await room.disconnect()
@@ -259,6 +324,10 @@ def main() -> None:
     parser.add_argument("--turns", type=int, default=1)
     parser.add_argument("--practice", help="tutor rooms: Build tab romanized practice line")
     parser.add_argument("--practice-en", default="", help="English meaning of --practice")
+    parser.add_argument("--agent-name", default="maatu-studio")
+    parser.add_argument("--controls", action="store_true")
+    parser.add_argument("--sequence-file", type=Path, help="JSON list of spoken inputs with text and voice_language")
+    parser.add_argument("--site", help="Use the deployed site's token route and French preview speech")
     args = parser.parse_args()
     if args.turns < 1:
         parser.error("--turns must be at least 1")
@@ -272,6 +341,10 @@ def main() -> None:
             json.dumps({"practice": args.practice, "practiceEn": args.practice_en})
             if args.practice
             else None,
+            args.agent_name,
+            args.controls,
+            json.loads(args.sequence_file.read_text()) if args.sequence_file else None,
+            args.site,
         )
     )
     print(json.dumps(result, ensure_ascii=False))

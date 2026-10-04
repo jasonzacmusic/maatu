@@ -1,4 +1,6 @@
 import type { PersonaMeta } from "./personas.generated";
+import { synthesizeSpeech } from "./speech";
+import type { Lang } from "./maatu-design";
 import { personaMeta } from "./curriculum";
 import { hasNativeScript, romanizeText } from "./romanize";
 
@@ -8,7 +10,6 @@ import { hasNativeScript, romanizeText } from "./romanize";
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
-const SARVAM_KEY = process.env.SARVAM_API_KEY;
 
 export type Line = { who: "character" | "learner"; text: string };
 
@@ -76,26 +77,10 @@ async function callGemini(prompt: string): Promise<Record<string, unknown> | nul
   }
 }
 
-async function synthCoachAudio(text: string, languageCode: string): Promise<string | null> {
-  if (!SARVAM_KEY || !text) return null;
-  try {
-    const res = await fetch("https://api.sarvam.ai/text-to-speech", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "api-subscription-key": SARVAM_KEY },
-      body: JSON.stringify({
-        text: text.slice(0, 900),
-        target_language_code: languageCode,
-        speaker: "shreya",
-        model: "bulbul:v3",
-      }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const audios = data?.audios;
-    return Array.isArray(audios) && audios.length ? audios[0] : null;
-  } catch {
-    return null;
-  }
+async function synthCoachAudio(text: string, lang: Lang): Promise<string | null> {
+  if (!text) return null;
+  try { return (await synthesizeSpeech(text.slice(0, 500), lang)).audio; }
+  catch { return null; }
 }
 
 // The UI is strictly romanized. The prompt asks Gemini for Latin script only,
@@ -143,7 +128,7 @@ export async function generateReport(
   )) as [string, string][];
   const spoken = typeof raw.summary_spoken === "string" ? raw.summary_spoken : "";
 
-  const coachAudio = await synthCoachAudio(spoken, persona.languageCode);
+  const coachAudio = await synthCoachAudio(spoken, persona.language);
 
   return {
     headline: await ensureRoman(typeof raw.headline === "string" ? raw.headline : "Nicely done", lc),

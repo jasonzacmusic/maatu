@@ -15,9 +15,9 @@ ROOT = Path(__file__).resolve().parent.parent
 PERSONA_DIR = ROOT / "personas"
 TS_OUT = ROOT / "lib" / "personas.generated.ts"
 
-LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
-CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai"}
+LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "fr": "fr-FR"}
+LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "fr": "French"}
+CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai", "fr": "Paris"}
 
 # Per scenario: shop id (frontend), gender, level, English rubric, and per
 # language the character name, a spoken-style note, and the opening beat.
@@ -294,6 +294,17 @@ SCENARIOS = {
 }
 
 
+FRENCH_SCENARIOS = {'auto': ('Taxi, Paris', 'Luc', 'A taxi driver taking a local passenger across Paris. Meter fares, euros, card payments and ordinary traffic.', 'Confirm the destination, ask about the route, quote a consistent estimated metered fare in euros, handle traffic and payment. Do not invent auto rickshaws, Indian place names or UPI.', 'The passenger has just got into your Paris taxi. Greet them with bonjour and ask where they are going.'), 'chai': ('Café, Paris', 'Camille', 'A friendly regular at a neighborhood café. Espresso cups, bistro chairs and ordinary local small talk.', 'Chat about the day, weekend plans, food or music. Respond to the learner’s actual topic and always leave a natural next question.', 'You are both sitting at a neighborhood café with a coffee. Say salut and ask how their day is going.'), 'delivery': ('At the intercom, Paris', 'Yanis', 'A delivery rider outside a Paris apartment building, checking the intercom, floor and entrance code.', 'Confirm the order, building, floor and directions, handle one mistaken entrance, and hand over the delivery.', 'Call from the front door of the Paris building and ask which intercom to ring.'), 'care': ('Customer service, Paris', 'Julie', 'A French broadband service representative arranging installation.', 'Compare two broadband plans in euros, confirm the address and arrange an appointment.', 'Welcome the caller to customer service and ask what you can help with.'), 'teach': ('Music studio, Paris', 'Léo', 'A curious beginner music student who asks realistic questions about rhythm, melody and chords.', 'Ask the learner to explain a simple musical idea, ask why, and try following their directions. Stay the student.', 'Say bonjour and ask the teacher to show you how to count four beats.'), 'airport': ('Airport check-in, Paris', 'Nora', 'An airline check-in agent at Charles de Gaulle.', 'Check destination, baggage, a seat preference and boarding time. Keep the details consistent.', 'Say bonjour and ask where the passenger is flying today.'), 'salon': ('Hair salon, Paris', 'Thomas', 'A friendly neighborhood hairdresser.', 'Ask how much to cut, confirm the style, discuss their day and handle payment in euros.', 'Welcome the learner and ask what haircut they would like.'), 'market': ('Street market, Paris', 'Sophie', 'A vendor at a neighborhood produce market with seasonal fruit and vegetables.', 'Ask what they want, give consistent prices per kilo in euros, weigh produce and handle payment.', 'Say bonjour and ask which fruit or vegetables they are looking for.'), 'kirana': ('Épicerie, Paris', 'Malik', 'The owner of a neighborhood grocery shop.', 'Help with a small shopping list, handle one unavailable item, state prices in euros, and settle the bill.', 'Welcome the shopper and ask what they need today.'), 'doctor': ('Clinic reception, Paris', 'Élodie', 'A patient clinic staff member practicing appointment and symptom vocabulary.', 'Ask how the learner feels and help arrange an appointment. This is language practice; avoid diagnosing, prescribing or giving doses.', 'Say bonjour and ask whether they have an appointment.'), 'restaurant': ('Bistro, Paris', 'Hugo', 'A busy but friendly server in an everyday Paris bistro.', 'Offer the menu, take a food and drink order, handle a dish being unavailable, and bring the bill in euros.', 'Welcome the guest and ask whether they would like something to drink.'), 'neighbour': ('Next door, Paris', 'Anaïs', 'A neighbor in the same Paris apartment building.', 'Introduce yourself, ask where they moved from, chat about the neighborhood and ask a small favor.', 'Introduce yourself as the next-door neighbor and welcome them to the building.'), 'landlord': ('Apartment visit, Paris', 'Paul', 'A landlord discussing a Paris apartment repair.', 'Hear about the broken tap, discuss access and arrange a repair time. Keep the rental details consistent.', 'Say bonjour and ask what needs fixing in the apartment.'), 'pharmacy': ('Pharmacie, Paris', 'Inès', 'A French pharmacist helping with everyday pharmacy vocabulary.', 'Ask what the learner needs and whether they have an ordonnance, explain that prescriptions need a clinician. Avoid inventing medical advice or doses.', 'Greet the learner and ask what you can help them find.')}
+
+for scenario_id, fields in FRENCH_SCENARIOS.items():
+    scene_label, name, character, goals, opening = fields
+    sc = SCENARIOS[scenario_id]
+    sc["scene_label"]["fr"] = scene_label
+    sc["name"]["fr"] = name
+    sc["voice"]["fr"] = "Aoede"
+    sc["style"]["fr"] = "Natural everyday Paris French. Use vous with customers and strangers, tu with friends. Keep turns short and clear, allow common spoken forms like on and dropped ne, never exaggerated slang. All prices are in euros."
+
+
 def build():
     PERSONA_DIR.mkdir(exist_ok=True)
     manifest = {}
@@ -311,10 +322,10 @@ def build():
                 "voice": s["voice"][lang],
                 "tts": {"pace": 1.05 if s["gender"] == "male" else 1.0, "emotion": "casual"},
                 "teach_mode": s.get("teach_mode", False),
-                "character": s["character"],
+                "character": FRENCH_SCENARIOS[skey][2] if lang == "fr" else s["character"],
                 "speech_style": s["style"][lang],
                 "level_behavior": level_behavior(s["level"]),
-                "goals": s["goals"],
+                "goals": FRENCH_SCENARIOS[skey][3] if lang == "fr" else s["goals"],
                 "end_condition": s["end_condition"],
                 "secret_agenda": s["secret_agenda"],
                 "correction_policy": (
@@ -322,7 +333,7 @@ def build():
                     if not s.get("teach_mode")
                     else "You are the student, not the teacher. Never teach them. If you do not understand their explanation, say so like a curious kid and ask again."
                 ),
-                "opening": s["opening"],
+                "opening": FRENCH_SCENARIOS[skey][4] if lang == "fr" else s["opening"],
                 "debrief_rubric": s["rubric"],
             }
             (PERSONA_DIR / f"{pid}.json").write_text(json.dumps(persona, ensure_ascii=False, indent=2) + "\n")
@@ -362,7 +373,7 @@ def write_ts(manifest: dict):
         "",
         "export type PersonaMeta = {",
         "  id: string;",
-        "  language: \"kn\" | \"hi\" | \"ta\";",
+        "  language: \"kn\" | \"hi\" | \"ta\" | \"fr\";",
         "  languageCode: string;",
         "  languageName: string;",
         "  scenario: string;",

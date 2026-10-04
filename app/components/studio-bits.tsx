@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { splitEnding } from "@/lib/grammar";
 import { isSaved, toggleSaved } from "@/lib/review";
-import { C, DISPLAY, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
+import { C, DISPLAY, LINE, LINE_SOFT, MONO, type IndianLang as Lang } from "@/lib/maatu-design";
 
 // Shared pieces of the Sentence Studio: the voice hook, the hear button, chips,
 // labels, section frames, and the lit verb. No em dashes anywhere.

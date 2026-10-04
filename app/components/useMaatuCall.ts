@@ -25,7 +25,8 @@ function safeRomanizedText(text: string) {
 }
 
 function languageCode(persona: string) {
-  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta)(?:-|$)/)?.[1];
+  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta|fr)(?:-|$)/)?.[1];
+  if (language === "fr") return "fr-FR";
   if (language === "hi") return "hi-IN";
   if (language === "ta") return "ta-IN";
   return "kn-IN";
@@ -50,6 +51,7 @@ export interface MaatuCall {
   toggleMute: () => Promise<void>;
   unlockAudio: () => Promise<void>;
   requestSlowDown: () => Promise<boolean>;
+  requestHelp: (action: "repeat" | "explain" | "pause" | "resume") => Promise<boolean>;
   // The learner's own microphone: live level (0 to 1), whether any sound has
   // reached it lately, the mics on this device, and a way to switch.
   micLevel: number;
@@ -67,7 +69,7 @@ export interface MaatuCall {
 type PendingLine = Omit<Line, "text"> & { key: string; text: string | null };
 
 // A sentence built in the Build tab that the companion should drill out loud.
-export type PracticeLine = { target: string; en: string };
+export type PracticeLine = { target: string; en: string; context?: string };
 
 export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, practice: PracticeLine | null = null): MaatuCall {
   const [phase, setPhase] = useState<CallPhase>("idle");
@@ -85,6 +87,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   const [endedUnexpectedly, setEndedUnexpectedly] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
+  const generation = useRef(0);
+  const controls = useRef(new Map<string, { resolve: (ok: boolean) => void; timer: ReturnType<typeof setTimeout> }>());
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const rawRef = useRef<Line[]>([]);
   const displayRef = useRef<Line[]>([]);
@@ -94,7 +98,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
 
   const flushDisplay = useCallback(() => {
     let changed = false;
-    while (pendingRef.current[0]?.text !== null) {
+    while (pendingRef.current.length > 0 && pendingRef.current[0].text !== null) {
       const ready = pendingRef.current.shift();
       if (!ready?.text) continue;
       displayRef.current.push({ who: ready.who, text: ready.text });
@@ -136,6 +140,9 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   }, []);
 
   const hangUp = useCallback(async () => {
+    generation.current += 1;
+    for (const request of controls.current.values()) { clearTimeout(request.timer); request.resolve(false); }
+    controls.current.clear();
     await Promise.race([
       Promise.allSettled([...romanizationTasksRef.current]),
       new Promise((resolve) => setTimeout(resolve, 2500)),
@@ -253,6 +260,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   );
 
   const connect = useCallback(async () => {
+    const attempt = ++generation.current;
     setPhase("connecting");
     setError(null);
     setTranscript([]);
@@ -272,13 +280,13 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
         persona.startsWith("teacher-") || persona.startsWith("tutor-")
           ? persona
           : `${persona}-d${difficultyStage}`;
-      const extra = practice && persona.startsWith("tutor-") ? `&practice=${encodeURIComponent(practice.target)}&practiceEn=${encodeURIComponent(practice.en)}` : "";
-      const res = await fetch(`/api/token?persona=${encodeURIComponent(callPersona)}${extra}`);
+      const res = await fetch("/api/token", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ persona: callPersona, practice: practice?.target, practiceEn: practice?.en, context: practice?.context }) });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Could not reach the character.");
       }
       const { token, url, room: roomId } = await res.json();
+      if (attempt !== generation.current) return;
       setRoomName(roomId);
 
       let storedMic: string | null = null;
@@ -293,6 +301,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       room.on(RoomEvent.TrackSubscribed, (track: RemoteTrack) => {
         const el = ensureAudioEl();
         if (track.kind === Track.Kind.Audio && el) {
+          setCharacterHeard(true);
           track.attach(el);
           el.play().catch(() => setNeedsAudioUnlock(!room.canPlaybackAudio));
         }
@@ -305,6 +314,11 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
         try {
           const message = JSON.parse(new TextDecoder().decode(payload));
           if (message.action === "slow-down-applied") setSlowerPace(true);
+          if (message.action === "control-applied" || message.action === "slow-down-applied") {
+            const key = message.control || "slow-down";
+            const request = controls.current.get(key);
+            if (request) { clearTimeout(request.timer); request.resolve(true); controls.current.delete(key); }
+          }
         } catch {
           // Ignore malformed or unrelated control packets.
         }
@@ -345,6 +359,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
                 })
                   .then((response) => (response.ok ? response.json() : { text: "Romanization unavailable" }))
                   .then((data) => {
+                    if (attempt !== generation.current) return;
                     const romanized = safeRomanizedText(typeof data.text === "string" ? data.text : "Romanization unavailable");
                     setCaption({ who, text: romanized });
                     pending.text = romanized;
@@ -376,6 +391,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       });
 
       await room.connect(url, token);
+      if (attempt !== generation.current) { await room.disconnect(); return; }
       ensureAudioEl();
       // Unlock remote audio playback within the tap that started the call.
       try {
@@ -384,8 +400,10 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
         // fall back to the tap-to-hear prompt
       }
       setNeedsAudioUnlock(!room.canPlaybackAudio);
+      if (attempt !== generation.current) { await room.disconnect(); return; }
       try {
         await room.localParticipant.setMicrophoneEnabled(true);
+        if (attempt !== generation.current) { await room.disconnect(); return; }
         setMuted(false);
         startMeter(room);
         void refreshMics(room);
@@ -396,6 +414,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       }
       setPhase("live");
     } catch (e) {
+      if (attempt !== generation.current) return;
+      await roomRef.current?.disconnect();
       roomRef.current = null;
       setError(e instanceof Error ? e.message : "Could not connect.");
       setConnectionIssue(null);
@@ -422,17 +442,26 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   const recordTranscript = useCallback(() => [...rawRef.current], []);
   const recordDisplayTranscript = useCallback(() => [...displayRef.current], []);
 
-  const requestSlowDown = useCallback(async () => {
+  const requestControl = useCallback(async (action: string) => {
     const room = roomRef.current;
     if (!room) return false;
+    const previous = controls.current.get(action);
+    if (previous) { clearTimeout(previous.timer); previous.resolve(false); }
+    const acknowledged = new Promise<boolean>((resolve) => {
+      const timer = setTimeout(() => { controls.current.delete(action); resolve(false); }, 10000);
+      controls.current.set(action, { resolve, timer });
+    });
     try {
-      const payload = new TextEncoder().encode(JSON.stringify({ action: "slow-down" }));
-      await room.localParticipant.publishData(payload, { reliable: true, topic: "maatu.control" });
-      return true;
+      await room.localParticipant.publishData(new TextEncoder().encode(JSON.stringify({ action })), { reliable: true, topic: "maatu.control" });
+      return await acknowledged;
     } catch {
+      const pending = controls.current.get(action);
+      if (pending) { clearTimeout(pending.timer); pending.resolve(false); controls.current.delete(action); }
       return false;
     }
   }, []);
+  const requestSlowDown = useCallback(() => requestControl("slow-down"), [requestControl]);
+  const requestHelp = useCallback((action: "repeat" | "explain" | "pause" | "resume") => requestControl(action), [requestControl]);
 
   useEffect(() => {
     if (phase === "ended" || phase === "error") stopMeter();
@@ -440,6 +469,9 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
 
   useEffect(() => {
     return () => {
+      generation.current += 1;
+      for (const request of controls.current.values()) { clearTimeout(request.timer); request.resolve(false); }
+      controls.current.clear();
       stopMeter();
       roomRef.current?.disconnect();
       roomRef.current = null;
@@ -467,6 +499,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
     toggleMute,
     unlockAudio,
     requestSlowDown,
+    requestHelp,
     micLevel,
     micSilent,
     mics,

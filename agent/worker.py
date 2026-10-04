@@ -78,34 +78,8 @@ def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
 logger = logging.getLogger("maatu.agent")
 logging.basicConfig(level=logging.INFO)
 
-# French has no Sarvam voice, so the French companion runs on Gemini Live, one
-# model that hears and speaks (tested 2026-09-28: replies in 1.0 to 1.5 s).
+# One native-audio engine supports all four languages.
 FRENCH_LIVE_MODEL = os.environ.get("MAATU_FRENCH_MODEL", "gemini-3.8-live")
-FRENCH_PROMPT = (
-    "You are Camille, a warm, playful friend from Paris who helps an Indian adult "
-    "learn to SPEAK everyday French. This is a live voice call. The learner is a "
-    "beginner and speaks mostly English plus a few French words.\n"
-    "- Speak casual spoken Paris French the way friends actually talk: drop the ne "
-    "(je sais pas), say on for we, use the near future (je vais manger). Never "
-    "stiff textbook French.\n"
-    "- Keep every turn short: one or two sentences, then ask the learner to say "
-    "something. Speak a little slowly and clearly.\n"
-    "- Support in English: whenever you teach a phrase, say it in French, give the "
-    "English meaning, then invite them to repeat it.\n"
-    "- An English question gets the English meaning FIRST, then the French.\n"
-    "- A close-but-imperfect attempt counts as correct: praise briefly and move on. "
-    "A real mistake gets one warm correction and one retry, then move on.\n"
-    "- Control phrases always work: wait, stop, slow down, say that again, what "
-    "does that mean, go back.\n"
-    "- The learner can chat about anything, ask you to teach any topic, or ask you "
-    "to act out any scene (a cafe, a bakery, a train station). Follow their lead.\n"
-    "- Never mention spelling, letters or typing. This is only about speaking."
-)
-FRENCH_OPENING = (
-    "Greet the learner warmly in French with bonjour, then in one short friendly "
-    "English sentence offer the choice: we can just chat, I can teach you anything "
-    "you name, or we can act out any scene you invent. Ask what they feel like today."
-)
 
 
 # Every Kannada, Hindi and Tamil call (Chat, lessons, situations) runs on Gemini
@@ -113,9 +87,9 @@ FRENCH_OPENING = (
 # a local one and replies land in one to two seconds. Sarvam's text voice read
 # romanized spellings with an outsider's accent (Jason, 2026-09-28). Set
 # MAATU_LIVE_LANGS="" to put every call back on the Sarvam pipeline below.
-LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta").split(",") if x.strip()}
+LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta,fr").split(",") if x.strip()}
 LIVE_VOICES = {"female": ["Kore", "Aoede", "Leda", "Zephyr"], "male": ["Puck", "Charon", "Orus", "Fenrir"]}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai"}
+CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "fr": "Paris"}
 
 
 def persona_lang(persona) -> str:
@@ -126,14 +100,14 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
     lang = persona_lang(persona)
     gender = "male" if str(getattr(persona, "gender", "female")).lower().startswith("m") else "female"
     voices = LIVE_VOICES[gender]
-    voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else {"kn": "Kore", "hi": "Aoede", "ta": "Leda"}[lang]
+    voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else {"kn": "Kore", "hi": "Aoede", "ta": "Leda", "fr": "Aoede"}[lang]
     logger.info("room=%s persona=%s engine=gemini-live model=%s voice=%s", ctx.room.name, persona.id, FRENCH_LIVE_MODEL, voice)
     # The script rule in the prompts exists for a text voice; a speaking model
     # just speaks, so tell it how to sound.
     instructions = persona.system_prompt + (
         f"\n\nYou are speaking out loud yourself. Pronounce every word the way a local from {CITY.get(lang, 'India')} "
-        "says it, in the everyday spoken register, with natural Indian English for any English parts. "
-        "Speak at a relaxed, clear pace for a learner."
+        "says it, in the everyday spoken register. Use clear natural English for support. "
+        "Speak at a relaxed, clear pace for a learner. Say only your direct conversational reply, never narrate instructions or describe what you plan to say."
     )
     session = AgentSession(
         llm=google.realtime.RealtimeModel(
@@ -156,18 +130,41 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
         if role in ("user", "assistant") and text:
             logger.info("transcript room=%s %s: %s", ctx.room.name, "learner" if role == "user" else "agent", " ".join(text.split()))
 
-    async def _slow_down():
+    turn = {"ended_at": None}
+
+    @session.on("user_state_changed")
+    def _user_state(ev):
+        if getattr(ev, "old_state", None) == "speaking" and getattr(ev, "new_state", None) == "listening":
+            turn["ended_at"] = time.perf_counter()
+
+    @session.on("agent_state_changed")
+    def _agent_state(ev):
+        if getattr(ev, "new_state", None) == "speaking" and turn["ended_at"]:
+            ms = (time.perf_counter() - turn["ended_at"]) * 1000
+            logger.info("turn latency: %.0f ms [%s] speech_end_to_agent_audio persona=%s", ms, "OK" if ms <= 1500 else "OVER", persona.id)
+            turn["ended_at"] = None
+
+    async def _control(action):
+        commands = {
+            "slow-down": "Please slow down and keep that slower pace. Repeat your last phrase slowly.",
+            "repeat": "Please say your last phrase or question again.",
+            "explain": "What is the English meaning of the last target-language phrase you taught me?",
+            "pause": "Please wait a moment. Just say okay, then wait quietly for me.",
+            "resume": "I am ready. Let us continue where we left off.",
+        }
+        if action not in commands:
+            return
         try:
+            await session.interrupt(force=True)
+            if action == "slow-down":
+                await session.current_agent.update_instructions(instructions + "\n\nThe learner wants a slower pace for this call. Use wider pauses and short phrases while keeping the topic and teaching behavior.")
+            session.generate_reply(user_input=commands[action])
             await ctx.room.local_participant.publish_data(
-                json.dumps({"action": "slow-down-applied", "pace": 0.8}), reliable=True, topic="maatu.control"
+                json.dumps({"action": "slow-down-applied" if action == "slow-down" else "control-applied", "control": action, "pace": 0.8}),
+                reliable=True, topic="maatu.control"
             )
-            session.generate_reply(
-                instructions="The learner asked you to slow down. Say a short okay, then from now on speak "
-                "noticeably slower, with small pauses between words, for the rest of the call."
-            )
-            logger.info("control=slow-down persona=%s engine=gemini-live", persona.id)
         except Exception:
-            logger.exception("slow-down failed persona=%s", persona.id)
+            logger.exception("control failed persona=%s action=%s", persona.id, action)
 
     @ctx.room.on("data_received")
     def _on_data(packet):
@@ -175,10 +172,10 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
             return
         try:
             payload = json.loads(bytes(packet.data).decode())
-        except Exception:
+        except (ValueError, UnicodeDecodeError):
             return
-        if payload.get("action") == "slow-down":
-            asyncio.create_task(_slow_down())
+        if isinstance(payload, dict):
+            asyncio.create_task(_control(payload.get("action")))
 
     await session.start(room=ctx.room, agent=Agent(instructions=instructions))
     await session.generate_reply(instructions=persona.opening)
@@ -199,51 +196,6 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
     asyncio.create_task(_close_if_no_mic())
 
 
-async def run_french(ctx: agents.JobContext) -> None:
-    opening = FRENCH_OPENING
-    try:
-        learner = await asyncio.wait_for(ctx.wait_for_participant(), timeout=10)
-        data = json.loads(learner.metadata or "{}")
-        practice = " ".join(str(data.get("practice", "")).split())[:160]
-        practice_en = " ".join(str(data.get("practiceEn", "")).split())[:160]
-        if practice:
-            opening = (
-                f"The learner just built this sentence in the Build tab and wants to say it "
-                f"out loud: {practice_en} = {practice}. Greet them with bonjour, say you will "
-                "practise that line together, say it once slowly, and ask them to repeat it. "
-                "After they try, flip it one step at a time (past, right now, every day, "
-                "future; then he or she) asking them to say each version."
-            )
-            logger.info("practice line room=%s practice=%s practice_en=%s", ctx.room.name, practice, practice_en)
-    except asyncio.TimeoutError:
-        logger.warning("no learner joined within 10 s room=%s", ctx.room.name)
-    except Exception:
-        logger.exception("french practice metadata read failed room=%s", ctx.room.name)
-
-    logger.info("room=%s persona=tutor-fr model=%s", ctx.room.name, FRENCH_LIVE_MODEL)
-    session = AgentSession(
-        llm=google.realtime.RealtimeModel(
-            model=FRENCH_LIVE_MODEL,
-            voice="Aoede",
-            temperature=0.8,
-            api_key=GEMINI_API_KEY,
-        ),
-    )
-
-    @ctx.room.on("track_subscribed")
-    def _on_track(track, publication, participant):
-        logger.info("heard track room=%s kind=%s from=%s", ctx.room.name, getattr(track, "kind", "?"), getattr(participant, "identity", "?"))
-
-    @session.on("conversation_item_added")
-    def _on_item(ev):
-        item = getattr(ev, "item", None)
-        role = getattr(item, "role", None)
-        text = getattr(item, "text_content", None)
-        if role in ("user", "assistant") and text:
-            logger.info("transcript room=%s %s: %s", ctx.room.name, "learner" if role == "user" else "agent", " ".join(text.split()))
-
-    await session.start(room=ctx.room, agent=Agent(instructions=FRENCH_PROMPT))
-    await session.generate_reply(instructions=opening)
 
 
 async def entrypoint(ctx: agents.JobContext):
@@ -255,33 +207,23 @@ async def entrypoint(ctx: agents.JobContext):
     # test call is answered by exactly one voice.
     if AGENT_NAME and room_name.startswith(AGENT_NAME + "."):
         room_name = room_name[len(AGENT_NAME) + 1 :]
-    if room_name.startswith("tutor-fr__"):
-        await run_french(ctx)
-        return
     try:
         persona = persona_from_room_name(room_name)
     except ValueError as exc:
         logger.error("rejecting room=%s error=%s", ctx.room.name, exc)
         return
-    if persona.id.startswith("tutor-"):
+    learner_metadata = None
+    if not persona.id.startswith("teacher-"):
         # The Build tab starts a companion call with the sentence the learner
         # just built in their participant metadata. Read it before the
         # greeting so the companion opens on that line.
         try:
             learner = await asyncio.wait_for(ctx.wait_for_participant(), timeout=10)
-            persona = apply_practice_metadata(persona, learner.metadata)
+            learner_metadata = learner.metadata
         except asyncio.TimeoutError:
             logger.warning("no learner joined within 10 s room=%s", ctx.room.name)
         except Exception:
             logger.exception("practice metadata read failed room=%s", ctx.room.name)
-        line = persona.raw.get("practice_line")
-        if line:
-            logger.info(
-                "practice line room=%s practice=%s practice_en=%s",
-                ctx.room.name,
-                line["practice"],
-                line["practiceEn"],
-            )
     classroom_mode = persona.id.startswith("teacher-") or persona.id.startswith("tutor-")
     agenda, agenda_updated_at = (
         (None, None)
@@ -290,7 +232,11 @@ async def entrypoint(ctx: agents.JobContext):
     )
     if agenda:
         persona = apply_secret_agenda(persona, agenda)
-    if persona_lang(persona) in LIVE_LANGS:
+    persona = apply_practice_metadata(persona, learner_metadata)
+    line = persona.raw.get("practice_line")
+    if line:
+        logger.info("practice line room=%s practice=%s practice_en=%s", ctx.room.name, line["practice"], line["practiceEn"])
+    if persona_lang(persona) == "fr" or persona_lang(persona) in LIVE_LANGS:
         await run_live(ctx, persona)
         return
     logger.info(

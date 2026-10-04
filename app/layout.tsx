@@ -9,7 +9,7 @@ const monoFont = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrain
 
 export const metadata: Metadata = {
   title: "Maatu",
-  description: "Private voice lessons and real speaking practice for beginner Kannada, Hindi, and Tamil.",
+  description: "Learn spoken Tamil, Kannada, Hindi, and French through live conversations, authentic scenarios, and a playful sentence lab.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
@@ -19,10 +19,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0D16",
+  themeColor: "#FBF9F4",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
   viewportFit: "cover",
 };
 
@@ -34,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} h-full antialiased`}>
       <body className="min-h-full">
+        <template dangerouslySetInnerHTML={{ __html: "<!-- THESIS: A neighborhood conversation studio. OWN-WORLD: Daylight paper, purple, colored sentence roles, local photographs, Newsreader and Hanken. STORY: Start a thought, learn useful speech, carry it into scenes and sentence experiments. FIRST VIEWPORT: Four languages, three modes, invitation beside city photography, voice and typed entry. FORM: Grounded candidate 3, seed 030faa12. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->" }} />
         {children}
         <RegisterServiceWorker />
       </body>

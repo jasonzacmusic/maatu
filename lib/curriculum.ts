@@ -20,15 +20,15 @@ export type Unit = { unit: string; lessons: Lesson[] };
 export const UNITS: Unit[] = curriculum.units as Unit[];
 export const ALL_LESSONS: Lesson[] = UNITS.flatMap((u) => u.lessons);
 
-export const LANG_NAME: Record<Lang, string> = { kn: "Kannada", hi: "Hindi", ta: "Tamil" };
-export const LANG_CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN" };
-const TEACHER_NAME: Record<Lang, string> = { kn: "Meera", hi: "Anjali", ta: "Kavya" };
+export const LANG_NAME: Record<Lang, string> = { kn: "Kannada", hi: "Hindi", ta: "Tamil", fr: "French" };
+export const LANG_CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", fr: "fr-FR" };
+const TEACHER_NAME: Record<Lang, string> = { kn: "Meera", hi: "Anjali", ta: "Kavya", fr: "Camille" };
 
 // A synthetic PersonaMeta so the Call screen can render a class or tutor session.
-// The French companion: Chat only (no course or scenes), voiced by Gemini Live.
+// Legacy companion metadata; French also shares the full course and scenarios.
 export const FRENCH_META: PersonaMeta = {
   id: "tutor-fr",
-  language: "kn",
+  language: "fr",
   languageCode: "fr-FR",
   languageName: "French",
   scenario: "tutor",
@@ -64,10 +64,11 @@ export function teacherMeta(lang: Lang, lessonId: string | null): PersonaMeta {
 }
 
 export function personaMeta(personaId: string): PersonaMeta | null {
-  if (PERSONAS[personaId]) return PERSONAS[personaId];
-  const tutor = /^tutor-(kn|hi|ta)$/.exec(personaId);
+  const base = personaId.replace(/-d[123]$/, "");
+  if (PERSONAS[base]) return { ...PERSONAS[base], id: personaId };
+  const tutor = /^tutor-(kn|hi|ta|fr)$/.exec(personaId);
   if (tutor) return teacherMeta(tutor[1] as Lang, null);
-  const teacher = /^teacher-(kn|hi|ta)-(.+)$/.exec(personaId);
+  const teacher = /^teacher-(kn|hi|ta|fr)-(.+)$/.exec(personaId);
   if (!teacher || !ALL_LESSONS.some((lesson) => lesson.id === teacher[2])) return null;
   return teacherMeta(teacher[1] as Lang, teacher[2]);
 }

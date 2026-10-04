@@ -5,6 +5,10 @@ import { useEffect } from "react";
 export default function RegisterServiceWorker() {
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
+    if (process.env.NODE_ENV !== "production") {
+      navigator.serviceWorker.getRegistrations().then((registrations) => registrations.forEach((registration) => void registration.unregister()));
+      return;
+    }
 
     const register = () => {
       navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(() => {

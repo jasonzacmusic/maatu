@@ -137,3 +137,24 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Sarvam stays as the fallback: STT moved from the sunset saarika:v2.5 to saaras:v4 translit locked to the call language; prompts now tell the text brain to write target words in native script for the voice.
 - French: Chat with Camille (Gemini 3.8 Live, voice Aoede, spoken Paris register) on Talk, and Say it out loud for French lines in Build. No coach report for French yet; the call returns to where it started.
 - Cost note: Gemini Live is roughly 1.2 to 2 INR per call minute (research estimate), charged to the existing Gemini key.
+
+
+## 2026-10-05 Spoken studio audit and redesign
+
+- Interpret Canada as Kannada, matching the existing Kannada product and stating the interpretation to Jason.
+- Use a daylight neighborhood studio under the broad redesign authorization: ordinary conversation benefits from inviting typography, immediate voice and text entry, and real local photography. The optional appearance preference was unanswered; choose a reasonable default under the standing rule.
+- Give all four languages the same three primary modes, 16 lessons, 14 scenario roles, server speech, call recap, and reusable sentence choices. French scenarios use Paris places, euros, taxis, cafés, and vous for strangers.
+- Use the same five semantic steps across languages while honoring local word order, case, gender, articles, adjective position, and tense. Keep disabled combinations explicit instead of inventing nonsensical forms.
+- Retain full teaching prompts. Clarify an absolute two-attempt limit: one correction, one retry, then move on even if the learner repeats an unrelated word. Verified in real six-turn course calls in all four languages.
+- Explicitly dispatch `maatu-studio` in room tokens and register that name on the cloud worker. An older unnamed Mac worker was taking some test calls and serving stale behavior; named dispatch isolates the intended production worker without altering unrelated services.
+- Send reliable call controls and show success only after an actual worker acknowledgment. Use user-input turns for repeat/explain requests so the model responds to the learner rather than narrating control instructions.
+- Keep native speech internally and Latin captions on screen. Server-generated Gemini speech covers all four languages, including French, with native-script preparation for Indian-language preview text. Sarvam remains the Indian fallback.
+- Use Gemini 3.5 Flash for typed teaching after lighter-model samples produced weaker grammar. Pin MAATU_CHAT_MODEL to the tested gemini-3.5-flash in production so an older global model setting cannot override this choice. Constrain four response fields with a schema, exclude thought parts, recover a complete JSON object, and return a readable retry message for upstream failures. Reply and follow-up fields explicitly support beginners in English.
+- Preserve the final speaking-check gate, real conversation stats, saved phrases, difficulty, caption and reduced-motion preferences. No invented mastery or online status.
+- Upgrade Next.js to 16.3.8 and patch its PostCSS dependency after the existing version showed security advisories. Production npm audit reports zero vulnerabilities.
+- Put latency-sensitive API functions in Mumbai through vercel.json; keep report/database routes near Neon. Do not remove teaching behaviors to reach the 1.5-second budget, which still fails in the measured cloud calls.
+- Image generation failed twice. Use actual, attributed Wikimedia city photos instead. Each shipping WebP has a source sidecar; visible settings link to licenses and credits. Label AI roles plainly so photographs cannot imply a real named tutor.
+- Apply the finish review's eight ordered fixes: connected phone diagram, immediate typed entry, AI identity, heading order, focus, contrast, tab keyboard behavior, and correct French photo provenance.
+- Agent source and evidence files without REPORT footers are integrated under the standing exception and noted in TASKS.md. JSON, image, and generated runtime files retain valid formats.
+
+<!-- REPORT: agent=Codex; task=spoken-studio-decisions; status=complete; files=DECISIONS.md; open_questions=none -->

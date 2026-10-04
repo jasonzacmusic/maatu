@@ -3,7 +3,7 @@
 
 export type PersonaMeta = {
   id: string;
-  language: "kn" | "hi" | "ta";
+  language: "kn" | "hi" | "ta" | "fr";
   languageCode: string;
   languageName: string;
   scenario: string;
@@ -86,6 +86,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "past continuous tense"
     ]
   },
+  "fr-auto": {
+    "id": "fr-auto",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "auto",
+    "shop": "auto",
+    "name": "Luc",
+    "level": 3,
+    "sceneLabel": "Taxi, Paris",
+    "teachMode": false,
+    "rubric": [
+      "fare negotiation",
+      "number fluency",
+      "politeness register",
+      "response latency"
+    ],
+    "defaultSecretAgenda": [
+      "numbers 40 to 90",
+      "polite imperative forms",
+      "past continuous tense"
+    ]
+  },
   "kn-delivery": {
     "id": "kn-delivery",
     "language": "kn",
@@ -142,6 +165,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Vignesh",
     "level": 2,
     "sceneLabel": "Delivery gate, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number and address fluency",
+      "politeness",
+      "clarity"
+    ],
+    "defaultSecretAgenda": [
+      "directions and locations",
+      "flat and floor numbers",
+      "polite requests"
+    ]
+  },
+  "fr-delivery": {
+    "id": "fr-delivery",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "delivery",
+    "shop": "gate",
+    "name": "Yanis",
+    "level": 2,
+    "sceneLabel": "At the intercom, Paris",
     "teachMode": false,
     "rubric": [
       "giving directions",
@@ -224,6 +270,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "spelling out an address"
     ]
   },
+  "fr-care": {
+    "id": "fr-care",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "care",
+    "shop": "phone",
+    "name": "Julie",
+    "level": 2,
+    "sceneLabel": "Customer service, Paris",
+    "teachMode": false,
+    "rubric": [
+      "formal register",
+      "number and date fluency",
+      "address dictation",
+      "comprehension under hold"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and dates",
+      "formal address forms",
+      "spelling out an address"
+    ]
+  },
   "kn-airport": {
     "id": "kn-airport",
     "language": "kn",
@@ -280,6 +349,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Deepa",
     "level": 3,
     "sceneLabel": "Airport counter, MAA",
+    "teachMode": false,
+    "rubric": [
+      "request forms",
+      "number comprehension",
+      "following instructions",
+      "courtesy"
+    ],
+    "defaultSecretAgenda": [
+      "numbers (seat, gate, weight, kilos)",
+      "polite requests",
+      "understanding instructions"
+    ]
+  },
+  "fr-airport": {
+    "id": "fr-airport",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "airport",
+    "shop": "airport",
+    "name": "Nora",
+    "level": 3,
+    "sceneLabel": "Airport check-in, Paris",
     "teachMode": false,
     "rubric": [
       "request forms",
@@ -362,6 +454,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "present and past tense mix"
     ]
   },
+  "fr-chai": {
+    "id": "fr-chai",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "chai",
+    "shop": "chai",
+    "name": "Camille",
+    "level": 2,
+    "sceneLabel": "Café, Paris",
+    "teachMode": false,
+    "rubric": [
+      "conversational flow",
+      "asking questions back",
+      "everyday vocabulary",
+      "confidence"
+    ],
+    "defaultSecretAgenda": [
+      "everyday small talk",
+      "opinions and preferences",
+      "present and past tense mix"
+    ]
+  },
   "kn-teach": {
     "id": "kn-teach",
     "language": "kn",
@@ -418,6 +533,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Arun",
     "level": 3,
     "sceneLabel": "Music school, Chennai",
+    "teachMode": true,
+    "rubric": [
+      "concept clarity",
+      "target-language music vocabulary (flag every English fallback)",
+      "pacing",
+      "whether questions were truly answered"
+    ],
+    "defaultSecretAgenda": [
+      "music vocabulary in the target language",
+      "explaining and simplifying",
+      "answering why questions"
+    ]
+  },
+  "fr-teach": {
+    "id": "fr-teach",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "teach",
+    "shop": "music",
+    "name": "Léo",
+    "level": 3,
+    "sceneLabel": "Music studio, Paris",
     "teachMode": true,
     "rubric": [
       "concept clarity",
@@ -500,6 +638,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "bargaining phrases"
     ]
   },
+  "fr-market": {
+    "id": "fr-market",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "market",
+    "shop": "market",
+    "name": "Sophie",
+    "level": 2,
+    "sceneLabel": "Street market, Paris",
+    "teachMode": false,
+    "rubric": [
+      "vegetable vocabulary",
+      "numbers and quantities",
+      "bargaining confidence",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "vegetable names",
+      "numbers, weights and prices",
+      "bargaining phrases"
+    ]
+  },
   "kn-kirana": {
     "id": "kn-kirana",
     "language": "kn",
@@ -556,6 +717,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Raja",
     "level": 2,
     "sceneLabel": "Provision store, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "grocery vocabulary",
+      "numbers and totals",
+      "asking for alternatives",
+      "everyday politeness"
+    ],
+    "defaultSecretAgenda": [
+      "grocery staples",
+      "quantities and packet sizes",
+      "asking for and refusing things politely"
+    ]
+  },
+  "fr-kirana": {
+    "id": "fr-kirana",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "kirana",
+    "shop": "kirana",
+    "name": "Malik",
+    "level": 2,
+    "sceneLabel": "Épicerie, Paris",
     "teachMode": false,
     "rubric": [
       "grocery vocabulary",
@@ -638,6 +822,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "understanding instructions"
     ]
   },
+  "fr-doctor": {
+    "id": "fr-doctor",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "doctor",
+    "shop": "clinic",
+    "name": "Élodie",
+    "level": 3,
+    "sceneLabel": "Clinic reception, Paris",
+    "teachMode": false,
+    "rubric": [
+      "describing symptoms",
+      "time and frequency words",
+      "understanding instructions",
+      "asking the doctor to repeat"
+    ],
+    "defaultSecretAgenda": [
+      "body parts and symptoms",
+      "duration and frequency of time",
+      "understanding instructions"
+    ]
+  },
   "kn-restaurant": {
     "id": "kn-restaurant",
     "language": "kn",
@@ -694,6 +901,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Saravanan",
     "level": 2,
     "sceneLabel": "Mess, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "food vocabulary",
+      "ordering and requesting",
+      "handling a change of plan",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "food and drink names",
+      "likes, dislikes and quantities",
+      "polite requests"
+    ]
+  },
+  "fr-restaurant": {
+    "id": "fr-restaurant",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "restaurant",
+    "shop": "restaurant",
+    "name": "Hugo",
+    "level": 2,
+    "sceneLabel": "Bistro, Paris",
     "teachMode": false,
     "rubric": [
       "food vocabulary",
@@ -776,6 +1006,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "neighbourhood daily routine"
     ]
   },
+  "fr-neighbour": {
+    "id": "fr-neighbour",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "neighbour",
+    "shop": "neighbour",
+    "name": "Anaïs",
+    "level": 2,
+    "sceneLabel": "Next door, Paris",
+    "teachMode": false,
+    "rubric": [
+      "small talk flow",
+      "talking about yourself",
+      "everyday household vocabulary",
+      "warmth"
+    ],
+    "defaultSecretAgenda": [
+      "introducing yourself",
+      "family and work",
+      "neighbourhood daily routine"
+    ]
+  },
   "kn-landlord": {
     "id": "kn-landlord",
     "language": "kn",
@@ -832,6 +1085,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Sekar",
     "level": 3,
     "sceneLabel": "Your flat, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "making a complaint clearly",
+      "money and date fluency",
+      "negotiating politely",
+      "standing your ground"
+    ],
+    "defaultSecretAgenda": [
+      "household and repair vocabulary",
+      "dates, months and money",
+      "complaining and negotiating politely"
+    ]
+  },
+  "fr-landlord": {
+    "id": "fr-landlord",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "landlord",
+    "shop": "landlord",
+    "name": "Paul",
+    "level": 3,
+    "sceneLabel": "Apartment visit, Paris",
     "teachMode": false,
     "rubric": [
       "making a complaint clearly",
@@ -914,6 +1190,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "opinions and small talk"
     ]
   },
+  "fr-salon": {
+    "id": "fr-salon",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "salon",
+    "shop": "salon",
+    "name": "Thomas",
+    "level": 2,
+    "sceneLabel": "Hair salon, Paris",
+    "teachMode": false,
+    "rubric": [
+      "describing preferences",
+      "saying no politely",
+      "small talk",
+      "comparison words"
+    ],
+    "defaultSecretAgenda": [
+      "describing what you want",
+      "more, less, shorter, longer",
+      "opinions and small talk"
+    ]
+  },
   "kn-pharmacy": {
     "id": "kn-pharmacy",
     "language": "kn",
@@ -970,6 +1269,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Bala",
     "level": 2,
     "sceneLabel": "Medical store, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "explaining what you need",
+      "understanding dose instructions",
+      "numbers and money",
+      "asking clarifying questions"
+    ],
+    "defaultSecretAgenda": [
+      "medicine and symptom words",
+      "numbers, doses and timing",
+      "asking for something cheaper"
+    ]
+  },
+  "fr-pharmacy": {
+    "id": "fr-pharmacy",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "pharmacy",
+    "shop": "pharmacy",
+    "name": "Inès",
+    "level": 2,
+    "sceneLabel": "Pharmacie, Paris",
     "teachMode": false,
     "rubric": [
       "explaining what you need",

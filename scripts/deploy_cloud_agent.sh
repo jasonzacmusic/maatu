@@ -4,10 +4,9 @@
 # Authenticates with the project API key and secret in agent/.env, so no
 # browser login is needed. Created 2026-09-28 as agent CA_qEYzC3PqfR2e.
 #
-# The cloud copy runs with MAATU_AGENT_NAME=maatu-cloud, so it ONLY answers
-# rooms explicitly dispatched to it (room names 'maatu-cloud.<persona>__<id>')
-# and never takes a real learner's call. To make it answer production calls,
-# run this with PRODUCTION=1 (drops the name, so it joins every room).
+# The cloud copy uses an explicit dispatch name. Run with PRODUCTION=1 to
+# register maatu-studio, the name selected by app/api/token. Test deployments
+# use maatu-cloud. Named dispatch prevents older Mac workers taking calls.
 # No em dashes anywhere.
 set -e
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -17,7 +16,7 @@ mkdir -p "$BUILD/agent" "$BUILD/personas"
 cp "$REPO/agent/"*.py "$BUILD/agent/"
 cp "$REPO/agent/requirements.txt" "$BUILD/requirements.txt"
 cp "$REPO/personas/"*.json "$BUILD/personas/"
-cp "$REPO/curriculum.json" "$REPO/grammar.json" "$REPO/playbooks.json" "$BUILD/"
+cp "$REPO/curriculum.json" "$REPO/grammar.json" "$REPO/playbooks.json" "$REPO/french-reference.txt" "$BUILD/"
 cat > "$BUILD/Dockerfile" << 'DF'
 FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1
@@ -35,7 +34,7 @@ printf '[project]\n  subdomain = "maatu-zj9ke1eq"\n\n[agent]\n  id = "%s"\n' "$A
 SECRETS="$BUILD/../secrets.env"
 grep -v '^#' "$REPO/agent/.env" | grep -v '^LIVEKIT_' > "$SECRETS"
 if [ "${PRODUCTION:-0}" = "1" ]; then
-  echo "MAATU_AGENT_NAME=production" >> "$SECRETS"
+  echo "MAATU_AGENT_NAME=maatu-studio" >> "$SECRETS"
 else
   echo "MAATU_AGENT_NAME=maatu-cloud" >> "$SECRETS"
 fi

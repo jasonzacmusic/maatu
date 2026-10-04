@@ -2,6 +2,8 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
+- [ ] **M19: 2026-10-05 Spoken studio audit and redesign.** Four-language parity across ordinary conversation, 56 scenario roles and the connected five-step sentence lab; French now has all 16 lessons, native voice previews, live scenarios and grounded coach reports. Actual cloud course calls passed close-attempt, one-retry, meaning-first and spoken-control checks in all four languages; 20 button controls acknowledged. Deterministic checks cover 130,432 structural combinations and 64 lesson routes. Final visual fixes applied and production build passed. Public release verification is in progress. The strict 1.5 second latency budget remains unmet.
+
 - [x] **M18: 2026-09-28 Sentence Path, French, voice revived on the Mac mini.** Build opens on an emoji path (who, action, what, when) giving the spoken line in Kannada, Hindi, Tamil, or French with beats to say it, a tense ladder, every person, a word order map, all four languages, and a Venn. Grammar audited twice by Gemini 3.1 Pro (1,584 then 618 lines). Studio rooms folded into a one-at-a-time toolbox. "Say it out loud" opens a companion call that drills the built line (verified room tutor-kn__e2e1790584342). The voice worker was missing from this Mac; reinstalled here, probes answered in kn, hi, ta teacher, kn-auto and companion rooms; external turn latency 1.1 to 2.3 s, so the 1.5 s budget still fails on some turns. Voice agent moved to LiveKit Cloud (agent CA_qEYzC3PqfR2e, region ap-south, free Build plan) the same day at Jason's request; the Mac mini LaunchAgent is disabled (re-enable with agent/install_agent_service.sh). Five production-path probes (teacher-kn-l1, tutor-kn, kn-auto, tutor-hi, tutor-ta) were all answered by the cloud worker. Talk now leads with three modes: Chat, Build, and optional situations; Build gains example sentences and Surprise me.
 
 - [x] **M17: 2026-09-04 Closing set shipped; Maatu put to bed.** Review room with per-device spaced repetition (save any line, Leitner schedule, due badge), slow-voice toggle, play-the-whole-scene listening mode, test-me on word decks, copy-a-line for WhatsApp, studio counts on Progress, and a Practise-this-in-the-Studio link from every debrief takeaway. Verified in the browser: saving two lines showed 2 to review, grading moved it to 1, the slow voice fetched fresh audio, play-all advanced through the scene and stopped on tap, zero console errors. Remaining outside this Mac: host the voice worker on the Mac mini; on the phone: one thumb test of hold-to-speak.
@@ -25,12 +27,12 @@
 ## Live product
 
 - URL: https://maatu.vercel.app (installable PWA)
-- Agent service: `launchctl print gui/$(id -u)/com.nsm.maatu.agent`; logs at ~/Library/Logs/maatu-agent.log; reinstall/update with agent/install_agent_service.sh
+- Production voice agent: LiveKit Cloud, named worker `maatu-studio`, agent `CA_qEYzC3PqfR2e`, India region. Local LaunchAgents are legacy fallbacks.
 - Calls no longer need any Mac on; the agent runs in LiveKit Cloud (the agent brain runs here). Vercel serves the app; LiveKit Cloud carries the audio; Neon stores debriefs.
 
 ## Waiting on Jason
 
-- Voice reliability: the worker lives on the MacBook Pro, which sleeps after one minute on battery (caffeinate only holds it on AC). Decide whether the worker moves to the always-on Mac mini; that needs a session on the mini (run agent/install_agent_service.sh there).
+- No deployment decision is pending. The voice worker is hosted in LiveKit Cloud; calls do not depend on Mac sleep settings.
 
 No credential setup is pending. A physical phone ear test remains useful as a device check, but the production audio path is covered by the repeatable LiveKit probe.
 
@@ -48,3 +50,5 @@ No credential setup is pending. A physical phone ear test remains useful as a de
 - Rewritten: 6 Kannada persona agendas.
 - Sample: kn-auto now elicits "Extra kodalla, meter mele banni."
 - Active agenda confirmed by the live worker at 2026-07-12T01:03:01.106Z.
+
+- 2026-10-05 integration note: code, generated JSON, photo sidecars and finish evidence were integrated without REPORT footers where a footer would invalidate their format. The review and design documents follow their skill output contracts.

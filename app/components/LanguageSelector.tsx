@@ -1,7 +1,7 @@
 import { LANG_NAME } from "@/lib/curriculum";
 import { C, LINE, type Lang } from "@/lib/maatu-design";
 
-const LANGS: Lang[] = ["kn", "hi", "ta"];
+const LANGS: Lang[] = ["ta", "kn", "hi", "fr"];
 
 type LanguageSelectorProps = {
   lang: Lang;
@@ -15,7 +15,7 @@ export function LanguageSelector({ lang, onChange, label = "Course language" }: 
       <div className="mb-2 text-[11px] font-bold" style={{ color: C.mono, letterSpacing: 1 }}>
         {label.toUpperCase()}
       </div>
-      <div className="grid grid-cols-3 gap-2" role="group" aria-label={label}>
+      <div className="grid grid-cols-4 gap-2" role="group" aria-label={label}>
         {LANGS.map((option) => {
           const selected = lang === option;
           return (

@@ -1,5 +1,5 @@
 import grammar from "@/grammar.json";
-import type { Lang } from "./maatu-design";
+import type { IndianLang as Lang } from "./maatu-design";
 
 // Sentence Studio engine: builds vetted colloquial sentences from grammar.json
 // so the learner can assemble any sentence by tapping, see it word by word, and

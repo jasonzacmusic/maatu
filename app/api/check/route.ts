@@ -12,8 +12,8 @@ import { hasNativeScript, romanizeText } from "@/lib/romanize";
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MODEL = process.env.CHECK_MODEL || "gemini-flash-lite-latest";
-const LANGS: Lang[] = ["kn", "hi", "ta"];
-const CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN" };
+const LANGS: Lang[] = ["kn", "hi", "ta", "fr"];
+const CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", fr: "fr-FR" };
 const TYPES = new Set(["tense", "gender", "verb", "word-order", "missing-word", "ending", "word-choice", "politeness", "spelling"]);
 
 export type Correction = { type: string; was: string; now: string; why: string };
@@ -47,7 +47,7 @@ Hard rules:
 - No em dashes anywhere.
 
 REFERENCE (vetted, ${ln}):
-${referenceText(lang)}
+${lang === "fr" ? "Everyday French: je, tu, vous, il, elle, on, ils. Keep articles and gender agreement. Past uses avoir or être plus the participle. Everyday future uses aller plus infinitive. Natural spoken negation drops ne. Use tu with friends, vous with strangers." : referenceText(lang)}
 
 ${expected ? `THE LEARNER WAS ASKED TO SAY THIS EXACT LINE: ${JSON.stringify(expected)}. Judge the attempt against it: if the meaning is right and most words match, ok is true and target is that line. Hyphens, commas, full stops, capitals, spelling variants, and the order of two separate sentences never count as differences. Tag only real differences that change meaning or grammar, and mention any missing word by type missing-word.\n` : ""}
 LEARNER LINE: ${JSON.stringify(text)}
