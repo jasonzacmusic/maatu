@@ -145,9 +145,10 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
             turn["ended_at"] = None
 
     async def _control(action):
+        language_name = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "fr": "French"}[lang]
         commands = {
-            "slow-down": "Please slow down and keep that slower pace. Repeat your last phrase slowly.",
-            "repeat": "Please say your last phrase or question again.",
+            "slow-down": f"Please slow down and keep that slower pace. Say the most recent {language_name} phrase you taught me again, slowly. Repeat that same phrase, not the English follow-up question. Do not add a new exercise.",
+            "repeat": f"Please repeat the most recent {language_name} phrase you taught me, exactly. I want to hear that phrase again, not the English follow-up question. Do not add a new exercise.",
             "explain": "What is the English meaning of the last target-language phrase you taught me?",
             "pause": "Please wait a moment. Just say okay, then wait quietly for me.",
             "resume": "I am ready. Let us continue where we left off.",

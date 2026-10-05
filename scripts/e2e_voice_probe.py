@@ -200,6 +200,8 @@ async def run_probe(
             stream = rtc.AudioStream(track)
             async for event in stream:
                 level = rms(event.frame)
+                if level > 20:
+                    timing["last_remote_audio_at"] = time.perf_counter()
                 if level > 5 and not opening_done.is_set():
                     opening_audio_started.set()
                 if ready_for_reply and level > 120 and not reply_audio.is_set():
@@ -229,6 +231,14 @@ async def run_probe(
                     elif ready_for_reply and (control_active or text.rstrip(".").lower() not in ACKNOWLEDGMENTS):
                         reply_done.set()
 
+        async def wait_for_audio_boundary() -> None:
+            deadline = time.perf_counter() + timeout
+            while time.perf_counter() < deadline:
+                if time.perf_counter() - timing.get("last_remote_audio_at", time.perf_counter()) > 0.8:
+                    return
+                await asyncio.sleep(0.2)
+            raise TimeoutError("The agent did not finish its speaking turn")
+
         await room.connect(livekit_url, token)
         # Publish the microphone at once, like the real app does, so the agent
         # is already subscribed when the learner speaks. Publishing it after the
@@ -247,7 +257,7 @@ async def run_probe(
                 # The synchronized opening transcript can arrive just before the
                 # final audio frame. Clear that tail so it cannot be mistaken for
                 # the first audio of the learner's reply.
-                await asyncio.sleep(1.5)
+                await wait_for_audio_boundary()
 
             results: list[dict[str, object]] = []
             for turn_number, audio_path in enumerate(audio_paths, 1):
@@ -273,6 +283,7 @@ async def run_probe(
 
                 await asyncio.wait_for(reply_audio.wait(), timeout=timeout)
                 await asyncio.wait_for(reply_done.wait(), timeout=timeout)
+                await wait_for_audio_boundary()
                 ready_for_reply = False
                 latency_ms = round((timing["reply_audio_at"] - timing["speech_end_at"]) * 1000)
                 results.append(
@@ -280,7 +291,7 @@ async def run_probe(
                         "turn": turn_number,
                         "input": inputs[turn_number - 1]["text"],
                         "learner_transcript": learner_lines[-1] if len(learner_lines) > learner_start else None,
-                        "reply": remote_lines[-1] if len(remote_lines) > remote_start else None,
+                        "reply": " ".join(remote_lines[remote_start:]) if len(remote_lines) > remote_start else None,
                         "external_speech_end_to_audio_ms": latency_ms,
                     }
                 )
@@ -298,6 +309,7 @@ async def run_probe(
                     await room.local_participant.publish_data(json.dumps({"action": action}), reliable=True, topic="maatu.control")
                     await asyncio.wait_for(control_events[action].wait(), timeout=12)
                     await asyncio.wait_for(reply_done.wait(), timeout=30)
+                    await wait_for_audio_boundary()
                     ready_for_reply = False
                     control_results.append({"action": action, "acknowledged": True, "reply": remote_lines[start:]})
             return {

@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T23:51:30Z",
+  "title": "Design System: Maatu",
+  "extensions": {
+    "colorMeta": {
+      "purple": {
+        "role": "primary",
+        "displayName": "Conversational Purple",
+        "tonalRamp": [
+          "oklch(15% 0.17619 285.80)",
+          "oklch(26% 0.17619 285.80)",
+          "oklch(37% 0.17619 285.80)",
+          "oklch(49% 0.17619 285.80)",
+          "oklch(60% 0.17619 285.80)",
+          "oklch(72% 0.17619 285.80)",
+          "oklch(84% 0.17619 285.80)",
+          "oklch(95% 0.17619 285.80)"
+        ]
+      },
+      "purple-dark": {
+        "role": "primary",
+        "displayName": "Deep Purple",
+        "tonalRamp": [
+          "oklch(15% 0.15980 285.50)",
+          "oklch(26% 0.15980 285.50)",
+          "oklch(37% 0.15980 285.50)",
+          "oklch(49% 0.15980 285.50)",
+          "oklch(60% 0.15980 285.50)",
+          "oklch(72% 0.15980 285.50)",
+          "oklch(84% 0.15980 285.50)",
+          "oklch(95% 0.15980 285.50)"
+        ]
+      },
+      "lavender": {
+        "role": "primary",
+        "displayName": "Lavender Paper",
+        "tonalRamp": [
+          "oklch(15% 0.02485 301.07)",
+          "oklch(26% 0.02485 301.07)",
+          "oklch(37% 0.02485 301.07)",
+          "oklch(49% 0.02485 301.07)",
+          "oklch(60% 0.02485 301.07)",
+          "oklch(72% 0.02485 301.07)",
+          "oklch(84% 0.02485 301.07)",
+          "oklch(95% 0.02485 301.07)"
+        ]
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Speech Green",
+        "tonalRamp": [
+          "oklch(15% 0.06894 167.01)",
+          "oklch(26% 0.06894 167.01)",
+          "oklch(37% 0.06894 167.01)",
+          "oklch(49% 0.06894 167.01)",
+          "oklch(60% 0.06894 167.01)",
+          "oklch(72% 0.06894 167.01)",
+          "oklch(84% 0.06894 167.01)",
+          "oklch(95% 0.06894 167.01)"
+        ]
+      },
+      "mint": {
+        "role": "secondary",
+        "displayName": "Mint Paper",
+        "tonalRamp": [
+          "oklch(15% 0.01995 154.89)",
+          "oklch(26% 0.01995 154.89)",
+          "oklch(37% 0.01995 154.89)",
+          "oklch(49% 0.01995 154.89)",
+          "oklch(60% 0.01995 154.89)",
+          "oklch(72% 0.01995 154.89)",
+          "oklch(84% 0.01995 154.89)",
+          "oklch(95% 0.01995 154.89)"
+        ]
+      },
+      "peach": {
+        "role": "secondary",
+        "displayName": "Soft Peach",
+        "tonalRamp": [
+          "oklch(15% 0.03319 60.08)",
+          "oklch(26% 0.03319 60.08)",
+          "oklch(37% 0.03319 60.08)",
+          "oklch(49% 0.03319 60.08)",
+          "oklch(60% 0.03319 60.08)",
+          "oklch(72% 0.03319 60.08)",
+          "oklch(84% 0.03319 60.08)",
+          "oklch(95% 0.03319 60.08)"
+        ]
+      },
+      "who-ink": {
+        "role": "tertiary",
+        "displayName": "Who Woodland Ink",
+        "tonalRamp": [
+          "oklch(15% 0.05889 161.06)",
+          "oklch(26% 0.05889 161.06)",
+          "oklch(37% 0.05889 161.06)",
+          "oklch(49% 0.05889 161.06)",
+          "oklch(60% 0.05889 161.06)",
+          "oklch(72% 0.05889 161.06)",
+          "oklch(84% 0.05889 161.06)",
+          "oklch(95% 0.05889 161.06)"
+        ]
+      },
+      "action-ink": {
+        "role": "tertiary",
+        "displayName": "Does Grape Ink",
+        "tonalRamp": [
+          "oklch(15% 0.11052 294.39)",
+          "oklch(26% 0.11052 294.39)",
+          "oklch(37% 0.11052 294.39)",
+          "oklch(49% 0.11052 294.39)",
+          "oklch(60% 0.11052 294.39)",
+          "oklch(72% 0.11052 294.39)",
+          "oklch(84% 0.11052 294.39)",
+          "oklch(95% 0.11052 294.39)"
+        ]
+      },
+      "what-paper": {
+        "role": "tertiary",
+        "displayName": "What Peach Paper",
+        "tonalRamp": [
+          "oklch(15% 0.03146 59.71)",
+          "oklch(26% 0.03146 59.71)",
+          "oklch(37% 0.03146 59.71)",
+          "oklch(49% 0.03146 59.71)",
+          "oklch(60% 0.03146 59.71)",
+          "oklch(72% 0.03146 59.71)",
+          "oklch(84% 0.03146 59.71)",
+          "oklch(95% 0.03146 59.71)"
+        ]
+      },
+      "what-ink": {
+        "role": "tertiary",
+        "displayName": "What Warm Brown",
+        "tonalRamp": [
+          "oklch(15% 0.07936 54.40)",
+          "oklch(26% 0.07936 54.40)",
+          "oklch(37% 0.07936 54.40)",
+          "oklch(49% 0.07936 54.40)",
+          "oklch(60% 0.07936 54.40)",
+          "oklch(72% 0.07936 54.40)",
+          "oklch(84% 0.07936 54.40)",
+          "oklch(95% 0.07936 54.40)"
+        ]
+      },
+      "describe-paper": {
+        "role": "tertiary",
+        "displayName": "Describe Rose Paper",
+        "tonalRamp": [
+          "oklch(15% 0.02425 358.30)",
+          "oklch(26% 0.02425 358.30)",
+          "oklch(37% 0.02425 358.30)",
+          "oklch(49% 0.02425 358.30)",
+          "oklch(60% 0.02425 358.30)",
+          "oklch(72% 0.02425 358.30)",
+          "oklch(84% 0.02425 358.30)",
+          "oklch(95% 0.02425 358.30)"
+        ]
+      },
+      "describe-ink": {
+        "role": "tertiary",
+        "displayName": "Describe Berry Ink",
+        "tonalRamp": [
+          "oklch(15% 0.08501 2.86)",
+          "oklch(26% 0.08501 2.86)",
+          "oklch(37% 0.08501 2.86)",
+          "oklch(49% 0.08501 2.86)",
+          "oklch(60% 0.08501 2.86)",
+          "oklch(72% 0.08501 2.86)",
+          "oklch(84% 0.08501 2.86)",
+          "oklch(95% 0.08501 2.86)"
+        ]
+      },
+      "when-paper": {
+        "role": "tertiary",
+        "displayName": "When Blue Paper",
+        "tonalRamp": [
+          "oklch(15% 0.01769 240.00)",
+          "oklch(26% 0.01769 240.00)",
+          "oklch(37% 0.01769 240.00)",
+          "oklch(49% 0.01769 240.00)",
+          "oklch(60% 0.01769 240.00)",
+          "oklch(72% 0.01769 240.00)",
+          "oklch(84% 0.01769 240.00)",
+          "oklch(95% 0.01769 240.00)"
+        ]
+      },
+      "when-ink": {
+        "role": "tertiary",
+        "displayName": "When Slate Ink",
+        "tonalRamp": [
+          "oklch(15% 0.05684 243.03)",
+          "oklch(26% 0.05684 243.03)",
+          "oklch(37% 0.05684 243.03)",
+          "oklch(49% 0.05684 243.03)",
+          "oklch(60% 0.05684 243.03)",
+          "oklch(72% 0.05684 243.03)",
+          "oklch(84% 0.05684 243.03)",
+          "oklch(95% 0.05684 243.03)"
+        ]
+      },
+      "helper-paper": {
+        "role": "tertiary",
+        "displayName": "Helper Paper",
+        "tonalRamp": [
+          "oklch(15% 0.00796 106.55)",
+          "oklch(26% 0.00796 106.55)",
+          "oklch(37% 0.00796 106.55)",
+          "oklch(49% 0.00796 106.55)",
+          "oklch(60% 0.00796 106.55)",
+          "oklch(72% 0.00796 106.55)",
+          "oklch(84% 0.00796 106.55)",
+          "oklch(95% 0.00796 106.55)"
+        ]
+      },
+      "helper-ink": {
+        "role": "tertiary",
+        "displayName": "Helper Olive Ink",
+        "tonalRamp": [
+          "oklch(15% 0.01586 134.99)",
+          "oklch(26% 0.01586 134.99)",
+          "oklch(37% 0.01586 134.99)",
+          "oklch(49% 0.01586 134.99)",
+          "oklch(60% 0.01586 134.99)",
+          "oklch(72% 0.01586 134.99)",
+          "oklch(84% 0.01586 134.99)",
+          "oklch(95% 0.01586 134.99)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Daylight Paper",
+        "tonalRamp": [
+          "oklch(15% 0.00695 88.64)",
+          "oklch(26% 0.00695 88.64)",
+          "oklch(37% 0.00695 88.64)",
+          "oklch(49% 0.00695 88.64)",
+          "oklch(60% 0.00695 88.64)",
+          "oklch(72% 0.00695 88.64)",
+          "oklch(84% 0.00695 88.64)",
+          "oklch(95% 0.00695 88.64)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26% 0.00000 0.00)",
+          "oklch(37% 0.00000 0.00)",
+          "oklch(49% 0.00000 0.00)",
+          "oklch(60% 0.00000 0.00)",
+          "oklch(72% 0.00000 0.00)",
+          "oklch(84% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Everyday Ink",
+        "tonalRamp": [
+          "oklch(15% 0.00669 164.53)",
+          "oklch(26% 0.00669 164.53)",
+          "oklch(37% 0.00669 164.53)",
+          "oklch(49% 0.00669 164.53)",
+          "oklch(60% 0.00669 164.53)",
+          "oklch(72% 0.00669 164.53)",
+          "oklch(84% 0.00669 164.53)",
+          "oklch(95% 0.00669 164.53)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "tonalRamp": [
+          "oklch(15% 0.01118 140.50)",
+          "oklch(26% 0.01118 140.50)",
+          "oklch(37% 0.01118 140.50)",
+          "oklch(49% 0.01118 140.50)",
+          "oklch(60% 0.01118 140.50)",
+          "oklch(72% 0.01118 140.50)",
+          "oklch(84% 0.01118 140.50)",
+          "oklch(95% 0.01118 140.50)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Paper Line",
+        "tonalRamp": [
+          "oklch(15% 0.01074 112.38)",
+          "oklch(26% 0.01074 112.38)",
+          "oklch(37% 0.01074 112.38)",
+          "oklch(49% 0.01074 112.38)",
+          "oklch(60% 0.01074 112.38)",
+          "oklch(72% 0.01074 112.38)",
+          "oklch(84% 0.01074 112.38)",
+          "oklch(95% 0.01074 112.38)"
+        ]
+      },
+      "display-emphasis": {
+        "role": "neutral",
+        "displayName": "Display Plum",
+        "tonalRamp": [
+          "oklch(15% 0.07303 300.03)",
+          "oklch(26% 0.07303 300.03)",
+          "oklch(37% 0.07303 300.03)",
+          "oklch(49% 0.07303 300.03)",
+          "oklch(60% 0.07303 300.03)",
+          "oklch(72% 0.07303 300.03)",
+          "oklch(84% 0.07303 300.03)",
+          "oklch(95% 0.07303 300.03)"
+        ]
+      },
+      "error-paper": {
+        "role": "neutral",
+        "displayName": "Error Paper",
+        "tonalRamp": [
+          "oklch(15% 0.01769 39.40)",
+          "oklch(26% 0.01769 39.40)",
+          "oklch(37% 0.01769 39.40)",
+          "oklch(49% 0.01769 39.40)",
+          "oklch(60% 0.01769 39.40)",
+          "oklch(72% 0.01769 39.40)",
+          "oklch(84% 0.01769 39.40)",
+          "oklch(95% 0.01769 39.40)"
+        ]
+      },
+      "error-ink": {
+        "role": "neutral",
+        "displayName": "Error Ink",
+        "tonalRamp": [
+          "oklch(15% 0.10067 34.83)",
+          "oklch(26% 0.10067 34.83)",
+          "oklch(37% 0.10067 34.83)",
+          "oklch(49% 0.10067 34.83)",
+          "oklch(60% 0.10067 34.83)",
+          "oklch(72% 0.10067 34.83)",
+          "oklch(84% 0.10067 34.83)",
+          "oklch(95% 0.10067 34.83)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Lilac",
+        "tonalRamp": [
+          "oklch(15% 0.13582 290.59)",
+          "oklch(26% 0.13582 290.59)",
+          "oklch(37% 0.13582 290.59)",
+          "oklch(49% 0.13582 290.59)",
+          "oklch(60% 0.13582 290.59)",
+          "oklch(72% 0.13582 290.59)",
+          "oklch(84% 0.13582 290.59)",
+          "oklch(95% 0.13582 290.59)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Main serif page headings and their italic emphasis."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Bold sans-serif conversation invitation."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Recurring serif course, empty-state and coach-note titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Base UI and inherited text style."
+      },
+      "body-copy": {
+        "displayName": "Body Copy",
+        "purpose": "Supporting page and invitation copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Standard button labels."
+      },
+      "label-small": {
+        "displayName": "Label Small",
+        "purpose": "Compact button labels."
+      },
+      "sentence": {
+        "displayName": "Sentence",
+        "purpose": "Role-colored sentence word blocks."
+      }
+    },
+    "shadows": [
+      {
+        "name": "speech-bubble",
+        "value": "0 8px 24px #24141c25",
+        "purpose": "Local lift for the greeting over the photograph."
+      },
+      {
+        "name": "mobile-drawer",
+        "value": "12px 0 34px #22193115",
+        "purpose": "Separate the open navigation drawer from the scrim."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-state",
+        "value": "150ms ease",
+        "purpose": "Button background and color, plus sidebar hover."
+      },
+      {
+        "name": "selection-and-scene",
+        "value": "200ms ease",
+        "purpose": "Sentence selection and the small featured-scene lift."
+      },
+      {
+        "name": "drawer",
+        "value": "250ms ease",
+        "purpose": "Mobile navigation translation."
+      },
+      {
+        "name": "speaking",
+        "value": "850ms ease-in-out infinite",
+        "purpose": "Voice bars only while the agent speaks; disabled by reduced motion."
+      },
+      {
+        "name": "loading",
+        "value": "1s linear infinite",
+        "purpose": "Spinner during active work; disabled by reduced motion."
+      },
+      {
+        "name": "thinking",
+        "value": "1.5s ease-in-out infinite",
+        "purpose": "Pending text reply feedback; disabled by reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile-max",
+        "value": "680px"
+      },
+      {
+        "name": "tablet-max",
+        "value": "850px"
+      },
+      {
+        "name": "compact-desktop-max",
+        "value": "1150px"
+      },
+      {
+        "name": "wide-min",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main voice, listening or next-step action.",
+      "html": "<button type=\"button\" class=\"ds-primary\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 19v3\"/><path d=\"M19 10v2a7 7 0 0 1-14 0v-2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"13\" rx=\"3\"/></svg>Start a conversation<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:43px;border:0;border-radius:8px;padding:12px 17px;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:13px;font-weight:600;line-height:1.2;cursor:pointer;transition:background .15s,color .15s;background:var(--purple,#6350c6);color:var(--white,#fff);}.ds-primary:hover{background:var(--purple-dark,#5140a8);}.ds-primary:focus-visible{outline:3px solid #9382df;outline-offset:4px;}.ds-primary:disabled{opacity:.46;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none;}}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary listening, text or practice action.",
+      "html": "<button type=\"button\" class=\"ds-outline\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/></svg>Hear it</button>",
+      "css": ".ds-outline{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:43px;border:0;border-radius:8px;padding:12px 17px;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:13px;font-weight:600;line-height:1.2;cursor:pointer;transition:background .15s,color .15s;border:1px solid #d6d2df;background:transparent;color:#50486b;}.ds-outline:hover{background:#f2edf9;}.ds-outline:focus-visible{outline:3px solid #9382df;outline-offset:4px;}.ds-outline:disabled{opacity:.46;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none;}}"
+    },
+    {
+      "name": "Small Button",
+      "kind": "button",
+      "refersTo": "button-small",
+      "description": "Compact lavender action within a conversation heading.",
+      "html": "<button type=\"button\" class=\"ds-small\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 19v3\"/><path d=\"M19 10v2a7 7 0 0 1-14 0v-2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"13\" rx=\"3\"/></svg>Switch to voice</button>",
+      "css": ".ds-small{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:43px;border:0;border-radius:8px;padding:12px 17px;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:13px;font-weight:600;line-height:1.2;cursor:pointer;transition:background .15s,color .15s;font-size:11px;padding:10px 12px;min-height:36px;background:var(--lavender,#eee8fa);color:var(--purple-dark,#5140a8);}.ds-small:focus-visible{outline:3px solid #9382df;outline-offset:4px;}.ds-small:disabled{opacity:.46;cursor:not-allowed;}@media(prefers-reduced-motion:reduce){.ds-small{transition:none;}}"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Quiet square control for listening, saving or sending.",
+      "html": "<button type=\"button\" class=\"ds-icon\" aria-label=\"Save phrase\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z\"/></svg></button>",
+      "css": ".ds-icon{height:36px;width:36px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:7px;background:transparent;color:var(--purple,#6350c6);padding:0;cursor:pointer;}.ds-icon:hover{background:var(--lavender,#eee8fa);}.ds-icon:focus-visible{outline:3px solid #9382df;outline-offset:4px;}.ds-icon:disabled{opacity:.46;cursor:not-allowed;}"
+    },
+    {
+      "name": "Message Entry",
+      "kind": "input",
+      "refersTo": "input-message",
+      "description": "The typed first thought beside the primary voice action.",
+      "html": "<form class=\"ds-entry\"><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\"/></svg><input aria-label=\"Start with a message\" placeholder=\"Or type a thought to Kavya…\" maxlength=\"1000\"/><button type=\"button\" aria-label=\"Start text conversation\" disabled><svg width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/></svg></button></form>",
+      "css": ".ds-entry{display:flex;gap:12px;align-items:center;background:var(--white,#fff);border:1px solid var(--line,#e5e6de);padding:8px 10px 8px 17px;border-radius:10px;color:var(--purple,#6350c6);min-height:56px;}.ds-entry input{flex:1;min-width:0;border:0;background:none;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:13px;color:var(--ink,#292d2b);caret-color:var(--purple,#6350c6);}.ds-entry input::placeholder{color:#6b706b;}.ds-entry button{height:36px;width:36px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:7px;background:transparent;color:var(--purple,#6350c6);padding:0;cursor:pointer;}.ds-entry button:hover{background:var(--lavender,#eee8fa);}.ds-entry input:focus-visible,.ds-entry button:focus-visible{outline:3px solid #9382df;outline-offset:4px;}.ds-entry button:disabled{opacity:.46;cursor:not-allowed;}@media(max-width:680px){.ds-entry{min-height:54px;gap:9px;padding-left:13px;}.ds-entry input{font-size:12px;}}"
+    },
+    {
+      "name": "Mode Navigation",
+      "kind": "nav",
+      "refersTo": "mode-navigation",
+      "description": "Three visible named modes with a purple current-page underline.",
+      "html": "<nav class=\"ds-modes\" aria-label=\"Learning modes\"><button type=\"button\" aria-current=\"page\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\"/></svg>Just talk</button><button type=\"button\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 2v2\"/><path d=\"M14 2v2\"/><path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\"/><path d=\"M6 2v2\"/></svg>Real-life scenes</button><button type=\"button\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 6a9 9 0 0 0-9 9V3\"/><circle cx=\"18\" cy=\"6\" r=\"3\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/></svg>Sentence lab</button></nav>",
+      "css": ".ds-modes{display:flex;gap:28px;align-items:center;height:63px;padding:0 42px;border-bottom:1px solid var(--line,#e5e6de);}.ds-modes button{display:flex;gap:8px;align-items:center;background:none;border:0;position:relative;height:100%;padding:0 0 1px;color:var(--muted,#626761);font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-weight:600;font-size:13px;white-space:nowrap;cursor:pointer;}.ds-modes button[aria-current=page]{color:var(--purple,#6350c6);}.ds-modes button[aria-current=page]::after{content:\"\";position:absolute;bottom:-1px;left:0;right:0;height:3px;background:var(--purple,#6350c6);border-radius:3px 3px 0 0;}.ds-modes button:focus-visible{outline:3px solid #9382df;outline-offset:4px;}@media(max-width:1150px){.ds-modes{padding:0 28px;gap:22px;}}@media(max-width:850px){.ds-modes{padding:0 24px;gap:21px;height:55px;}.ds-modes button{font-size:11px;}}@media(max-width:680px){.ds-modes{padding:0 20px;gap:24px;justify-content:space-between;}.ds-modes button{gap:6px;}}"
+    },
+    {
+      "name": "Scene Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Quiet filtering with a dark selected state.",
+      "html": "<div class=\"ds-filters\" role=\"group\" aria-label=\"Filter scenarios\"><button type=\"button\" aria-pressed=\"true\">All scenes</button><button type=\"button\" aria-pressed=\"false\">Everyday</button><button type=\"button\" aria-pressed=\"false\">Out &amp; about</button><button type=\"button\" aria-pressed=\"false\">Music</button></div>",
+      "css": ".ds-filters{display:flex;gap:8px;flex-wrap:wrap;}.ds-filters button{padding:8px 13px;border:1px solid var(--line,#e5e6de);border-radius:6px;background:none;color:var(--muted,#626761);font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:11px;cursor:pointer;}.ds-filters button[aria-pressed=true]{background:var(--ink,#292d2b);color:var(--white,#fff);border-color:var(--ink,#292d2b);}.ds-filters button:focus-visible{outline:3px solid #9382df;outline-offset:4px;}"
+    },
+    {
+      "name": "Phrase Card",
+      "kind": "card",
+      "refersTo": "card-phrase",
+      "description": "A mint surface for a reusable spoken phrase and its meaning.",
+      "html": "<section class=\"ds-phrase\"><div class=\"ds-phrase-heading\"><h3>A phrase to take with you</h3><span>Everyday Tamil</span></div><p class=\"ds-phrase-text\" lang=\"ta-IN\">Konjam tea kudunga.</p><p class=\"ds-phrase-meaning\">A little tea, please.</p><div class=\"ds-phrase-actions\"><button type=\"button\" class=\"ds-phrase-hear\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/></svg>Hear it</button></div></section>",
+      "css": ".ds-phrase{padding:23px;background:var(--mint,#e0eee4);border-radius:12px;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);}.ds-phrase-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;}.ds-phrase-heading h3{margin:0;font-size:13px;font-weight:700;color:#3f6250;}.ds-phrase-heading>span{font-size:10px;color:#4c6a57;}.ds-phrase-text{font-family:var(--font-display,Newsreader,Georgia,serif);font-size:28px;line-height:1.15;margin:19px 0 0;color:#2e5542;}.ds-phrase-meaning{margin:7px 0 0;color:#4a6555;font-size:12px;}.ds-phrase-actions{display:flex;align-items:center;gap:8px;margin-top:20px;}.ds-phrase-hear{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:43px;border:0;border-radius:8px;padding:12px 17px;font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);font-size:13px;font-weight:600;line-height:1.2;cursor:pointer;transition:background .15s,color .15s;min-height:34px;padding:8px 12px;font-size:11px;background:#fff9;color:#365c46;border:1px solid #adc7b7;}.ds-phrase-hear:focus-visible{outline:3px solid #9382df;outline-offset:4px;}@media(max-width:850px){.ds-phrase{padding:24px;}}@media(max-width:680px){.ds-phrase{padding:22px;}.ds-phrase-text{font-size:26px;}.ds-phrase-heading h3{font-size:12px;}}@media(prefers-reduced-motion:reduce){.ds-phrase-hear{transition:none;}}"
+    },
+    {
+      "name": "Connected Sentence Path",
+      "kind": "custom",
+      "refersTo": "sentence-step-who",
+      "description": "Numbered roles in the desktop and mobile turning path.",
+      "html": "<div class=\"ds-flow\" role=\"tablist\" aria-label=\"Sentence-building steps\"><div class=\"ds-stop-wrap\"><button type=\"button\" role=\"tab\" class=\"ds-stop ds-role-who\" aria-selected=\"true\" tabindex=\"0\"><span class=\"ds-stop-label\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"8\" r=\"5\"/><path d=\"M20 21a8 8 0 0 0-16 0\"/></svg>1. Who</span><strong>I</strong></button><svg class=\"ds-connector\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></div><div class=\"ds-stop-wrap\"><button type=\"button\" role=\"tab\" class=\"ds-stop ds-role-action\" aria-selected=\"false\" tabindex=\"-1\"><span class=\"ds-stop-label\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\"/><path d=\"m14 7 3 3\"/><path d=\"M5 6v4\"/><path d=\"M19 14v4\"/><path d=\"M10 2v2\"/><path d=\"M7 8H3\"/><path d=\"M21 16h-4\"/><path d=\"M11 3H9\"/></svg>2. Does</span><strong>drink</strong></button><svg class=\"ds-connector\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></div><div class=\"ds-stop-wrap\"><button type=\"button\" role=\"tab\" class=\"ds-stop ds-role-what\" aria-selected=\"false\" tabindex=\"-1\"><span class=\"ds-stop-label\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 6a9 9 0 0 0-9 9V3\"/><circle cx=\"18\" cy=\"6\" r=\"3\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/></svg>3. What</span><strong>coffee</strong></button><svg class=\"ds-connector\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></div><div class=\"ds-stop-wrap\"><button type=\"button\" role=\"tab\" class=\"ds-stop ds-role-describe\" aria-selected=\"false\" tabindex=\"-1\"><span class=\"ds-stop-label\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/></svg>4. Describe</span><strong>Optional</strong></button><svg class=\"ds-connector\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></div><div class=\"ds-stop-wrap\"><button type=\"button\" role=\"tab\" class=\"ds-stop ds-role-when\" aria-selected=\"false\" tabindex=\"-1\"><span class=\"ds-stop-label\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6h4\"/></svg>5. When</span><strong>Every day</strong></button></div></div>",
+      "css": ".ds-flow{display:flex;align-items:stretch;}.ds-stop-wrap{display:flex;align-items:center;flex:1;min-width:0;}.ds-stop{flex:1;min-width:0;text-align:left;padding:14px 12px;border:1px solid transparent;border-radius:10px;background:var(--role-bg);color:var(--role-ink);font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);cursor:pointer;transition:border .2s,background .2s;}.ds-stop[aria-selected=true]{border:2px solid var(--role-ink);padding:13px 11px;}.ds-stop-label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;margin-bottom:10px;}.ds-stop strong{display:block;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.ds-connector{color:#a6a398;width:25px;flex:none;}.ds-role-who{--role-bg:#e0eee4;--role-ink:#37614c;}.ds-role-action{--role-bg:#eee8fa;--role-ink:#635096;}.ds-role-what{--role-bg:#fae5d5;--role-ink:#875736;}.ds-role-describe{--role-bg:#f7e2e8;--role-ink:#905263;}.ds-role-when{--role-bg:#e1edf6;--role-ink:#43647e;}.ds-stop:focus-visible{outline:3px solid #9382df;outline-offset:4px;}@media(max-width:1150px){.ds-stop{padding:12px 9px;}.ds-stop[aria-selected=true]{padding:11px 8px;}.ds-stop-label{font-size:9px;}.ds-stop strong{font-size:12px;}.ds-connector{width:19px;}}@media(max-width:680px){.ds-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 20px;}.ds-stop-wrap{position:relative;width:100%;}.ds-stop-wrap:nth-child(4){grid-column:3;grid-row:2;}.ds-stop-wrap:nth-child(5){grid-column:2;grid-row:2;}.ds-stop{padding:12px;}.ds-stop[aria-selected=true]{padding:11px;}.ds-stop-label{font-size:10px;margin-bottom:7px;}.ds-stop strong{font-size:13px;}.ds-connector{display:block;position:absolute;width:18px;right:-19px;top:calc(50% - 9px);}.ds-stop-wrap:nth-child(3) .ds-connector{top:auto;bottom:-20px;right:calc(50% - 9px);transform:rotate(90deg);}.ds-stop-wrap:nth-child(4) .ds-connector{right:auto;left:-19px;transform:rotate(180deg);}}@media(prefers-reduced-motion:reduce){.ds-stop{transition:none;}}"
+    },
+    {
+      "name": "Sentence Role Words",
+      "kind": "custom",
+      "refersTo": "sentence-word-who",
+      "description": "Role blocks shown with English labels; generated sentences follow the selected language’s word order.",
+      "html": "<div class=\"ds-words\" lang=\"en\" aria-label=\"Sentence role colors\"><span class=\"ds-word ds-role-who\"><strong>Who</strong><small>who</small></span><span class=\"ds-word ds-role-action\"><strong>Does</strong><small>action</small></span><span class=\"ds-word ds-role-what\"><strong>What</strong><small>what</small></span><span class=\"ds-word ds-role-describe\"><strong>Describe</strong><small>detail</small></span><span class=\"ds-word ds-role-when\"><strong>When</strong><small>when</small></span><span class=\"ds-word ds-role-helper\"><strong>Helper</strong><small>helper</small></span></div>",
+      "css": ".ds-words{display:flex;gap:7px;flex-wrap:wrap;line-height:1.3;}.ds-word{display:flex;flex-direction:column;padding:9px 10px 7px;border-radius:6px;background:var(--role-bg);color:var(--role-ink);font-family:var(--font-body,\"Hanken Grotesk\",sans-serif);}.ds-word strong{font-size:19px;font-weight:600;line-height:1.45;}.ds-word small{font-size:9px;margin-top:4px;}.ds-role-who{--role-bg:#e0eee4;--role-ink:#37614c;}.ds-role-action{--role-bg:#eee8fa;--role-ink:#635096;}.ds-role-what{--role-bg:#fae5d5;--role-ink:#875736;}.ds-role-describe{--role-bg:#f7e2e8;--role-ink:#905263;}.ds-role-when{--role-bg:#e1edf6;--role-ink:#43647e;}.ds-role-helper{--role-bg:#f0f0ea;--role-ink:#5f655c;}@media(max-width:850px){.ds-words{gap:9px;}.ds-word strong{font-size:21px;}}@media(max-width:680px){.ds-word strong{font-size:20px;}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Neighborhood Conversation Studio",
+    "overview": "The Neighborhood Conversation Studio makes speaking feel like a small, useful part of the day. Warm paper, conversational purple and quiet colored sentence pieces give the interface a friendly daylight character. Actual city photographs bring local life into the studio, while fictional AI teachers and scene partners remain identified in text.\n\nThe system balances open space with practical controls. Newsreader frames invitations and phrases; Hanken Grotesk keeps messages, choices and actions clear. White fields and soft tinted panels organize the work without heavy elevation. Conversation, scenes, lessons and the sentence lab share the same restrained controls and visible feedback.",
+    "keyCharacteristics": [
+      "Daylight paper with purple actions and low saturation learning surfaces.",
+      "Newsreader framing paired with clear Hanken Grotesk conversation and controls.",
+      "Five connected sentence roles whose colors follow their words.",
+      "Local photography, labeled AI partners and feedback grounded in actual activity."
+    ],
+    "rules": [
+      {
+        "name": "The Role Continuity Rule",
+        "body": "Keep Who in mint, Does in lavender, What in peach, Describe in pink and When in blue. Carry each role's background and ink into matching output words when language, person or tense changes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Frame and Speak Rule",
+        "body": "Newsreader frames pages and reusable phrases. Hanken Grotesk carries controls, sentence blocks and chat, with bold Hanken for the conversation invitation.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Surface Rule",
+        "body": "Keep working surfaces flat. Use soft shadow for an overlaid speech bubble or an open mobile navigation drawer.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do carry the same role background and ink from a numbered sentence step into its output words.",
+      "Do keep language names and mode labels visible in the studio shell as workspaces rearrange.",
+      "Do use actual city photographs with captions that describe place and separate text that identifies AI partners.",
+      "Do preserve the shared focus outline and clear selected borders or underlines.",
+      "Do show useful speech and its English meaning together, with listening and practice actions nearby.",
+      "Do tie loading, speaking, error and completion feedback to the activity that produced it and honor reduced motion."
+    ],
+    "donts": [
+      "Don't remap a sentence role's color when changing language or tense.",
+      "Don't present a city photograph as a portrait of a fictional AI teacher or scene partner.",
+      "Don't use reduced text opacity on colored sentence labels or remove the visible keyboard focus treatment.",
+      "Don't decorate ordinary working panels with hard offset shadows, heavy gradients or fabricated availability and progress."
+    ]
+  }
+}

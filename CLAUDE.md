@@ -2,7 +2,7 @@
 
 # Maatu: Standing Rules for Claude Code
 
-Maatu (ಮಾತು, "speech"): spoken-only practice of Kannada, Hindi, and Tamil through live voice calls with AI characters in real Indian scenarios. Full specs live in `docs/plan/`. Read `docs/plan/01_BUILD_SPEC_CLAUDE_CODE.md` before any build work.
+Maatu (ಮಾತು, "speech"): spoken-language practice in Tamil, Kannada, Hindi, and French through ordinary voice and text conversation, local scenarios, and a reusable sentence lab. Live calls use AI practice partners. Full specs live in `docs/plan/`. Read `docs/plan/01_BUILD_SPEC_CLAUDE_CODE.md` before any build work.
 
 ## Who you are working with
 
@@ -29,7 +29,7 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 ## Repo layout
 
 - `app/`, `lib/`: Next.js 15 PWA (frontend + API routes), deploys to Vercel from repo root.
-- `agent/`: Python voice agent worker (livekit-agents), runs on this Mac mini via LaunchAgent.
+- `agent/`: Python voice agent worker (livekit-agents), deployed to LiveKit Cloud with the dispatch name `maatu-studio`. Local LaunchAgents are legacy fallbacks.
 - `personas/`: persona JSON files, data not code (schema in the build spec, section 4).
 - `docs/plan/`: the six orchestra briefs, the source of truth.
 - `inbox/`: drop zone for Grok, ChatGPT, and Claude Design deliverables.

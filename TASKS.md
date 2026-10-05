@@ -2,7 +2,7 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
-- [ ] **M19: 2026-10-05 Spoken studio audit and redesign.** Four-language parity across ordinary conversation, 56 scenario roles and the connected five-step sentence lab; French now has all 16 lessons, native voice previews, live scenarios and grounded coach reports. Actual cloud course calls passed close-attempt, one-retry, meaning-first and spoken-control checks in all four languages; 20 button controls acknowledged. Deterministic checks cover 130,432 structural combinations and 64 lesson routes. Final visual fixes applied and production build passed. Public release verification is in progress. The strict 1.5 second latency budget remains unmet.
+- [x] **M19: 2026-10-05 Spoken studio audit and redesign.** Public at https://maatu.vercel.app. Four-language parity across ordinary conversation, 56 scenario roles and the connected five-step sentence lab; French now has all 16 lessons, native voice previews, live scenarios and grounded coach reports. Production token, two-turn text, speech and transcription checks passed in all four languages. Eight real calls through the public token endpoint verified conversation continuity and six-turn course behavior: close attempts accepted, one retry then move on, English meaning first, wait/stop and go-back/repeat/slower. All 20 button controls acknowledged; repeat and slower replayed the target phrase. A production French recap persisted with spoken feedback and successful readback. Deterministic checks cover 130,432 structural combinations and 64 lesson routes. Final visual fixes and the design system are recorded; production build passed. Final 32 spoken turns measured 1.037 to 2.763 seconds, median 1.613 seconds; the strict 1.5 second latency budget remains unmet. Voice glosses and follow-ups can still vary between model replies.
 
 - [x] **M18: 2026-09-28 Sentence Path, French, voice revived on the Mac mini.** Build opens on an emoji path (who, action, what, when) giving the spoken line in Kannada, Hindi, Tamil, or French with beats to say it, a tense ladder, every person, a word order map, all four languages, and a Venn. Grammar audited twice by Gemini 3.1 Pro (1,584 then 618 lines). Studio rooms folded into a one-at-a-time toolbox. "Say it out loud" opens a companion call that drills the built line (verified room tutor-kn__e2e1790584342). The voice worker was missing from this Mac; reinstalled here, probes answered in kn, hi, ta teacher, kn-auto and companion rooms; external turn latency 1.1 to 2.3 s, so the 1.5 s budget still fails on some turns. Voice agent moved to LiveKit Cloud (agent CA_qEYzC3PqfR2e, region ap-south, free Build plan) the same day at Jason's request; the Mac mini LaunchAgent is disabled (re-enable with agent/install_agent_service.sh). Five production-path probes (teacher-kn-l1, tutor-kn, kn-auto, tutor-hi, tutor-ta) were all answered by the cloud worker. Talk now leads with three modes: Chat, Build, and optional situations; Build gains example sentences and Surprise me.
 
@@ -28,7 +28,8 @@
 
 - URL: https://maatu.vercel.app (installable PWA)
 - Production voice agent: LiveKit Cloud, named worker `maatu-studio`, agent `CA_qEYzC3PqfR2e`, India region. Local LaunchAgents are legacy fallbacks.
-- Calls no longer need any Mac on; the agent runs in LiveKit Cloud (the agent brain runs here). Vercel serves the app; LiveKit Cloud carries the audio; Neon stores debriefs.
+- Verified voice release: `sM25FFoF5FfD`, deployed 2026-10-05. The final public calls used this worker's phrase-specific control commands.
+- Calls no longer need any Mac on; LiveKit Cloud hosts the voice worker and carries the audio. Vercel serves the app; Neon stores debriefs.
 
 ## Waiting on Jason
 
