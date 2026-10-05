@@ -170,4 +170,6 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Capture the microphone alongside token setup and connection work. Stop stale or abandoned tracks, tolerate capture denial, and prevent a stale room from ending a newer call. This removes a sequential setup step; physical microphone startup was not measured in this follow-up.
 - Review the desktop, phone and actual 635px browser width. Apply independent findings for language-scoped feedback, omitted-noun meaning, and connector legibility. Document the changed surface after the final correction. New French free-build audio still took about 7 seconds in the local check; saved challenge audio avoids that delay.
 
+- Public audio compatibility: normalize prepared WAV blobs to `audio/wav` before FileReader conversion. The production CDN sends `audio/wave`, which caused the in-app browser to reject the original data URL despite verified WAV bytes.
+
 <!-- REPORT: agent=Codex; task=spoken-studio-decisions; status=complete; files=DECISIONS.md; open_questions=none -->

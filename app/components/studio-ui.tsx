@@ -29,7 +29,8 @@ async function phraseAudio(lang: Lang, text: string, slow: boolean): Promise<str
     if (seed) {
       const response = await fetch(seed.url);
       if (!response.ok) throw new Error("The saved voice could not load. Try again.");
-      const blob = await response.blob();
+      // Vercel serves WAVs as audio/wave, which some browsers reject in data URLs.
+      const blob = new Blob([await response.arrayBuffer()], { type: "audio/wav" });
       src = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(String(reader.result));
