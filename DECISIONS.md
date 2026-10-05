@@ -159,4 +159,15 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Apply the finish review's eight ordered fixes: connected phone diagram, immediate typed entry, AI identity, heading order, focus, contrast, tab keyboard behavior, and correct French photo provenance.
 - Agent source and evidence files without REPORT footers are integrated under the standing exception and noted in TASKS.md. JSON, image, and generated runtime files retain valid formats.
 
+## 2026-10-05 Sentence lab game and earlier audio
+
+- Extend the established studio into a grammar board rather than choose a new identity. Role nodes connect by meaning; the generated sentence below follows actual local word order. The doer acts, the verb uses a noun, the adjective describes it, and time changes the verb form. Omitted objects show dashed, unused relationships.
+- Add four meaning-based challenges per language and keep free build available. Verify choices, proper names, agreement, time, negation and question form before recording a build. Count each challenge once per language and preserve completion on this device. Clear feedback when the learner changes language or choices.
+- Repair dependent choices when a new verb needs a different noun or an adjective no longer fits. Explain the adjustment and keep all previous noun, verb, name, tense, question, negative, saving and live practice choices.
+- Explain verb form without a universal subject-ending claim. Hindi hints mention noun gender in some past forms. Keep the existing native grammar renderer unchanged.
+- Put Hear it beside the heading. Quietly prepare a stable sentence, never autoplay, share pending requests and bound preview caches. Generate normal/slower audio for the starter and all four challenge goals in every language, 40 WAV files with content hashes and an exact-input manifest.
+- Native-script Sarvam Bulbul v3 previews measured about 1.6 seconds including pronunciation preparation in local production-mode checks, versus roughly 6 to 9 seconds for the previous Gemini preview generation. Keep native-script preparation; romanized synthesis caused the earlier outsider accent. Gemini remains the Indic preview fallback and French preview provider. Live calls retain Gemini Live and full teaching prompts.
+- Capture the microphone alongside token setup and connection work. Stop stale or abandoned tracks, tolerate capture denial, and prevent a stale room from ending a newer call. This removes a sequential setup step; physical microphone startup was not measured in this follow-up.
+- Review the desktop, phone and actual 635px browser width. Apply independent findings for language-scoped feedback, omitted-noun meaning, and connector legibility. Document the changed surface after the final correction. New French free-build audio still took about 7 seconds in the local check; saved challenge audio avoids that delay.
+
 <!-- REPORT: agent=Codex; task=spoken-studio-decisions; status=complete; files=DECISIONS.md; open_questions=none -->

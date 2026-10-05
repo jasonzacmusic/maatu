@@ -1,0 +1,23 @@
+{
+  "semantic_challenge_cases": 16,
+  "wrong_meanings_rejected": true,
+  "repeat_completion_not_duplicated": true,
+  "proper_name_gender_adjective_and_past_constructed": true,
+  "per_language_progress_persisted_on_reload": true,
+  "compatible_noun_and_adjective_repair": true,
+  "keyboard": [
+    "ArrowRight",
+    "Home",
+    "End"
+  ],
+  "browser_errors": 0,
+  "language_success_feedback_reset": true,
+  "omitted_object_labels": [
+    "does",
+    "omitted",
+    "unused",
+    "changes"
+  ],
+  "omitted_object_wires_dashed": true,
+  "physical_microphone_startup_measured": false
+}

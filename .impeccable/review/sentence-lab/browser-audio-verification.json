@@ -1,0 +1,26 @@
+[
+  {
+    "language": "Tamil",
+    "prepared_playback_ui_ms": 274,
+    "sentence": "Meera drank hot coffee yesterday.",
+    "words": "Meera\nproper noun\nnethu\ntime\nsoodaana\nadjective\ncoffee\nnoun\nkudichaa\nverb"
+  },
+  {
+    "language": "Kannada",
+    "prepared_playback_ui_ms": 277,
+    "sentence": "Meera drank hot coffee yesterday.",
+    "words": "Meera\nproper noun\nnenne\ntime\nbisi\nadjective\ncoffee\nnoun\nkudidlu\nverb"
+  },
+  {
+    "language": "Hindi",
+    "prepared_playback_ui_ms": 276,
+    "sentence": "Meera drank hot coffee yesterday.",
+    "words": "Meera ne\nproper noun\nkal\ntime\ngaram\nadjective\ncoffee\nnoun\npi\nverb"
+  },
+  {
+    "language": "French",
+    "prepared_playback_ui_ms": 286,
+    "sentence": "Meera drank hot coffee yesterday.",
+    "words": "Meera\nproper noun\na\nverb\nbu\nverb\ndu café\nnoun\nchaud\nadjective\nhier\ntime"
+  }
+]

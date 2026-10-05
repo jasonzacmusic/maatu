@@ -1,0 +1,677 @@
+.word-game {
+  --game-paper: #f6f3eb;
+  container-type: inline-size;
+}
+.game-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+.game-heading h1 {
+  font-size: 47px;
+  line-height: 1.08;
+  max-width: 13ch;
+}
+.game-heading h1 em {
+  color: var(--purple);
+}
+.game-heading p {
+  max-width: 44ch;
+}
+.game-speaker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.game-speaker .button {
+  min-width: 127px;
+  min-height: 48px;
+}
+.game-speaker small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+.game-switch {
+  display: flex;
+  gap: 4px;
+  background: #ece8df;
+  padding: 4px;
+  border-radius: 9px;
+}
+.game-switch button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: #696353;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.game-switch button.active {
+  background: #fff;
+  color: var(--purple);
+}
+.game-switch button:hover {
+  background: #ffffffa0;
+}
+.game-toolbar > .text-button {
+  font-size: 11px;
+}
+.sentence-mission {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #eee8fa;
+  border-radius: 12px;
+  padding: 23px 25px;
+  margin-bottom: 17px;
+}
+.mission-copy {
+  flex: 1;
+  min-width: 180px;
+}
+.mission-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #624897;
+  display: block;
+  margin-bottom: 7px;
+}
+.mission-copy h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.22;
+  font-weight: 500;
+  color: #3a2c55;
+}
+.mission-copy p {
+  font-size: 11px;
+  color: #6d597e;
+  margin-top: 9px;
+}
+.mission-controls {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 9px;
+}
+.build-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: #624897;
+}
+.mission-dots {
+  display: flex;
+  gap: 7px;
+}
+.mission-dots button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  border: 1px solid #c3b8d7;
+  border-radius: 7px;
+  background: transparent;
+  color: #6b5986;
+  font-size: 11px;
+}
+.mission-dots button.current {
+  background: #fff;
+  border-color: #635096;
+  color: #513988;
+}
+.mission-dots button.built {
+  background: #d9eadc;
+  color: #2c5943;
+  border-color: #769e85;
+}
+.check-build {
+  padding: 9px 12px !important;
+  min-height: 35px !important;
+  font-size: 11px !important;
+}
+.mission-feedback {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #554466;
+  padding-top: 14px;
+  border-top: 1px solid #d7cde5;
+}
+.mission-feedback > svg {
+  flex: none;
+}
+.mission-feedback .text-button {
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.sentence-mission.complete {
+  background: #e0eee4;
+}
+.sentence-mission.complete .mission-copy h2,
+.sentence-mission.complete .mission-title,
+.sentence-mission.complete .build-count,
+.mission-feedback.success {
+  color: #325d47;
+}
+.sentence-mission.complete .mission-copy p {
+  color: #416650;
+}
+.word-board {
+  position: relative;
+  container-type: inline-size;
+  border: 1px solid #ded8cc;
+  border-radius: 14px;
+  background-color: var(--game-paper);
+  background-image: radial-gradient(#d9d2c4 0.8px, transparent 0.8px);
+  background-size: 20px 20px;
+  padding: 24px;
+  margin-bottom: 22px;
+}
+.grammar-nodes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas: "who action what" ". when describe";
+  gap: 42px 52px;
+  position: relative;
+}
+.grammar-node {
+  position: relative;
+  min-width: 0;
+  min-height: 117px;
+  border: 1px solid #c8c3b880;
+  border-radius: 12px;
+  padding: 17px 18px 24px;
+  text-align: left;
+  color: var(--role-ink);
+  background: var(--role-bg);
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    border-color 0.18s;
+}
+.grammar-node.selected {
+  border: 2px solid var(--role-ink);
+  padding: 16px 17px 23px;
+}
+.grammar-node:hover {
+  border-color: var(--role-ink);
+}
+.node-type {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.grammar-node > strong {
+  display: block;
+  font-size: 23px;
+  line-height: 1.3;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 9px 0 5px;
+}
+.grammar-node > small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--role-ink);
+  padding-right: 35px;
+}
+.node-edit {
+  position: absolute;
+  right: 12px;
+  bottom: 9px;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--role-ink);
+}
+.grammar-wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.wire {
+  fill: none;
+  stroke: #82755f;
+  stroke-width: 1.6;
+}
+.wire.active {
+  stroke: #7356a5;
+  stroke-width: 2.4;
+}
+.wire.unused {
+  stroke-dasharray: 4 4;
+}
+.grammar-wires text {
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 11px;
+  fill: #665c49;
+  paint-order: stroke;
+  stroke: var(--game-paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+.board-caption {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 22px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #68604f;
+}
+.board-signal {
+  height: 6px;
+  width: 6px;
+  border-radius: 2px;
+  background: var(--purple);
+}
+.fit-notice {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  color: #5d477f;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: -5px 0 20px;
+}
+.fit-notice svg {
+  flex: none;
+  margin-top: 2px;
+}
+.word-game .lab-workspace {
+  gap: 22px;
+  grid-template-columns: 1fr 1.1fr;
+}
+.word-game .piece-picker {
+  padding: 24px;
+}
+.bank-type {
+  font-size: 11px;
+  color: #6c597e;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.word-game .picker-heading {
+  margin-bottom: 12px;
+}
+.word-game .picker-heading h2 {
+  font-size: 19px;
+}
+.word-game .picker-heading > span {
+  font-size: 11px;
+  margin-top: 21px;
+}
+.type-lesson {
+  font-size: 12px;
+  line-height: 1.65;
+  color: #706a60;
+  margin-bottom: 19px;
+  max-width: 54ch;
+}
+.word-game .piece-choice {
+  min-height: 66px;
+  padding: 13px 14px;
+}
+.word-game .piece-choice strong {
+  font-size: 14px;
+}
+.word-game .piece-choice small {
+  font-size: 11px;
+}
+.word-game .picker-note {
+  font-size: 12px;
+}
+.word-game .sentence-result {
+  padding: 25px;
+  background: #eeebe1;
+}
+.word-game .result-heading {
+  font-size: 12px;
+}
+.word-game .result-english {
+  font-size: 20px;
+  font-family: var(--font-display);
+  color: #474c40;
+  line-height: 1.35;
+  margin-top: 25px;
+}
+.word-game .word {
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  padding: 10px 12px 8px;
+}
+.word-game .word:hover {
+  outline: 1px solid var(--role-ink);
+}
+.word-game .word strong {
+  font-size: 22px;
+}
+.word-game .word small {
+  font-size: 10px;
+}
+.verb-ending {
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+.word-order-key {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #68604f;
+  margin-top: 17px;
+}
+.word-order-key svg {
+  flex: none;
+  margin-top: 2px;
+}
+.word-game .result-note {
+  font-size: 12px;
+}
+.word-game .pronunciation-guide {
+  font-size: 12px;
+}
+.word-game .check-line {
+  font-size: 12px;
+}
+.word-game .variation {
+  font-size: 12px;
+}
+.word-game .gender-label {
+  font-size: 11px;
+}
+.word-game .tense-ladder strong {
+  font-size: 13px;
+}
+.word-game .tense-ladder button > span {
+  font-size: 11px;
+}
+.word-game .result-actions .button {
+  min-height: 44px;
+}
+.word-game .sounds-help p {
+  font-size: 12px;
+}
+.mission-feedback.success {
+  animation: build-reveal 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes build-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.word-game[data-motion="reduce"] * {
+  animation: none !important;
+  transition: none !important;
+}
+@container (max-width:579px) {
+  .grammar-nodes {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "who who" "action when" "what describe";
+    gap: 37px 40px;
+  }
+  .grammar-node {
+    min-height: 106px;
+    padding: 15px 14px 23px;
+  }
+  .grammar-node.selected {
+    padding: 14px 13px 22px;
+  }
+  .grammar-node > strong {
+    font-size: 21px;
+    margin-top: 8px;
+  }
+  .grammar-node[style*="who"] {
+    min-height: 99px;
+  }
+  .grammar-node[style*="who"] strong {
+    padding-right: 45%;
+    margin-bottom: 5px;
+  }
+  .grammar-node[style*="who"] .node-edit {
+    bottom: 21px;
+    right: 19px;
+  }
+  .node-type {
+    font-size: 11px;
+    gap: 6px;
+  }
+  .grammar-wires text {
+    font-size: 9px;
+  }
+  .word-game .lab-workspace {
+    grid-template-columns: 1fr;
+  }
+  .word-game .sentence-result {
+    min-height: 0;
+  }
+  .word-game .piece-picker {
+    padding: 21px;
+  }
+  .word-game .practice-button {
+    margin-top: 4px;
+  }
+  .game-heading h1 {
+    font-size: 40px;
+    max-width: 10ch;
+  }
+  .game-heading p {
+    font-size: 12px;
+    max-width: 34ch;
+  }
+  .game-speaker .button {
+    min-width: 100px;
+    padding: 11px;
+    font-size: 12px;
+  }
+  .game-speaker small {
+    font-size: 9px;
+    max-width: 13ch;
+    text-align: center;
+  }
+  .sentence-mission {
+    padding: 20px;
+    gap: 17px;
+  }
+  .mission-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .mission-controls .build-count {
+    margin-right: auto;
+  }
+  .mission-copy h2 {
+    font-size: 25px;
+  }
+  .mission-feedback {
+    flex-wrap: wrap;
+  }
+  .mission-feedback .text-button {
+    margin: 0;
+  }
+  .game-switch button {
+    font-size: 11px;
+    padding: 9px;
+  }
+  .game-toolbar > .text-button {
+    font-size: 10px;
+  }
+  .game-toolbar {
+    align-items: flex-start;
+  }
+  .word-board {
+    padding: 19px;
+  }
+  .board-caption {
+    font-size: 10px;
+    margin-top: 20px;
+  }
+}
+@container (max-width:390px) {
+  .game-heading {
+    gap: 11px;
+    align-items: flex-start;
+  }
+  .game-heading h1 {
+    font-size: 35px;
+  }
+  .game-heading p {
+    font-size: 11px;
+  }
+  .game-speaker .button {
+    min-width: 92px;
+    font-size: 11px;
+  }
+  .game-toolbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .game-toolbar > .text-button {
+    margin-left: auto;
+  }
+  .word-board {
+    padding: 15px;
+  }
+  .grammar-nodes {
+    gap: 37px 35px;
+  }
+  .grammar-node > strong {
+    font-size: 19px;
+  }
+  .grammar-node > small {
+    font-size: 10px;
+  }
+  .node-edit {
+    font-size: 10px;
+  }
+  .node-type {
+    font-size: 10px;
+  }
+  .grammar-node {
+    padding: 13px 12px 23px;
+  }
+  .grammar-node.selected {
+    padding: 12px 11px 22px;
+  }
+  .word-game .piece-choice {
+    padding: 12px;
+    min-height: 63px;
+  }
+  .word-game .piece-choice strong {
+    font-size: 13px;
+  }
+  .word-game .piece-choice small {
+    font-size: 10px;
+  }
+  .word-game .result-words .word strong {
+    font-size: 21px;
+  }
+  .word-game .lab-toggles {
+    gap: 14px;
+  }
+  .mission-copy h2 {
+    font-size: 24px;
+  }
+  .word-game .gender-label {
+    flex-wrap: wrap;
+  }
+  .word-game .word-order-key {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-game * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.bank-question {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+@container (max-width:720px) {
+  .word-game .lab-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+@container (max-width:579px) {
+  .grammar-nodes {
+    column-gap: 54px;
+  }
+  .grammar-wires text {
+    font-size: 11px;
+  }
+  .node-edit {
+    font-size: 10px;
+  }
+  .mission-controls {
+    gap: 8px;
+  }
+  .mission-controls .build-count {
+    flex-basis: 100%;
+  }
+  .mission-dots {
+    gap: 4px;
+  }
+  .mission-dots button {
+    width: 44px;
+    height: 44px;
+  }
+  .word-game .check-build {
+    min-height: 44px !important;
+    padding: 9px 8px !important;
+    font-size: 10px !important;
+  }
+  .game-switch button {
+    min-height: 44px;
+  }
+  .game-toolbar > .text-button {
+    min-height: 44px;
+  }
+}

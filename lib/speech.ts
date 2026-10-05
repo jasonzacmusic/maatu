@@ -4,7 +4,7 @@ import type { Lang } from "./maatu-design";
 const KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const cache = new Map<string, { audio: string; mime: string }>();
 
-async function voiceScript(text: string, lang: Lang) {
+async function convertScript(text: string, lang: Lang) {
   if (lang === "fr") return text;
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent", {
     method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": KEY! },
@@ -18,13 +18,59 @@ async function voiceScript(text: string, lang: Lang) {
   return native;
 }
 
+const scriptCache = new Map<string, string>();
+const scriptRequests = new Map<string, Promise<string>>();
+const audioRequests = new Map<string, Promise<{ audio: string; mime: string }>>();
+
+async function voiceScript(text: string, lang: Lang) {
+  const id = `${lang}:${text}`;
+  const saved = scriptCache.get(id);
+  if (saved) return saved;
+  const pending = scriptRequests.get(id);
+  if (pending) return pending;
+  const task = convertScript(text, lang);
+  scriptRequests.set(id, task);
+  try {
+    const native = await task;
+    if (scriptCache.size >= 100) scriptCache.delete(scriptCache.keys().next().value!);
+    scriptCache.set(id, native);
+    return native;
+  } finally { scriptRequests.delete(id); }
+}
+
 export async function synthesizeSpeech(text: string, lang: Lang, pace = 0.9) {
   const id = `${lang}:${pace}:${text}`;
-  const cached = cache.get(id);
-  if (cached) return cached;
+  const saved = cache.get(id);
+  if (saved) return saved;
+  const pending = audioRequests.get(id);
+  if (pending) return pending;
+  const task = createSpeech(text, lang, pace);
+  audioRequests.set(id, task);
+  try {
+    const audio = await task;
+    if (cache.size >= 100) cache.delete(cache.keys().next().value!);
+    cache.set(id, audio);
+    return audio;
+  } finally { audioRequests.delete(id); }
+}
+
+async function createSpeech(text: string, lang: Lang, pace = 0.9) {
   if (!KEY) throw new Error("Voice is not configured.");
   const native = await voiceScript(text, lang);
   const language = LANGUAGES[lang];
+  if (lang !== "fr" && process.env.SARVAM_API_KEY) {
+    try {
+      const response = await fetch("https://api.sarvam.ai/text-to-speech", {
+        method: "POST", headers: { "Content-Type": "application/json", "api-subscription-key": process.env.SARVAM_API_KEY },
+        body: JSON.stringify({ text: native, target_language_code: language.code, speaker: { kn: "shreya", hi: "pooja", ta: "ishita" }[lang], model: "bulbul:v3", pace }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.audios?.[0]) return { audio: data.audios[0] as string, mime: "audio/wav" };
+      }
+    } catch { /* A preview can still use the native-language Gemini voice. */ }
+  }
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
     method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": KEY },
     body: JSON.stringify({
@@ -38,22 +84,7 @@ export async function synthesizeSpeech(text: string, lang: Lang, pace = 0.9) {
     const blocks = (data.steps ?? []).flatMap((s: { content?: { type: string; data?: string; mime_type?: string }[] }) => s.content ?? []);
     const audio = blocks.filter((b: { type: string; data?: string }) => b.type === "audio" && b.data).at(-1);
     if (audio?.data) {
-      const result = { audio: audio.data as string, mime: audio.mime_type || "audio/wav" };
-      if (cache.size >= 100) cache.delete(cache.keys().next().value!);
-      cache.set(id, result);
-      return result;
-    }
-  }
-  if (lang !== "fr" && process.env.SARVAM_API_KEY) {
-    const speaker = { kn: "shreya", hi: "pooja", ta: "ishita" }[lang];
-    const fallback = await fetch("https://api.sarvam.ai/text-to-speech", {
-      method: "POST", headers: { "Content-Type": "application/json", "api-subscription-key": process.env.SARVAM_API_KEY },
-      body: JSON.stringify({ text: native, target_language_code: language.code, speaker, model: "bulbul:v3", pace }),
-      signal: AbortSignal.timeout(20000),
-    });
-    if (fallback.ok) {
-      const data = await fallback.json();
-      if (data.audios?.[0]) return { audio: data.audios[0] as string, mime: "audio/wav" };
+      return { audio: audio.data as string, mime: audio.mime_type || "audio/wav" };
     }
   }
   throw new Error("The pronunciation voice could not respond. Try again.");

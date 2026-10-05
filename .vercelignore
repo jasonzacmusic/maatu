@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.env*
+keys.txt
+agent
+inbox
+docs
+.impeccable/review
+scripts

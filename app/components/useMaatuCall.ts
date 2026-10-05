@@ -4,6 +4,8 @@ import {
   Room,
   RoomEvent,
   Track,
+  createLocalAudioTrack,
+  type LocalAudioTrack,
   type RemoteTrack,
   type TranscriptionSegment,
   type Participant,
@@ -87,6 +89,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   const [endedUnexpectedly, setEndedUnexpectedly] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
+  const preparingMicRef = useRef<LocalAudioTrack | null>(null);
   const generation = useRef(0);
   const controls = useRef(new Map<string, { resolve: (ok: boolean) => void; timer: ReturnType<typeof setTimeout> }>());
   const audioElRef = useRef<HTMLAudioElement | null>(null);
@@ -141,6 +144,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
 
   const hangUp = useCallback(async () => {
     generation.current += 1;
+    preparingMicRef.current?.stop();
+    preparingMicRef.current = null;
     for (const request of controls.current.values()) { clearTimeout(request.timer); request.resolve(false); }
     controls.current.clear();
     await Promise.race([
@@ -261,6 +266,10 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
 
   const connect = useCallback(async () => {
     const attempt = ++generation.current;
+    preparingMicRef.current?.stop();
+    preparingMicRef.current = null;
+    let capturedMic: LocalAudioTrack | undefined;
+    let cancelCapture = false;
     setPhase("connecting");
     setError(null);
     setTranscript([]);
@@ -280,21 +289,26 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
         persona.startsWith("teacher-") || persona.startsWith("tutor-")
           ? persona
           : `${persona}-d${difficultyStage}`;
+      let storedMic: string | null = null;
+      try { storedMic = window.localStorage.getItem("maatu-mic"); } catch { /* Optional remembered device. */ }
+      // Ask for the microphone while the token and connection are being prepared.
+      // A rejected or stale attempt must never leave a captured track running.
+      const microphone: Promise<{ track?: LocalAudioTrack; error?: unknown }> = createLocalAudioTrack(storedMic ? { deviceId: storedMic } : undefined)
+        .then((track) => {
+          if (cancelCapture || attempt !== generation.current) { track.stop(); return { error: new Error("Call cancelled") }; }
+          capturedMic = track;
+          preparingMicRef.current = track;
+          return { track };
+        }).catch((error: unknown) => ({ error }));
       const res = await fetch("/api/token", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ persona: callPersona, practice: practice?.target, practiceEn: practice?.en, context: practice?.context }) });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "Could not reach the character.");
       }
       const { token, url, room: roomId } = await res.json();
-      if (attempt !== generation.current) return;
+      if (attempt !== generation.current) { cancelCapture = true; capturedMic?.stop(); return; }
       setRoomName(roomId);
 
-      let storedMic: string | null = null;
-      try {
-        storedMic = window.localStorage.getItem("maatu-mic");
-      } catch {
-        storedMic = null;
-      }
       const room = new Room({ adaptiveStream: true, dynacast: true, audioCaptureDefaults: storedMic ? { deviceId: storedMic } : undefined });
       roomRef.current = room;
 
@@ -380,7 +394,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
         },
       );
       room.on(RoomEvent.Disconnected, () => {
-        if (roomRef.current) {
+        if (roomRef.current === room) {
           roomRef.current = null;
           setSpeaker(null);
           setConnectionIssue("The call dropped. Your transcript is safe.");
@@ -391,7 +405,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       });
 
       await room.connect(url, token);
-      if (attempt !== generation.current) { await room.disconnect(); return; }
+      if (attempt !== generation.current) { cancelCapture = true; capturedMic?.stop(); await room.disconnect(); return; }
       ensureAudioEl();
       // Unlock remote audio playback within the tap that started the call.
       try {
@@ -402,18 +416,28 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
       setNeedsAudioUnlock(!room.canPlaybackAudio);
       if (attempt !== generation.current) { await room.disconnect(); return; }
       try {
-        await room.localParticipant.setMicrophoneEnabled(true);
+        const prepared = await microphone;
+        if (attempt !== generation.current) { prepared.track?.stop(); await room.disconnect(); return; }
+        if (!prepared.track) throw prepared.error;
+        await room.localParticipant.publishTrack(prepared.track, { source: Track.Source.Microphone });
+        if (preparingMicRef.current === prepared.track) preparingMicRef.current = null;
         if (attempt !== generation.current) { await room.disconnect(); return; }
         setMuted(false);
         startMeter(room);
         void refreshMics(room);
       } catch {
         // Mic denied or unavailable: they can still listen. Not fatal.
+        capturedMic?.stop();
+        if (preparingMicRef.current === capturedMic) preparingMicRef.current = null;
+        if (attempt !== generation.current) return;
         setMuted(true);
         setMicIssue("Your microphone is blocked. Allow the mic for this site in your browser settings, then tap the mic button.");
       }
       setPhase("live");
     } catch (e) {
+      cancelCapture = true;
+      capturedMic?.stop();
+      if (preparingMicRef.current === capturedMic) preparingMicRef.current = null;
       if (attempt !== generation.current) return;
       await roomRef.current?.disconnect();
       roomRef.current = null;
@@ -470,6 +494,8 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   useEffect(() => {
     return () => {
       generation.current += 1;
+      preparingMicRef.current?.stop();
+      preparingMicRef.current = null;
       for (const request of controls.current.values()) { clearTimeout(request.timer); request.resolve(false); }
       controls.current.clear();
       stopMeter();

@@ -1,0 +1,44 @@
+[
+  {
+    "arrows": 4,
+    "inactive_connector_contrast": 4.06,
+    "labels": [
+      "does",
+      "uses",
+      "describes",
+      "changes"
+    ],
+    "relationship_label_px": "11px",
+    "roles": 5,
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "arrows": 4,
+    "inactive_connector_contrast": 4.06,
+    "labels": [
+      "does",
+      "uses",
+      "describes",
+      "changes"
+    ],
+    "relationship_label_px": "11px",
+    "roles": 5,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "arrows": 4,
+    "inactive_connector_contrast": 4.06,
+    "labels": [
+      "does",
+      "uses",
+      "describes",
+      "changes"
+    ],
+    "relationship_label_px": "11px",
+    "roles": 5,
+    "scrollWidth": 635,
+    "width": 635
+  }
+]

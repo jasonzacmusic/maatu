@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LoaderCircle, Square, Volume2 } from "lucide-react";
 import { LANGUAGES } from "@/lib/languages";
 import type { Lang } from "@/lib/maatu-design";
+import starterAudio from "@/lib/lab-voice.generated.json";
 
 let activePreview: HTMLAudioElement | null = null;
 
@@ -12,50 +13,91 @@ export function CityArt({ lang, className = "" }: { lang: Lang; className?: stri
   return <div className={`city-art ${className}`} role="img" aria-label={`Photograph of everyday local life in ${l.city}`} style={{ backgroundImage: `url(/scenes/${lang}.webp)`, backgroundPosition: "center" }} />;
 }
 
+const previewCache = new Map<string, string>();
+const previewRequests = new Map<string, Promise<string>>();
+const audioKey = (lang: Lang, text: string, slow: boolean) => `${lang}:${slow ? 0.72 : 0.9}:${text}`;
+
+async function phraseAudio(lang: Lang, text: string, slow: boolean): Promise<string> {
+  const key = audioKey(lang, text, slow);
+  const cached = previewCache.get(key);
+  if (cached) return cached;
+  const pending = previewRequests.get(key);
+  if (pending) return pending;
+  const task = (async () => {
+    const seed = (starterAudio as { lang: string; text: string; pace: number; url: string }[]).find((clip) => clip.lang === lang && clip.text === text && clip.pace === (slow ? 0.72 : 0.9));
+    let src: string;
+    if (seed) {
+      const response = await fetch(seed.url);
+      if (!response.ok) throw new Error("The saved voice could not load. Try again.");
+      const blob = await response.blob();
+      src = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error("The voice could not load. Try again."));
+        reader.readAsDataURL(blob);
+      });
+    } else {
+      const response = await fetch("/api/say", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lang, text, pace: slow ? 0.72 : 0.9 }) });
+      const data = await response.json();
+      if (!response.ok || !data.audio) throw new Error(data.error || "The voice could not respond. Try again.");
+      src = `data:${data.mime || "audio/wav"};base64,${data.audio}`;
+    }
+    if (previewCache.size >= 64) previewCache.delete(previewCache.keys().next().value!);
+    previewCache.set(key, src);
+    return src;
+  })();
+  previewRequests.set(key, task);
+  try { return await task; } finally { previewRequests.delete(key); }
+}
+
 export function useSpeech(lang: Lang) {
   const audio = useRef<HTMLAudioElement | null>(null);
-  const request = useRef<AbortController | null>(null);
   const sequence = useRef(0);
-  const cache = useRef(new Map<string, string>());
+  const alive = useRef(true);
+  const currentLanguage = useRef(lang);
+  currentLanguage.current = lang;
+  const [preparedKey, setPreparedKey] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "playing">("idle");
   const [error, setError] = useState("");
   const stop = useCallback(() => {
     sequence.current += 1;
-    request.current?.abort();
     audio.current?.pause();
-    setState("idle");
+    if (alive.current) setState("idle");
   }, []);
+  const prepare = useCallback(async (text: string, slow = false) => {
+    try {
+      await phraseAudio(lang, text, slow);
+      if (alive.current && currentLanguage.current === lang) setPreparedKey(audioKey(lang, text, slow));
+      return true;
+    } catch { return false; }
+  }, [lang]);
   const speak = useCallback(async (text: string, slow = false) => {
     stop(); setError("");
     const seq = sequence.current;
-    const key = `${lang}:${slow}:${text}`;
-    let src = cache.current.get(key);
     try {
-      if (!src) {
-        setState("loading");
-        const controller = new AbortController(); request.current = controller;
-        const response = await fetch("/api/say", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lang, text, pace: slow ? 0.72 : 0.9 }), signal: controller.signal });
-        const data = await response.json();
-        if (!response.ok || !data.audio) throw new Error(data.error || "The voice could not respond. Try again.");
-        src = `data:${data.mime || "audio/wav"};base64,${data.audio}`;
-        if (cache.current.size >= 60) cache.current.delete(cache.current.keys().next().value!);
-        cache.current.set(key, src!);
-      }
-      if (seq !== sequence.current) return;
+      const key = audioKey(lang, text, slow);
+      let src = previewCache.get(key);
+      if (!src) { setState("loading"); src = await phraseAudio(lang, text, slow); }
+      if (!alive.current || seq !== sequence.current) return;
+      setPreparedKey(key);
       const player = new Audio(src); audio.current = player;
       activePreview?.pause(); activePreview = player;
-      player.onended = () => { if (seq === sequence.current) setState("idle"); };
-      player.onpause = () => { if (seq === sequence.current) setState("idle"); };
-      player.onerror = () => { if (seq === sequence.current) { setState("idle"); setError("Audio could not play. Tap Hear it to retry."); } };
+      player.onended = () => { if (alive.current && seq === sequence.current) setState("idle"); };
+      player.onpause = () => { if (alive.current && seq === sequence.current) setState("idle"); };
+      player.onerror = () => { if (alive.current && seq === sequence.current) { setState("idle"); setError("Audio could not play. Tap Hear it to retry."); } };
       await player.play();
-      if (seq === sequence.current) setState("playing");
+      if (alive.current && seq === sequence.current) setState("playing");
     } catch (e) {
-      if (seq !== sequence.current) return;
+      if (!alive.current || seq !== sequence.current) return;
       setState("idle"); setError(e instanceof Error ? e.message : "Audio could not play. Try again.");
     }
   }, [lang, stop]);
-  useEffect(() => { stop(); return stop; }, [lang, stop]);
-  return { state, error, speak, stop };
+  useEffect(() => {
+    alive.current = true; stop();
+    return () => { alive.current = false; sequence.current += 1; audio.current?.pause(); };
+  }, [lang, stop]);
+  const isReady = useCallback((text: string, slow = false) => previewCache.has(audioKey(lang, text, slow)), [lang, preparedKey]);
+  return { state, error, speak, stop, prepare, isReady };
 }
 
 export function HearButton({ text, lang, slow = false, label = "Hear it", compact = false }: { text: string; lang: Lang; slow?: boolean; label?: string; compact?: boolean }) {

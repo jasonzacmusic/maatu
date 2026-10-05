@@ -1,0 +1,107 @@
+[
+  {
+    "arrows": 4,
+    "challengeButtons": [
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      }
+    ],
+    "roles": 5,
+    "scrollWidth": 1440,
+    "speaker": {
+      "bottom": 308.203125,
+      "height": 71,
+      "left": 1256,
+      "right": 1383,
+      "top": 237.203125,
+      "width": 127,
+      "x": 1256,
+      "y": 237.203125
+    },
+    "width": 1440,
+    "wordBankColumns": "511.422px 562.578px"
+  },
+  {
+    "arrows": 4,
+    "challengeButtons": [
+      {
+        "height": 44,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "width": 44
+      },
+      {
+        "height": 44,
+        "width": 44
+      }
+    ],
+    "roles": 5,
+    "scrollWidth": 390,
+    "speaker": {
+      "bottom": 272,
+      "height": 69.5,
+      "left": 278,
+      "right": 370,
+      "top": 202.5,
+      "width": 92,
+      "x": 278,
+      "y": 202.5
+    },
+    "width": 390,
+    "wordBankColumns": "350px"
+  },
+  {
+    "arrows": 4,
+    "challengeButtons": [
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      },
+      {
+        "height": 29,
+        "width": 29
+      }
+    ],
+    "roles": 5,
+    "scrollWidth": 635,
+    "speaker": {
+      "bottom": 314.5546875,
+      "height": 71,
+      "left": 488,
+      "right": 615,
+      "top": 243.5546875,
+      "width": 127,
+      "x": 488,
+      "y": 243.5546875
+    },
+    "width": 635,
+    "wordBankColumns": "595px"
+  }
+]
