@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Hanken_Grotesk, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import "./sentence-lab.css";
+import "./conversation-coach.css";
 import RegisterServiceWorker from "./components/RegisterServiceWorker";
 
 const bodyFont = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });

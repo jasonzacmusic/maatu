@@ -94,6 +94,14 @@ typography:
     fontSize: "22px"
     fontWeight: 600
     lineHeight: 1.45
+  phrase-coach:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "clamp(25px, 2.8vw, 34px)"
+    lineHeight: 1.2
+  sentence-coach-word:
+    fontFamily: "Hanken Grotesk, sans-serif"
+    fontSize: "15px"
+    fontWeight: 600
 rounded:
   compact: "6px"
   field: "7px"
@@ -113,7 +121,9 @@ spacing:
   "24": "24px"
   "28": "28px"
   "32": "32px"
+  "36": "36px"
   "42": "42px"
+  "64": "64px"
 components:
   button-primary:
     backgroundColor: "{colors.purple}"
@@ -190,6 +200,30 @@ components:
   sentence-challenge-complete:
     backgroundColor: "{colors.mint}"
     textColor: "{colors.completed-ink}"
+  coach-node-action:
+    backgroundColor: "{colors.lavender}"
+    textColor: "{colors.action-ink}"
+    rounded: "{rounded.surface}"
+    padding: "12px 12px 25px"
+  coach-node-action-selected:
+    padding: "11px 11px 24px"
+  coach-word-helper:
+    backgroundColor: "{colors.helper-paper}"
+    textColor: "{colors.helper-ink}"
+    typography: "{typography.sentence-coach-word}"
+    rounded: "{rounded.navigation}"
+    padding: "10px 12px"
+  correction-result:
+    backgroundColor: "{colors.mint}"
+    textColor: "{colors.who-ink}"
+    rounded: "{rounded.surface}"
+    padding: "14px 16px"
+  history-row:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink}"
+    padding: "20px 8px"
+  history-row-selected:
+    backgroundColor: "{colors.lavender}"
 ---
 
 # Design System: Maatu
@@ -276,6 +310,7 @@ The Sentence lab exposes Who as Pronoun or Proper noun, Does as Verb, What as No
 - **Label:** Actions use `label`; compact buttons and meaningful diagram relationship labels use `label-small`. Secondary metadata is smaller and subordinate. Controls use sentence case and practical weights rather than a separate uppercase display style.
 - **Grammar choice:** The dependency nodes give their chosen word the `grammar-choice` treatment, reducing to (21px then 19px) at component widths (579px then 390px). Type, target-language preview and the Choosing or Change state remain separate lines.
 - **Sentence:** The shared role-word baseline remains `sentence`. The Sentence lab enlarges its tappable output words with `sentence-lab`, reducing to (21px) at component widths up to (390px). Short serif phrase cards and live captions give a whole phrase room to be read aloud.
+- **Conversation phrase:** The sentence coach uses `phrase-coach` for the actual phrase, with a local phone size (28px). Its role words and alternative sentences use `sentence-coach-word`; role labels remain smaller (11px). Practice phrases use the compact serif size (26px), and side-coach models use serif emphasis (23px) with leading (1.35). These remain local conversation variants within the incumbent pairing.
 
 The Sentence lab's Newsreader page heading uses (47px), leading (1.08) and purple italic emphasis; its component-width variants use (40px then 35px). These are local heading variants inside the existing serif hierarchy.
 
@@ -299,6 +334,12 @@ At a board component width up to (579px), the doer spans two columns above paire
 
 The word bank and result use a two-column ratio (1:1.1) with a (22px) gap. They stack when the lab component is at most (720px) wide, independently of the sidebar's viewport rules. Choice tiles retain two columns, the result's practice action spans its width, and the tense ladder reduces from four columns to two with the shell. The early Hear it action stays beside the heading; phone challenge controls wrap into a row, and activity, shuffle, challenge selection and check controls have minimum (44px) targets.
 
+The local conversation extension pairs the speaker or text thread with a sentence inspector in a maximum width (1180px). Both use a (0.7:1.3) column ratio. The call's speaker column has a minimum width (270px) and a gap (42px); the text column starts at (280px), with a gap (38px). The speaking column is sticky at (24px) from the viewport top. At viewports up to (960px), both surfaces stack in document order with the conversation first, remove stickiness and introduce a thin divider above the coach.
+
+The conversation inspector reuses the semantic board with its own compact density: node padding (12px 12px 25px), minimum height (108px), canvas padding (18px), and gaps (36px vertically, 64px horizontally). At inspector component widths up to (580px), Doer / Adjective occupy the first row, Verb / Time the second, and Object / place the third row's left cell. Nodes reduce to (98px), chosen words to (15px), and phone canvas padding to (16px). The Adjective-to-Object connector follows a separate outer right rail; its label uses the empty lower-right region while Time-to-Verb keeps the central gap. The reserved horizontal space keeps relationship labels clear of node edges. Actual spoken word order follows below the graph. Alternatives and time changes use equal columns, then one column at phone viewports up to (580px); practice controls also stack and wrap there.
+
+History pairs an open conversation list with its selected transcript at a (0.8:1.2) ratio, a minimum list width (240px), and a gap (40px). At viewports up to (760px), the list comes first and the transcript follows with a gap (26px). The live language picker also occupies a full row there. History uses divider-led rows and open transcript articles, preserving the studio's flat working surfaces.
+
 ## Elevation & Depth
 
 Depth is mainly tonal: white fields, mint phrase cards, lavender conversation surfaces and a warm neutral sentence result sit on the paper canvas. Borders mark editable or grouped controls. Ordinary cards and working panels have no shadow. Actual photographs carry their own visual depth.
@@ -317,6 +358,8 @@ State transitions are brief and functional: buttons and sidebar hover use (150ms
 ## Shapes
 
 The common shape is a gently curved rectangle. Compact filters and role words use `compact`; fields and icon buttons use `field`; buttons and choice tiles use `control`; language groups and sidebar items use `navigation`; reusable panels, messages, challenge panels and grammar nodes use `surface`. The dependency canvas uses `diagram`, and the larger invitation uses `feature`. Borders remain thin (1px), while the selected grammar node uses its role ink in a stronger border (2px) with compensated padding so its size stays stable.
+
+Conversation word chips use `navigation` corners and a thin transparent border that takes the role ink on hover. Pause notices and live correction models use `surface` corners. Saved corrections sit on an inset mint surface without a colored side stripe. Open history rows and transcript dividers retain their simple rectangular structure.
 
 Circular avatars, scene goal numbers and call controls have a clear role, distinct from rectangular workspaces. Numbered challenge selectors are rounded square controls, becoming (44px) squares on phones. The speech bubble adds a small triangular tail over the photograph. Five colored grammar nodes, directed connections and matching word blocks form the lab's recurring signature.
 
@@ -374,6 +417,34 @@ Saving, slower playback, speaking with the AI teacher, proper names and agreemen
 
 Assistant messages sit to the left in white; learner messages sit to the right in lavender. A useful phrase appears within the teacher's message, in green, with its English meaning and adjacent listening and saving controls. Initial avatars identify the AI teacher without a photographic portrait. Errors use a warm notice with text and a recovery action where available. Call connection and control acknowledgements, lesson outcomes and progress remain based on actual activity; the design does not add decorative online badges or invented metrics.
 
+### Conversation Sentence Inspector
+
+The inspector annotates a completed teacher phrase asynchronously. The large serif phrase, English meaning and Listen action come before the compact board. Display words use Latin learner captions; speech retains the exact native phrase. A validated breakdown must reconstruct the selected spoken phrase rather than substitute a new sentence. English-only explanations leave an honest waiting message, and failed analysis has a visible retry.
+
+The five board tabs are Doer, Verb, Object / place, Adjective and Time. Selection reads Inspect or Exploring, opens role notes and highlights related edges; it does not edit the sentence or open the lab's choice bank. Empty roles explicitly say Not stated and No separate word. Dashed omitted, unused or not stated relationships retain visible labels. Arrow, Home and End navigation uses the same roving focus pattern as the lab.
+
+The row below the board preserves spoken order and exposes each word's actual part of speech, English gloss and ending or agreement note. Pronouns and proper names use mint, verbs lavender, nouns/places/articles/prepositions peach, adjectives pink and time blue; remaining detail words use Helper Paper. A grammatical role and the word's semantic diagram slot are distinct, so an address does not automatically become the doer.
+
+Alternative and tense rows are practice versions, with whole phrases and English meanings. A selected row gains a quiet mint tint and purple text, while the original spoken phrase remains visible above. Back to spoken phrase restores the original model. Time changes retain person, object or destination and topic, and align yesterday, now, tomorrow and already with the intended action. Requests, imperatives and fragments explain when a tense ladder is unsuitable instead of inventing one. The travel contrast has native examples in all four languages, including a past expression for two days ago without adding a return journey.
+
+In a live call, Listen and Hear this pause the conversation before playback. Pause immediately mutes remote playback and learner input, then requests the agent pause; the visible notice acknowledges the paused state and the diagram freezes. Resume restores remote playback and the learner's earlier mute choice after acknowledgement. Slower stops the old clip before preparing another. Preparation follows a stable phrase after a short delay (700ms), without autoplay, and playback failure keeps a visible recovery message. The inspector's local focus uses Active Diagram Grape with the shared outline width (3px) and offset (4px).
+
+### Independent Side Coach
+
+The side coach is a quiet adjunct to the partner, separated by a Paper Line divider and identified in text. Completed learner turns receive automatic grammar analysis after a short delay (700ms), without stopping the partner. A clear issue exposes One small adjustment and one explanation; clear or uncertain automatic results do not manufacture a warning. Explicit Check my sentence can open the full result.
+
+The model appears on mint with woodland ink, an English meaning and one useful explanation. Hear the correction pauses the live scene and speaks the native model through a separate fixed voice of the opposite gender from the scene persona, in the same language and register. This is configured voice identity; it does not establish accent authenticity.
+
+Check pronunciation uses only a recent ephemeral recording when explicitly requested. Try it privately pauses input and remote playback before recording the learner's model attempt, with a visible recording acknowledgement of six seconds. The recording buffer captures approximately (6.5s) and remains on the device until an explicit check uploads it; raw audio is not part of saved history. Noisy or ambiguous evidence has an explicit uncertain result, and pronunciation warnings require conservative confidence and an independent recognition check where configured. Correction actions and playback targets have a minimum height (44px).
+
+### Saved Conversation History
+
+The selected list row gains Lavender Paper and exposes its pressed state. Its concise scene title, language, actual turn count and last date identify the record. Legacy scenario launch instructions map to the scene label without modifying the original transcript. Long general titles are shortened with a visible ellipsis, using a word boundary when available. The reading pane has a serif title, download control and Continue this conversation action before the open transcript.
+
+Submitted text turns and each final live segment save immediately to device history, with stable turn identifiers and original source text. Translated turns are labeled. A language switch translates the complete saved thread in ordered batches, validates turn identity and speaker order, and publishes only a finished version; other language versions remain retained. The original partner, place, facts, prices and unfinished question supply continuation context instead of a fresh greeting. A translation failure preserves the original and shows a recovery notice.
+
+Each saved correction is attributed to Side coach on mint without a colored side border. Assistant turns retain listening actions using their source phrase. Download exports the thread with its language versions as JSON. The reading pane states that records live on this device and clearing browser data removes them. If storage is full or blocked, the studio alerts the learner that the current visit remains in memory and points to history download before closing.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -386,6 +457,9 @@ Assistant messages sit to the left in white; learner messages sit to the right i
 - **Do** tie loading, speaking, error and completion feedback to the activity that produced it and honor reduced motion.
 - **Do** distinguish dependency meaning from spoken word order, and explicitly mark omitted relationships.
 - **Do** prepare stable audio without autoplay and show readiness only for the current sentence, language and pace.
+- **Do** preserve the actual spoken phrase above visibly separate practice versions, and keep inspector selection separate from lab editing.
+- **Do** keep current live-language selection visibly filled as well as exposing its pressed state.
+- **Do** attribute saved corrections to Side coach on mint and preserve original transcript versions when translating or shortening titles.
 
 ### Don't:
 
@@ -393,5 +467,6 @@ Assistant messages sit to the left in white; learner messages sit to the right i
 - **Don't** present a city photograph as a portrait of a fictional AI teacher or scene partner.
 - **Don't** use reduced text opacity on colored sentence labels or remove the visible keyboard focus treatment.
 - **Don't** decorate ordinary working panels with hard offset shadows, heavy gradients or fabricated availability and progress.
+- **Don't** infer a pronunciation warning from a transcript alone or hide uncertainty behind a confident correction.
 
-<!-- REPORT: agent=impeccable_lab_documenter; task=sentence-lab-design-documentation; status=complete; files=DESIGN.md,.impeccable/design.json; open_questions=none -->
+<!-- REPORT: agent=impeccable_conversation_documenter; task=conversation-coach-design-documentation; status=complete; files=DESIGN.md,.impeccable/design.json,.impeccable/conversation-coach-brief.md; open_questions=none -->

@@ -1,26 +1,49 @@
 import { LANGUAGES } from "./languages";
+import { VOICE_PERSONAS } from "./voice-personas.generated";
 import type { Lang } from "./maatu-design";
 
 const KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const cache = new Map<string, { audio: string; mime: string }>();
 
 async function convertScript(text: string, lang: Lang) {
-  if (lang === "fr") return text;
-  const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent", {
-    method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": KEY! },
-    body: JSON.stringify({ contents: [{ parts: [{ text: `Convert ONLY this romanized spoken ${LANGUAGES[lang].name} into its native script for speech synthesis. Preserve exactly the colloquial words and meaning. Keep English loanwords in English. Do not translate, formalize, explain, or add a romanized copy. Return only the line.\n${text}` }] }], generationConfig: { temperature: 0 } }),
-    signal: AbortSignal.timeout(12000),
-  });
-  if (!response.ok) throw new Error("Pronunciation preparation is unavailable.");
+  if (lang === "fr" || /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u.test(text))
+    return text;
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": KEY! },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: `Convert ONLY this romanized spoken ${LANGUAGES[lang].name} into its native script for speech synthesis. Preserve exactly the colloquial words and meaning. Keep English loanwords in English. Do not translate, formalize, explain, or add a romanized copy. Return only the line.\n${text}`,
+              },
+            ],
+          },
+        ],
+        generationConfig: { temperature: 0 },
+      }),
+      signal: AbortSignal.timeout(12000),
+    },
+  );
+  if (!response.ok)
+    throw new Error("Pronunciation preparation is unavailable.");
   const data = await response.json();
-  const native = data.candidates?.[0]?.content?.parts?.find((p: { text?: string }) => p.text)?.text?.trim();
+  const native = data.candidates?.[0]?.content?.parts
+    ?.find((p: { text?: string }) => p.text)
+    ?.text?.trim();
   if (!native) throw new Error("Pronunciation preparation is unavailable.");
   return native;
 }
 
 const scriptCache = new Map<string, string>();
 const scriptRequests = new Map<string, Promise<string>>();
-const audioRequests = new Map<string, Promise<{ audio: string; mime: string }>>();
+const audioRequests = new Map<
+  string,
+  Promise<{ audio: string; mime: string }>
+>();
 
 async function voiceScript(text: string, lang: Lang) {
   const id = `${lang}:${text}`;
@@ -32,59 +55,145 @@ async function voiceScript(text: string, lang: Lang) {
   scriptRequests.set(id, task);
   try {
     const native = await task;
-    if (scriptCache.size >= 100) scriptCache.delete(scriptCache.keys().next().value!);
+    if (scriptCache.size >= 100)
+      scriptCache.delete(scriptCache.keys().next().value!);
     scriptCache.set(id, native);
     return native;
-  } finally { scriptRequests.delete(id); }
+  } finally {
+    scriptRequests.delete(id);
+  }
 }
 
-export async function synthesizeSpeech(text: string, lang: Lang, pace = 0.9) {
-  const id = `${lang}:${pace}:${text}`;
+export async function synthesizeSpeech(
+  text: string,
+  lang: Lang,
+  pace = 0.9,
+  coachPersona = "",
+) {
+  const id = `${process.env.MAATU_TTS_PROVIDER || "auto"}:${process.env.MAATU_TTS_MODEL || "default"}:${lang}:${pace}:${coachPersona}:${text}`;
   const saved = cache.get(id);
   if (saved) return saved;
   const pending = audioRequests.get(id);
   if (pending) return pending;
-  const task = createSpeech(text, lang, pace);
+  const task = createSpeech(text, lang, pace, coachPersona);
   audioRequests.set(id, task);
   try {
     const audio = await task;
     if (cache.size >= 100) cache.delete(cache.keys().next().value!);
     cache.set(id, audio);
     return audio;
-  } finally { audioRequests.delete(id); }
+  } finally {
+    audioRequests.delete(id);
+  }
 }
 
-async function createSpeech(text: string, lang: Lang, pace = 0.9) {
-  if (!KEY) throw new Error("Voice is not configured.");
+async function createSpeech(
+  text: string,
+  lang: Lang,
+  pace = 0.9,
+  coachPersona = "",
+) {
+  const coachMale =
+    !!coachPersona && VOICE_PERSONAS[coachPersona]?.gender !== "male";
+  const provider =
+    process.env[`MAATU_TTS_PROVIDER_${lang.toUpperCase()}`] ||
+    process.env.MAATU_TTS_PROVIDER ||
+    (lang === "fr" ? "gemini" : "sarvam");
+  if (!["gemini", "sarvam"].includes(provider))
+    throw new Error("Unsupported voice adapter.");
   const native = await voiceScript(text, lang);
   const language = LANGUAGES[lang];
-  if (lang !== "fr" && process.env.SARVAM_API_KEY) {
+  if (provider === "sarvam") {
+    if (lang === "fr" || !process.env.SARVAM_API_KEY)
+      throw new Error("This language has no configured Sarvam voice.");
     try {
       const response = await fetch("https://api.sarvam.ai/text-to-speech", {
-        method: "POST", headers: { "Content-Type": "application/json", "api-subscription-key": process.env.SARVAM_API_KEY },
-        body: JSON.stringify({ text: native, target_language_code: language.code, speaker: { kn: "shreya", hi: "pooja", ta: "ishita" }[lang], model: "bulbul:v3", pace }),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-subscription-key": process.env.SARVAM_API_KEY,
+        },
+        body: JSON.stringify({
+          text: native,
+          target_language_code: language.code,
+          speaker: coachMale
+            ? { kn: "kabir", hi: "amit", ta: "rohan" }[lang]
+            : { kn: "shreya", hi: "pooja", ta: "ishita" }[lang],
+          model: process.env.MAATU_SARVAM_TTS_MODEL || "bulbul:v3",
+          pace,
+        }),
         signal: AbortSignal.timeout(8000),
       });
       if (response.ok) {
         const data = await response.json();
-        if (data.audios?.[0]) return { audio: data.audios[0] as string, mime: "audio/wav" };
+        if (data.audios?.[0])
+          return { audio: data.audios[0] as string, mime: "audio/wav" };
       }
-    } catch { /* A preview can still use the native-language Gemini voice. */ }
+    } catch {
+      /* Retry uses the same fixed speaker, never a different accent. */
+    }
+    throw new Error("This speaker could not prepare the phrase. Try again.");
   }
-  const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
-    method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": KEY },
-    body: JSON.stringify({
-      model: process.env.MAATU_TTS_MODEL || "gemini-3.8-flash-tts",
-      input: [{ type: "user_input", content: [{ type: "text", text: native, annotations: [{ type: "speech_metadata", style: `A native speaker from ${language.city}, speaking natural colloquial ${language.name}. ${pace < 0.8 ? "Slow, clear speech with short pauses between phrases." : "Relaxed conversational pace."} Authentic vowel length, consonants, and phrase rhythm. Read the exact words.` }] }] }],
-      response_format: { type: "audio" }, generation_config: { speech_config: [{ voice: lang === "kn" ? "Kore" : lang === "ta" ? "Leda" : "Aoede" }] },
-    }), signal: AbortSignal.timeout(35000),
-  });
+  if (!KEY) throw new Error("Voice is not configured.");
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/interactions",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": KEY },
+      body: JSON.stringify({
+        model: process.env.MAATU_TTS_MODEL || "gemini-3.8-flash-tts",
+        input: [
+          {
+            type: "user_input",
+            content: [
+              {
+                type: "text",
+                text: native,
+                annotations: [
+                  {
+                    type: "speech_metadata",
+                    style: `A native speaker from ${language.city}, speaking natural colloquial ${language.name}. ${pace < 0.8 ? "Slow, clear speech with short pauses between phrases." : "Relaxed conversational pace."} Authentic vowel length, consonants, and phrase rhythm. Read the exact words.`,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        response_format: { type: "audio" },
+        generation_config: {
+          speech_config: [
+            {
+              voice: coachMale
+                ? "Charon"
+                : lang === "kn"
+                  ? "Kore"
+                  : lang === "ta"
+                    ? "Leda"
+                    : "Aoede",
+            },
+          ],
+        },
+      }),
+      signal: AbortSignal.timeout(35000),
+    },
+  );
   if (response.ok) {
     const data = await response.json();
-    const blocks = (data.steps ?? []).flatMap((s: { content?: { type: string; data?: string; mime_type?: string }[] }) => s.content ?? []);
-    const audio = blocks.filter((b: { type: string; data?: string }) => b.type === "audio" && b.data).at(-1);
+    const blocks = (data.steps ?? []).flatMap(
+      (s: {
+        content?: { type: string; data?: string; mime_type?: string }[];
+      }) => s.content ?? [],
+    );
+    const audio = blocks
+      .filter(
+        (b: { type: string; data?: string }) => b.type === "audio" && b.data,
+      )
+      .at(-1);
     if (audio?.data) {
-      return { audio: audio.data as string, mime: audio.mime_type || "audio/wav" };
+      return {
+        audio: audio.data as string,
+        mime: audio.mime_type || "audio/wav",
+      };
     }
   }
   throw new Error("The pronunciation voice could not respond. Try again.");

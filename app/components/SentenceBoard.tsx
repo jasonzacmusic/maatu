@@ -28,6 +28,14 @@ export default function SentenceBoard({
   named,
   hasObject,
   onSelect,
+  labels,
+  description,
+  hasDescription = true,
+  hasTime = true,
+  inspecting = false,
+  panelId = "piece-panel",
+  idPrefix = "step",
+  objectLinkLabel = "uses",
 }: {
   step: WordStep;
   values: Record<WordStep, string>;
@@ -35,6 +43,14 @@ export default function SentenceBoard({
   named: boolean;
   hasObject: boolean;
   onSelect: (step: WordStep) => void;
+  labels?: Partial<Record<WordStep, string>>;
+  description?: string;
+  hasDescription?: boolean;
+  hasTime?: boolean;
+  inspecting?: boolean;
+  panelId?: string;
+  idPrefix?: string;
+  objectLinkLabel?: string;
 }) {
   const board = useRef<HTMLDivElement>(null);
   const nodes = useRef<Partial<Record<WordStep, HTMLButtonElement>>>({});
@@ -52,9 +68,9 @@ export default function SentenceBoard({
         580;
       const links: [WordStep, WordStep, string, boolean][] = [
         ["who", "action", "does", mobile],
-        ["action", "what", hasObject ? "uses" : "omitted", mobile],
-        ["describe", "what", hasObject ? "describes" : "unused", !mobile],
-        ["when", "action", "changes", !mobile],
+        ["action", "what", hasObject ? objectLinkLabel : "omitted", mobile],
+        ["describe", "what", hasObject && hasDescription ? "describes" : "unused", !mobile],
+        ["when", "action", hasTime ? "changes" : "not stated", !mobile],
       ];
       const next: Edge[] = [];
       for (const [from, to, label, vertical] of links) {
@@ -62,6 +78,25 @@ export default function SentenceBoard({
         const b = nodes.current[to]?.getBoundingClientRect();
         if (!a || !b) continue;
         const reverse = from === "describe" || from === "when";
+        if (mobile && from === "describe") {
+          // Take the outside lane so description never shares the time arrow.
+          const right = Math.max(
+            ...Object.values(nodes.current).map((node) =>
+              node ? node.getBoundingClientRect().right - parent.x : 0,
+            ),
+          ) + 8;
+          const x1 = a.right - parent.x;
+          const y1 = a.y + a.height / 2 - parent.y;
+          const x2 = b.right - parent.x;
+          const y2 = b.y + b.height / 2 - parent.y;
+          next.push({
+            from, to, label,
+            d: `M${x1},${y1} H${right} V${y2} H${x2}`,
+            x: (right + x2) / 2,
+            y: y2 - 7,
+          });
+          continue;
+        }
         const x1 =
           (vertical ? a.x + a.width / 2 : reverse ? a.x : a.right) - parent.x;
         const y1 =
@@ -90,7 +125,7 @@ export default function SentenceBoard({
     observer.observe(el);
     measure();
     return () => observer.disconnect();
-  }, [hasObject]);
+  }, [hasObject, hasDescription, hasTime, objectLinkLabel]);
   function navigate(e: KeyboardEvent<HTMLButtonElement>, index: number) {
     const target =
       e.key === "Home"
@@ -110,11 +145,11 @@ export default function SentenceBoard({
   return (
     <div className="word-board" ref={board}>
       <p className="sr-only">
-        The pronoun or proper noun is the doer. It connects to the verb.{" "}
+        {description || <>The pronoun or proper noun is the doer. It connects to the verb.{" "}
         {hasObject
           ? "The verb uses a noun. The adjective describes that noun."
           : "The verb is used without an object here. The noun and adjective slots are unused."}{" "}
-        Time changes the verb form. Use arrow keys to choose a word type.
+        Time changes the verb form.</>} Use arrow keys to choose a word type.
       </p>
       <svg className="grammar-wires" aria-hidden="true">
         <defs>
@@ -132,7 +167,7 @@ export default function SentenceBoard({
         {edges.map((edge) => (
           <g key={edge.from}>
             <path
-              className={`wire ${step === edge.from || step === edge.to ? "active" : ""} ${!hasObject && edge.to === "what" ? "unused" : ""}`}
+              className={`wire ${step === edge.from || step === edge.to ? "active" : ""} ${!hasObject && edge.to === "what" || !hasDescription && edge.from === "describe" || !hasTime && edge.from === "when" ? "unused" : ""}`}
               d={edge.d}
               markerEnd="url(#grammar-arrow)"
             />
@@ -157,8 +192,8 @@ export default function SentenceBoard({
                 if (node) nodes.current[id] = node;
               }}
               role="tab"
-              id={`step-${id}`}
-              aria-controls="piece-panel"
+              id={`${idPrefix}-${id}`}
+              aria-controls={panelId}
               aria-selected={step === id}
               tabIndex={step === id ? 0 : -1}
               onKeyDown={(e) => navigate(e, i)}
@@ -168,12 +203,12 @@ export default function SentenceBoard({
             >
               <span className="node-type">
                 <Icon size={16} />
-                {id === "who" && named ? "Proper noun" : WORD_ROLES[id].title}
+                {labels?.[id] || (id === "who" && named ? "Proper noun" : WORD_ROLES[id].title)}
               </span>
               <strong>{values[id]}</strong>
               <small>{previews[id] || WORD_ROLES[id].question}</small>
               <span className="node-edit">
-                {step === id ? "Choosing" : "Change"}
+                {inspecting ? step === id ? "Exploring" : "Inspect" : step === id ? "Choosing" : "Change"}
               </span>
             </button>
           );

@@ -400,6 +400,11 @@ def write_ts(manifest: dict):
         "",
     ]
     TS_OUT.write_text("\n".join(lines))
+    voices = {}
+    for path in PERSONA_DIR.glob("*.json"):
+        data = json.loads(path.read_text())
+        voices[data["id"]] = {"gender": data.get("gender", "female"), "voice": data.get("voice", "")}
+    (ROOT / "lib" / "voice-personas.generated.ts").write_text("// Generated from persona JSON. Keep character and correction voice identities separate.\nexport const VOICE_PERSONAS: Record<string, { gender: string; voice: string }> = " + json.dumps(voices, ensure_ascii=False, indent=2) + ";\n")
 
 
 if __name__ == "__main__":

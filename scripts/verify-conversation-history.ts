@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import { createConversation, appendConversation, getConversation, saveTranslation, saveCorrection, conversationContext, translateConversation } from '../lib/conversation-history';
+const device = new Map<string,string>();
+Object.assign(globalThis, { localStorage: { getItem:(key:string)=>device.get(key)||null, setItem:(key:string,value:string)=>device.set(key,value) }, window: { dispatchEvent:()=>true }, CustomEvent:class { constructor(public name:string, public options:unknown){} } });
+const t = createConversation('kn','kn-auto','A ride to Jayanagar');
+const turn={id:'a',role:'user' as const,text:'Jason wants Jayanagar for 100 rupees.',at:1};
+appendConversation(t.id,'kn',turn);appendConversation(t.id,'kn',turn);
+assert.equal(getConversation(t.id)?.versions.kn?.length,1,'Duplicate transcription segment must not duplicate a turn');
+assert.ok(saveTranslation(t.id,'kn','fr',['a'],[{...turn,text:'Jason veut aller à Jayanagar pour 100 roupies.',translated:true}]));
+assert.equal(getConversation(t.id)?.versions.kn?.[0].text,turn.text,'Translation preserves the original');
+assert.ok(conversationContext(t.id,'fr').includes('100 roupies'));
+appendConversation(t.id,'kn',{...turn,id:'b',text:'Please take the left turn.'});
+assert.equal(saveTranslation(t.id,'kn','hi',['a'],[turn]),false,'Never publish a partial/stale translation over new speech');
+saveCorrection(t.id,'kn','a',{corrected:'A clearer sentence',meaning:'Same destination',explanation:'Case ending',speech:'ಮಾತು'});
+assert.equal(getConversation(t.id)?.versions.kn?.[0].correction?.explanation,'Case ending');
+assert.equal(getConversation(t.id)?.versions.fr?.[0].text,'Jason veut aller à Jayanagar pour 100 roupies.');
+void (async () => {
+  const cached = createConversation('kn', 'tutor', 'A translated teaching sentence');
+  const teaching = { id: 'teaching', role: 'assistant' as const, text: 'Here is the past form.', sourcePhrase: 'ನಾನು ನಿನ್ನೆ ಅಲ್ಲಿಗೆ ಹೋದೆ.', at: 1 };
+  appendConversation(cached.id, 'kn', teaching);
+  saveTranslation(cached.id, 'kn', 'fr', ['teaching'], [{ ...teaching, text: 'A previous translation', translated: true }]);
+  let requests = 0;
+  Object.assign(globalThis, { fetch: async () => {
+    requests++;
+    return { ok: true, json: async () => ({ turns: [{ ...teaching, text: 'Une traduction complète.', sourcePhrase: 'Je suis allé là-bas hier.', phrase: 'Je suis allé là-bas hier.', phraseMeaning: 'I went there yesterday.' }] }) };
+  } });
+  await translateConversation(cached.id, 'kn', 'fr');
+  assert.equal(requests, 1, 'A legacy translation without a localized practice phrase must be refreshed');
+  assert.equal(getConversation(cached.id)?.versions.fr?.[0].sourcePhrase, 'Je suis allé là-bas hier.');
+  assert.equal(getConversation(cached.id)?.versions.kn?.[0].sourcePhrase, teaching.sourcePhrase, 'Refreshing translation cannot overwrite the original practice phrase');
+  await translateConversation(cached.id, 'kn', 'fr');
+  assert.equal(requests, 1, 'A complete translated practice phrase can be reused');
+  Object.assign(globalThis,{localStorage:{getItem:(key:string)=>device.get(key)||null,setItem:()=>{throw new Error('QuotaExceeded')}}});
+  appendConversation(t.id,'kn',{...turn,id:'c',text:'The browser storage is full.'});
+  assert.equal(getConversation(t.id)?.versions.kn?.length,3,'A failed durable write must retain the newest turns in memory');
+  console.log('History: persistence, deduplication, original retention, translation race, correction association, quota fallback and translated practice migration pass.');
+})().catch((error) => { console.error(error); process.exitCode = 1; });

@@ -1,0 +1,643 @@
+/* A spoken sentence opens into the lab's five colored roles. */
+.conversation-coach {
+  text-align: left;
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  min-width: 0;
+}
+.coach-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.coach-heading > .text-button {
+  font-size: 15px;
+  font-weight: 600;
+}
+.coach-heading .button {
+  min-height: 42px;
+  font-size: 12px;
+}
+.coach-empty,
+.coach-loading,
+.coach-paused {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #68604f;
+  max-width: 65ch;
+}
+.coach-loading {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.coach-paused {
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  background: #eee8fa;
+  color: #5140a8;
+  border-radius: 12px;
+}
+.coach-said {
+  margin-bottom: 24px;
+}
+.coach-said h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.coach-said p {
+  font-family: var(--font-display);
+  font-size: clamp(25px, 2.8vw, 34px);
+  line-height: 1.2;
+  color: var(--purple);
+  overflow-wrap: anywhere;
+}
+.coach-said > span {
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.conversation-coach .word-board {
+  padding: 18px;
+}
+.conversation-coach .grammar-nodes {
+  gap: 36px 64px;
+}
+.conversation-coach .grammar-node {
+  padding: 12px 12px 25px;
+  min-height: 108px;
+}
+.conversation-coach .grammar-node.selected {
+  padding: 11px 11px 24px;
+}
+.conversation-coach .grammar-node > strong {
+  font-size: 19px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+.conversation-coach .grammar-node > small {
+  white-space: normal;
+  padding-right: 0;
+}
+.conversation-coach .node-type {
+  font-size: 11px;
+  gap: 5px;
+}
+.coach-rule {
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 72ch;
+  margin: 22px 0 16px;
+}
+.coach-word-order {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+}
+.coach-word {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: left;
+  color: #5f655c;
+  background: #f0f0ea;
+  cursor: pointer;
+}
+.coach-word strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+.coach-word small {
+  display: block;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.coach-word:is(.role-pronoun, .role-proper-noun) {
+  background: #e0eee4;
+  color: #37614c;
+}
+.coach-word.role-verb {
+  background: #eee8fa;
+  color: #635096;
+}
+.coach-word:is(.role-noun, .role-place, .role-article, .role-preposition) {
+  background: #fae5d5;
+  color: #875736;
+}
+.coach-word.role-adjective {
+  background: #f7e2e8;
+  color: #905263;
+}
+.coach-word.role-time {
+  background: #e1edf6;
+  color: #43647e;
+}
+.coach-word:hover {
+  border-color: currentColor;
+}
+.coach-word-notes {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.conversation-coach h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.coach-word-notes p {
+  font-size: 13px;
+  line-height: 1.65;
+  margin-top: 6px;
+  max-width: 72ch;
+}
+.coach-variations {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  margin: 28px 0 20px;
+}
+.coach-variations button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 14px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.coach-variations button[aria-pressed="true"] {
+  color: var(--purple);
+  background: #e0eee480;
+}
+.coach-variations button:hover strong {
+  color: var(--purple);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.coach-variations button > span {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #68604f;
+  margin-bottom: 5px;
+}
+.coach-variations strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.coach-variations small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+.coach-time-note {
+  font-size: 13px;
+  line-height: 1.65;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.coach-practice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.coach-practice p {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--purple);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.coach-practice span,
+.coach-practice small {
+  display: block;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 7px;
+}
+.coach-audio {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 14px;
+}
+.coach-audio .button {
+  min-height: 44px;
+  white-space: nowrap;
+}
+.coach-audio label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  min-height: 30px;
+}
+.coach-audio input {
+  accent-color: var(--purple);
+}
+.coach-audio .text-button {
+  font-size: 12px;
+}
+.coach-practice .audio-error {
+  grid-column: 1 / -1;
+}
+.with-coach.call-room {
+  max-width: 1180px;
+}
+.call-session-layout {
+  display: grid;
+  grid-template-columns: minmax(270px, 0.7fr) minmax(0, 1.3fr);
+  gap: 42px;
+  align-items: start;
+}
+.call-speaking {
+  min-width: 0;
+  position: sticky;
+  top: 24px;
+}
+.with-coach .conversation-coach {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+.with-coach .call-avatar {
+  width: 80px;
+  height: 80px;
+  font-size: 48px;
+  border-radius: 50%;
+}
+.with-coach .call-identity h1 {
+  font-size: 32px;
+}
+.with-coach .voice-field {
+  height: 70px;
+  margin: 12px 0;
+}
+.with-coach .caption-area {
+  min-height: 100px;
+  margin-bottom: 18px;
+}
+.with-coach .caption-area p {
+  font-size: 24px;
+}
+.with-coach .call-tools {
+  gap: 8px;
+}
+.with-coach .call-tools button {
+  font-size: 11px;
+  padding: 10px;
+}
+.with-coach .call-controls {
+  margin-top: 22px;
+}
+.conversation-coach :is(button, input):focus-visible {
+  outline: 3px solid #7356a5;
+  outline-offset: 4px;
+}
+@media (max-width: 960px) {
+  .call-session-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .call-speaking {
+    position: static;
+  }
+  .with-coach .call-tools {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  .with-coach .conversation-coach {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+}
+@media (max-width: 580px) {
+  .coach-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .coach-heading > .text-button {
+    font-size: 15px;
+  }
+  .coach-variations {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .coach-practice {
+    grid-template-columns: 1fr;
+  }
+  .coach-audio {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .conversation-coach .grammar-nodes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "who describe" "action when" "what .";
+    gap: 36px 64px;
+  }
+  .conversation-coach .grammar-node {
+    min-height: 98px;
+  }
+  .conversation-coach .grammar-node > strong {
+    font-size: 15px;
+  }
+  .conversation-coach .word-board {
+    padding: 16px;
+  }
+  .coach-said p {
+    font-size: 28px;
+  }
+  .coach-word {
+    padding: 9px 11px;
+  }
+  .with-coach .call-top {
+    margin-bottom: 24px;
+  }
+}
+
+.chat-space.with-coach {
+  max-width: 1180px;
+}
+.chat-session-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+  gap: 38px;
+  align-items: start;
+}
+.chat-speaking {
+  position: sticky;
+  top: 24px;
+  min-width: 0;
+}
+.chat-session-layout .conversation-coach {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+.chat-session-layout .chat-heading {
+  flex-wrap: wrap;
+}
+.chat-session-layout .chat-heading > .button {
+  margin-left: 54px;
+}
+@container (max-width: 580px) {
+  .conversation-coach .grammar-nodes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "who describe" "action when" "what .";
+  }
+}
+@media (max-width: 960px) {
+  .chat-session-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .chat-speaking {
+    position: static;
+  }
+  .chat-session-layout .conversation-coach {
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+}
+/* History and a quiet, independent side coach share the studio's paper. */
+.translation-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--lavender);
+  border-radius: 12px;
+  font-size: 14px;
+}
+.history-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: 40px;
+  align-items: start;
+}
+.history-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.history-list > button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 20px 8px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.history-list > button[aria-pressed="true"] {
+  background: var(--lavender);
+}
+.history-list > button > span {
+  flex: 1;
+  min-width: 0;
+}
+.history-list strong {
+  display: block;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.history-list small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 6px;
+}
+.history-reading {
+  min-width: 0;
+}
+.history-reading h2 {
+  font-family: var(--font-newsreader);
+  font-size: 28px;
+  font-weight: 500;
+}
+.history-transcript {
+  margin-top: 24px;
+}
+.history-transcript article {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.history-transcript article > small {
+  font-size: 11px;
+  color: var(--muted);
+}
+.history-transcript p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+.history-meaning {
+  color: var(--muted);
+}
+.correction-coach {
+  margin-top: 22px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.correction-heading {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.correction-heading > span {
+  flex: 1;
+}
+.correction-heading strong {
+  display: block;
+  font-size: 14px;
+}
+.correction-heading small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.correction-heading .correction-warning {
+  flex: none;
+  font-size: 11px;
+  background: #fae5d5;
+  color: #875736;
+  padding: 5px 8px;
+  border-radius: 8px;
+}
+.correction-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.correction-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.correction-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.correction-coach p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.correction-result {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: #e0eee4;
+  border-radius: 12px;
+  color: #37614c;
+}
+.correction-result small {
+  font-size: 11px;
+}
+.correction-result > strong {
+  display: block;
+  font-family: var(--font-newsreader);
+  font-size: 23px;
+  line-height: 1.35;
+  margin-top: 7px;
+  overflow-wrap: anywhere;
+}
+.correction-footnote {
+  color: var(--muted);
+  font-size: 11px !important;
+}
+.saved-correction {
+  padding: 8px 14px;
+  margin-top: 14px;
+  background: #e0eee4;
+}
+.saved-correction strong {
+  display: block;
+  margin-top: 6px;
+}
+.call-top {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.call-top .language-picker {
+  margin-left: auto;
+}
+.call-speaking .correction-coach {
+  max-width: 100%;
+}
+@media (max-width: 760px) {
+  .history-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+  .call-top .language-picker {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .call-top > .text-button {
+    font-size: 12px;
+  }
+  .history-reading h2 {
+    font-size: 25px;
+  }
+}
+.coach-said-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.coach-said-head h2 {
+  margin: 0;
+}
+.coach-quick-hear {
+  min-height: 44px;
+  flex: none;
+}
+.new-conversation {
+  min-height: 44px;
+  font-size: 12px;
+}
+.correction-actions button,
+.correction-result .text-button,
+.call-room.with-coach .call-tools button {
+  min-height: 44px;
+}
+@media (max-width: 680px) {
+  .call-room.with-coach .language-picker button {
+    min-height: 44px;
+  }
+}

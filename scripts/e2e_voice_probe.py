@@ -290,7 +290,7 @@ async def run_probe(
                     {
                         "turn": turn_number,
                         "input": inputs[turn_number - 1]["text"],
-                        "learner_transcript": learner_lines[-1] if len(learner_lines) > learner_start else None,
+                        "learner_transcript": " ".join(learner_lines[learner_start:]) if len(learner_lines) > learner_start else None,
                         "reply": " ".join(remote_lines[remote_start:]) if len(remote_lines) > remote_start else None,
                         "external_speech_end_to_audio_ms": latency_ms,
                     }
@@ -308,8 +308,20 @@ async def run_probe(
                     control_active = True
                     await room.local_participant.publish_data(json.dumps({"action": action}), reliable=True, topic="maatu.control")
                     await asyncio.wait_for(control_events[action].wait(), timeout=12)
-                    await asyncio.wait_for(reply_done.wait(), timeout=30)
-                    await wait_for_audio_boundary()
+                    if action == "pause":
+                        # Pausing must produce silence and ignore incoming speech.
+                        before = len(learner_lines)
+                        with wave.open(str(audio_paths[0]), "rb") as wav:
+                            while chunk := wav.readframes(320):
+                                if len(chunk) < 640: chunk += b"\0" * (640-len(chunk))
+                                await source.capture_frame(rtc.AudioFrame(chunk,16000,1,320))
+                        await source.wait_for_playout()
+                        await asyncio.sleep(2)
+                        if len(remote_lines) != start or len(learner_lines) != before:
+                            raise AssertionError("Paused call still accepted speech or replied")
+                    else:
+                        await asyncio.wait_for(reply_done.wait(), timeout=30)
+                        await wait_for_audio_boundary()
                     ready_for_reply = False
                     control_results.append({"action": action, "acknowledged": True, "reply": remote_lines[start:]})
             return {

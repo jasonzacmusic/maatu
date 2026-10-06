@@ -3,6 +3,7 @@
 livekit-agents==1.8.3
 livekit-plugins-sarvam==1.8.3
 livekit-plugins-google==1.8.3
+livekit-plugins-openai==1.8.3
 livekit-plugins-anthropic==1.8.3
 livekit-plugins-silero==1.8.3
 python-dotenv

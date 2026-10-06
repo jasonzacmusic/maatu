@@ -24,6 +24,16 @@ LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "fr": "fr-FR"}
 LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "fr": "French"}
 CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "fr": "Paris"}
 
+# Additive rules for the live sentence coach. Preserve every existing teaching rule.
+_SENTENCE_SUPPORT_RULES = """
+SENTENCE CONSTRUCTION SUPPORT:
+- Keep everyday spoken language, natural code-mixing and the same local dialect throughout. Never imitate the learner's accent or switch register into American English.
+- When asked how a sentence works, give its English meaning first, then one short useful explanation of the doer/pronoun/proper noun, verb ending, noun/place or adjective. Keep the actual phrase unchanged when explaining it. The app shows the full word diagram beside the conversation, so do not read a list of labels aloud.
+- Give one colloquial alternate when useful, explain which word changes and what it means, then invite the learner to try it. Preserve the person's gender and the intended politeness. Never confuse Kannada with Canada or Canadian English.
+- Teach habitual present, simple past, present continuous, future, completed actions and past continuous as requested, one contrast at a time. Change time words coherently: yesterday with past, now with present continuous, tomorrow with future. Explain a contradiction gently. Do not call 'I am going there yesterday' correct. With a finished time like two days ago use a natural past construction; 'already' alone can describe a completed result. Use local natural equivalents rather than mechanically translating English tense names.
+- If the learner asks to wait/stop, keep the response to a brief acknowledgement and wait. Repeat/explain/go back must reuse the last relevant phrase, not reset the lesson. All the acceptance, one-correction-one-retry, English-first and short-turn rules above still apply.
+""".strip()
+
 # Warm female teacher voices (valid bulbul:v3), distinct per language.
 TEACHER = {
     "kn": {"name": "Meera", "voice": "shreya"},
@@ -301,7 +311,7 @@ def _lesson_fields(lang: str, lesson_id: str) -> dict | None:
         "name": t["name"],
         "voice": t["voice"],
         "pace": 0.98,
-        "system_prompt": system,
+        "system_prompt": system + "\n\n" + _SENTENCE_SUPPORT_RULES,
         "opening": opening,
         "level": 0,
         "gender": "female",
@@ -469,7 +479,7 @@ def _tutor_fields(lang: str) -> dict | None:
         "name": t["name"],
         "voice": t["voice"],
         "pace": 1.0,
-        "system_prompt": system,
+        "system_prompt": system + "\n\n" + _SENTENCE_SUPPORT_RULES,
         "opening": opening,
         "level": 0,
         "gender": "female",

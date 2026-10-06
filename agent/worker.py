@@ -25,6 +25,8 @@ from livekit import agents
 from livekit.agents import Agent, AgentSession
 from livekit.plugins import anthropic, google, sarvam, silero
 
+from speech_contract import NativeSpeechAgent
+from providers import voice_plan, build_native_engines, build_live_engine, set_voice_pace
 from persona import apply_practice_metadata, apply_secret_agenda, persona_from_room_name
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
@@ -52,17 +54,6 @@ if AGENT_NAME == "production":
     AGENT_NAME = ""
 
 
-def build_brain():
-    if BRAIN == "anthropic" and ANTHROPIC_API_KEY:
-        return anthropic.LLM(model=ANTHROPIC_MODEL, api_key=ANTHROPIC_API_KEY)
-
-    # No thinking_config here, on purpose. Google repointed gemini-flash-lite-latest
-    # to a model that rejects thinking_budget 0 with a 400 INVALID_ARGUMENT, which
-    # silenced every reply in production (2026-07-22). The current lite model spends
-    # zero thought tokens on these short spoken turns anyway (~1s replies).
-    return google.LLM(model=GEMINI_MODEL, temperature=0.8, api_key=GEMINI_API_KEY)
-
-
 def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
     query = urllib.parse.urlencode({"persona": persona_id})
     try:
@@ -78,16 +69,8 @@ def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
 logger = logging.getLogger("maatu.agent")
 logging.basicConfig(level=logging.INFO)
 
-# One native-audio engine supports all four languages.
-FRENCH_LIVE_MODEL = os.environ.get("MAATU_FRENCH_MODEL", "gemini-3.8-live")
-
-
-# Every Kannada, Hindi and Tamil call (Chat, lessons, situations) runs on Gemini
-# Live: one model that hears and speaks the language natively, so the accent is
-# a local one and replies land in one to two seconds. Sarvam's text voice read
-# romanized spellings with an outsider's accent (Jason, 2026-09-28). Set
-# MAATU_LIVE_LANGS="" to put every call back on the Sarvam pipeline below.
-LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta,fr").split(",") if x.strip()}
+# Profile selection is pinned per room in providers.py. The controller below
+# owns interruption, pause, resume, teaching and progress for every profile.
 LIVE_VOICES = {"female": ["Kore", "Aoede", "Leda", "Zephyr"], "male": ["Puck", "Charon", "Orus", "Fenrir"]}
 CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "fr": "Paris"}
 
@@ -96,26 +79,21 @@ def persona_lang(persona) -> str:
     return (persona.language or "kn-IN")[:2]
 
 
-async def run_live(ctx: agents.JobContext, persona) -> None:
+async def run_live(ctx: agents.JobContext, persona, plan) -> None:
     lang = persona_lang(persona)
     gender = "male" if str(getattr(persona, "gender", "female")).lower().startswith("m") else "female"
     voices = LIVE_VOICES[gender]
     voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else {"kn": "Kore", "hi": "Aoede", "ta": "Leda", "fr": "Aoede"}[lang]
-    logger.info("room=%s persona=%s engine=gemini-live model=%s voice=%s", ctx.room.name, persona.id, FRENCH_LIVE_MODEL, voice)
+    logger.info("room=%s persona=%s engine=gemini-live model=%s voice=%s", ctx.room.name, persona.id, plan.live_model, voice)
     # The script rule in the prompts exists for a text voice; a speaking model
     # just speaks, so tell it how to sound.
     instructions = persona.system_prompt + (
         f"\n\nYou are speaking out loud yourself. Pronounce every word the way a local from {CITY.get(lang, 'India')} "
-        "says it, in the everyday spoken register. Use clear natural English for support. "
+        "says it, in the everyday spoken register. Keep the same local accent, vocal identity and dialect across every turn, including English support. Never imitate the learner's accent or switch to American English. "
         "Speak at a relaxed, clear pace for a learner. Say only your direct conversational reply, never narrate instructions or describe what you plan to say."
     )
     session = AgentSession(
-        llm=google.realtime.RealtimeModel(
-            model=FRENCH_LIVE_MODEL,
-            voice=voice,
-            temperature=0.8,
-            api_key=GEMINI_API_KEY,
-        ),
+        llm=build_live_engine(plan, voice),
     )
 
     @ctx.room.on("track_subscribed")
@@ -150,16 +128,20 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
             "slow-down": f"Please slow down and keep that slower pace. Say the most recent {language_name} phrase you taught me again, slowly. Repeat that same phrase, not the English follow-up question. Do not add a new exercise.",
             "repeat": f"Please repeat the most recent {language_name} phrase you taught me, exactly. I want to hear that phrase again, not the English follow-up question. Do not add a new exercise.",
             "explain": "What is the English meaning of the last target-language phrase you taught me?",
-            "pause": "Please wait a moment. Just say okay, then wait quietly for me.",
             "resume": "I am ready. Let us continue where we left off.",
         }
-        if action not in commands:
+        if action not in commands and action != "pause":
             return
         try:
-            await session.interrupt(force=True)
+            if action == "pause":
+                session.input.set_audio_enabled(False)
+                await session.interrupt(force=True)
+            else:
+                if action == "resume": session.input.set_audio_enabled(True)
+                await session.interrupt(force=True)
             if action == "slow-down":
                 await session.current_agent.update_instructions(instructions + "\n\nThe learner wants a slower pace for this call. Use wider pauses and short phrases while keeping the topic and teaching behavior.")
-            session.generate_reply(user_input=commands[action])
+            if action != "pause": session.generate_reply(user_input=commands[action])
             await ctx.room.local_participant.publish_data(
                 json.dumps({"action": "slow-down-applied" if action == "slow-down" else "control-applied", "control": action, "pace": 0.8}),
                 reliable=True, topic="maatu.control"
@@ -237,8 +219,9 @@ async def entrypoint(ctx: agents.JobContext):
     line = persona.raw.get("practice_line")
     if line:
         logger.info("practice line room=%s practice=%s practice_en=%s", ctx.room.name, line["practice"], line["practiceEn"])
-    if persona_lang(persona) == "fr" or persona_lang(persona) in LIVE_LANGS:
-        await run_live(ctx, persona)
+    plan = voice_plan(persona_lang(persona))
+    if plan.mode == "gemini-live":
+        await run_live(ctx, persona, plan)
         return
     logger.info(
         "room=%s persona=%s language=%s voice=%s brain=%s difficulty=%s agenda_updated_at=%s",
@@ -251,45 +234,10 @@ async def entrypoint(ctx: agents.JobContext):
         agenda_updated_at or "default",
     )
 
-    tts_engine = sarvam.TTS(
-        target_language_code=persona.language,
-        model="bulbul:v3",
-        speaker=persona.voice,
-        pace=persona.pace,
-        # The installed Sarvam plugin enforces 30 as the minimum. Lower values
-        # crash the call before the teacher can speak.
-        min_buffer_size=30,
-        max_chunk_length=50,
-        output_audio_codec="mp3",
-        api_key=SARVAM_API_KEY,
-    )
+    stt_engine, brain_engine, tts_engine = build_native_engines(plan, persona)
     session = AgentSession(
-        stt=sarvam.STT(
-            # Auto-detect, NOT locked to the target language. A beginner speaks
-            # mostly English plus a few target words, and a locked transcriber
-            # turned every English question into phonetic native-script gibberish
-            # ("what does namaskara mean" -> Kannada letters), which the brain
-            # could not answer. Verified against the live API: auto-detect
-            # transcribes pure kn/hi/ta identically to the locked mode AND
-            # returns clean romanized text for mixed speech.
-            # saarika:v2.5 is sunset. Tested 2026-09-28: saaras:v4 in translit
-            # mode, locked to the call's language, wrote Kannada as clean
-            # romanized Latin ("naanu dina piano nudistini") and English
-            # questions as plain English, 0.15 to 0.3 s after speech ended.
-            # saaras:v4 on auto-detect heard Kannada and Tamil as Malayalam on
-            # short clips, so it stays locked.
-            language=persona.language,
-            model="saaras:v4",
-            mode="translit",
-            # Sarvam's own end-of-speech detection was the single biggest slice
-            # of the turn: measured transcription_delay of 785 to 875 ms before
-            # the final transcript arrived, which the brain must wait for. High
-            # sensitivity finalizes sooner. The endpointing grace window below
-            # still keeps a beginner's short thinking pause inside one turn.
-            high_vad_sensitivity=True,
-            api_key=SARVAM_API_KEY,
-        ),
-        llm=build_brain(),
+        stt=stt_engine,
+        llm=brain_engine,
         tts=tts_engine,
         # 0.25 is the FLOOR the TurnDetector allows. Anything lower makes
         # session.start raise ValueError and every call crashes before the
@@ -311,7 +259,7 @@ async def entrypoint(ctx: agents.JobContext):
 
     async def _apply_slow_down():
         slower_pace = max(0.72, persona.pace - 0.18)
-        tts_engine.update_options(pace=slower_pace)
+        set_voice_pace(tts_engine, slower_pace)
         logger.info(
             "control=slow-down persona=%s pace=%.2f",
             persona.id,
@@ -332,15 +280,37 @@ async def entrypoint(ctx: agents.JobContext):
         try:
             reply = session.generate_reply(
                 instructions=(
-                    "The learner tapped the slow down control. Acknowledge it in one short "
-                    "romanized target-language phrase, then repeat your most recent teaching "
-                    "point, question, or scene prompt more slowly. Use very short chunks and "
+                    "The learner tapped slow down. Repeat ONLY the most recent target-language "
+                    "teaching phrase exactly, in native script, not the English follow-up. Use very short chunks and "
                     "full-stop pauses. Stay at the same point in the lesson or scene."
                 )
             )
             await reply.wait_for_playout()
         except Exception:
             logger.exception("slow-down reply failed persona=%s", persona.id)
+
+    async def _native_control(action):
+        language_name = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}[persona_lang(persona)]
+        commands = {
+            "repeat": f"Repeat only the last {language_name} teaching phrase exactly, in native script, not the English follow-up. Do not start a new exercise.",
+            "explain": "Give the plain English meaning of the last target-language phrase first. Do not introduce a new exercise.",
+            "resume": "I am ready. Continue the same conversation where we paused.",
+        }
+        if action not in {*commands, "pause", "slow-down"}: return
+        try:
+            if action == "slow-down":
+                await _apply_slow_down()
+                return
+            if action == "pause":
+                session.input.set_audio_enabled(False)
+                await session.interrupt(force=True)
+            else:
+                if action == "resume": session.input.set_audio_enabled(True)
+                await session.interrupt(force=True)
+                session.generate_reply(user_input=commands[action])
+            await ctx.room.local_participant.publish_data(json.dumps({"action":"control-applied","control":action}), reliable=True, topic="maatu.control")
+        except Exception:
+            logger.exception("native control failed persona=%s action=%s", persona.id, action)
 
     @ctx.room.on("data_received")
     def _on_data_received(packet):
@@ -350,8 +320,7 @@ async def entrypoint(ctx: agents.JobContext):
             payload = json.loads(packet.data.decode("utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError):
             return
-        if payload.get("action") == "slow-down":
-            asyncio.create_task(_apply_slow_down())
+        if isinstance(payload, dict): asyncio.create_task(_native_control(payload.get("action")))
 
     @session.on("user_input_transcribed")
     def _on_user_input_transcribed(ev):
@@ -368,7 +337,7 @@ async def entrypoint(ctx: agents.JobContext):
         )
         if any(phrase in text for phrase in slow_requests):
             slower_pace = max(0.72, persona.pace - 0.18)
-            tts_engine.update_options(pace=slower_pace)
+            set_voice_pace(tts_engine, slower_pace)
             logger.info(
                 "control=spoken-slow-down persona=%s pace=%.2f transcript=%s",
                 persona.id,
@@ -458,7 +427,7 @@ async def entrypoint(ctx: agents.JobContext):
 
     await session.start(
         room=ctx.room,
-        agent=Agent(instructions=persona.system_prompt),
+        agent=NativeSpeechAgent(language=persona_lang(persona), instructions=persona.system_prompt),
     )
 
     # The character speaks first, in scene.
@@ -470,7 +439,7 @@ if __name__ == "__main__":
         agents.WorkerOptions(
             entrypoint_fnc=entrypoint,
             agent_name=AGENT_NAME,
-            job_executor_type=agents.JobExecutorType.THREAD,
-            num_idle_processes=0,
+            job_executor_type=agents.JobExecutorType.PROCESS,
+            num_idle_processes=1,
         )
     )

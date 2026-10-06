@@ -1,0 +1,37 @@
+# Conversation sentence coach
+
+Mode: Operate. Extend the incumbent daylight studio and sentence lab, preserving Newsreader, Hanken Grotesk and the five grammar-role colors. The user requests an exact spoken-phrase breakdown, colloquial substitutions, coherent tense changes, stable native voices, persistent scene history, translation when switching language, and an independent correction voice with private practice while paused.
+
+THESIS: Hear the phrase, see its construction, pause to try a useful variation.
+OWN-WORLD: Daylight paper and colored grammar roles, precise dependency arrows, readable English support and Latin learner captions. No new imagery or visual identity.
+STORY: The live call remains conversational. An asynchronous side coach annotates the latest completed teacher phrase without delaying speech. The dependency chart and actual spoken word order have distinct jobs. Word clicks explain real roles, including auxiliaries, places and particles.
+FIRST VIEWPORT: A compact live speaker and controls on the left, the spoken phrase and connected roles on the right. Text conversations use the same two-column arrangement, with the composer in the conversation pane. On phones the speaker comes first and the coach follows in normal document flow.
+FORM: Local extension of grounded candidate 3, seed 030faa12. The existing five-node semantic graph uses explicit omitted roles and the actual word order appears below it. The alternatives and tense forms are practice versions, visibly distinct from what the teacher said.
+INTERACTION: Pause disables input, interrupts the agent and mutes remote playback immediately; the diagram freezes. Hear this pauses first. Resume restores the learner's earlier mute choice. Every chip has a role, gloss and ending note. Changes in time preserve the topic/person and use coherent yesterday/now/tomorrow expressions.
+VOICE: Indian calls and phrase playback use fixed Sarvam persona voices with native script. No silent provider change on playback failure. French retains one Gemini voice. Romanization runs locally, preserves English, and never blocks ordered captions. The full teacher prompts remain intact.
+HISTORY: Save each final live segment and each submitted text turn immediately on the device. Language changes translate the entire saved thread in ordered batches, retaining originals and exact speaker order. History continues the existing scene rather than resetting to a greeting. A storage failure is explicit and records can be downloaded.
+CORRECTION: A quiet side coach annotates a clear grammar issue without interrupting the partner. Explicit pronunciation checks upload only a recent ephemeral recording; private practice captures six seconds while the conversation input and remote playback are paused. It uses the opposite voice gender from the scene persona in the same language/register. Uncertain audio never becomes a confident warning.
+PROVIDERS: Transport adapters own model and voice configuration. Native-script speech, history, diagrams, teaching and pause remain product contracts. No silent voice fallback.
+FINISH: Two bounded self-inspection rounds, one detector run, fresh independent finish review, then documentation at this surface boundary. Real calls test teaching behavior, controls and latency. Public deployment includes both the frontend and cloud voice agent. Native accent authenticity still needs human native-speaker judgment; fixed speaker configuration alone does not establish perfection.
+
+## Implemented local system
+
+The extension retains the studio's palette, Newsreader/Hanken pairing, flat paper surfaces and prior lab behavior. `DESIGN.md` records the conversation phrase and compact role-word type, the existing role palette, gently curved controls, and local inspector, side-coach and history variants. Its sidecar preserves the ten incumbent component examples and adds three conversation patterns.
+
+Text and live conversation use a sticky (0.7:1.3) pair and stack at viewports up to (960px). History uses a (0.8:1.2) pair and stacks at (760px). The inspector's semantic board reserves horizontal gaps (64px); its narrow arrangement places Doer / Adjective, Verb / Time, and Object / empty across three rows. Adjective-to-Object takes an outer right rail with its label in the empty lower-right region, distinct from Time-to-Verb in the center. Inspector tabs explain roles and show Inspect / Exploring; lab tabs retain Choosing / Change and editable choices.
+
+The source-validated native phrase remains the speech model while Latin captions display its exact words in spoken order. Alternatives and coherent time versions remain separate practice selections. The travel contrast includes native examples in all four languages and a finished-time past example without adding a return journey. Missing roles and unsuitable tense ladders have explicit explanations.
+
+Live playback pauses learner input and remote speech, acknowledges the pause and freezes the inspector. Resume restores the earlier microphone choice. The independent side coach gives automatic grammar hints without interrupting the partner, uses a configured opposite-gender model voice in the same register, and accepts explicit recent-audio or private-practice checks. Its private recording UI states six seconds; the buffer captures approximately (6.5s). Audio remains ephemeral, and ambiguous pronunciation evidence exposes uncertainty.
+
+Final voice segments and submitted text turns save to device history. Language switches translate the complete thread in ordered batches and retain language versions, speaker order and original scene facts. Saved records expose continuation and JSON download, with a storage-failure alert when only visit memory remains. Translated history retains the full original explanation while its separate practice sentence uses the newly selected language; older translated records refresh this practice field on the next switch. Scene titles use concise persona labels, including older launch-instruction records; general titles use an ellipsis at a word boundary when available. Original turns remain intact. Live language choices have visible active treatment. Saved corrections retain mint and Side coach attribution without a colored side stripe.
+
+## Finish evidence
+
+The review packet contains all nine full-page captures at the original paths: `desktop.png`, `mobile.png`, `user-635.png`, `history-desktop.png`, `history-mobile.png`, `history-user-635.png`, `call-desktop.png`, `call-mobile.png`, and `call-user-635.png`, under `.impeccable/review/conversation/`.
+
+The independent `finish-review.md` identified four local fixes. The fresh `verdict.md` resolves dependency-label clearance, visible live-language selection, concise saved-scene identity and removal of the saved correction stripe, with disposition ship at that fix scope. The still captures establish visible states and layout; native accent authenticity, microphone hardware and end-to-end latency remain separate from that visual verdict.
+
+Not canonized: the former label collisions, unselected live picker, launch-instruction titles and correction stripe are resolved defects, not patterns for future screens. No global visual identity or lab rule was replaced.
+
+<!-- REPORT: agent=impeccable_conversation_documenter; task=conversation-coach-design-documentation; status=complete; files=DESIGN.md,.impeccable/design.json,.impeccable/conversation-coach-brief.md; open_questions=none -->

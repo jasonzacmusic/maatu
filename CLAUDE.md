@@ -28,7 +28,7 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 
 ## Repo layout
 
-- `app/`, `lib/`: Next.js 15 PWA (frontend + API routes), deploys to Vercel from repo root.
+- `app/`, `lib/`: Next.js 16 PWA (frontend + API routes), deploys to Vercel from repo root.
 - `agent/`: Python voice agent worker (livekit-agents), deployed to LiveKit Cloud with the dispatch name `maatu-studio`. Local LaunchAgents are legacy fallbacks.
 - `personas/`: persona JSON files, data not code (schema in the build spec, section 4).
 - `docs/plan/`: the six orchestra briefs, the source of truth.
@@ -40,7 +40,7 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 
 - Frontend: Next.js + Tailwind, PWA, Vercel.
 - Realtime: LiveKit Cloud, one room per session.
-- Voice (since 2026-09-28): every Kannada, Hindi, Tamil and French call runs on Gemini Live (`gemini-3.8-live`, speech to speech) in `agent/worker.py` `run_live` / `run_french`, because Sarvam Bulbul reading romanized text sounded like an outsider and replies took 2 to 3 s. The Sarvam pipeline (saaras:v4 translit STT, Bulbul v3 TTS, Gemini flash-lite brain) stays in the code as the fallback: set `MAATU_LIVE_LANGS=""`. The agent is hosted on LiveKit Cloud (`PRODUCTION=1 scripts/deploy_cloud_agent.sh`). Learners only ever see romanized captions; the app romanizes native-script text.
+- Voice (since 2026-10-06, Jason requested fixed local voices and provider independence): Kannada, Tamil and Hindi use Sarvam Saaras v4 automatic code-mixed recognition, the complete Gemini 3.5 Flash teaching brain, and a fixed Sarvam Bulbul v3 persona speaker with native-script input. French uses Gemini 3.8 Live. `agent/providers.py` pins one configured profile per room; operators can select live or fixed-native profiles without changing teaching, history or controls. There is no silent provider/voice fallback. `lib/model-adapters.ts` handles web model transport; `lib/speech.ts` handles exact phrase playback and the opposite-gender correction voice. Calls run in isolated prewarmed processes so a failed room connection cannot terminate another call. Deploy with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`. Captions are romanized locally; native source is retained for speech, teaching and translation.
 - DB: Neon Postgres + Drizzle.
 - Latency budget: under 1.5s from user speech end to agent audio start. Log per turn.
 - Personas are JSON data. `secret_agenda` is rewritten nightly. Characters NEVER correct the learner in scene.
@@ -54,9 +54,18 @@ Rewriting a prompt to be *clearer* is allowed. Removing teaching behaviour is no
 - a wrong answer gets one warm correction, one retry, then moves on
 - an English question gets the English meaning FIRST, never a pronunciation drill
 - control phrases work: wait, stop, slow down, say that again, what does that mean, go back
-- the learner only ever SEES romanized Latin (the app romanizes captions); the Sarvam fallback voice gets native script so it sounds local
+- the learner only ever SEES romanized Latin (the app romanizes captions); the fixed Sarvam voice gets native script so it sounds local
 - short turns that always end by asking the learner to say something
 
 ### Hard floors that crash the call if crossed
 - `silero.VAD.load(min_silence_duration=...)` must be **>= 0.25**. Lower and `session.start` raises ValueError, so every call dies before the teacher speaks.
 - `sarvam.TTS(min_buffer_size=...)` must be **>= 30**. Lower crashes the call.
+
+## Conversation contracts (2026-10-06)
+
+- Save every completed voice segment and submitted text turn immediately on this device. Preserve original language versions; switching a continuing conversation translates all turns in order and retains the character, place, prices and topic. Never erase a history to start a fresh conversation. Offer a download and expose storage failures.
+- Side coaching is asynchronous and independent of the scene partner. Grammar checks may suggest a clear correction; pronunciation checks require an explicit request with actual audio. Uncertain audio must never become a confident pronunciation warning. Private recording is ephemeral and never published to the conversation room.
+- Pause mutes local input and remote output immediately, then requires the worker acknowledgment before private practice. Resume restores the previous microphone choice. The sentence diagram freezes while paused.
+- Sentence explanations must reproduce a phrase actually spoken. Semantic-role relationships and spoken word order are separate. Honorific addresses are not invented doers; requests do not acquire invented statement tenses. Coherent changes preserve topic and coordinate verb tense with time.
+
+<!-- REPORT: agent=Codex; task=conversation-standing-contracts; status=complete; files=CLAUDE.md; open_questions=none -->
