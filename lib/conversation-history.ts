@@ -161,6 +161,8 @@ export function conversationContext(id: string, lang: Lang) {
   const thread = getConversation(id);
   if (!thread) return "";
   const rows = thread.versions[lang] || thread.versions[thread.lang] || [];
+  // A brand-new thread has nothing to continue: let the character open the scene.
+  if (!rows.length) return "";
   return `Continue this saved conversation. Do not restart with a greeting. Preserve its people, numbers, facts and unfinished question. Original scene: ${thread.title}. ${PERSONAS[thread.persona] ? `Keep the same character name, ${PERSONAS[thread.persona].name}, and the original scene location and currency while speaking the selected language.` : ""}\n${rows
     .slice(-14)
     .map(

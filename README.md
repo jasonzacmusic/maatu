@@ -1,6 +1,10 @@
+<p><img src="public/brand/maatu-logo.svg" alt="maatu." width="260"></p>
+
 # Maatu
 
-Learn everyday spoken Tamil, Kannada, Hindi, and French at [maatu.nathanielschool.com](https://maatu.nathanielschool.com).
+Learn everyday spoken Tamil, Kannada, Hindi, and French at [maatu.nathanielschool.com](https://maatu.nathanielschool.com). Free, no account needed. Language guides: [Tamil](https://maatu.nathanielschool.com/learn/tamil), [Kannada](https://maatu.nathanielschool.com/learn/kannada), [Hindi](https://maatu.nathanielschool.com/learn/hindi), [French](https://maatu.nathanielschool.com/learn/french), and [About Maatu](https://maatu.nathanielschool.com/about).
+
+Maatu is the Kannada word for speech.
 
 Three ways to learn share the same language choices and teaching principles:
 
@@ -18,6 +22,15 @@ Next.js PWA on Vercel, LiveKit Cloud for live audio, and Neon for grounded call 
 
 Vercel's production branch is `main`. Deploy from the repository root. Redeploy the cloud worker with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`; its data includes `french-reference.txt`, all persona JSON, and the existing full teaching prompts.
 
+## Brand, search and answer engines
+
+- **Logo:** a speech bubble whose dots grow, the last one in warm marigold: a few words today, more courage tomorrow. The same round voice dot is the full stop in the wordmark. Files in `public/brand/` (SVG with outlined lettering, PNG, 1024 px app icon); the in-app mark is `app/components/BrandMark.tsx`. Purple `#6350c6`, voice `#ee9459`, paper `#fbf9f4`.
+- **Icons:** `app/icon.svg` and `app/favicon.ico` for browsers, `app/apple-icon.png` for iPhone home screens, any and maskable PNGs for Android in `public/`.
+- **Public pages:** `/learn`, `/learn/{tamil,kannada,hindi,french}` and `/about` are server-rendered, so search engines and AI crawlers that do not run JavaScript read the full content. Every claim on them is built in `lib/site.ts` from the app's own lessons, scenes and characters, so the public description cannot drift from the product.
+- **Search:** titles, descriptions, canonical URLs on the branded domain, Open Graph and Twitter cards with a share image per language (`public/og/`), `robots.txt`, `sitemap.xml`, and schema.org data (`lib/structured-data.ts`: Organization, WebSite, WebApplication, Course, FAQPage, BreadcrumbList).
+- **Answer engines:** `/llms.txt` gives AI assistants a plain-text summary with the languages, course, scenes and FAQ answers. AI crawlers are allowed.
+- **Deep links:** `/?lang=kn&mode=scenes` opens the studio in a language (`ta`, `kn`, `hi`, `fr`) and mode (`scenes`, `build`, `course`). The address is tidied after opening.
+
 ## Verification and project records
 
 - `scripts/verify-learning.ts`: 13 linguistic golden cases, 130,432 structurally valid combinations, 80 scenario records, and 64 lesson routes.
@@ -34,6 +47,6 @@ Vercel's production branch is `main`. Deploy from the repository root. Redeploy 
 
 Measured cloud turns remain around two seconds, above the strict 1.5-second budget. Preserve teaching quality while improving latency in the pipeline.
 
-A Nathaniel School of Music project by Jason Zac.
+A Nathaniel School of Music project by Jason Zac. Copyright Nathaniel School of Music. All rights reserved. Street photographs are used under the Creative Commons licences listed in `public/photo-credits.txt`.
 
-<!-- REPORT: agent=Codex; task=spoken-studio-redesign; status=complete; files=README.md; open_questions=none -->
+<!-- REPORT: agent=Claude; task=public-launch-seo-brand; status=complete; files=README.md; open_questions=none -->

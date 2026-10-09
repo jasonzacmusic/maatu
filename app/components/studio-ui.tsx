@@ -6,6 +6,7 @@ import { LANGUAGES } from "@/lib/languages";
 import type { Lang } from "@/lib/maatu-design";
 import type { SpeakLang } from "@/lib/say-it";
 import starterAudio from "@/lib/lab-voice.generated.json";
+import { BrandMark, Wordmark } from "./BrandMark";
 
 let activePreview: HTMLAudioElement | null = null;
 
@@ -256,27 +257,8 @@ export function HearButton({
 export function Brand({ small = false }: { small?: boolean }) {
   return (
     <span className={`brand ${small ? "brand-small" : ""}`}>
-      <svg
-        width="35"
-        height="35"
-        viewBox="0 0 40 40"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M4 7h23a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6H15l-8 5v-9a6 6 0 0 1-3-5V7Z"
-          fill="currentColor"
-        />
-        <path
-          d="M12 14v8m5-10v12m5-9v6m5-9v12"
-          stroke="#fff"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </svg>
-      <span>
-        maatu<span className="brand-dot">.</span>
-      </span>
+      <BrandMark size={35} />
+      <Wordmark />
     </span>
   );
 }

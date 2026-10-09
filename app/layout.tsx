@@ -5,15 +5,54 @@ import "./sentence-lab.css";
 import "./conversation-coach.css";
 import "./finish.css";
 import RegisterServiceWorker from "./components/RegisterServiceWorker";
+import { SCHOOL, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 const bodyFont = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
 const displayFont = Newsreader({ subsets: ["latin"], variable: "--font-newsreader", display: "swap" });
 const monoFont = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Maatu",
-  description: "Learn spoken Tamil, Kannada, Hindi, and French through live conversations, authentic scenarios, and a playful sentence lab.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: "%s | Maatu" },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "learn Kannada",
+    "learn Tamil",
+    "learn Hindi",
+    "learn French",
+    "spoken Kannada",
+    "spoken Tamil",
+    "spoken Hindi",
+    "speak Kannada",
+    "Kannada conversation practice",
+    "Tamil conversation practice",
+    "Hindi speaking practice",
+    "French speaking practice",
+    "AI language teacher",
+    "language learning app India",
+  ],
+  authors: [{ name: SCHOOL.name, url: SCHOOL.url }],
+  creator: SCHOOL.name,
+  publisher: SCHOOL.name,
+  category: "education",
+  alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: "/",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
+  formatDetection: { telephone: false },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",

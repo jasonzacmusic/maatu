@@ -1,11 +1,11 @@
-const CACHE = "maatu-studio-v5";
+const CACHE = "maatu-studio-v6";
 const DEVELOPMENT = ["localhost", "127.0.0.1", "[::1]"].includes(self.location.hostname);
 const SHELL = [
   "/",
   "/manifest.webmanifest",
   "/icon-192.png",
   "/icon-512.png",
-  "/apple-icon.png",
+  "/icon.svg",
 ];
 
 self.addEventListener("install", (event) => {
@@ -34,7 +34,8 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (response.ok) {
+          // Only the studio itself is the offline shell; the public pages are not.
+          if (response.ok && url.pathname === "/") {
             const copy = response.clone();
             caches.open(CACHE).then((cache) => cache.put("/", copy));
           }

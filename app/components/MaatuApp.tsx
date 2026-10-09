@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   ArrowLeft,
@@ -148,6 +148,7 @@ export default function MaatuApp() {
   const [situation, setSituation] = useState("");
   const [device, setDevice] = useState({ conversations: 0, turns: 0 });
   const l = LANGUAGES[lang];
+  const linkParams = useRef<URLSearchParams | null>(null);
 
   useEffect(() => {
     let stored: unknown;
@@ -177,9 +178,30 @@ export default function MaatuApp() {
     // one tap away, instead of being dropped into an old chat.
     const current = getConversation(activeConversation());
     if (current) {
-      setResume(current);
+      // Only offer to continue a conversation that has something in it.
+      if (Object.values(current.versions).some((turns) => turns?.length))
+        setResume(current);
       setLang(current.lang);
     }
+    // Links from the public language pages open the studio in a language and
+    // mode, e.g. /?lang=kn&mode=scenes. The address is tidied afterwards.
+    // Read once per mount, so a second effect run cannot lose the link.
+    linkParams.current ??= new URLSearchParams(window.location.search);
+    const params = linkParams.current;
+    const linked = params.get("lang");
+    if (isLang(linked)) {
+      setLang(linked);
+      try {
+        localStorage.setItem("maatu-lang", linked);
+      } catch {
+        /* The link still works for this visit. */
+      }
+      if (current && current.lang !== linked) setResume(null);
+    }
+    const mode = params.get("mode");
+    if (mode === "scenes" || mode === "build" || mode === "course") setScreen(mode);
+    if (params.has("lang") || params.has("mode"))
+      window.history.replaceState(null, "", window.location.pathname);
     setWelcome(
       !read("maatu-welcome-done", false) && !loadConversations().length,
     );
@@ -223,6 +245,9 @@ export default function MaatuApp() {
             )?.id,
     );
     setTopic("");
+    // Remount the chat even when language, partner and topic are unchanged,
+    // so the resumed thread actually opens.
+    setChatReset((n) => n + 1);
     setScreen("talk");
   }
   async function chooseLang(next: Lang) {
@@ -1115,6 +1140,14 @@ export default function MaatuApp() {
         {!immersive && (
           <footer className="app-footer">
             <span>Made for the way people actually talk.</span>
+            <nav aria-label="About Maatu">
+              {LANGUAGE_ORDER.map((code) => (
+                <a key={code} href={`/learn/${LANGUAGES[code].name.toLowerCase()}`}>
+                  Learn {LANGUAGES[code].name}
+                </a>
+              ))}
+              <a href="/about">About</a>
+            </nav>
             <span>Maatu · Nathaniel School of Music</span>
           </footer>
         )}

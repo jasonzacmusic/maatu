@@ -192,4 +192,17 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Put provider transport in dedicated adapters; full teaching prompts, controls, history, correction rules and validation stay in product code. Gemini, Anthropic and compatible brain settings are available; only shipping configurations are evaluated. No silent fallback changes the voice midway. Reject the measured Flash-Lite and newer Flash replacements because they did not improve the full-prompt contract.
 - Use PROCESS jobs and one prewarmed worker process. A failed LiveKit FFI room join in THREAD mode ended unrelated calls during the real tests. Process-mode Kannada controls and a concurrent continued Hindi scene stayed alive. Native-speaker review and the 1.5-second latency target remain open; never claim fixed identity proves a perfect accent.
 
-<!-- REPORT: agent=Codex; task=spoken-studio-decisions; status=complete; files=DECISIONS.md; open_questions=none -->
+
+## 2026-10-09 Public launch: search, answer engines, brand and audit fixes
+
+- Make the GitHub repository public after a full-history leak scan (gitleaks over all 55 commits plus a pattern scan for Google, OpenAI, Neon, LiveKit, GitHub and private keys). The one hit was a false positive, a localStorage key name. Keys stay in `.env.local` and `agent/.env`, both ignored. No licence file: the code is public to read, all rights reserved.
+- Logo: a speech bubble with three growing dots, the last in marigold `#ee9459`. An "m" inside a bubble was rejected because it reads as the Mastodon logo. The wordmark's full stop becomes the same round voice dot. Lettering is outlined from Hanken Grotesk 800 so the SVG renders without the font.
+- The studio stays a client app; search content lives on server-rendered public pages (`/learn`, four language guides, `/about`) because AI crawlers do not run JavaScript and the studio home renders only a loading line before hydration.
+- Public copy states only what the app does today, generated from the same lessons, scenes, characters and phrases. No testimonials, no invented history, no level promises. Free and no account are both true of the current app.
+- Do not redirect `maatu.vercel.app` to the branded domain: learners who used the old address keep their saved conversations and progress in that browser origin. Canonical URLs and `metadataBase` point search engines at `maatu.nathanielschool.com` instead.
+- Deep links `/?lang=&mode=` let the public pages open the studio in the right language and mode. Parameters are read once per mount (a ref) so React's development double effect cannot lose them.
+- Service worker: only the studio page itself is stored as the offline shell; before, any visited page would have become the offline home.
+- Audit fixes from the review of the day's ten commits: Continue your last conversation now opens the chat (the chat remounts), a brand-new conversation no longer tells the character to continue a saved one (so scene openings and chosen situations survive), and the resume card is hidden for a conversation with no turns.
+- Readable sizes in the sentence lab: the target-language word under each board node goes from 10 px to 13 px and wraps instead of being cut off on 320 px phones; labels, wire words and Check build no longer drop below 11 px.
+
+<!-- REPORT: agent=Claude; task=public-launch-decisions; status=complete; files=DECISIONS.md; open_questions=none -->

@@ -530,3 +530,54 @@
     transition: none;
   }
 }
+
+/* Readable sizes (2026-10-09): the target-language words and their labels in
+   the sentence lab never drop below 11px, on any screen. The board re-measures
+   its wires, so larger text keeps the diagram aligned. */
+.word-game .grammar-node > small {
+  font-size: 13px;
+}
+/* Never cut off the word being learned: wrap it instead of "kudi...". */
+.word-game .grammar-node > strong {
+  white-space: normal;
+  hyphens: auto;
+}
+.word-game .grammar-node > small {
+  white-space: normal;
+  overflow-wrap: break-word;
+  padding-right: 0;
+}
+@container (max-width: 300px) {
+  .word-game .grammar-node > strong {
+    font-size: 18px;
+  }
+}
+.word-game .node-type {
+  font-size: 12px;
+}
+.word-game .node-edit {
+  font-size: 11px;
+}
+.word-game .grammar-wires text {
+  font-size: 11px;
+}
+.word-game .board-caption {
+  font-size: 13px;
+}
+.word-game .piece-choice small {
+  font-size: 12px;
+}
+.word-game .word small {
+  font-size: 11px;
+}
+.word-game .game-speaker small {
+  font-size: 11px;
+}
+.word-game .game-speaker .button,
+.word-game .check-build,
+.word-game .text-button {
+  font-size: 13px;
+}
+.word-game .result-heading span {
+  font-size: 12px;
+}

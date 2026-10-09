@@ -1,18 +1,26 @@
 {
-  "name": "Maatu",
+  "name": "Maatu: speak Tamil, Kannada, Hindi and French",
   "short_name": "Maatu",
   "id": "/",
-  "description": "Everyday Tamil, Kannada, Hindi, and French. Talk, try real-life scenes, and build your own sentences.",
+  "description": "Speak everyday Tamil, Kannada, Hindi and French out loud with a friendly AI teacher. Talk, try real-life scenes and build your own sentences.",
+  "lang": "en",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#FBF9F4",
   "theme_color": "#FBF9F4",
   "orientation": "portrait",
+  "categories": ["education", "languages"],
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Real-life scenes", "short_name": "Scenes", "url": "/?mode=scenes", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Sentence lab", "short_name": "Lab", "url": "/?mode=build", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Your first words", "short_name": "Lessons", "url": "/?mode=course", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
   ]
 }
