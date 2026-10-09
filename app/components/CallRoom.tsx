@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   Captions,
   CircleHelp,
+  Keyboard,
   LoaderCircle,
   Mic,
   MicOff,
@@ -16,7 +17,6 @@ import {
 import { useMaatuCall, type Line, type PracticeLine } from "./useMaatuCall";
 import type { PersonaMeta } from "@/lib/personas.generated";
 import type { Lang } from "@/lib/maatu-design";
-import { LANGUAGE_ORDER } from "@/lib/languages";
 import CorrectionCoach from "./CorrectionCoach";
 import { LANGUAGES } from "@/lib/languages";
 import { SCENE_ICONS } from "./ScenarioStudio";
@@ -36,11 +36,12 @@ export default function CallRoom({
   captions,
   onEnd,
   onBack,
+  onType,
   conversationId,
-  onLanguage,
 }: {
   conversationId?: string;
-  onLanguage: (lang: Lang) => void;
+  onLanguage?: (lang: Lang) => void;
+  onType: () => void;
   meta: PersonaMeta;
   stage: 1 | 2 | 3;
   practice?: PracticeLine | null;
@@ -95,15 +96,21 @@ export default function CallRoom({
         : 0,
     });
   }
+  async function typeInstead() {
+    if (ending.current) return;
+    ending.current = true;
+    await call.hangUp();
+    onType();
+  }
   const status =
     call.phase === "connecting"
-      ? "Connecting to your teacher…"
+      ? `Calling ${meta.name}…`
       : call.phase === "error"
         ? "Could not connect"
         : call.phase === "ended"
           ? "Conversation ended"
           : !call.characterHeard
-            ? "Your teacher is joining…"
+            ? `${meta.name} is picking up. The first call of the day can take up to 20 seconds.`
             : paused
               ? "Take your time. We’re here."
               : call.speaker === "character"
@@ -162,26 +169,12 @@ export default function CallRoom({
           className="text-button"
           onClick={() => void finish()}
         >
-          <ArrowLeft size={17} /> Back to your studio
+          <ArrowLeft size={17} /> End call
         </button>
-        <div
-          className="language-picker"
-          role="group"
-          aria-label="Translate conversation"
-        >
-          {LANGUAGE_ORDER.map((code) => (
-            <button
-              type="button"
-              key={code}
-              className={code === meta.language ? "active" : ""}
-              aria-pressed={code === meta.language}
-              onClick={() => onLanguage(code)}
-            >
-              {LANGUAGES[code].name}
-            </button>
-          ))}
-        </div>
-        <span>
+        <span className="call-language">
+          {l.name} · {l.city}
+        </span>
+        <span aria-label="Call time">
           {Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, "0")}
         </span>
       </div>
@@ -248,7 +241,16 @@ export default function CallRoom({
               {call.error ||
                 call.connectionIssue ||
                 call.micIssue ||
-                "Your teacher is taking longer to join. Try reconnecting, or return to text practice."}
+                `${meta.name} is taking longer than usual. Try reconnecting, or keep going by typing.`}
+              {(call.micIssue || call.phase === "error" || waitingTooLong) && (
+                <button
+                  type="button"
+                  className="button button-primary call-type-instead"
+                  onClick={() => void typeInstead()}
+                >
+                  <Keyboard size={17} /> Keep going by typing
+                </button>
+              )}
               {(call.phase === "error" ||
                 call.phase === "ended" ||
                 waitingTooLong) && (
@@ -280,8 +282,16 @@ export default function CallRoom({
           )}
           {call.micSilent && !call.muted && (
             <p className="error-note">
-              Your microphone is quiet. Check your input below, then try
-              speaking.
+              We cannot hear you yet. Check that the right microphone is
+              chosen below, or{" "}
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => void typeInstead()}
+              >
+                keep going by typing
+              </button>
+              .
             </p>
           )}
           {call.mics.length > 1 && (
@@ -385,7 +395,10 @@ export default function CallRoom({
               Return to practice
             </button>
           )}
-          <p className="composer-hint">Each turn is saved on this device.</p>
+          <p className="composer-hint">
+            Stuck? Say it in English, or ask “how do I say…?”. Each turn is
+            saved on this device.
+          </p>
           <CorrectionCoach
             lang={meta.language}
             learner={lastLearnerLine?.source || lastLearnerLine?.text || ""}
@@ -400,6 +413,7 @@ export default function CallRoom({
         </div>
         <ConversationCoach
           lang={meta.language}
+          initialOpen={false}
           spoken={lastTeacherLine?.source || lastTeacherLine?.text || ""}
           paused={paused}
           onPause={call.phase === "live" ? () => help("pause") : undefined}

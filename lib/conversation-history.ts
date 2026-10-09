@@ -12,6 +12,7 @@ export type ConversationTurn = {
   meaning?: string;
   phraseMeaning?: string;
   followUp?: string;
+  tip?: string;
   at: number;
   translated?: boolean;
   correction?: {

@@ -31,7 +31,7 @@ SENTENCE CONSTRUCTION SUPPORT:
 - When asked how a sentence works, give its English meaning first, then one short useful explanation of the doer/pronoun/proper noun, verb ending, noun/place or adjective. Keep the actual phrase unchanged when explaining it. The app shows the full word diagram beside the conversation, so do not read a list of labels aloud.
 - Give one colloquial alternate when useful, explain which word changes and what it means, then invite the learner to try it. Preserve the person's gender and the intended politeness. Never confuse Kannada with Canada or Canadian English.
 - Teach habitual present, simple past, present continuous, future, completed actions and past continuous as requested, one contrast at a time. Change time words coherently: yesterday with past, now with present continuous, tomorrow with future. Explain a contradiction gently. Do not call 'I am going there yesterday' correct. With a finished time like two days ago use a natural past construction; 'already' alone can describe a completed result. Use local natural equivalents rather than mechanically translating English tense names.
-- If the learner asks to wait/stop, keep the response to a brief acknowledgement and wait. Repeat/explain/go back must reuse the last relevant phrase, not reset the lesson. All the acceptance, one-correction-one-retry, English-first and short-turn rules above still apply.
+- If the learner asks to wait/stop, keep the response to a brief acknowledgement and wait. Repeat/explain/go back must reuse the last relevant phrase, not reset the lesson. All the acceptance, one-correction (a recast in conversation, one explicit retry in lessons and practice), English-first and short-turn rules above still apply.
 """.strip()
 
 # Warm female teacher voices (valid bulbul:v3), distinct per language.
@@ -369,8 +369,11 @@ _COMPANION_RULES = (
     "can be useful, but do not make every ordinary chat turn a repeat-after-me "
     "drill. React simply and specifically instead of gushing.\n"
     "- Correct at most ONE thing per turn, the mistake that most affects "
-    "meaning. Give the natural form once, invite one retry, then accept it and "
-    "respond to what the learner MEANT.\n"
+    "meaning. In ordinary conversation the correction is a recast: say the "
+    "natural form once inside your reply, the way a friend repeats back what "
+    "you meant, then respond to what the learner MEANT. Your follow-up question "
+    "is the retry: it naturally invites them to use the form again. Ask for an "
+    "explicit retry only in practice mode (see SOFT TEACHING below).\n"
     "- A retry closes a correction even if the same wrong word comes back. "
     "Acknowledge the effort without claiming it was correct, then continue the "
     "topic with a different useful phrase. Never request a third attempt.\n"
@@ -393,6 +396,22 @@ _COMPANION_RULES = (
     "without replacing it with a new phrase or adding a new drill.\n"
     "- No em dashes."
 )
+
+# Jason's rule, 9 October 2026: teach softly while the conversation keeps
+# going. Added to the companion and to every scene; lessons keep their drills.
+_SOFT_TEACHING_RULES = """
+SOFT TEACHING WHILE YOU TALK. This is how every ordinary conversation turn works:
+- Never stop the conversation to teach. Teaching rides inside a normal, friendly reply, so the learner feels they are chatting, not being tested.
+- The rhythm of a turn: first react to what they MEANT, like a friend would. Then slip in the {ln} way to say their own thought, or the corrected version of what they just tried, as part of your sentence. Then carry on with one easy question that invites them to use it.
+- Mistakes are recast, never drilled. Say the right form naturally once, the way a friend echoes back what you said. Add at most a few English words of why, only when it changes the meaning, for example: yesterday, so the past form. A close attempt is simply correct: respond to its meaning and move on.
+- In ordinary conversation never say try saying, repeat after me, say it back, can you say that, one more time or say it with me.
+- When the learner speaks English, that is something they want to be able to say. Answer them, give the {ln} version of what they just said in one short natural sentence with its plain English meaning, then keep talking about their topic.
+- A how do I say or what is this in {ln} question gets the {ln} phrase first, its plain English meaning second, and a natural follow-up question on the same topic third.
+- Practice mode is the only place for repeat after me and one explicit retry: when the learner asks to practise or repeat, when they bring a sentence from the sentence lab, or in a structured lesson.
+- At most one small grammar tip per turn, only for a mistake that matters. Never a lecture, never a list of rules.
+- Your follow-up question moves their story forward: ask about something new (what else, with whom, why, what next). Never re-ask a fact they already told you just to make them repeat it.
+- Speech recognition sometimes writes the learner's words in the wrong script or language, for example Telugu or Hindi letters for Tamil sounds. That is a machine error, never the learner speaking another language. Never comment on which language or script they used. Sound it out and answer the meaning.
+""".strip()
 
 
 def _tutor_fields(lang: str) -> dict | None:
@@ -479,13 +498,19 @@ def _tutor_fields(lang: str) -> dict | None:
         "name": t["name"],
         "voice": t["voice"],
         "pace": 1.0,
-        "system_prompt": system + "\n\n" + _SENTENCE_SUPPORT_RULES,
+        "system_prompt": system + "\n\n" + _SENTENCE_SUPPORT_RULES + "\n\n" + soft_teaching_rules(lang),
         "opening": opening,
         "level": 0,
         "gender": "female",
         "teach_mode": False,
         "rubric": [],
     }
+
+
+def soft_teaching_rules(lang: str) -> str:
+    """The soft teaching block for one language, shared by the companion and
+    every scene character."""
+    return _SOFT_TEACHING_RULES.format(ln=LANG_NAME.get(lang, "the target language"))
 
 
 def _clean_practice(text: object, limit: int = 160) -> str:

@@ -8,11 +8,15 @@ import {
   Bookmark,
   Check,
   Coffee,
+  GitBranch,
+  Lightbulb,
   MessageCircle,
   Mic,
   Music2,
+  Plus,
   RefreshCw,
   Sparkles,
+  X,
 } from "lucide-react";
 import { PERSONAS } from "@/lib/personas.generated";
 import { romanizeDisplay } from "@/lib/romanize-client";
@@ -22,11 +26,12 @@ import type { PracticeLine } from "./useMaatuCall";
 import { toggleSaved } from "@/lib/review";
 import { CityArt, HearButton } from "./studio-ui";
 import ConversationCoach from "./ConversationCoach";
-import CorrectionCoach from "./CorrectionCoach";
+import SayItIn from "./SayItIn";
 import {
   appendConversation,
   createConversation,
   getConversation,
+  type ConversationThread,
   type ConversationTurn,
 } from "@/lib/conversation-history";
 
@@ -42,12 +47,14 @@ export type Message = {
   meaning?: string;
   phraseMeaning?: string;
   followUp?: string;
+  tip?: string;
 };
 
 function Chat({
   lang,
   persona,
   seed,
+  situation,
   onVoice,
   conversationId,
   onConversation,
@@ -56,6 +63,7 @@ function Chat({
   lang: Lang;
   persona?: string;
   seed?: string;
+  situation?: string;
   onVoice: (practice?: PracticeLine) => void;
   conversationId?: string;
   onConversation: (id: string) => void;
@@ -126,6 +134,7 @@ function Chat({
         body: JSON.stringify({
           lang,
           persona,
+          situation: situation || undefined,
           continuation: conversationId
             ? {
                 name: partnerName,
@@ -159,6 +168,7 @@ function Chat({
         sourcePhrase: data.sourcePhrase,
         meaning: data.meaning,
         followUp: data.followUp,
+        tip: data.tip || undefined,
       };
       const rows: Message[] = [...next, answer];
       appendConversation(threadId.current, lang, answer);
@@ -204,26 +214,45 @@ function Chat({
     e.preventDefault();
     void send(input);
   };
-  const lastLearner = messages.findLast((m) => m.role === "user");
-  const lastTeaching = messages.findLast(
-    (m) => m.role === "assistant" && m.phrase,
-  );
-  const lastPhrase = lastTeaching?.sourcePhrase || lastTeaching?.phrase || "";
+  const [inspect, setInspect] = useState("");
+  // Phones and narrow windows open the explainer under its message; wide
+  // screens show it beside the conversation.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 960px)");
+    const update = () => setNarrow(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  const inspector = inspect ? (
+    <div className={`chat-inspector ${narrow ? "inline" : ""}`}>
+      <button
+        type="button"
+        className="text-button chat-inspector-close"
+        onClick={() => setInspect("")}
+      >
+        <X size={16} /> Close the explanation
+      </button>
+      <ConversationCoach lang={lang} spoken={inspect} teacher={partnerName} />
+    </div>
+  ) : null;
   return (
-    <div className="chat-space with-coach">
+    <div
+      className={`chat-space ${inspect && !narrow ? "with-coach" : "chat-solo"}`}
+    >
       <div className="chat-session-layout">
         <div className="chat-speaking">
           <div className="chat-heading">
-            <div className="avatar">{partnerName.charAt(0)}</div>
+            <div className="avatar" aria-hidden="true">
+              {partnerName.charAt(0)}
+            </div>
             <div>
-              <strong>
-                {persona
-                  ? "Keep the scene going"
-                  : `A conversation with ${partnerName}`}
-              </strong>
+              <strong>{partnerName}</strong>
               <span>
-                Everyday {l.name}, with your AI{" "}
-                {persona ? "practice partner" : "teacher"}.
+                {persona
+                  ? `${PERSONAS[persona]?.sceneLabel ?? "Scene"} · AI scene partner`
+                  : `Everyday ${l.name} · AI teacher`}
               </span>
             </div>
             <button
@@ -233,16 +262,15 @@ function Chat({
                 onVoice({ target: "", en: "", context: voiceContext })
               }
             >
-              <Mic size={16} /> Switch to voice
+              <Mic size={16} /> Talk instead
             </button>
           </div>
-          <button
-            type="button"
-            className="text-button new-conversation"
-            onClick={onNew}
-          >
-            Start a fresh conversation
-          </button>
+          <div className="chat-subbar">
+            <button type="button" className="text-button" onClick={onNew}>
+              <Plus size={16} /> New conversation
+            </button>
+            <span>Saved on this device</span>
+          </div>
           <div
             className="chat-log"
             role="log"
@@ -254,8 +282,8 @@ function Chat({
                 <MessageCircle size={30} />
                 <h3>Anything on your mind?</h3>
                 <p>
-                  Talk about your day, ask a language question, or make up a
-                  scene. {partnerName} will help you say it.
+                  Write in English or {l.name}. {partnerName} answers, shows you
+                  how to say it in {l.name}, and keeps the chat going.
                 </p>
               </div>
             )}
@@ -268,8 +296,14 @@ function Chat({
                 {m.phrase && (
                   <div className="teaching-phrase">
                     <div>
-                      {m.phrase !== m.text && <strong lang={l.code}>{romanizeDisplay(m.sourcePhrase || m.phrase)}</strong>}
-                      <span>{m.phraseMeaning || m.meaning}</span>
+                      {m.phrase !== m.text && (
+                        <strong lang={l.code}>
+                          {romanizeDisplay(m.sourcePhrase || m.phrase)}
+                        </strong>
+                      )}
+                      <span>
+                        {l.name} for: {m.phraseMeaning || m.meaning}
+                      </span>
                     </div>
                     <HearButton
                       lang={lang}
@@ -282,8 +316,8 @@ function Chat({
                       className="icon-button"
                       aria-label={
                         saved.includes(m.phrase)
-                          ? "Unsave phrase"
-                          : "Save phrase"
+                          ? "Remove from your phrasebook"
+                          : "Save to your phrasebook"
                       }
                       onClick={() => {
                         const added = toggleSaved(
@@ -306,7 +340,40 @@ function Chat({
                     </button>
                   </div>
                 )}
+                {m.tip && !m.translated && (
+                  <p className="chat-tip">
+                    <Lightbulb size={16} aria-hidden="true" />
+                    <span>{m.tip}</span>
+                  </p>
+                )}
                 {m.followUp && <p className="follow-up">{m.followUp}</p>}
+                {m.phrase && (
+                  <div className="message-tools">
+                    <SayItIn
+                      lang={lang}
+                      text={m.sourcePhrase || m.phrase}
+                      meaning={m.phraseMeaning || m.meaning || ""}
+                    />
+                    <button
+                      type="button"
+                      className="text-button"
+                      aria-pressed={inspect === (m.sourcePhrase || m.phrase)}
+                      onClick={() =>
+                        setInspect((x) =>
+                          x === (m.sourcePhrase || m.phrase)
+                            ? ""
+                            : m.sourcePhrase || m.phrase || "",
+                        )
+                      }
+                    >
+                      <GitBranch size={15} /> How this sentence works
+                    </button>
+                  </div>
+                )}
+                {narrow &&
+                  m.phrase &&
+                  inspect === (m.sourcePhrase || m.phrase) &&
+                  inspector}
               </div>
             ))}
             {busy && (
@@ -340,8 +407,9 @@ function Chat({
               value={input}
               maxLength={1000}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={`Say anything to ${partnerName}…`}
+              placeholder={`Write to ${partnerName} in English or ${l.name}…`}
               disabled={busy}
+              autoComplete="off"
             />
             <button
               type="submit"
@@ -351,23 +419,8 @@ function Chat({
               <ArrowUp size={21} />
             </button>
           </form>
-          <p className="composer-hint">
-            Saved as you go on this device. English is welcome.
-          </p>
-          <CorrectionCoach
-            lang={lang}
-            learner={lastLearner?.source || lastLearner?.text || ""}
-            expected={lastPhrase}
-            persona={persona || `tutor-${lang}`}
-            conversationId={threadId.current}
-            turnId={lastLearner?.id}
-          />
         </div>
-        <ConversationCoach
-          lang={lang}
-          spoken={lastPhrase}
-          teacher={partnerName}
-        />
+        {!narrow && inspector}
       </div>
     </div>
   );
@@ -376,23 +429,37 @@ function Chat({
 export default function ConversationStudio({
   lang,
   onVoice,
+  onFreshVoice,
   onScenes,
   onBuild,
   persona,
   seed,
+  situation,
   conversationId,
   onConversation,
   onNew,
+  resume,
+  onResume,
+  welcome,
+  onFirstLesson,
+  onDismissWelcome,
 }: {
   conversationId?: string;
   onConversation: (id: string) => void;
   onNew: () => void;
   lang: Lang;
   onVoice: (practice?: PracticeLine) => void;
+  onFreshVoice: () => void;
   onScenes: () => void;
   onBuild: () => void;
   persona?: string;
   seed?: string;
+  situation?: string;
+  resume?: ConversationThread | null;
+  onResume: () => void;
+  welcome?: boolean;
+  onFirstLesson: () => void;
+  onDismissWelcome: () => void;
 }) {
   const l = LANGUAGES[lang];
   const [chat, setChat] = useState(!!seed || !!persona || !!conversationId);
@@ -409,6 +476,7 @@ export default function ConversationStudio({
         lang={lang}
         persona={persona}
         seed={topic}
+        situation={situation}
         onVoice={onVoice}
         conversationId={conversationId}
         onConversation={onConversation}
@@ -424,10 +492,52 @@ export default function ConversationStudio({
           <em>A whole new language.</em>
         </h1>
         <p>
-          No perfect sentences needed. Just you, your curiosity, and {l.teacher}
-          , your AI teacher.
+          No perfect sentences needed. Just you, your curiosity, and{" "}
+          {l.teacher}, your AI teacher.
         </p>
       </header>
+      {welcome && (
+        <section className="start-here" aria-labelledby="start-here-title">
+          <div>
+            <h2 id="start-here-title">Never spoken {l.name} before?</h2>
+            <p>
+              Start with lesson 1. {l.teacher} teaches hello and how are you
+              out loud, one phrase at a time. About 10 minutes, with your
+              microphone.
+            </p>
+          </div>
+          <div className="start-here-actions">
+            <button
+              type="button"
+              className="button button-primary"
+              onClick={onFirstLesson}
+            >
+              <BookOpen size={18} /> Start lesson 1
+            </button>
+            <button
+              type="button"
+              className="button button-outline"
+              onClick={onDismissWelcome}
+            >
+              I know a little. Let’s talk
+            </button>
+          </div>
+        </section>
+      )}
+      {resume && (
+        <button type="button" className="resume-card" onClick={onResume}>
+          <span className="round-icon lavender">
+            <MessageCircle size={20} />
+          </span>
+          <span>
+            <strong>Continue your last conversation</strong>
+            <small>{resume.title}</small>
+          </span>
+          <span className="resume-action">
+            Continue <ArrowRight size={17} />
+          </span>
+        </button>
+      )}
       <section className="conversation-hero">
         <div className="hero-copy">
           <h2>
@@ -441,9 +551,9 @@ export default function ConversationStudio({
           <button
             type="button"
             className="button button-primary"
-            onClick={() => onVoice()}
+            onClick={onFreshVoice}
           >
-            <Mic size={19} /> Start a conversation <ArrowRight size={18} />
+            <Mic size={19} /> Start talking <ArrowRight size={18} />
           </button>
           <form
             className="quick-composer"
@@ -473,7 +583,8 @@ export default function ConversationStudio({
             </button>
           </form>
           <span className="hero-footnote">
-            Live voice · Everyday {l.name} · At your pace
+            Speak or type in English or {l.name}. Your microphone is used only
+            during a call.
           </span>
         </div>
         <div className="hero-art">
@@ -549,8 +660,8 @@ export default function ConversationStudio({
               <BookOpen size={21} />
             </span>
             <span>
-              <strong>Build it. Flip it. Say it.</strong>
-              <small>Same words, a world of possibilities.</small>
+              <strong>Sentence lab</strong>
+              <small>Build a sentence, flip it, and hear it.</small>
             </span>
             <ArrowRight size={18} />
           </button>

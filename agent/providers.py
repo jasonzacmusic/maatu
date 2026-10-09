@@ -37,9 +37,37 @@ def build_brain(plan: VoicePlan):
 
 def build_native_engines(plan: VoicePlan, persona):
     # Native script is a teaching output contract, independent of transport.
-    stt = sarvam.STT(language="unknown", model=plan.stt_model, mode="codemix", prompt=f"Conversation in {persona.language} and Indian English. Preserve English questions in English. Expected names and words: {persona.name}, Maatu, Kannada, Tamil, Hindi, namaskara, hegiddira, vanakkam, eppadi irukkeenga, namaste.", high_vad_sensitivity=True, api_key=os.environ.get("SARVAM_API_KEY"))
-    tts = sarvam.TTS(target_language_code=persona.language, model=plan.tts_model, speaker=persona.voice, pace=persona.pace, min_buffer_size=30, max_chunk_length=50, output_audio_codec="mp3", api_key=os.environ.get("SARVAM_API_KEY"))
+    # The room's language is known, so recognition is locked to it. Auto-detect
+    # once heard Tamil as Telugu and the character scolded the learner
+    # (9-Oct-2026 probe). Codemix mode still keeps English words in English.
+    stt_language = os.environ.get("MAATU_STT_LANGUAGE") or persona.language
+    stt = sarvam.STT(language=stt_language, model=plan.stt_model, mode="codemix", prompt=f"Conversation in {persona.language} and Indian English. Preserve English questions in English. Expected names and words: {persona.name}, Maatu, Kannada, Tamil, Hindi, namaskara, hegiddira, vanakkam, eppadi irukkeenga, namaste.", high_vad_sensitivity=True, api_key=os.environ.get("SARVAM_API_KEY"))
+    model, speaker = native_voice(persona, plan.tts_model)
+    tts = sarvam.TTS(target_language_code=persona.language, model=model, speaker=speaker, pace=persona.pace, min_buffer_size=30, max_chunk_length=50, output_audio_codec="mp3", api_key=os.environ.get("SARVAM_API_KEY"))
     return stt, build_brain(plan), tts
+
+# Bulbul v4 conversational speakers. Kannada moved to v4 on 9-Oct-2026: a
+# blind native-listener style comparison preferred it 4 of 4 times over v3
+# (v3 sounded slow and segmented). Hindi tied and Tamil has no conversational
+# v4 voice yet, so both stay on v3. Override per language with
+# MAATU_SARVAM_TTS_MODEL_KN / _HI / _TA.
+V4_SPEAKERS = {
+    "kn": {"female": "chaitra_kn_conversation", "male": "chetan_kn_conversation"},
+}
+DEFAULT_TTS_MODEL = {"kn": "bulbul:v4-flash"}
+
+
+def native_voice(persona, configured_model: str) -> tuple[str, str]:
+    lang = (persona.language or "kn-IN")[:2]
+    model = os.environ.get(f"MAATU_SARVAM_TTS_MODEL_{lang.upper()}") or DEFAULT_TTS_MODEL.get(lang) or configured_model
+    if model.startswith("bulbul:v4"):
+        gender = "male" if str(getattr(persona, "gender", "female")).lower().startswith("m") else "female"
+        speaker = V4_SPEAKERS.get(lang, {}).get(gender)
+        if speaker:
+            return model, speaker
+        model = configured_model
+    return model, persona.voice
+
 
 def build_live_engine(plan: VoicePlan, voice: str):
     return google.realtime.RealtimeModel(model=plan.live_model, voice=voice, temperature=0.8, api_key=os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))

@@ -41,7 +41,7 @@ function cleanLine(value: string | null | undefined, max = 160) {
 async function mint(
   personaId: string,
   learner: string,
-  practice?: { target: string; en: string; context?: string },
+  practice?: { target: string; en: string; context?: string; situation?: string },
 ) {
   if (!LIVEKIT_URL || !API_KEY || !API_SECRET) {
     return NextResponse.json(
@@ -83,13 +83,20 @@ async function mint(
                 .trim()
                 .slice(0, 2400)
             : "",
+        situation:
+          typeof practice.situation === "string"
+            ? practice.situation
+                .replace(/[\u0000-\u001f\u007f]/g, " ")
+                .trim()
+                .slice(0, 400)
+            : "",
       }
     : null;
   const at = new AccessToken(API_KEY, API_SECRET, {
     identity,
     ttl: "30m",
     metadata:
-      line && (line.practice || line.context)
+      line && (line.practice || line.context || line.situation)
         ? JSON.stringify(line)
         : undefined,
   });
@@ -119,6 +126,7 @@ export async function POST(request: Request) {
     target: body.practice ?? "",
     en: body.practiceEn ?? "",
     context: typeof body.context === "string" ? body.context : "",
+    situation: typeof body.situation === "string" ? body.situation : "",
   });
 }
 
@@ -131,6 +139,7 @@ export async function GET(request: Request) {
       target: searchParams.get("practice") ?? "",
       en: searchParams.get("practiceEn") ?? "",
       context: searchParams.get("context") ?? "",
+      situation: searchParams.get("situation") ?? "",
     },
   );
 }

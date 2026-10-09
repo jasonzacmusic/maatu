@@ -22,7 +22,7 @@
     "polite imperative forms",
     "past continuous tense"
   ],
-  "correction_policy": "NEVER correct the learner's grammar in character. Stay in the scene. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
+  "correction_policy": "Never lecture or point out a mistake. Stay in the scene and model the right form by echoing it back naturally when you confirm what they said. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
   "opening": "You just hailed them near a metro station and climbed in. Greet the passenger the way an auto driver would, ask where they want to go, and start the fare talk. One short line.",
   "debrief_rubric": [
     "fare negotiation",

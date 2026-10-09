@@ -164,7 +164,7 @@ async def run_probe(
             practice = json.loads(metadata or "{}")
             request = urllib.request.Request(
                 site.rstrip("/") + "/api/token",
-                data=json.dumps({"persona": persona, "learner": identity, "practice": practice.get("practice", ""), "practiceEn": practice.get("practiceEn", ""), "context": practice.get("context", "")}).encode(),
+                data=json.dumps({"persona": persona, "learner": identity, "practice": practice.get("practice", ""), "practiceEn": practice.get("practiceEn", ""), "context": practice.get("context", ""), "situation": practice.get("situation", "")}).encode(),
                 headers={"Content-Type": "application/json"}, method="POST",
             )
             with urllib.request.urlopen(request, timeout=30) as response:
@@ -341,7 +341,7 @@ async def run_probe(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("persona", choices=sorted(PHRASES))
+    parser.add_argument("persona", help="any persona id, for example kn-hospital or tutor-ta")
     parser.add_argument("--phrase")
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument("--barge-in", action="store_true")
@@ -350,6 +350,7 @@ def main() -> None:
     parser.add_argument("--practice-en", default="", help="English meaning of --practice")
     parser.add_argument("--agent-name", default="maatu-studio")
     parser.add_argument("--controls", action="store_true")
+    parser.add_argument("--situation", default="", help="scene situation brief, as chosen in the app")
     parser.add_argument("--sequence-file", type=Path, help="JSON list of spoken inputs with text and voice_language")
     parser.add_argument("--site", help="Use the deployed site's token route and French preview speech")
     args = parser.parse_args()
@@ -358,12 +359,12 @@ def main() -> None:
     result = asyncio.run(
         run_probe(
             args.persona,
-            args.phrase or PHRASES[args.persona],
+            args.phrase or PHRASES.get(args.persona, "Hello."),
             args.timeout,
             args.barge_in,
             args.turns,
-            json.dumps({"practice": args.practice, "practiceEn": args.practice_en})
-            if args.practice
+            json.dumps({k: v for k, v in {"practice": args.practice, "practiceEn": args.practice_en, "situation": args.situation}.items() if v})
+            if args.practice or args.situation
             else None,
             args.agent_name,
             args.controls,

@@ -74,7 +74,12 @@ export interface MaatuCall {
 type PendingLine = Omit<Line, "text"> & { key: string; text: string | null };
 
 // A sentence built in the Build tab that the companion should drill out loud.
-export type PracticeLine = { target: string; en: string; context?: string };
+export type PracticeLine = {
+  target: string;
+  en: string;
+  context?: string;
+  situation?: string;
+};
 
 export function useMaatuCall(
   persona: string,
@@ -378,6 +383,7 @@ export function useMaatuCall(
           practice: practice?.target,
           practiceEn: practice?.en,
           context: practice?.context,
+          situation: practice?.situation,
         }),
       });
       if (!res.ok) {

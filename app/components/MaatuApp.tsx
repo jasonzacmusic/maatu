@@ -44,12 +44,13 @@ import {
   getConversation,
   conversationContext,
   translateConversation,
+  loadConversations,
   HISTORY_EVENT,
   type ConversationThread,
 } from "@/lib/conversation-history";
 import { PERSONAS } from "@/lib/personas.generated";
 import ConversationStudio from "./ConversationStudio";
-import ScenarioStudio from "./ScenarioStudio";
+import ScenarioStudio, { type SceneStart } from "./ScenarioStudio";
 import { BuildScreen } from "./BuildScreen";
 import type { CallEnd } from "./CallRoom";
 const CallRoom = dynamic(() => import("./CallRoom"), {
@@ -87,6 +88,15 @@ const NAV = [
   { id: "history", label: "Conversation history", icon: Bookmark },
   { id: "progress", label: "Your progress", icon: TrendingUp },
   { id: "settings", label: "Make it yours", icon: Settings2 },
+] as const;
+
+// The tab row is the phone's main navigation; on wider screens the sidebar
+// carries the same choices, so the row is hidden there.
+const TABS = [
+  { id: "talk", label: "Just talk", short: "Talk", icon: MessageCircle },
+  { id: "scenes", label: "Real-life scenes", short: "Scenes", icon: Coffee },
+  { id: "course", label: "Your first words", short: "Lessons", icon: BookOpen },
+  { id: "build", label: "Sentence lab", short: "Lab", icon: GitBranch },
 ] as const;
 
 function read<T>(key: string, fallback: T): T {
@@ -133,6 +143,10 @@ export default function MaatuApp() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [statsError, setStatsError] = useState(false);
   const [review, setReview] = useState<ReviewItem[]>([]);
+  const [resume, setResume] = useState<ConversationThread | null>(null);
+  const [welcome, setWelcome] = useState(false);
+  const [situation, setSituation] = useState("");
+  const [device, setDevice] = useState({ conversations: 0, turns: 0 });
   const l = LANGUAGES[lang];
 
   useEffect(() => {
@@ -159,8 +173,16 @@ export default function MaatuApp() {
     remember("maatu-user-id-v2", id);
     setUser(id);
     migrateLegacyChats();
+    // A returning learner sees the home studio with their last conversation
+    // one tap away, instead of being dropped into an old chat.
     const current = getConversation(activeConversation());
-    if (current) continueThread(current);
+    if (current) {
+      setResume(current);
+      setLang(current.lang);
+    }
+    setWelcome(
+      !read("maatu-welcome-done", false) && !loadConversations().length,
+    );
     setReview(loadReview());
     setReady(true);
   }, []);
@@ -170,11 +192,21 @@ export default function MaatuApp() {
     window.addEventListener(HISTORY_EVENT, changed);
     return () => window.removeEventListener(HISTORY_EVENT, changed);
   }, []);
+  useEffect(() => {
+    // Every screen opens at its top, never at the previous screen's scroll.
+    window.scrollTo({ top: 0 });
+  }, [screen]);
+  function dismissWelcome() {
+    setWelcome(false);
+    remember("maatu-welcome-done", true);
+  }
   function rememberThread(id: string) {
     setConversationId(id);
     selectConversation(id);
   }
   function continueThread(thread: ConversationThread) {
+    setResume(null);
+    setSituation("");
     rememberThread(thread.id);
     setLang(thread.lang);
     setTextPersona(
@@ -260,6 +292,16 @@ export default function MaatuApp() {
     if (screen === "progress") {
       void refreshStats();
       setReview(loadReview());
+      const threads = loadConversations();
+      setDevice({
+        conversations: threads.length,
+        turns: threads.reduce(
+          (n, t) =>
+            n +
+            (t.versions[t.lang] ?? []).filter((x) => x.role === "user").length,
+          0,
+        ),
+      });
     }
   }, [screen, refreshStats]);
   function go(next: Screen) {
@@ -278,11 +320,16 @@ export default function MaatuApp() {
       );
     }
   }
-  function startVoice(line?: PracticeLine, selected?: PersonaMeta) {
+  function startVoice(
+    line?: PracticeLine,
+    selected?: PersonaMeta,
+    fresh = false,
+  ) {
     const partner = selected ?? teacherMeta(lang, null);
     const old = getConversation(conversationId);
     const freshScene =
-      screen === "scenes" || screen === "lesson" || !!line?.target;
+      fresh || screen === "scenes" || screen === "lesson" || !!line?.target;
+    setResume(null);
     const thread =
       old && !freshScene
         ? old
@@ -305,16 +352,19 @@ export default function MaatuApp() {
             target: line?.target || "",
             en: line?.en || "",
             context: [context, line?.context].filter(Boolean).join("\n"),
+            situation: line?.situation,
           }
         : null,
     );
     setScreen("call");
   }
-  function textScene(selected: PersonaMeta) {
+  function textScene(selected: PersonaMeta, brief = "") {
     setConversationId(undefined);
+    setResume(null);
     setTextPersona(selected.id);
+    setSituation(brief);
     setTopic(
-      `Let's start this ${selected.sceneLabel} scene. You play ${selected.name}. Keep the conversation natural and help me when I need a phrase.`,
+      `Let's start this ${selected.sceneLabel} scene. You play ${selected.name}.${brief ? ` Today's situation: ${brief}` : ""} Keep the conversation natural and help me when I need a phrase.`,
     );
     setScreen("talk");
   }
@@ -493,16 +543,23 @@ export default function MaatuApp() {
         )}
         {!immersive && (
           <nav className="mode-tabs" aria-label="Learning modes">
-            {NAV.slice(0, 3).map((n) => (
+            {TABS.map((n) => (
               <button
                 type="button"
                 key={n.id}
                 onClick={() => go(n.id)}
                 aria-current={screen === n.id ? "page" : undefined}
-                className={screen === n.id ? "active" : ""}
+                className={
+                  screen === n.id || (n.id === "course" && screen === "lesson")
+                    ? "active"
+                    : ""
+                }
               >
                 <n.icon size={17} />
-                {n.label}
+                <span className="tab-long">{n.label}</span>
+                <span className="tab-short" aria-hidden="true">
+                  {n.short}
+                </span>
               </button>
             ))}
             <span className="local-register">
@@ -541,12 +598,14 @@ export default function MaatuApp() {
               lang={lang}
               persona={textPersona}
               seed={topic}
+              situation={situation}
               conversationId={conversationId}
               onConversation={rememberThread}
               onNew={() => {
                 setConversationId(undefined);
                 setTextPersona(undefined);
                 setTopic("");
+                setSituation("");
                 setChatReset((n) => n + 1);
               }}
               onVoice={(line) =>
@@ -555,6 +614,15 @@ export default function MaatuApp() {
                   textPersona ? PERSONAS[textPersona] : undefined,
                 )
               }
+              onFreshVoice={() => startVoice(undefined, undefined, true)}
+              resume={resume}
+              onResume={() => resume && continueThread(resume)}
+              welcome={welcome}
+              onFirstLesson={() => {
+                dismissWelcome();
+                openLesson(ALL_LESSONS[0]);
+              }}
+              onDismissWelcome={dismissWelcome}
               onScenes={() => go("scenes")}
               onBuild={() => go("build")}
             />
@@ -562,14 +630,24 @@ export default function MaatuApp() {
             <ScenarioStudio
               key={lang}
               lang={lang}
-              onStart={(p) => startVoice(undefined, p)}
-              onText={(p) => {
-                setMeta(p);
-                textScene(p);
+              onStart={(start: SceneStart) =>
+                startVoice(
+                  start.situation
+                    ? { target: "", en: "", situation: start.situation }
+                    : undefined,
+                  start.persona,
+                  true,
+                )
+              }
+              onText={(start: SceneStart) => {
+                setMeta(start.persona);
+                textScene(start.persona, start.situation);
               }}
               onCustom={(context) => {
                 setConversationId(undefined);
                 setTextPersona(undefined);
+                setResume(null);
+                setSituation("");
                 setTopic(context);
                 setScreen("talk");
               }}
@@ -586,6 +664,16 @@ export default function MaatuApp() {
               captions={caps}
               onEnd={(data) => void finishCall(data)}
               onBack={() => setScreen(origin)}
+              onType={() => {
+                setTextPersona(
+                  meta.scenario === "tutor" || meta.scenario === "class"
+                    ? undefined
+                    : meta.id.replace(/-d[123]$/, ""),
+                );
+                setSituation(practice?.situation || "");
+                setTopic("");
+                setScreen("talk");
+              }}
             />
           ) : screen === "history" ? (
             <ConversationHistory onContinue={continueThread} />
@@ -708,15 +796,52 @@ export default function MaatuApp() {
             <>
               <header className="page-heading">
                 <h1>
-                  Look how far
-                  <br />
-                  <em>your words can go.</em>
+                  {device.conversations || complete ? (
+                    <>
+                      Look how far
+                      <br />
+                      <em>your words have come.</em>
+                    </>
+                  ) : (
+                    <>
+                      Your first words
+                      <br />
+                      <em>will show up here.</em>
+                    </>
+                  )}
                 </h1>
-                <p>Your real conversations and the phrases you want to keep.</p>
+                <p>
+                  Counted from what you actually did on this device. Nothing
+                  is guessed.
+                </p>
               </header>
-              {statsError ? (
+              <div className="progress-facts">
+                <div>
+                  <strong>{device.conversations}</strong>
+                  <span>conversations saved</span>
+                </div>
+                <div>
+                  <strong>{device.turns}</strong>
+                  <span>things you said or wrote</span>
+                </div>
+                <div>
+                  <strong>
+                    {statsError || !stats
+                      ? "–"
+                      : Math.floor(stats.totalSeconds / 60)}
+                  </strong>
+                  <span>minutes on voice calls</span>
+                </div>
+                <div>
+                  <strong>
+                    {complete}/{ALL_LESSONS.length}
+                  </strong>
+                  <span>{l.name} lessons passed</span>
+                </div>
+              </div>
+              {statsError && (
                 <p className="error-note">
-                  Your conversation history could not load.{" "}
+                  Voice call minutes could not load.{" "}
                   <button
                     type="button"
                     className="text-button"
@@ -725,25 +850,6 @@ export default function MaatuApp() {
                     Try again
                   </button>
                 </p>
-              ) : !stats ? (
-                <p role="status">Loading your conversations…</p>
-              ) : (
-                <div className="progress-facts">
-                  <div>
-                    <strong>{Math.floor(stats.totalSeconds / 60)}</strong>
-                    <span>minutes spoken</span>
-                  </div>
-                  <div>
-                    <strong>{stats.sessionCount}</strong>
-                    <span>conversations</span>
-                  </div>
-                  <div>
-                    <strong>
-                      {complete}/{ALL_LESSONS.length}
-                    </strong>
-                    <span>{l.name} lessons</span>
-                  </div>
-                </div>
               )}
               <div className="section-heading">
                 <h3>Your pocket phrasebook</h3>
@@ -928,12 +1034,14 @@ export default function MaatuApp() {
                     ? passed
                       ? "You can say something new."
                       : "Every try counts."
-                    : "A conversation worth keeping."}
+                    : finished.raw.some((x) => x.who === "learner")
+                      ? "A conversation worth keeping."
+                      : "We did not hear you this time."}
                 </h1>
                 <p>
                   {finished.raw.some((x) => x.who === "learner")
                     ? "Here’s what to take into your next conversation."
-                    : "Your teacher did not hear a speaking turn yet. Come back and try a little conversation."}
+                    : "Nothing you said reached the call. Check your microphone, or keep practising by typing."}
                 </p>
               </header>
               {finished.personaId.startsWith("teacher-") && (
@@ -984,7 +1092,7 @@ export default function MaatuApp() {
                   className="button button-outline"
                   onClick={() => go("build")}
                 >
-                  Play with your words
+                  Open the sentence lab
                   <GitBranch size={17} />
                 </button>
               </div>

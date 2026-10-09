@@ -57,6 +57,7 @@ export default function ConversationCoach({
   const [step, setStep] = useState<WordStep>("action");
   const [variant, setVariant] = useState<CoachVariant | null>(null);
   const [slow, setSlow] = useState(false);
+  const [allTimes, setAllTimes] = useState(false);
   useEffect(() => {
     onPhrase?.(data?.speech || "");
   }, [data?.speech, onPhrase]);
@@ -166,7 +167,7 @@ export default function ConversationCoach({
           onClick={() => setOpen(!open)}
         >
           <GitBranch size={18} />
-          {open ? "How this sentence works" : "Show sentence flowchart"}
+          {open ? "Hide how this sentence works" : "How this sentence works"}
         </button>
         {onPause && (
           <button
@@ -201,8 +202,8 @@ export default function ConversationCoach({
           )}
           {busy && (
             <p className="coach-loading" role="status">
-              <LoaderCircle size={17} className="spin" /> Connecting the words…
-              Your conversation can keep going.
+              <LoaderCircle size={17} className="spin" /> Taking the sentence
+              apart for you. Keep talking if you like.
             </p>
           )}
           {error && (
@@ -344,7 +345,7 @@ export default function ConversationCoach({
                 <div>
                   <h3>Keep the idea. Change the time.</h3>
                   {data.tenses.length ? (
-                    data.tenses.map((v, i) => (
+                    (allTimes ? data.tenses : data.tenses.slice(0, 3)).map((v, i) => (
                       <button
                         type="button"
                         key={i}
@@ -358,6 +359,16 @@ export default function ConversationCoach({
                     ))
                   ) : (
                     <p>This phrase does not need tense changes.</p>
+                  )}
+                  {data.tenses.length > 3 && (
+                    <button
+                      type="button"
+                      className="text-button coach-more-times"
+                      aria-expanded={allTimes}
+                      onClick={() => setAllTimes(!allTimes)}
+                    >
+                      {allTimes ? "Show fewer" : `Show ${data.tenses.length - 3} more times`}
+                    </button>
                   )}
                 </div>
               </div>

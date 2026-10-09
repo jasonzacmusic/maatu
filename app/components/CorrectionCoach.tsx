@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, CircleHelp, LoaderCircle, Mic, Volume2 } from "lucide-react";
 import type { Lang } from "@/lib/maatu-design";
-import { LANGUAGES } from "@/lib/languages";
 import { useSpeech } from "./studio-ui";
 import { saveCorrection } from "@/lib/conversation-history";
 export type Correction = {
@@ -155,10 +154,8 @@ export default function CorrectionCoach({
       <div className="correction-heading">
         <CircleHelp size={18} />
         <span>
-          <strong>Your side coach</strong>
-          <small>
-            {LANGUAGES[lang].name} · same local register, another voice
-          </small>
+          <strong>Side coach</strong>
+          <small>Quietly checks what you just said</small>
         </span>
         {warning && (
           <span className="correction-warning" role="status">
@@ -239,8 +236,8 @@ export default function CorrectionCoach({
       )}
       <p className="correction-footnote">
         {getAudio
-          ? "Checks use your audio only when you ask. Private practice pauses the scene; resume when ready."
-          : "Your partner keeps the conversation going. The side coach helps with your sentence."}
+          ? "Your recording is used only when you tap a pronunciation check. Private practice pauses the call first."
+          : "Your partner keeps talking. The side coach helps with your sentence."}
       </p>
     </section>
   );

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LoaderCircle, Square, Volume2 } from "lucide-react";
 import { LANGUAGES } from "@/lib/languages";
 import type { Lang } from "@/lib/maatu-design";
+import type { SpeakLang } from "@/lib/say-it";
 import starterAudio from "@/lib/lab-voice.generated.json";
 
 let activePreview: HTMLAudioElement | null = null;
@@ -31,11 +32,11 @@ export function CityArt({
 
 const previewCache = new Map<string, string>();
 const previewRequests = new Map<string, Promise<string>>();
-const audioKey = (lang: Lang, text: string, slow: boolean, persona = "") =>
+const audioKey = (lang: SpeakLang, text: string, slow: boolean, persona = "") =>
   `${lang}:${slow ? 0.72 : 0.9}:${persona}:${text}`;
 
 async function phraseAudio(
-  lang: Lang,
+  lang: SpeakLang,
   text: string,
   slow: boolean,
   persona = "",
@@ -109,7 +110,7 @@ async function phraseAudio(
   }
 }
 
-export function useSpeech(lang: Lang, persona = "") {
+export function useSpeech(lang: SpeakLang, persona = "") {
   const audio = useRef<HTMLAudioElement | null>(null);
   const sequence = useRef(0);
   const alive = useRef(true);
@@ -203,7 +204,7 @@ export function HearButton({
   compact = false,
 }: {
   text: string;
-  lang: Lang;
+  lang: SpeakLang;
   slow?: boolean;
   label?: string;
   compact?: boolean;

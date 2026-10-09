@@ -42,7 +42,13 @@ export type ShopId =
   | "restaurant"
   | "neighbour"
   | "landlord"
-  | "pharmacy";
+  | "pharmacy"
+  | "cab"
+  | "hospital"
+  | "insurance"
+  | "claim"
+  | "lesson"
+  | "desk";
 
 // All fourteen scenarios are live across the three languages. Routing to a real
 // persona is decided by personaId() in lib/personas.generated.ts.
@@ -61,6 +67,12 @@ export const LIVE: Record<ShopId, boolean> = {
   neighbour: true,
   landlord: true,
   pharmacy: true,
+  cab: true,
+  hospital: true,
+  insurance: true,
+  claim: true,
+  lesson: true,
+  desk: true,
 };
 
 export const LABELS: Record<ShopId, string> = {
@@ -78,6 +90,12 @@ export const LABELS: Record<ShopId, string> = {
   neighbour: "NEXT DOOR",
   landlord: "LANDLORD",
   pharmacy: "MEDICAL STORE",
+  cab: "CAB",
+  hospital: "HOSPITAL",
+  insurance: "INSURANCE",
+  claim: "CLAIMS DESK",
+  lesson: "MUSIC CLASS",
+  desk: "FRONT DESK",
 };
 
 // Camera targets for the zoom into each shop (scene coordinates, viewBox 390x780).
@@ -187,17 +205,23 @@ export const SCENARIO_ORDER: ShopId[] = [
   "auto",
   "chai",
   "market",
-  "gate",
+  "cab",
   "kirana",
   "restaurant",
+  "hospital",
+  "gate",
   "neighbour",
   "clinic",
   "pharmacy",
+  "insurance",
+  "claim",
   "salon",
   "landlord",
   "phone",
   "airport",
+  "lesson",
   "music",
+  "desk",
 ];
 
 export const SCENARIO_TAGLINE: Record<ShopId, string> = {
@@ -215,6 +239,12 @@ export const SCENARIO_TAGLINE: Record<ShopId, string> = {
   neighbour: "Meet next door",
   landlord: "Rent and repairs",
   pharmacy: "Pick up medicine",
+  cab: "Find your cab",
+  hospital: "Find the right department",
+  insurance: "Choose a health plan",
+  claim: "Negotiate a claim",
+  lesson: "Learn music in this language",
+  desk: "Ask about Nathaniel School",
 };
 
 // A one-line brief for the pre-call screen, second person, warm.
@@ -233,6 +263,12 @@ export const SCENARIO_BRIEF: Record<ShopId, string> = {
   neighbour: "The neighbour from the next flat catches you at the door. Say who you are and where you are from, hear about the water timings, and handle a small favour.",
   landlord: "Rent day. The landlord wants more for maintenance and you have a leaking tap to report. Make your complaint clearly and settle a day for the repair.",
   pharmacy: "At the medical shop counter, ask for what you need, hear that one item needs a prescription, take the cheaper option, and get the dose instructions right.",
+  cab: "Your app cab has arrived but the driver cannot see you. Tell him where you are standing, share the OTP, agree the route and pay at the end.",
+  hospital: "You are at a big hospital's help desk. Say why you came and find your way: the right department, the floor, the token and what to carry.",
+  insurance: "A health insurance advisor explains a plan. Ask about cover, premium, waiting periods and cashless hospitals, and push back on the price.",
+  claim: "Your hospital claim was only partly paid. Stay calm and firm, question each deduction and ask for a review.",
+  lesson: "Your music class at Nathaniel School, taught in this language. Count, clap and name notes with your teacher.",
+  desk: "Call the Nathaniel School front desk and ask anything about the school, in this language.",
 };
 
 export const DIFFICULTY: Record<ShopId, string> = {
@@ -250,6 +286,12 @@ export const DIFFICULTY: Record<ShopId, string> = {
   neighbour: "Beginner",
   landlord: "Intermediate",
   pharmacy: "Beginner",
+  cab: "Beginner",
+  hospital: "Easy",
+  insurance: "Intermediate",
+  claim: "Intermediate",
+  lesson: "Easy",
+  desk: "Easy",
 };
 
 // The three teacher hosts, so onboarding and the hub can name them.

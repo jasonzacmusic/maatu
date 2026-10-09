@@ -19,6 +19,8 @@ def normalize_speech(text: str, lang: str) -> str:
     if lang == "kn":
         # 'naavu' is 'we'; a first-person gloss must use 'naanu'.
         text = re.sub(r"ನಾವು(?=\s+(?:means|is)\s+I\b)", "ನಾನು", text, flags=re.I)
+    # Markdown or stray underscores must never be read aloud or captioned.
+    text = re.sub(r"[_*#`~]+", "", text)
     return text.replace("\u2014", ",")
 
 class NativeSpeechAgent(Agent):

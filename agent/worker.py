@@ -244,7 +244,11 @@ async def entrypoint(ctx: agents.JobContext):
         # teacher speaks. Do not lower this while the turn detector is in use.
         vad=silero.VAD.load(min_silence_duration=0.25),
         turn_handling={
-            "endpointing": {"min_delay": 0.4, "max_delay": 0.7},
+            # Beginners pause to think mid-sentence ("Sorry, ... how do I say
+            # which floor?"). At 0.4 s the teacher answered "Sorry." and was
+            # cut off by the rest of the question (9-Oct-2026 probe). The turn
+            # detector waits max_delay when it predicts more is coming.
+            "endpointing": {"min_delay": 0.6, "max_delay": 1.8},
             "interruption": {
                 "enabled": True,
                 "mode": "vad",

@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { isLang } from "@/lib/languages";
+import { isSpeakLang } from "@/lib/say-it";
 import { synthesizeSpeech } from "@/lib/speech";
 
 export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
-  if (!isLang(body.lang) || typeof body.text !== "string" || !body.text.trim()) {
+  if (!isSpeakLang(body.lang) || typeof body.text !== "string" || !body.text.trim()) {
     return NextResponse.json({ error: "Choose a language and a phrase to hear." }, { status: 400 });
   }
   const pace = typeof body.pace === "number" ? Math.max(0.65, Math.min(1.2, body.pace)) : 0.9;

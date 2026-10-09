@@ -22,7 +22,7 @@
     "numbers, weights and prices",
     "bargaining phrases"
   ],
-  "correction_policy": "NEVER correct the learner's grammar in character. Stay in the scene. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
+  "correction_policy": "Never lecture or point out a mistake. Stay in the scene and model the right form by echoing it back naturally when you confirm what they said. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
   "opening": "They have stopped at your vegetable stall. Call them over warmly and ask what they need today. One short line.",
   "debrief_rubric": [
     "vegetable vocabulary",

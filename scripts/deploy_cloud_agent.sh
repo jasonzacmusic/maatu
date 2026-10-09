@@ -12,10 +12,11 @@ set -e
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 AGENT_ID="${AGENT_ID:-CA_qEYzC3PqfR2e}"
 BUILD="$(mktemp -d)/maatu-cloud"
-mkdir -p "$BUILD/agent" "$BUILD/personas"
+mkdir -p "$BUILD/agent" "$BUILD/personas" "$BUILD/knowledge"
 cp "$REPO/agent/"*.py "$BUILD/agent/"
 cp "$REPO/agent/requirements.txt" "$BUILD/requirements.txt"
 cp "$REPO/personas/"*.json "$BUILD/personas/"
+cp "$REPO/knowledge/"*.md "$BUILD/knowledge/"
 cp "$REPO/curriculum.json" "$REPO/grammar.json" "$REPO/playbooks.json" "$REPO/french-reference.txt" "$BUILD/"
 cat > "$BUILD/Dockerfile" << 'DF'
 FROM python:3.12-slim

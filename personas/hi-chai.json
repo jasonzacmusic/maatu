@@ -22,7 +22,7 @@
     "opinions and preferences",
     "present and past tense mix"
   ],
-  "correction_policy": "NEVER correct the learner's grammar in character. Stay in the scene. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
+  "correction_policy": "Never lecture or point out a mistake. Stay in the scene and model the right form by echoing it back naturally when you confirm what they said. If you do not understand, react like a real person would: ask again, repeat, or rephrase simpler.",
   "opening": "You are both standing at the chai stall with a glass of tea. Greet them warmly like a familiar face and start some easy small talk. One short line.",
   "debrief_rubric": [
     "conversational flow",

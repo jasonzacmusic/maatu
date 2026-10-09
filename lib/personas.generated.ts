@@ -1304,6 +1304,558 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "numbers, doses and timing",
       "asking for something cheaper"
     ]
+  },
+  "kn-cab": {
+    "id": "kn-cab",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "cab",
+    "shop": "cab",
+    "name": "Naveen",
+    "level": 2,
+    "sceneLabel": "App cab, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number fluency",
+      "making a request",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and OTP digits",
+      "directions and landmarks",
+      "polite requests"
+    ]
+  },
+  "hi-cab": {
+    "id": "hi-cab",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "cab",
+    "shop": "cab",
+    "name": "Sandeep",
+    "level": 2,
+    "sceneLabel": "App cab, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number fluency",
+      "making a request",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and OTP digits",
+      "directions and landmarks",
+      "polite requests"
+    ]
+  },
+  "ta-cab": {
+    "id": "ta-cab",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "cab",
+    "shop": "cab",
+    "name": "Karthik",
+    "level": 2,
+    "sceneLabel": "App cab, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number fluency",
+      "making a request",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and OTP digits",
+      "directions and landmarks",
+      "polite requests"
+    ]
+  },
+  "fr-cab": {
+    "id": "fr-cab",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "cab",
+    "shop": "cab",
+    "name": "Mehdi",
+    "level": 2,
+    "sceneLabel": "Ride-app car, Paris",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number fluency",
+      "making a request",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and OTP digits",
+      "directions and landmarks",
+      "polite requests"
+    ]
+  },
+  "kn-hospital": {
+    "id": "kn-hospital",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "hospital",
+    "shop": "hospital",
+    "name": "Shwetha",
+    "level": 2,
+    "sceneLabel": "Hospital help desk, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "asking where something is",
+      "understanding directions",
+      "numbers and floors",
+      "describing why you came"
+    ],
+    "defaultSecretAgenda": [
+      "hospital departments",
+      "floors, directions and token numbers",
+      "asking where something is"
+    ]
+  },
+  "hi-hospital": {
+    "id": "hi-hospital",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "hospital",
+    "shop": "hospital",
+    "name": "Neha",
+    "level": 2,
+    "sceneLabel": "Hospital help desk, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "asking where something is",
+      "understanding directions",
+      "numbers and floors",
+      "describing why you came"
+    ],
+    "defaultSecretAgenda": [
+      "hospital departments",
+      "floors, directions and token numbers",
+      "asking where something is"
+    ]
+  },
+  "ta-hospital": {
+    "id": "ta-hospital",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "hospital",
+    "shop": "hospital",
+    "name": "Priya",
+    "level": 2,
+    "sceneLabel": "Hospital help desk, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "asking where something is",
+      "understanding directions",
+      "numbers and floors",
+      "describing why you came"
+    ],
+    "defaultSecretAgenda": [
+      "hospital departments",
+      "floors, directions and token numbers",
+      "asking where something is"
+    ]
+  },
+  "fr-hospital": {
+    "id": "fr-hospital",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "hospital",
+    "shop": "hospital",
+    "name": "Claire",
+    "level": 2,
+    "sceneLabel": "Hospital reception, Paris",
+    "teachMode": false,
+    "rubric": [
+      "asking where something is",
+      "understanding directions",
+      "numbers and floors",
+      "describing why you came"
+    ],
+    "defaultSecretAgenda": [
+      "hospital departments",
+      "floors, directions and token numbers",
+      "asking where something is"
+    ]
+  },
+  "kn-insurance": {
+    "id": "kn-insurance",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "insurance",
+    "shop": "insurance",
+    "name": "Raghavendra",
+    "level": 3,
+    "sceneLabel": "Health insurance advisor, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "asking clarifying questions",
+      "number fluency with lakhs and percentages",
+      "comparing options",
+      "saying no politely"
+    ],
+    "defaultSecretAgenda": [
+      "insurance and money words",
+      "big numbers, lakhs and percentages",
+      "asking clarifying questions"
+    ]
+  },
+  "hi-insurance": {
+    "id": "hi-insurance",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "insurance",
+    "shop": "insurance",
+    "name": "Rohit",
+    "level": 3,
+    "sceneLabel": "Health insurance advisor, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "asking clarifying questions",
+      "number fluency with lakhs and percentages",
+      "comparing options",
+      "saying no politely"
+    ],
+    "defaultSecretAgenda": [
+      "insurance and money words",
+      "big numbers, lakhs and percentages",
+      "asking clarifying questions"
+    ]
+  },
+  "ta-insurance": {
+    "id": "ta-insurance",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "insurance",
+    "shop": "insurance",
+    "name": "Senthil",
+    "level": 3,
+    "sceneLabel": "Health insurance advisor, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "asking clarifying questions",
+      "number fluency with lakhs and percentages",
+      "comparing options",
+      "saying no politely"
+    ],
+    "defaultSecretAgenda": [
+      "insurance and money words",
+      "big numbers, lakhs and percentages",
+      "asking clarifying questions"
+    ]
+  },
+  "fr-insurance": {
+    "id": "fr-insurance",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "insurance",
+    "shop": "insurance",
+    "name": "Antoine",
+    "level": 3,
+    "sceneLabel": "Mutuelle advisor, Paris",
+    "teachMode": false,
+    "rubric": [
+      "asking clarifying questions",
+      "number fluency with lakhs and percentages",
+      "comparing options",
+      "saying no politely"
+    ],
+    "defaultSecretAgenda": [
+      "insurance and money words",
+      "big numbers, lakhs and percentages",
+      "asking clarifying questions"
+    ]
+  },
+  "kn-claim": {
+    "id": "kn-claim",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "claim",
+    "shop": "claim",
+    "name": "Nandini",
+    "level": 3,
+    "sceneLabel": "Insurance claims desk, Bengaluru",
+    "teachMode": false,
+    "rubric": [
+      "staying polite and firm",
+      "number and amount fluency",
+      "asking for a review",
+      "confirming next steps"
+    ],
+    "defaultSecretAgenda": [
+      "money, amounts and dates",
+      "polite firmness and negotiation",
+      "documents and reference numbers"
+    ]
+  },
+  "hi-claim": {
+    "id": "hi-claim",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "claim",
+    "shop": "claim",
+    "name": "Kavita",
+    "level": 3,
+    "sceneLabel": "Insurance claims desk, Dilli",
+    "teachMode": false,
+    "rubric": [
+      "staying polite and firm",
+      "number and amount fluency",
+      "asking for a review",
+      "confirming next steps"
+    ],
+    "defaultSecretAgenda": [
+      "money, amounts and dates",
+      "polite firmness and negotiation",
+      "documents and reference numbers"
+    ]
+  },
+  "ta-claim": {
+    "id": "ta-claim",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "claim",
+    "shop": "claim",
+    "name": "Revathi",
+    "level": 3,
+    "sceneLabel": "Insurance claims desk, Chennai",
+    "teachMode": false,
+    "rubric": [
+      "staying polite and firm",
+      "number and amount fluency",
+      "asking for a review",
+      "confirming next steps"
+    ],
+    "defaultSecretAgenda": [
+      "money, amounts and dates",
+      "polite firmness and negotiation",
+      "documents and reference numbers"
+    ]
+  },
+  "fr-claim": {
+    "id": "fr-claim",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "claim",
+    "shop": "claim",
+    "name": "Sandrine",
+    "level": 3,
+    "sceneLabel": "Insurance claims line, Paris",
+    "teachMode": false,
+    "rubric": [
+      "staying polite and firm",
+      "number and amount fluency",
+      "asking for a review",
+      "confirming next steps"
+    ],
+    "defaultSecretAgenda": [
+      "money, amounts and dates",
+      "polite firmness and negotiation",
+      "documents and reference numbers"
+    ]
+  },
+  "kn-lesson": {
+    "id": "kn-lesson",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "lesson",
+    "shop": "lesson",
+    "name": "Prakash",
+    "level": 2,
+    "sceneLabel": "Music class, Nathaniel School",
+    "teachMode": false,
+    "rubric": [
+      "music vocabulary",
+      "counting fluency",
+      "following instructions",
+      "asking the teacher questions"
+    ],
+    "defaultSecretAgenda": [
+      "music words in the target language",
+      "counting and numbers one to eight",
+      "understanding instructions"
+    ]
+  },
+  "hi-lesson": {
+    "id": "hi-lesson",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "lesson",
+    "shop": "lesson",
+    "name": "Rahul",
+    "level": 2,
+    "sceneLabel": "Music class, Nathaniel School",
+    "teachMode": false,
+    "rubric": [
+      "music vocabulary",
+      "counting fluency",
+      "following instructions",
+      "asking the teacher questions"
+    ],
+    "defaultSecretAgenda": [
+      "music words in the target language",
+      "counting and numbers one to eight",
+      "understanding instructions"
+    ]
+  },
+  "ta-lesson": {
+    "id": "ta-lesson",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "lesson",
+    "shop": "lesson",
+    "name": "Vijay",
+    "level": 2,
+    "sceneLabel": "Music class, Nathaniel School",
+    "teachMode": false,
+    "rubric": [
+      "music vocabulary",
+      "counting fluency",
+      "following instructions",
+      "asking the teacher questions"
+    ],
+    "defaultSecretAgenda": [
+      "music words in the target language",
+      "counting and numbers one to eight",
+      "understanding instructions"
+    ]
+  },
+  "fr-lesson": {
+    "id": "fr-lesson",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "lesson",
+    "shop": "lesson",
+    "name": "Julien",
+    "level": 2,
+    "sceneLabel": "Music class, Nathaniel School",
+    "teachMode": false,
+    "rubric": [
+      "music vocabulary",
+      "counting fluency",
+      "following instructions",
+      "asking the teacher questions"
+    ],
+    "defaultSecretAgenda": [
+      "music words in the target language",
+      "counting and numbers one to eight",
+      "understanding instructions"
+    ]
+  },
+  "kn-desk": {
+    "id": "kn-desk",
+    "language": "kn",
+    "languageCode": "kn-IN",
+    "languageName": "Kannada",
+    "scenario": "desk",
+    "shop": "desk",
+    "name": "Ananya",
+    "level": 2,
+    "sceneLabel": "Nathaniel School front desk",
+    "teachMode": false,
+    "rubric": [
+      "asking questions",
+      "understanding answers",
+      "music and school vocabulary",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "asking questions politely",
+      "days, times and numbers",
+      "music and school words"
+    ]
+  },
+  "hi-desk": {
+    "id": "hi-desk",
+    "language": "hi",
+    "languageCode": "hi-IN",
+    "languageName": "Hindi",
+    "scenario": "desk",
+    "shop": "desk",
+    "name": "Ritika",
+    "level": 2,
+    "sceneLabel": "Nathaniel School front desk",
+    "teachMode": false,
+    "rubric": [
+      "asking questions",
+      "understanding answers",
+      "music and school vocabulary",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "asking questions politely",
+      "days, times and numbers",
+      "music and school words"
+    ]
+  },
+  "ta-desk": {
+    "id": "ta-desk",
+    "language": "ta",
+    "languageCode": "ta-IN",
+    "languageName": "Tamil",
+    "scenario": "desk",
+    "shop": "desk",
+    "name": "Divya",
+    "level": 2,
+    "sceneLabel": "Nathaniel School front desk",
+    "teachMode": false,
+    "rubric": [
+      "asking questions",
+      "understanding answers",
+      "music and school vocabulary",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "asking questions politely",
+      "days, times and numbers",
+      "music and school words"
+    ]
+  },
+  "fr-desk": {
+    "id": "fr-desk",
+    "language": "fr",
+    "languageCode": "fr-FR",
+    "languageName": "French",
+    "scenario": "desk",
+    "shop": "desk",
+    "name": "Léa",
+    "level": 2,
+    "sceneLabel": "Nathaniel School front desk",
+    "teachMode": false,
+    "rubric": [
+      "asking questions",
+      "understanding answers",
+      "music and school vocabulary",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "asking questions politely",
+      "days, times and numbers",
+      "music and school words"
+    ]
   }
 };
 
@@ -1322,7 +1874,13 @@ export const SHOP_SCENARIO: Record<string, string> = {
   "neighbour": "neighbour",
   "landlord": "landlord",
   "salon": "salon",
-  "pharmacy": "pharmacy"
+  "pharmacy": "pharmacy",
+  "cab": "cab",
+  "hospital": "hospital",
+  "insurance": "insurance",
+  "claim": "claim",
+  "lesson": "lesson",
+  "desk": "desk"
 };
 
 export function personaId(shop: string, lang: string): string | null {
