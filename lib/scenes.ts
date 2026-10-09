@@ -12,7 +12,7 @@ export const SCENE_NAMES: Record<ShopId, string> = {
   phone: "Call customer care",
   music: "Teach what you love",
   lesson: "Your music class",
-  desk: "Ask Nathaniel School",
+  desk: "Ask Nathaniel School of Music",
   airport: "Ready for takeoff",
   salon: "A haircut and a chat",
   kirana: "The grocery store",
