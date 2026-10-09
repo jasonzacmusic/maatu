@@ -13,7 +13,7 @@ const GOLDEN: Record<string, string> = {
   "नमस्ते": "namaste", "आप कैसे हैं": "aap kaise hain", "ज़्यादा": "zyaadaa", "कितना": "kitnaa",
   "समझना": "samajhnaa", "बचपन": "bachpan", "मदद": "madad", "सब्ज़ी": "sabzee", "गाड़ी": "gaadee",
   "पढ़ना": "padhnaa", "लड़का": "ladkaa", "बाज़ार": "baazaar", "क्या": "kyaa", "अच्छा": "achchhaa", "मैंने": "maine", "हिंदी": "hindee",
-  "നന്ദി": "nandi", "ഞാൻ": "naan", "చాలా బాగుంది": "chaalaa baagundi",
+  "നന്ദി": "nandi", "ഞാൻ": "naan", "മെഡിക്കൽ സ്റ്റോർ": "medikkal stor", "എവിടെ": "evide", "എന്റെ": "ente", "చాలా బాగుంది": "chaalaa baagundi",
 };
 let failed = 0;
 for (const [native, expected] of Object.entries(GOLDEN)) {

@@ -79,18 +79,25 @@ async function phraseAudio(
         reader.readAsDataURL(blob);
       });
     } else {
-      const response = await fetch("/api/say", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lang,
-          text,
-          pace: slow ? 0.72 : 0.9,
-          role: persona ? "coach" : "character",
-          persona,
-        }),
-      });
-      const data = await response.json();
+      // A voice never keeps the learner waiting: 20 s per try, one retry.
+      let response: Response | null = null;
+      for (let attempt = 0; attempt < 2 && !response?.ok; attempt++) {
+        response = await fetch("/api/say", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            lang,
+            text,
+            pace: slow ? 0.72 : 0.9,
+            role: persona ? "coach" : "character",
+            persona,
+          }),
+          signal: AbortSignal.timeout(20000),
+        }).catch(() => null);
+      }
+      if (!response)
+        throw new Error("The voice is taking too long. Tap to try again.");
+      const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.audio)
         throw new Error(
           data.error || "The voice could not respond. Try again.",

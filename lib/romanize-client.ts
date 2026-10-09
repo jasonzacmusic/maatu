@@ -218,6 +218,14 @@ export function romanizeDisplay(text: string) {
         if (script === "devanagari")
           latin = latin
             .replace(/[ṃṁ](?=[.!?]*$)/g, "n");
+        if (script === "malayalam")
+          // Malayalam writes the t sound as a doubled r (stor, ente) and
+          // softens a single retroflex t between vowels (evide, veedu).
+          latin = latin
+            .replace(/nṟ/g, "nt")
+            .replace(/(?<=[^aeiouāīūēōè\s])ṟṟ/g, "t")
+            .replace(/ṟṟ/g, "tt")
+            .replace(/(?<=[aeiouāīūēōè])ṭ(?=[aeiouāīūēōè])/g, "d");
         return latinize(latin);
       },
     )
