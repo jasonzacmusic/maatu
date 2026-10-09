@@ -1,4 +1,26 @@
-# Maatu voice providers, checked 6 October 2026
+# Maatu voice providers
+
+## Checked 9 October 2026
+
+Measured from this Mac against the live keys:
+
+| Service | Model | Result |
+| --- | --- | --- |
+| Sarvam speech | bulbul:v3, bulbul:v4-flash | Working. 0.7 to 0.9 s per phrase; streaming first audio 0.31 to 0.35 s. |
+| Sarvam recognition | saaras:v4 (codemix) | Working. 0.27 to 0.36 s for a short phrase, exact Kannada round trip. Locked to the call language it keeps English questions in English. |
+| Sarvam chat | sarvam-m | Deprecated by Sarvam (sarvam-105b replaces it). Maatu never used it. |
+| Gemini text | gemini-3.5-flash | Working in all four languages, about 3.2 to 3.9 s per typed reply. |
+| Gemini speech (French) | gemini-3.8-flash-tts | Working, about 5 s per French phrase. |
+| Gemini Live (French calls) | gemini-3.8-live | Working, 1.3 to 2.0 s from learner speech end to reply audio. |
+| LiveKit Cloud worker | maatu-studio, ap-south | Running; it sleeps when idle and wakes on the first call. |
+
+Changes made: Kannada speaks with the Bulbul v4 flash conversational speakers (chaitra female, chetan male). A blind A/B with the clip order swapped preferred v4 for Kannada 4 of 4 times; Hindi tied 2 to 2 and Tamil has no conversational v4 speaker, so both stay on v3. Recognition is locked to the call language after auto-detect wrote Tamil speech in Telugu letters. Malayalam and Telugu phrases use Bulbul v3 for Say it in other languages.
+
+Verdict: Sarvam is the right speech provider for Kannada, Tamil, Hindi, Malayalam and Telugu today. It is built for Indian languages and code-mixed speech, it was the fastest service measured here, and its rates are low. Keep Gemini for the teaching brain and for French. Credible alternatives if Sarvam ever degrades, each already fits the adapter design: Google Chirp 3 HD voices (lists kn, ta, ml, te), ElevenLabs v3 (lists Kannada, Tamil and Malayalam among 74 languages, at a higher price) and Microsoft Azure neural voices. None was measured to beat Sarvam on Indian accent; vendor language lists do not prove a local accent. A native listener should review recordings once a term.
+
+Sources for the alternatives: [Google Chirp 3 HD](https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd), [ElevenLabs models](https://elevenlabs.io/docs/overview/models), [Sarvam models](https://docs.sarvam.ai/api/getting-started/models).
+
+## Earlier record, 6 October 2026
 
 Maatu originally ran Gemini Live for all four languages. This release uses Sarvam Saaras v4 for Indian recognition, Gemini 3.5 Flash for the complete teaching brain, and fixed Sarvam Bulbul v3 persona voices for Kannada, Tamil and Hindi. French uses Gemini 3.8 Live. Phrase playback uses Sarvam for Indian languages and Gemini 3.8 Flash TTS for French. Explicit pronunciation assessments listen to audio through Gemini. A proposed high-confidence Indian pronunciation warning receives an independent Sarvam recognition check; uncertainty or a matching recognized phrase suppresses the warning. Text-only grammar checks never diagnose an accent.
 

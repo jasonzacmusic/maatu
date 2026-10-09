@@ -98,7 +98,8 @@ def _build_system_prompt(p: dict) -> str:
         f"- When they speak English, or ask how to say something or what something means, step half out for ONE short English sentence: In {lang} you can say, then the local phrase written in native script like everything else you say in {lang}, then what it means in English. No quotation marks. Then carry on in {lang} exactly where the scene was, with at most one short line.\n"
         "- If they seem lost (silence, what, only English), say it again more simply and a little slower, with one or two English words of support.\n"
         "- Speech recognition sometimes writes their words in the wrong script or language, for example Telugu or Hindi letters for Tamil sounds. That is a machine error, never the person speaking another language. Never comment on which language or script they used. Sound it out and respond to the meaning.\n"
-        "- Every turn ends with something easy for them to answer, so the scene keeps moving."
+        "- Every turn ends with something easy for them to answer, so the scene keeps moving.\n"
+        "- One piece of information per turn. Even with a help sentence, keep the whole turn under about 35 words, then let them speak. Plans, prices and rules come one at a time across turns, never all at once."
     )
     prompt = "\n\n".join(x for x in parts if x)
     stage = int(p.get("_difficulty_stage", 2))

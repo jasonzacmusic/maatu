@@ -1,11 +1,11 @@
 # Maatu
 
-Learn everyday spoken Tamil, Kannada, Hindi, and French at [maatu.vercel.app](https://maatu.vercel.app).
+Learn everyday spoken Tamil, Kannada, Hindi, and French at [maatu.nathanielschool.com](https://maatu.nathanielschool.com).
 
 Three ways to learn share the same language choices and teaching principles:
 
-- **Just talk:** ordinary voice or text conversations about any topic, with useful phrases, English meanings, and a question that keeps the conversation going. Text history carries into a voice call.
-- **Real-life scenes:** 14 practice scenarios per language, rooted in Chennai, Bengaluru, Delhi, and Paris. Speak or type with an AI scene partner, or invent a situation. City photographs document actual places; they do not depict the fictional characters.
+- **Just talk:** ordinary voice or text conversations about any topic. The teacher teaches softly while you talk: it answers what you meant, gives your own sentence back in the target language, folds any correction into the reply, and keeps the conversation going. Typed replies add one small tip when a mistake matters, and any phrase can be shown and heard in Tamil, Kannada, Hindi, Malayalam, Telugu and French. Text history carries into a voice call.
+- **Real-life scenes:** 20 scenes per language, each with 3 to 6 situations to choose from and a translated first line: auto, app cab, vegetable market, grocery store, eatery, hospital help desk, clinic, pharmacy, buying health insurance, negotiating an insurance claim, a music class at Nathaniel School, the Nathaniel School front desk (answers from `knowledge/nsm-school.md`), and more, rooted in Chennai, Bengaluru, Delhi, and Paris. Characters stay in the scene, echo the right form back naturally, and give one English help sentence when asked. City photographs document actual places; they do not depict the fictional characters.
 - **Sentence lab:** a playable dependency board connects Pronoun or Proper noun, Verb, Noun, Adjective, and Time & tense. Choose free build or four meaning-based challenges, with useful hints and completion saved separately for each language. Reuse pronouns, proper names, 30 actions, suitable nouns, adjectives, and time choices. Compare the same choices across all four languages, change gender, ask a question, make it negative, hear it, save it, and practise with your teacher.
 
 Each language also has the same 16-lesson beginner course. Close attempts count; meaningful mistakes get one correction and one retry. English meaning questions come first. Pausing, repetition, explanation, slower speech, and going back keep the activity on track. Lesson completion requires a final speaking check, never merely opening a call.
@@ -14,13 +14,14 @@ Indian-language captions use romanized Latin. The voice receives native script o
 
 ## Runtime
 
-Next.js PWA on Vercel, LiveKit Cloud for live audio, Gemini Live speech to speech, and Neon for grounded call reports. The named production worker is `maatu-studio`, hosted in LiveKit Cloud's India region. Calls work without an awake Mac. Sarvam remains the Indian-language fallback. Preview speech prepares stable sentences in the background and shares cached audio across Hear it controls. The starter and all four challenge goals have saved normal/slower audio in every language, so those previews need no model request. New Indic previews use native-script Sarvam Bulbul v3 with Gemini fallback; French uses native Gemini speech.
+Next.js PWA on Vercel, LiveKit Cloud for live audio, and Neon for grounded call reports. Indian-language calls use Sarvam Saaras v4 recognition locked to the call language, the Gemini 3.5 Flash teaching brain and fixed Sarvam voices (Bulbul v4 flash for Kannada, v3 for Hindi and Tamil); French calls use Gemini 3.8 Live. The named production worker is `maatu-studio`, hosted in LiveKit Cloud's India region. Calls work without an awake Mac. Provider checks and the verdict on Sarvam are in `docs/VOICE_PROVIDERS.md`. Preview speech prepares stable sentences in the background and shares cached audio across Hear it controls. The starter and all four challenge goals have saved normal/slower audio in every language, so those previews need no model request. New Indic previews use native-script Sarvam Bulbul v3 with Gemini fallback; French uses native Gemini speech.
 
 Vercel's production branch is `main`. Deploy from the repository root. Redeploy the cloud worker with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`; its data includes `french-reference.txt`, all persona JSON, and the existing full teaching prompts.
 
 ## Verification and project records
 
-- `scripts/verify-learning.ts`: 13 linguistic golden cases, 130,432 structurally valid combinations, 56 scenario records, and 64 lesson routes. Structural coverage is not an exhaustive native-speaker grammar certification.
+- `scripts/verify-learning.ts`: 13 linguistic golden cases, 130,432 structurally valid combinations, 80 scenario records, and 64 lesson routes.
+- `scripts/verify-romanize.ts`: 50 golden caption words across Tamil, Kannada, Hindi, Malayalam and Telugu. Structural coverage is not an exhaustive native-speaker grammar certification.
 - `scripts/verify-sentence-game.ts`: semantic challenge checks across all four languages, rejection of incorrect meanings, proper names/agreement, and compatible word changes.
 - `scripts/verify-lab-voice.ts`: 40 saved playable clips plus concurrent-request and cached-audio equality; prints fresh and cached timing measurements.
 - `scripts/prepare-lab-voices.ts`: regenerate the saved starter and challenge voices through the configured speech endpoint.

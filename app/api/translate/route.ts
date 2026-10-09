@@ -70,7 +70,7 @@ export async function POST(request: Request) {
           (i) => i.code === r.code && typeof i.native === "string" && i.native.trim(),
         );
         if (!found) return null;
-        const native = found.native.trim().replace(/—/gu, ",").slice(0, 400);
+        const native = found.native.trim().replace(/\u2014/gu, ",").slice(0, 400);
         return {
           code: r.code,
           name: r.name,

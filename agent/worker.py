@@ -246,9 +246,10 @@ async def entrypoint(ctx: agents.JobContext):
         turn_handling={
             # Beginners pause to think mid-sentence ("Sorry, ... how do I say
             # which floor?"). At 0.4 s the teacher answered "Sorry." and was
-            # cut off by the rest of the question (9-Oct-2026 probe). The turn
-            # detector waits max_delay when it predicts more is coming.
-            "endpointing": {"min_delay": 0.6, "max_delay": 1.8},
+            # cut off by the rest of the question; at 0.6 s a two-sentence
+            # question still split (9-Oct-2026 probes). The turn detector
+            # waits max_delay when it predicts more is coming.
+            "endpointing": {"min_delay": 0.8, "max_delay": 2.0},
             "interruption": {
                 "enabled": True,
                 "mode": "vad",

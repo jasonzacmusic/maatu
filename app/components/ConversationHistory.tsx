@@ -48,7 +48,9 @@ export default function ConversationHistory({
         </h1>
         <p>
           Voice and text conversations are saved on this device as you go.
-          Continue one, then choose a language to translate it.
+          Tap Continue to carry one on. To hear the same conversation in
+          another language, continue it, then pick that language at the top:
+          the whole conversation is translated and your original is kept.
         </p>
       </header>
       <div className="history-layout">

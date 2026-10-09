@@ -221,7 +221,7 @@ export function romanizeDisplay(text: string) {
         return latinize(latin);
       },
     )
-    .replace(/—/gu, ",")
+    .replace(/\u2014/gu, ",")
     // Zero-width joiners steer Indic rendering; in Latin captions they only
     // split words such as haaspital and ge.
     .replace(/[​-‍﻿]/gu, "");

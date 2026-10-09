@@ -27,7 +27,7 @@ assert.equal(whenAllowed('sleep', 'can'), false);
 assert.equal(adjectiveAllowed('hot', 'book'), false);
 let count = 0;
 for (const lang of ['ta', 'kn', 'hi', 'fr'] as const) {
- assert.equal(Object.values(PERSONAS).filter(p => p.language === lang).length, 14);
+ assert.equal(Object.values(PERSONAS).filter(p => p.language === lang).length, 20);
  assert.ok(personaMeta(`tutor-${lang}`));
  for (const lesson of ALL_LESSONS) { assert.ok(lesson.lexicon[lang].length, `${lang} ${lesson.id}`); assert.equal(personaMeta(`teacher-${lang}-${lesson.id}`)?.language, lang); }
  for (const who of WHO_TILES) for (const verb of VERB_TILES) for (const object of [...verb.objects, null]) for (const when of WHEN_TILES) for (const adjective of ADJECTIVES) {
@@ -42,4 +42,4 @@ for (const lang of ['ta', 'kn', 'hi', 'fr'] as const) {
   }
  }
 }
-console.log(`${goldens.length} linguistic goldens, ${count.toLocaleString()} supported sentences, 56 scenarios, and 64 lesson routes passed.`);
+console.log(`${goldens.length} linguistic goldens, ${count.toLocaleString()} supported sentences, 80 scenarios, and 64 lesson routes passed.`);

@@ -169,7 +169,7 @@ async function createSpeech(
           model: sarvamModel(lang),
           pace,
         }),
-        signal: AbortSignal.timeout(8000),
+        signal: AbortSignal.timeout(15000),
       });
       if (response.ok) {
         const data = await response.json();

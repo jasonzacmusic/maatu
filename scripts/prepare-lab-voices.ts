@@ -1,28 +1,36 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { buildPath } from "../lib/sentence-path";
 import { MISSIONS, STARTER } from "../lib/sentence-game";
 
 async function main() {
   const site = process.env.MAATU_SPEECH_SOURCE_URL || "http://127.0.0.1:3033";
-  const clips: { lang: string; text: string; pace: number; url: string }[] = [];
+  // MAATU_LAB_LANGS=kn regenerates one language and keeps the others' clips.
+  const only = (process.env.MAATU_LAB_LANGS || "ta,kn,hi,fr").split(",");
+  const previous: { lang: string; text: string; pace: number; url: string }[] =
+    JSON.parse(await readFile("lib/lab-voice.generated.json", "utf8").catch(() => "[]"));
+  const clips = previous.filter((clip) => !only.includes(clip.lang));
   await mkdir("public/voices/lab", { recursive: true });
   await Promise.all(
-    (["ta", "kn", "hi", "fr"] as const).map(async (lang) => {
+    (["ta", "kn", "hi", "fr"] as const).filter((lang) => only.includes(lang)).map(async (lang) => {
       for (const choice of [
         STARTER,
         ...MISSIONS.map((mission) => mission.target),
       ]) {
         for (const pace of [0.9, 0.72]) {
           const text = buildPath(lang, choice)!.sentence;
-          const response = await fetch(`${site}/api/say`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ lang, text, pace }),
-          });
-          const body = await response.json();
-          if (!response.ok || !body.audio)
-            throw new Error(`Voice preparation failed for ${lang}`);
+          let body: { audio?: string; error?: string } = {};
+          for (let attempt = 1; attempt <= 3 && !body.audio; attempt++) {
+            const response = await fetch(`${site}/api/say`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ lang, text, pace }),
+            });
+            body = await response.json().catch(() => ({}));
+            if (!response.ok) body.audio = undefined;
+          }
+          if (!body.audio)
+            throw new Error(`Voice preparation failed for ${lang}: ${body.error ?? "no audio"}`);
           const audio = Buffer.from(body.audio, "base64");
           if (
             audio.toString("ascii", 0, 4) !== "RIFF" ||
@@ -39,6 +47,9 @@ async function main() {
       }
     }),
   );
+  for (const old of previous.filter((clip) => only.includes(clip.lang)))
+    if (!clips.some((clip) => clip.url === old.url))
+      await unlink(`public${old.url}`).catch(() => undefined);
   clips.sort(
     (a, b) =>
       a.lang.localeCompare(b.lang) ||

@@ -35,6 +35,9 @@ colors:
   diagram-label: "#665c49"
   challenge-ink: "#624897"
   completed-ink: "#325d47"
+  tip-paper: "#fbf5e6"
+  tip-ink: "#5b4a23"
+  tip-icon: "#9b7a26"
 typography:
   display:
     fontFamily: "Newsreader, Georgia, serif"
@@ -444,6 +447,18 @@ The selected list row gains Lavender Paper and exposes its pressed state. Its co
 Submitted text turns and each final live segment save immediately to device history, with stable turn identifiers and original source text. Translated turns are labeled. A language switch translates the complete saved thread in ordered batches, validates turn identity and speaker order, and publishes only a finished version; other language versions remain retained. The original partner, place, facts, prices and unfinished question supply continuation context instead of a fresh greeting. A translation failure preserves the original and shows a recovery notice.
 
 Each saved correction is attributed to Side coach on mint without a colored side border. Assistant turns retain listening actions using their source phrase. Download exports the thread with its language versions as JSON. The reading pane states that records live on this device and clearing browser data removes them. If storage is full or blocked, the studio alerts the learner that the current visit remains in memory and points to history download before closing.
+
+### Finish Layer (9 October 2026)
+
+`app/finish.css` loads last and settles readability: nothing a learner must read sits below 12px, body copy stays at 14px or more, and controls are at least 40px (44px for call tools). On phones the four-tab row (Talk, Scenes, Lessons, Lab) is the main navigation with short labels; at 681px and wider the tab row is hidden because the sidebar lists every mode.
+
+The home shows a mint **Start here** panel on a first visit (Start lesson 1, or I know a little) and a white **resume card** for the last conversation instead of reopening it. The home voice button always starts a fresh call.
+
+The typed chat is a single centered column. A reply shows the phrase, its meaning prefixed with the language name, Hear and Save, an optional **tip** on Tip Paper with a lightbulb, the follow-up, then two text actions: **Say it in other languages** (a divider-led list with a voice per language) and **How this sentence works**. The explainer opens on demand: beside the chat on wide screens, under its message at 960px and below. On phones the chat log is part of the page scroll and the message box is sticky at the bottom.
+
+Scene previews add **Choose what happens today**: wrapping situation buttons with a lavender selected state, Surprise me, and the situation brief. **A first line, if you need one** shows a translated opener on mint with Hear.
+
+Calls drop the in-call language switch, name the back action End call, explain the first-call wake-up wait, and offer **Keep going by typing** whenever the microphone is blocked, silent or the partner does not join. On phones Mute, End and Captions sit in a sticky bottom bar. The explainer starts collapsed in calls.
 
 ## Do's and Don'ts
 

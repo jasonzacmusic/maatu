@@ -43,7 +43,10 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 - Voice (since 2026-10-06, Jason requested fixed local voices and provider independence): Kannada, Tamil and Hindi use Sarvam Saaras v4 automatic code-mixed recognition, the complete Gemini 3.5 Flash teaching brain, and a fixed Sarvam Bulbul v3 persona speaker with native-script input. French uses Gemini 3.8 Live. `agent/providers.py` pins one configured profile per room; operators can select live or fixed-native profiles without changing teaching, history or controls. There is no silent provider/voice fallback. `lib/model-adapters.ts` handles web model transport; `lib/speech.ts` handles exact phrase playback and the opposite-gender correction voice. Calls run in isolated prewarmed processes so a failed room connection cannot terminate another call. Deploy with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`. Captions are romanized locally; native source is retained for speech, teaching and translation.
 - DB: Neon Postgres + Drizzle.
 - Latency budget: under 1.5s from user speech end to agent audio start. Log per turn.
-- Personas are JSON data. `secret_agenda` is rewritten nightly. Characters NEVER correct the learner in scene.
+- Personas are JSON data. `secret_agenda` is rewritten nightly. Characters never lecture or point out mistakes in scene; they echo the right form back naturally (soft recast) and step half out for one short English help sentence only when asked.
+- Recognition is locked to the call language (codemix). Endpointing floor for beginners: min 0.8 s, max 2.0 s. Kannada voices are Bulbul v4 flash (chaitra / chetan); Hindi and Tamil stay on Bulbul v3.
+- The front desk scene answers about Nathaniel School only from `knowledge/nsm-school.md`. Never add fees, discount codes or a founding year there; update `knowledge/SOURCES.md` when facts change, then run `agent/build_personas.py`.
+- Captions: `lib/romanize-client.ts` owns the Tamil and Hindi sound rules. Run `npx tsx scripts/verify-romanize.ts` after any change.
 
 ## Teaching quality outranks latency (Jason's standing decision, 2026-07-31)
 
@@ -51,7 +54,8 @@ Jason Zac (always "Jason Zac", never "Zak" or "Zach"): musician, educator, non-c
 
 Rewriting a prompt to be *clearer* is allowed. Removing teaching behaviour is not. Any prompt edit must still pass all of these, verified by running a real call, not by reading the code:
 - a close-but-imperfect attempt is accepted as correct, not drilled again
-- a wrong answer gets one warm correction, one retry, then moves on
+- a wrong answer gets one warm correction, then moves on. In conversation and scenes the correction is a recast inside the reply and the follow-up question invites reuse; lessons, practice mode and lab sentences keep one explicit retry (Jason, 2026-10-09: "softly teach me, never stop the conversation to teach")
+- English the learner says is answered AND given back in the target language, so they learn to say their own thought
 - an English question gets the English meaning FIRST, never a pronunciation drill
 - control phrases work: wait, stop, slow down, say that again, what does that mean, go back
 - the learner only ever SEES romanized Latin (the app romanizes captions); the fixed Sarvam voice gets native script so it sounds local

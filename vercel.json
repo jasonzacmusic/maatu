@@ -36,6 +36,11 @@
       "regions": [
         "bom1"
       ]
+    },
+    "app/api/translate/route.ts": {
+      "regions": [
+        "bom1"
+      ]
     }
   }
 }
