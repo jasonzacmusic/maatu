@@ -104,8 +104,13 @@ function Meter({ label, value, hint }: { label: string; value: number | null; hi
       </div>
       <div className="mt-1 h-1.5 overflow-hidden rounded-full" style={{ background: "rgba(242,237,226,0.10)" }}>
         <div
-          className="h-full rounded-full"
-          style={{ width: `${value ?? 0}%`, background: color, transition: "width 420ms cubic-bezier(.2,.8,.2,1), background 300ms ease" }}
+          className="h-full w-full rounded-full"
+          style={{
+            background: color,
+            transformOrigin: "left center",
+            transform: `scaleX(${(value ?? 0) / 100})`,
+            transition: "transform 420ms cubic-bezier(.2,.8,.2,1), background 300ms ease",
+          }}
         />
       </div>
       <div className="mt-1 text-[10px] leading-tight" style={{ color: C.faint }}>
@@ -194,10 +199,10 @@ function Card({ card, lang, onHear, playing }: { card: CoachCard; lang: Lang; on
   const perfect = card.ok && (card.grammar ?? 0) >= 85;
   const edge = english ? SKY : perfect ? GREEN : band(card.grammar ?? 0);
   return (
-    <div className="rounded-[14px] px-3.5 py-3" style={{ background: C.base, border: `1px solid ${edge}44`, borderLeft: `3px solid ${edge}` }}>
+    <div className="rounded-[14px] px-3.5 py-3" style={{ background: C.base, border: `1px solid ${edge}3D` }}>
       <div className="flex items-start justify-between gap-2">
         <span className="min-w-0 flex-1">
-          <span className="block text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.1 }}>
+          <span className="block text-[9.5px] font-bold" style={{ color: edge, letterSpacing: 1.1 }}>
             {english ? "YOU SPOKE ENGLISH" : perfect ? "YOU SAID IT RIGHT" : "YOU SAID"}
           </span>
           <span className="mt-0.5 block text-[12.5px] leading-snug" style={{ color: perfect ? C.milk : C.muted, fontFamily: MONO }}>

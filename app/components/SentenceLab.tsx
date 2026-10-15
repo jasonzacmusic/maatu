@@ -243,12 +243,13 @@ function Switch2({
         <span
           className="absolute rounded-full"
           style={{
-            left: on ? "50%" : 4,
+            left: 4,
             width: "calc(50% - 4px)",
             height: 42,
             background: `${side.color}26`,
             border: `1.5px solid ${side.color}`,
-            transition: "left 180ms cubic-bezier(.2,.8,.2,1), background 180ms ease, border-color 180ms ease",
+            transform: on ? "translateX(100%)" : "translateX(0)",
+            transition: "transform 180ms cubic-bezier(.2,.8,.2,1), background 180ms ease, border-color 180ms ease",
           }}
           aria-hidden="true"
         />
