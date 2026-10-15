@@ -8,9 +8,11 @@ import { ALL_LESSONS, FRENCH_META, teacherMeta, getDone, markDone, lessonWasMast
 import { ClassroomScreen } from "./ClassroomScreen";
 import { BuildScreen } from "./BuildScreen";
 import { countFor } from "@/lib/review";
+import type { Gender } from "@/lib/grammar";
 import { CourseProgressCard } from "./CourseProgressCard";
 import { LessonPreviewScreen } from "./LessonPreviewScreen";
 import { LessonResultScreen } from "./LessonResultScreen";
+import { CoachBadge, CoachRail, useLiveCoach } from "./LiveCoach";
 import {
   C,
   BODY,
@@ -53,6 +55,8 @@ type SessionEnd = {
   rawTranscript?: Line[];
   durationSec: number;
   endedUnexpectedly?: boolean;
+  // What the quiet coach scored during the call, carried into the debrief.
+  scores?: { grammar: number | null; pronunciation: number | null; spoken: number; understood: number };
 };
 type DifficultyStage = 1 | 2 | 3;
 type LessonResult = { lesson: Lesson; passed: boolean; transcript: Line[] };
@@ -65,7 +69,7 @@ type StreetStats = {
 };
 
 const EMPTY_STATS: StreetStats = { totalSeconds: 0, thisWeekSeconds: 0, sessionCount: 0, nights: 0, scenarios: [] };
-const LANGS: Lang[] = ["kn", "hi", "ta"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
 
 function greeting() {
   const hour = new Date().getHours();
@@ -229,7 +233,7 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
             Your private speaking teacher, from the very first word.
           </h1>
           <p className="mx-auto mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 320 }}>
-            Speak Kannada, Hindi, or Tamil. Chat about anything, build any sentence yourself, or act out a real situation.
+            Speak Kannada, Hindi, Tamil or Malayalam. Chat about anything, build any sentence yourself, or act out a real situation.
           </p>
         </div>
 
@@ -449,7 +453,7 @@ function Hub({
               Build any sentence yourself
             </span>
             <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              Tap who, the action, what and when. See it, hear it, flip it to did, doing and will do. Kannada, Hindi, Tamil, French.
+              One sentence on screen, every part changeable. 68 actions, 155 words, four times, yes or no, telling or asking. Kannada, Hindi, Tamil, Malayalam, French.
             </span>
           </span>
           <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>
@@ -583,6 +587,7 @@ function CallScreen({
   lang,
   difficultyStage,
   captionsDefault,
+  gender,
   onEnd,
   onBack,
   rm,
@@ -592,13 +597,21 @@ function CallScreen({
   lang: Lang;
   difficultyStage: DifficultyStage;
   captionsDefault: boolean;
+  gender: Gender;
   onEnd: (payload: SessionEnd) => void;
   onBack: () => void;
   rm: boolean;
   practice?: PracticeLine | null;
 }) {
-  const call = useMaatuCall(meta.id, difficultyStage, practice);
+  // The quiet coach: on for every scene and for Chat, off for a structured
+  // lesson (the teacher there corrects out loud, so two voices would collide)
+  // and off for French, which the coach has no vetted tables for.
+  const coachOn = meta.scenario !== "class" && meta.id !== "tutor-fr";
+  const brief = SCENARIO_BRIEF[meta.shop as ShopId] ?? null;
+  const coach = useLiveCoach(lang, gender, coachOn ? brief : null, coachOn);
+  const call = useMaatuCall(meta.id, difficultyStage, practice, coachOn ? coach.push : undefined);
   const [caps, setCaps] = useState(captionsDefault);
+  const [coachOpen, setCoachOpen] = useState(false);
   const [slowPending, setSlowPending] = useState(false);
   const [sec, setSec] = useState(0);
   const [noShow, setNoShow] = useState(false);
@@ -658,6 +671,7 @@ function CallScreen({
       rawTranscript: call.recordTranscript(),
       durationSec: sec,
       endedUnexpectedly: call.endedUnexpectedly,
+      scores: coachOn ? { grammar: coach.grammar, pronunciation: coach.pronunciation, spoken: coach.spoken, understood: coach.understood } : undefined,
     });
   };
 
@@ -672,6 +686,7 @@ function CallScreen({
       rawTranscript: call.recordTranscript(),
       durationSec: sec,
       endedUnexpectedly: call.endedUnexpectedly,
+      scores: coachOn ? { grammar: coach.grammar, pronunciation: coach.pronunciation, spoken: coach.spoken, understood: coach.understood } : undefined,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [call.phase]);
@@ -707,7 +722,8 @@ function CallScreen({
       <CallBackdrop scenario={meta.scenario} />
       <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: 420, background: "radial-gradient(220px 200px at 50% 8%, rgba(255,179,92,0.24), transparent 68%)" }} aria-hidden="true" />
 
-      <div className="relative mx-auto flex h-full max-w-[440px] flex-col">
+      <div className={"relative mx-auto grid h-full gap-0 lg:gap-6 lg:px-6" + (coachOn ? " max-w-[440px] lg:max-w-[1040px] lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)]" : " max-w-[440px]")}>
+      <div className="relative flex h-full min-h-0 flex-col">
         {/* header */}
         <div className="flex items-center justify-between px-6 pt-14">
           <span className="flex items-center gap-2 text-[13px]" style={{ color: C.muted }}>
@@ -721,10 +737,13 @@ function CallScreen({
             </button>
             <span className="hidden sm:inline">{isClass ? meta.sceneLabel : `${meta.name} · ${meta.sceneLabel.split(",")[0]}`}</span>
           </span>
-          <span className="inline-flex items-center gap-2 text-[12.5px] font-semibold" style={{ color: C.kumkum }}>
-            <span className={"rounded-full" + (rm ? "" : " mt-dotflash")} style={{ width: 7, height: 7, background: C.kumkum }} />
-            <span style={{ fontFamily: MONO }}>
-              {mm}:{ss}
+          <span className="inline-flex items-center gap-2">
+            {coachOn && <span className="lg:hidden"><CoachBadge coach={coach} open={coachOpen} onClick={() => setCoachOpen(!coachOpen)} /></span>}
+            <span className="inline-flex items-center gap-2 text-[12.5px] font-semibold" style={{ color: C.kumkum }}>
+              <span className={"rounded-full" + (rm ? "" : " mt-dotflash")} style={{ width: 7, height: 7, background: C.kumkum }} />
+              <span style={{ fontFamily: MONO }}>
+                {mm}:{ss}
+              </span>
             </span>
           </span>
         </div>
@@ -883,6 +902,20 @@ function CallScreen({
             </span>
           </button>
         </div>
+        {/* phone: the coach folds out under the controls */}
+        {coachOn && coachOpen && (
+          <div className="px-5 pb-8 lg:hidden">
+            <CoachRail coach={coach} lang={lang} name={meta.name} compact />
+          </div>
+        )}
+      </div>
+
+      {/* desktop: the coach lives on the right, beside the call, all the time */}
+      {coachOn && (
+        <div className="hidden min-h-0 py-14 lg:flex lg:flex-col">
+          <CoachRail coach={coach} lang={lang} name={meta.name} />
+        </div>
+      )}
       </div>
     </div>
   );
@@ -1015,6 +1048,37 @@ function DebriefScreen({
             </p>
           )}
         </div>
+
+        {session?.scores && session.scores.spoken > 0 && (
+          <div className="mt-5 rounded-[18px] p-4" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-[10.5px] font-bold" style={{ color: C.sodium, letterSpacing: 1.2 }}>HOW YOU SPOKE</span>
+              <span className="text-[11.5px]" style={{ color: C.faint }}>
+                {session.scores.understood} of {session.scores.spoken} lines understood
+              </span>
+            </div>
+            <div className="mt-2.5 flex gap-3">
+              {[
+                { label: "GRAMMAR", value: session.scores.grammar, hint: "how you put the words together" },
+                { label: "PRONUNCIATION", value: session.scores.pronunciation, hint: "how your words came through" },
+              ].map((m) => {
+                const color = m.value === null ? C.faint : m.value >= 85 ? "#7FE3A8" : m.value >= 60 ? C.sodium : "#FF8D7A";
+                return (
+                  <div key={m.label} className="min-w-0 flex-1">
+                    <div className="flex items-baseline justify-between gap-1">
+                      <span className="text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.1 }}>{m.label}</span>
+                      <span className="text-[18px] font-bold tabular-nums" style={{ color, fontFamily: MONO }}>{m.value === null ? "--" : `${m.value}%`}</span>
+                    </div>
+                    <div className="mt-1 h-1.5 overflow-hidden rounded-full" style={{ background: "rgba(242,237,226,0.10)" }}>
+                      <div className="h-full rounded-full" style={{ width: `${m.value ?? 0}%`, background: color }} />
+                    </div>
+                    <div className="mt-1 text-[10px] leading-tight" style={{ color: C.faint }}>{m.hint}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {status === "pending" && (
           <div className="mt-6 flex flex-col gap-3">
@@ -1398,6 +1462,9 @@ export default function MaatuApp() {
   const [studioSeed, setStudioSeed] = useState<{ text: string; nonce: number } | null>(null);
   const [rm, setRm] = useState(false);
   const [caps, setCaps] = useState(true);
+  // The learner's own gender, set in Build and remembered; Hindi needs it and
+  // the live coach is told it for every language.
+  const [gender, setGender] = useState<Gender>("m");
   const [userId, setUserId] = useState("");
   const [stats, setStats] = useState<StreetStats>(EMPTY_STATS);
   const [statsLoading, setStatsLoading] = useState(true);
@@ -1410,6 +1477,8 @@ export default function MaatuApp() {
     const prefersReduced = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setRm(storedMotion === null ? prefersReduced : storedMotion === "true");
     setCaps(window.localStorage.getItem("maatu-captions") !== "false");
+    const storedGender = window.localStorage.getItem("maatu-gender");
+    if (storedGender === "f" || storedGender === "m") setGender(storedGender);
     const storedLang = window.localStorage.getItem("maatu-lang") as Lang | null;
     if (storedLang && LANGS.includes(storedLang)) {
       setLangState(storedLang);
@@ -1593,7 +1662,7 @@ export default function MaatuApp() {
           ) : screen === "scenario" && pendingShop ? (
             <ScenarioDetail meta={meta} shop={pendingShop} difficultyStage={difficultyStage} onBack={() => setScreen("hub")} onCall={() => setScreen("call")} rm={rm} />
           ) : screen === "call" ? (
-            <CallScreen meta={meta} lang={lang} difficultyStage={difficultyStage} captionsDefault={caps} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} practice={activePersona.startsWith("tutor-") ? practiceLine : null} />
+            <CallScreen meta={meta} lang={lang} difficultyStage={difficultyStage} captionsDefault={caps} gender={gender} onEnd={handleCallEnd} onBack={() => setScreen(activePersona.startsWith("teacher-") ? "lessonPreview" : activePersona.startsWith("tutor-") ? tutorOrigin : "hub")} rm={rm} practice={activePersona.startsWith("tutor-") ? practiceLine : null} />
           ) : screen === "lessonResult" && lastLessonResult ? (
             <LessonResultScreen
               lang={lang}

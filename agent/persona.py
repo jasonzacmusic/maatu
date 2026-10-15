@@ -18,6 +18,7 @@ LANG_NAMES = {
     "kn-IN": "Kannada",
     "hi-IN": "Hindi",
     "ta-IN": "Tamil",
+    "ml-IN": "Malayalam",
     "en-IN": "Indian English",
 }
 

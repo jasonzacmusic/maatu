@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LANG_NAME } from "@/lib/curriculum";
 import { countFor, dueNow, grade, loadReview, type ReviewItem } from "@/lib/review";
 import { C, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 import { Section, SpeakButton, type Speaker } from "./studio-bits";
@@ -38,7 +39,7 @@ export function ReviewRoom({ lang, speaker, anchor, version, onChange }: { lang:
       {current && (
         <div key={current.id} className="mt-4 rounded-[18px] p-5" style={{ background: "linear-gradient(135deg,rgba(191,239,219,0.14),rgba(255,179,92,0.04))", border: "1px solid rgba(191,239,219,0.34)", animation: "mtFade 260ms ease both" }}>
           <div className="text-[10.5px] font-bold" style={{ color: C.tube, letterSpacing: 1.2 }}>
-            SAY THIS IN {lang === "kn" ? "KANNADA" : lang === "hi" ? "HINDI" : "TAMIL"} · BOX {current.box + 1}
+            SAY THIS IN {LANG_NAME[lang].toUpperCase()} · BOX {current.box + 1}
           </div>
           <div className="mt-1.5 text-[22px] font-semibold leading-snug" style={{ color: C.milk }}>{current.en}</div>
           {revealed ? (

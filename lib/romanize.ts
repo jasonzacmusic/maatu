@@ -1,4 +1,4 @@
-const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u;
+const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff\u0d00-\u0d7f]/u;
 
 export function hasNativeScript(text: string) {
   return NATIVE_SCRIPT.test(text);

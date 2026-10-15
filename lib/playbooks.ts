@@ -6,7 +6,7 @@ import type { Gender } from "./grammar";
 // teaching scripts), number blocks, and sound pairs for the Sentence Studio.
 // All data lives in playbooks.json. No em dashes anywhere.
 
-export type Line = { who: "you" | "them"; en: string; kn: string; hi: string; hiF?: string; ta: string; note?: string };
+export type Line = { who: "you" | "them"; en: string; kn: string; hi: string; hiF?: string; ta: string; ml: string; note?: string };
 export type Beat = { beat: string; lines: Line[] };
 export type SceneGroup = "street" | "food" | "shops" | "home" | "travel" | "music";
 export type Scene = { id: string; group: SceneGroup; title: string; place: string; blurb: string; beats: Beat[] };

@@ -15,9 +15,43 @@ ROOT = Path(__file__).resolve().parent.parent
 PERSONA_DIR = ROOT / "personas"
 TS_OUT = ROOT / "lib" / "personas.generated.ts"
 
-LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
-CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai"}
+LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "ml": "ml-IN"}
+LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "ml": "Malayalam"}
+CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai", "ml": "Kochi"}
+
+# Malayalam was added after the first three languages, so its per-scenario
+# dressing lives in one table here and is merged into SCENARIOS below. Spoken
+# Kochi Malayalam throughout, never literary.
+ML = {
+    "auto": {"scene_label": "Auto rickshaw, Kochi", "voice": "aditya", "name": "Shaji",
+             "style": "Kochi spoken Malayalam with natural English code-mixing (meter, signal, left-right, side aakkoo). Short sentences. Never literary Malayalam."},
+    "delivery": {"scene_label": "Delivery gate, Kochi", "voice": "sumit", "name": "Anoop",
+                 "style": "Spoken Malayalam with delivery-app English mixing (order, gate, block, OTP, location). Short, quick sentences."},
+    "care": {"scene_label": "Customer care, Kochi", "voice": "shreya", "name": "Anjana",
+             "style": "Professional spoken Malayalam with standard English mixing (plan, connection, installation, document, appointment). Courteous, measured."},
+    "airport": {"scene_label": "Airport counter, COK", "voice": "roopa", "name": "Reshma",
+                "style": "Brisk professional Malayalam with airport English mixing (check-in, boarding pass, gate, baggage, security). Clear and quick."},
+    "chai": {"scene_label": "Chaaya kada, Kochi", "voice": "ratan", "name": "Biju",
+             "style": "Warm casual Kochi Malayalam with everyday English mixing. Relaxed, friendly, unhurried."},
+    "teach": {"scene_label": "Music school, Kochi", "voice": "rahul", "name": "Adithyan",
+              "style": "Natural Kochi school-kid Malayalam with English mixing (beat, clap, song, YouTube). Eager, informal."},
+    "market": {"scene_label": "Vegetable market, Kochi", "voice": "suhani", "name": "Omana",
+               "style": "Fast market Malayalam, warm and loud, everyday English mixing (kilo, rate, fresh, half). Short bursts."},
+    "kirana": {"scene_label": "Provision store, Kochi", "voice": "manan", "name": "Devassy",
+               "style": "Everyday shopkeeper Malayalam, brisk and familiar, English mixing (packet, brand, total, UPI, home delivery)."},
+    "doctor": {"scene_label": "Clinic, Kochi", "voice": "shruti", "name": "Dr Sreelatha",
+               "style": "Calm clinical Malayalam, simple and clear, medical English mixing (fever, tablet, food, test, rest)."},
+    "restaurant": {"scene_label": "Thattukada, Kochi", "voice": "ashutosh", "name": "Jayan",
+                   "style": "Quick eatery Malayalam, friendly and rushed, food English mixing (plate, full, half, parcel, bill)."},
+    "neighbour": {"scene_label": "Your lane, Kochi", "voice": "rupali", "name": "Leela",
+                  "style": "Warm neighbourly Malayalam, chatty, everyday English mixing (flat, water, parking, parcel, chaaya)."},
+    "landlord": {"scene_label": "Your flat, Kochi", "voice": "shubh", "name": "Varghese",
+                 "style": "Practical landlord Malayalam, direct, English mixing (rent, maintenance, advance, plumber, geyser)."},
+    "salon": {"scene_label": "Barber shop, Kochi", "voice": "advait", "name": "Suresh",
+              "style": "Chatty barber Malayalam, friendly and opinionated, English mixing (trim, style, machine, massage, mirror)."},
+    "pharmacy": {"scene_label": "Medical store, Kochi", "voice": "aayan", "name": "Noushad",
+                 "style": "Efficient pharmacy Malayalam, clear and quick, medical English mixing (tablet, syrup, strip, generic, prescription)."},
+}
 
 # Per scenario: shop id (frontend), gender, level, English rubric, and per
 # language the character name, a spoken-style note, and the opening beat.
@@ -294,7 +328,21 @@ SCENARIOS = {
 }
 
 
+def merge_malayalam():
+    """Fold the ML table into SCENARIOS so every language is handled identically."""
+    for skey, extra in ML.items():
+        s = SCENARIOS[skey]
+        s["scene_label"]["ml"] = extra["scene_label"]
+        s["voice"]["ml"] = extra["voice"]
+        s["name"]["ml"] = extra["name"]
+        s["style"]["ml"] = extra["style"]
+    missing = sorted(set(SCENARIOS) - set(ML))
+    if missing:
+        raise SystemExit(f"no Malayalam dressing for: {missing}")
+
+
 def build():
+    merge_malayalam()
     PERSONA_DIR.mkdir(exist_ok=True)
     manifest = {}
     for skey, s in SCENARIOS.items():
@@ -362,7 +410,7 @@ def write_ts(manifest: dict):
         "",
         "export type PersonaMeta = {",
         "  id: string;",
-        "  language: \"kn\" | \"hi\" | \"ta\";",
+        "  language: \"kn\" | \"hi\" | \"ta\" | \"ml\";",
         "  languageCode: string;",
         "  languageName: string;",
         "  scenario: string;",

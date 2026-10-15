@@ -64,6 +64,19 @@
               "note: in daily life most people just say the English word sorry",
               "yes = aama",
               "no = illa"
+            ],
+            "ml": [
+              "hello = namaskaram (the reply is also namaskaram)",
+              "how are you = sukhamaano",
+              "I am fine = enikku sukhamaanu",
+              "thank you = nandi",
+              "note: in daily life most people simply say the English word thanks; teach nandi but mention this",
+              "please = dayavaayi",
+              "note: dayavaayi sounds formal in speech; people soften a request with kurachu plus the oo ending, or just say please in English",
+              "sorry = kshamikkanam",
+              "note: for sorry too, most people simply say the English word sorry",
+              "yes = athe",
+              "no = alla (there is none = illa)"
             ]
           }
         },
@@ -107,6 +120,13 @@
               "I am from ___ (my home town is ___) = en ooru ___",
               "nice to meet you = ungala paathadhula romba sandhosham",
               "note: in daily life most people simply say nice to meet you in English; teach the Tamil form but mention this"
+            ],
+            "ml": [
+              "my name is ___ = ente peru ___",
+              "what is your name = ningalude peru enthaanu",
+              "I am from ___ (my place is ___) = njaan ___ il ninnu aanu",
+              "nice to meet you = kandathil santhosham",
+              "note: in daily life most people simply say nice to meet you in English; teach the Malayalam form but mention this"
             ]
           }
         },
@@ -152,6 +172,13 @@
               "eleven to fifteen = padhinonnu, pannendu, padhimoonu, padhinaalu, padhinanju",
               "sixteen to twenty = padhinaaru, padhinezhu, padhinettu, patthonbadhu, irubadhu",
               "how many = ethana"
+            ],
+            "ml": [
+              "one to five = onnu, randu, moonu, naalu, anchu",
+              "six to ten = aaru, ezhu, ettu, onpathu, patthu",
+              "eleven to fifteen = pathinonnu, pathiranda, pathimoonu, pathinaalu, pathinanchu",
+              "sixteen to twenty = pathinaaru, pathinezhu, pathinettu, pathonpathu, irupathu",
+              "how many = ethra"
             ]
           }
         }
@@ -205,6 +232,14 @@
               "orange = orange (Tamils use the English word)",
               "grapes = dhraatchai",
               "this is ___ = idhu ___ (idhu maampazham = this is a mango)"
+            ],
+            "ml": [
+              "banana = pazham (the long one is ethakka)",
+              "mango = maampazham",
+              "apple = apple (Malayalis use the English word)",
+              "orange = orange (Malayalis use the English word)",
+              "grapes = munthiri",
+              "this is ___ = ithu ___ aanu (ithu maampazham aanu = this is a mango)"
             ]
           }
         },
@@ -257,6 +292,15 @@
               "onion = vengaayam",
               "tomato = thakkaali",
               "I want ___ = enakku ___ venum (enakku tea venum = I want tea)"
+            ],
+            "ml": [
+              "rice (cooked) = choru",
+              "water = vellam",
+              "milk = paal",
+              "tea = chaaya",
+              "onion = savaala (also ulli)",
+              "tomato = thakkaali",
+              "I want ___ = enikku ___ venam (enikku chaaya venam = I want tea)"
             ]
           }
         },
@@ -304,6 +348,14 @@
               "younger sister = thangachi (younger brother = thambi)",
               "child = kuzhandhai",
               "my mother = en amma"
+            ],
+            "ml": [
+              "mother = amma",
+              "father = achan",
+              "elder brother = chettan (elder sister = chechi)",
+              "younger sister = aniyathi (younger brother = aniyan)",
+              "child = kutti",
+              "my mother = ente amma"
             ]
           }
         },
@@ -356,6 +408,15 @@
               "chair = naarkaali",
               "book = puthagam",
               "where is ___ = ___ enga irukku (phone enga irukku = where is the phone)"
+            ],
+            "ml": [
+              "house = veedu",
+              "door = vaathil",
+              "phone = phone (everyone says the English word)",
+              "money = panam",
+              "chair = kasera",
+              "book = pusthakam",
+              "where is ___ = ___ evideyaanu (phone evideyaanu = where is the phone)"
             ]
           }
         }
@@ -405,6 +466,13 @@
               "this is ___ = idhu ___ (idhu thanni = this is water)",
               "that is ___ = adhu ___ (adhu maampazham = that is a mango)",
               "is this ___? = idhu ___ aa? (idhu paalaa? = is this milk? just add the aa sound to the noun)"
+            ],
+            "ml": [
+              "this = ithu",
+              "that = athu",
+              "this is ___ = ithu ___ aanu (ithu vellam aanu = this is water)",
+              "that is ___ = athu ___ aanu (athu maampazham aanu = that is a mango)",
+              "is this ___? = ithu ___ aano? (ithu paal aano? = is this milk? just add aano)"
             ]
           }
         },
@@ -447,6 +515,12 @@
               "I do not want ___ = enakku ___ vendam",
               "I have ___ = en kitta ___ irukku (en kitta kaasu irukku = I have money)",
               "I need ___ = enakku ___ venum (same word as want; Tamil does not separate them)"
+            ],
+            "ml": [
+              "I want ___ = enikku ___ venam",
+              "I do not want ___ = enikku ___ venda",
+              "I have ___ = ente kayyil ___ und (ente kayyil panam und = I have money)",
+              "I need ___ = enikku ___ venam (same word as want; Malayalam does not separate them)"
             ]
           }
         },
@@ -492,6 +566,13 @@
               "how much = evvalavu (on the street it shortens to evlo: idhu evlo? = how much is this?)",
               "how many = ethana",
               "who = yaaru"
+            ],
+            "ml": [
+              "what is this = ithu enthaanu",
+              "where is ___ = ___ evideyaanu",
+              "how much = ethra (ithu ethrayaanu? = how much is this?)",
+              "how many = ethra (the same word as how much)",
+              "who = aaru"
             ]
           }
         }
@@ -542,6 +623,14 @@
               "I go = naan poren (naan veetukku poren = I go home)",
               "I speak = naan pesuren (naan konjam Tamil pesuren = I speak a little Tamil)",
               "I come = naan varen"
+            ],
+            "ml": [
+              "I eat = njaan kazhikkunnu (njaan choru kazhikkunnu = I eat rice)",
+              "I drink = njaan kudikkunnu",
+              "I go = njaan pokunnu (njaan veettilekku pokunnu = I go home)",
+              "I speak = njaan samsaarikkunnu (njaan kurachu Malayalam samsaarikkunnu = I speak a little Malayalam)",
+              "I come = njaan varunnu",
+              "note: the big gift of Malayalam. The verb does not change for the person: njaan kazhikkunnu, nee kazhikkunnu, avar kazhikkunnu"
             ]
           }
         },
@@ -588,6 +677,14 @@
               "I saw = naan paathen",
               "today = innikki, yesterday = nethu (nethu naan veetukku ponen = yesterday I went home)",
               "note: contrast pair to teach the ending: saapdren (I eat) vs saapten (I ate)"
+            ],
+            "ml": [
+              "I ate = njaan kazhichu (njaan choru kazhichu = I ate rice)",
+              "I went = njaan poyi (njaan veettilekku poyi = I went home)",
+              "I came = njaan vannu",
+              "I saw = njaan kandu",
+              "today = innu, yesterday = innale (innale njaan veettilekku poyi = yesterday I went home)",
+              "note: contrast pair to teach the ending: kazhikkunnu (I eat) vs kazhichu (I ate)"
             ]
           }
         },
@@ -634,6 +731,14 @@
               "I will go = naan poven (naan naalaikku poven = I will go tomorrow)",
               "I will come = naan varuven",
               "I will speak = naan pesuven"
+            ],
+            "ml": [
+              "tomorrow = naale",
+              "I will eat = njaan kazhikkum (naale kazhikkum = I will eat tomorrow)",
+              "I will go = njaan pokum (naale pokum = I will go tomorrow)",
+              "I will come = njaan varum",
+              "I will speak = njaan samsaarikkum",
+              "note: Malayalam has a real future, and it is one easy ending: um. Same word for every person"
             ]
           }
         }
@@ -681,6 +786,13 @@
               "but = aana",
               "because = aenna (naan poren, aenna late aachu = I am going because it got late)",
               "note: word order is subject, object, verb: naan saadham saapdren = I rice eat"
+            ],
+            "ml": [
+              "and = um on both words (chaayayum choarum = tea and rice)",
+              "note: in spoken Kochi people very often just say the English word and; teach um but mention this",
+              "but = pakshe",
+              "because = enthukondennaal (shorter in speech: karanam)",
+              "note: word order is subject, object, verb: njaan choru kazhikkunnu = I rice eat"
             ]
           }
         },
@@ -726,6 +838,13 @@
               "can you say it again = thirumba sollunga",
               "there is no ___ = ___ illa (paal illa = there is no milk)",
               "I do not want = enakku vendam"
+            ],
+            "ml": [
+              "a little = kurachu",
+              "please give = thaaroo (kurachu vellam thaaroo = please give a little water)",
+              "can you say it again = onnu koodi parayoo",
+              "there is no ___ = ___ illa (paal illa = there is no milk)",
+              "I do not want = enikku venda"
             ]
           }
         },
@@ -792,6 +911,19 @@
               "stop here = inga niruthunga",
               "I did not understand = enakku puriyala",
               "speak slowly = medhuva pesunga (people also say konjam slow a pesunga)"
+            ],
+            "ml": [
+              "thirty = muppathu, forty = naalpathu, fifty = anpathu",
+              "sixty = arupathu, seventy = ezhupathu, eighty = enpathu, ninety = thonnooru",
+              "rupees = roopa (anpathu roopa = fifty rupees)",
+              "too much = kooduthal (ithu kooduthal aanu = this is too much)",
+              "reduce a little = kurachu kurakkoo",
+              "left = idathottu, right = valathottu (idathottu thirikkoo = turn left)",
+              "straight = neere (neere pokoo = go straight)",
+              "note: auto drivers understand the English words left, right and straight perfectly well; teach the Malayalam but say this",
+              "stop here = ivide nirthoo",
+              "I did not understand = enikku manassilaayilla",
+              "speak slowly = kurachu pathukke parayoo"
             ]
           }
         }

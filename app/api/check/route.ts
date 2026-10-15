@@ -12,8 +12,8 @@ import { hasNativeScript, romanizeText } from "@/lib/romanize";
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MODEL = process.env.CHECK_MODEL || "gemini-flash-lite-latest";
-const LANGS: Lang[] = ["kn", "hi", "ta"];
-const CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN" };
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+const CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", ml: "ml-IN" };
 const TYPES = new Set(["tense", "gender", "verb", "word-order", "missing-word", "ending", "word-choice", "politeness", "spelling"]);
 
 export type Correction = { type: string; was: string; now: string; why: string };
@@ -92,7 +92,7 @@ async function roman(value: unknown, code: string): Promise<string> {
   if (!hasNativeScript(s)) return s;
   const out = await romanizeText(s, code);
   if (out && out !== "Romanization unavailable" && !hasNativeScript(out)) return out;
-  return s.replace(/[ऀ-ॿ஀-௿ಀ-೿]+/gu, "").replace(/\s+/g, " ").trim();
+  return s.replace(/[ऀ-ॿ஀-௿ಀ-೿ഀ-ൿ]+/gu, "").replace(/\s+/g, " ").trim();
 }
 
 export async function POST(request: Request) {

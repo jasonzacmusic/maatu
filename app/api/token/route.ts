@@ -18,8 +18,8 @@ function randomSuffix() {
 function isValidPersona(personaId: string) {
   const base = personaId.replace(/-d[123]$/, "");
   if (PERSONAS[base]) return personaId === base || /^.+-d[123]$/.test(personaId);
-  if (/^tutor-(kn|hi|ta|fr)$/.test(personaId)) return true;
-  const teacher = /^teacher-(kn|hi|ta)-(.+)$/.exec(personaId);
+  if (/^tutor-(kn|hi|ta|ml|fr)$/.test(personaId)) return true;
+  const teacher = /^teacher-(kn|hi|ta|ml)-(.+)$/.exec(personaId);
   return Boolean(teacher && ALL_LESSONS.some((lesson) => lesson.id === teacher[2]));
 }
 

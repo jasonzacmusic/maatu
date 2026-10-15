@@ -13,6 +13,7 @@ const VOICE: Record<string, { code: string; speaker: string }> = {
   kn: { code: "kn-IN", speaker: "shreya" },
   hi: { code: "hi-IN", speaker: "pooja" },
   ta: { code: "ta-IN", speaker: "ishita" },
+  ml: { code: "ml-IN", speaker: "kavya" },
 };
 
 export async function POST(request: Request) {

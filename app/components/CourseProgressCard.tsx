@@ -1,7 +1,7 @@
 import { courseStatus, LANG_NAME } from "@/lib/curriculum";
 import { C, LINE, type Lang } from "@/lib/maatu-design";
 
-const LANGS: Lang[] = ["kn", "hi", "ta"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
 
 type CourseProgressCardProps = {
   activeLanguage: Lang;

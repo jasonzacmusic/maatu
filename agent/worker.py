@@ -108,14 +108,18 @@ FRENCH_OPENING = (
 )
 
 
-# Every Kannada, Hindi and Tamil call (Chat, lessons, situations) runs on Gemini
+# Every Kannada, Hindi, Tamil and Malayalam call (Chat, lessons, situations) runs on Gemini
 # Live: one model that hears and speaks the language natively, so the accent is
 # a local one and replies land in one to two seconds. Sarvam's text voice read
 # romanized spellings with an outsider's accent (Jason, 2026-09-28). Set
 # MAATU_LIVE_LANGS="" to put every call back on the Sarvam pipeline below.
-LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta").split(",") if x.strip()}
+LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta,ml").split(",") if x.strip()}
 LIVE_VOICES = {"female": ["Kore", "Aoede", "Leda", "Zephyr"], "male": ["Puck", "Charon", "Orus", "Fenrir"]}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai"}
+# The teacher and companion keep one steady voice per language. All eight
+# Gemini voices were checked against Sarvam Malayalam STT on 2026-10-15 and
+# every one came back transcribed word for word, so this is a character choice.
+TEACHER_VOICE = {"kn": "Kore", "hi": "Aoede", "ta": "Leda", "ml": "Zephyr"}
+CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "ml": "Kochi"}
 
 
 def persona_lang(persona) -> str:
@@ -126,7 +130,7 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
     lang = persona_lang(persona)
     gender = "male" if str(getattr(persona, "gender", "female")).lower().startswith("m") else "female"
     voices = LIVE_VOICES[gender]
-    voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else {"kn": "Kore", "hi": "Aoede", "ta": "Leda"}[lang]
+    voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else TEACHER_VOICE.get(lang, "Kore")
     logger.info("room=%s persona=%s engine=gemini-live model=%s voice=%s", ctx.room.name, persona.id, FRENCH_LIVE_MODEL, voice)
     # The script rule in the prompts exists for a text voice; a speaking model
     # just speaks, so tell it how to sound.

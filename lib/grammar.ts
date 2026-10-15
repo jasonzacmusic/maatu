@@ -15,13 +15,18 @@ export type VerbEn = { base: string; past: string; ing: string; s: string };
 export type VerbKn = { dict: string; pres: string; past: string; cont: string; neg: string; pastNeg: string; inf: string; want: string };
 export type VerbHi = { dict: string; stem: string; contStem?: string; fut?: { m: string[]; f: string[] }; perf: { m: string; f: string; pl: string }; ne: boolean };
 export type VerbTa = { dict: string; pres: string; past: string; fut: string; cont: string; inf: string };
-export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa };
-export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; kind: "thing" | "place" | "language"; enByLang?: Record<Lang, string> };
-export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; tense?: Tense };
-export type DeckEntry = { en: string; kn: string; hi: string; ta: string; trick?: string };
+// Malayalam carries no person endings at all: one form fits every subject.
+export type VerbMl = { dict: string; pres: string; past: string; fut: string; cont: string; inf: string; pastNeg?: string };
+export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa; ml: VerbMl };
+export type ObjectCat =
+  | "instrument" | "music" | "language" | "study" | "food" | "drink" | "place"
+  | "thing" | "clothes" | "transport" | "tech" | "media" | "money" | "sport" | "chore";
+export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; enByLang?: Record<Lang, string> };
+export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; tense?: Tense };
+export type DeckEntry = { en: string; kn: string; hi: string; ta: string; ml: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
-export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; slot: "thing" | "place"; why: string };
-export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string] };
+export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; ml: string; slot: "thing" | "place"; why: string };
+export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string]; ml: [string, string] };
 export type DeckId = "music" | "numbers" | "fruits" | "vegetables" | "countries" | "questions" | "little" | "describe" | "time";
 
 type Data = {
@@ -223,9 +228,63 @@ function taVerb(v: VerbTa, p: PersonId, t: Tense, neg: boolean): Form {
   return neg ? { word: `${v.inf} theriyaadhu`, parts: `${v.inf} + theriyaadhu`, stem: v.inf } : { word: `${v.inf} theriyum`, parts: `${v.inf} + theriyum`, stem: v.inf };
 }
 
+// ............................................................ Malayalam
+// The one language here with no person agreement: njaan vaayikkunnu, nee
+// vaayikkunnu, avar vaayikkunnu. Everything below is derived from four stored
+// forms, so there is nothing to memorize per person.
+function mlQuestion(word: string): string {
+  if (word.endsWith("illa")) return word.slice(0, -1) + "e";
+  if (word.endsWith("und") || word.endsWith("um") || word.endsWith("aam")) return word + "o";
+  if (word.endsWith("yi")) return word.slice(0, -1) + "o";
+  if (word.endsWith("i")) return word + "yo";
+  if (/[aeiou]$/.test(word)) return word.slice(0, -1) + "o";
+  return word + "o";
+}
+
+// Drop the um of the future and you have the stem every other form hangs on:
+// vaayikkum gives vaayikk, so vaayikkilla (will not) and vaayikkanam (want to).
+function mlStem(v: VerbMl): string {
+  return v.fut.endsWith("um") ? v.fut.slice(0, -2) : v.fut;
+}
+
+function mlPastNeg(v: VerbMl): string {
+  if (v.pastNeg) return v.pastNeg;
+  if (v.past.endsWith("u")) return v.past.slice(0, -1) + "illa";
+  if (v.past.endsWith("i")) return v.past + "yilla";
+  return v.past + " illa";
+}
+
+function mlVerb(v: VerbMl, t: Tense, neg: boolean): Form {
+  const stem = mlStem(v);
+  if (t === "present") {
+    return neg
+      ? { word: `${stem}illa`, parts: `${stem} + illa (do not, every person)`, stem }
+      : { word: v.pres, parts: `${stem} + unnu (every person)`, stem };
+  }
+  if (t === "future") {
+    return neg
+      ? { word: `${stem}illa`, parts: `${stem} + illa (will not, every person)`, stem }
+      : { word: v.fut, parts: `${stem} + um (every person)`, stem };
+  }
+  if (t === "past") {
+    return neg ? { word: mlPastNeg(v), parts: `${v.past} + illa (did not)` } : { word: v.past, parts: `${v.past} (past, every person)` };
+  }
+  if (t === "cont") {
+    const negWord = v.pres.endsWith("unnu") ? v.pres.slice(0, -1) + "illa" : `${v.pres} illa`;
+    return neg
+      ? { word: negWord, parts: `${v.pres} + illa` , stem }
+      : { word: v.cont, parts: `${stem} + unnund (happening right now)`, stem };
+  }
+  if (t === "want") {
+    return neg ? { word: `${stem}anda`, parts: `${stem} + anda (no wish)`, stem } : { word: `${stem}anam`, parts: `${stem} + anam (a wish)`, stem };
+  }
+  return neg ? { word: `${v.inf} ariyilla`, parts: `${v.inf} + ariyilla`, stem: v.inf } : { word: `${v.inf} ariyaam`, parts: `${v.inf} + ariyaam`, stem: v.inf };
+}
+
 export function verbForm(lang: Lang, verb: Verb, p: PersonId, t: Tense, neg = false, gender: Gender = "m", objG: Gender | "pl" | null = null): Form {
   if (lang === "kn") return knVerb(verb.kn, p, t, neg);
   if (lang === "hi") return hiVerb(verb.hi, p, t, neg, gender, objG);
+  if (lang === "ml") return mlVerb(verb.ml, t, neg);
   return taVerb(verb.ta, p, t, neg);
 }
 
@@ -306,6 +365,18 @@ export function build(lang: Lang, c: Choice): Built | null {
     else if (usesNe && obj && obj.hiG === "f") note = `${objWord} is a feminine word, so the past verb ends in i.`;
     else if (c.person !== "he" && c.person !== "she" && c.tense !== "past" && c.tense !== "can") note = `Gender is yours: a ${g === "f" ? "woman" : "man"} says it this way. Flip the toggle to hear the other form.`;
     return { sentence, english, pieces, note };
+  }
+
+  if (lang === "ml") {
+    const v = mlVerb(verb.ml, c.tense, neg);
+    // A wish and a skill sit with the person: enikku vaayikkanam, enikku vaayikkaan ariyaam.
+    const dative = c.tense === "can" || c.tense === "want";
+    pieces.push({ word: dative ? pr.dat : pr.sub, meaning: dative ? `to ${pr.en} (${c.tense === "want" ? "a wish" : "ability"} sits with the person)` : pr.en, role: "subject" });
+    if (obj) pieces.push({ word: objWord, meaning: objEn, role: "object" });
+    const word = q ? mlQuestion(v.word) : v.word;
+    pieces.push({ word, meaning: `${v.parts}${q ? " + o (question)" : ""}`, role: "verb", stem: v.stem });
+    if (!note) note = "Malayalam never changes the verb for who is doing it. This exact form works for I, you, he, she, we and they.";
+    return { sentence: pieces.map((p) => p.word).join(" "), english, pieces, note };
   }
 
   const v = taVerb(verb.ta, c.person, c.tense, neg);
@@ -398,5 +469,25 @@ export function referenceText(lang: Lang): string {
   for (const deck of DECK_ORDER) {
     lines.push(`${deck.label.toUpperCase()}: ${DECKS[deck.id].map((d) => `${d.en} = ${d[lang]}`).join("; ")}`);
   }
+  return lines.join("\n");
+}
+
+// A shorter reference for the live coach, which runs once per spoken turn and
+// has to answer while the conversation is still going. Rules, one line per
+// verb, the frames and the time words: enough to judge a sentence, without the
+// decks and scripts that the full referenceText carries.
+export function referenceCompact(lang: Lang): string {
+  const lines: string[] = [`RULES: ${RULES[lang].map((r) => `${r.title}: ${r.body} (${r.example})`).join(" ")}`];
+  lines.push("VERBS (dictionary form, then I-form in the present, the past, and the future):");
+  for (const verb of VERBS) {
+    const pres = build(lang, { person: "i", verb: verb.id, tense: "present" })?.sentence;
+    const past = build(lang, { person: "i", verb: verb.id, tense: "past" })?.sentence;
+    const fut = build(lang, { person: "i", verb: verb.id, tense: "future" })?.sentence;
+    lines.push(`- ${verb.en.base} = ${verb[lang].dict}: ${pres} / ${past} / ${fut}`);
+  }
+  lines.push(`PERSON WORDS: ${PERSONS[lang].map((p) => `${p.sub} (${p.en}${p.hint ? ", " + p.hint : ""})`).join("; ")}`);
+  lines.push(`FRAMES: ${FRAMES.map((f) => `${f.en} = ${f[lang]}`).join("; ")}`);
+  lines.push(`TIME WORDS: ${TIMES.map((t) => `${t.en} = ${t[lang]}`).join("; ")}`);
+  lines.push(`COMMANDS (polite / friend): ${COMMANDS.map((c) => `${c.en} = ${c[lang][0]} / ${c[lang][1]}`).join("; ")}`);
   return lines.join("\n");
 }

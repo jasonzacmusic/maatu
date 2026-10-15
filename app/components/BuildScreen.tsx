@@ -21,7 +21,7 @@ import { Chip, Label, LILAC, Lit, SaveButton, Section, SKY, SpeakButton, useSpea
 import { ReviewRoom } from "./ReviewRoom";
 import { countFor } from "@/lib/review";
 import { ScenesRoom, ShapesRoom, type Practice } from "./StudioRooms";
-import { SentencePath } from "./SentencePath";
+import { SentenceLab } from "./SentenceLab";
 
 // Build: the second mode next to the voice calls. The Sentence Path sits on
 // top (pick who, action, what, when; see and hear the spoken line in Kannada,
@@ -30,6 +30,14 @@ import { SentencePath } from "./SentencePath";
 // Words, Shapes, Rules. Every form comes from vetted tables; the brain is used
 // only to check free text. Romanized only, never native script. No em dashes
 // anywhere.
+
+// What to type in the Check box, in the spelling style each language uses here.
+const CHECK_HINT: Record<Lang, string> = {
+  kn: "I played piano yesterday  /  naanu nenne piano nudistini  /  naanu ___ hogtini",
+  hi: "I played piano yesterday  /  main kal piano bajaata  /  main ___ jaata hoon",
+  ta: "I played piano yesterday  /  naan nethu piano vaasikkiren  /  naan ___ poren",
+  ml: "I played piano yesterday  /  njaan innale piano vaayichu  /  njaan ___ pokunnu",
+};
 
 type Correction = { type: string; was: string; now: string; why: string };
 type Check = {
@@ -67,6 +75,7 @@ const RULE_FOR: Record<Lang, Record<string, number>> = {
   kn: { tense: 3, ending: 1, gender: 1, verb: 6, "word-order": 0, "missing-word": 7, "word-choice": 6, politeness: 1, spelling: 1 },
   hi: { tense: 3, ending: 2, gender: 1, verb: 7, "word-order": 0, "missing-word": 2, "word-choice": 7, politeness: 2, spelling: 1 },
   ta: { tense: 2, ending: 1, gender: 5, verb: 6, "word-order": 0, "missing-word": 7, "word-choice": 6, politeness: 5, spelling: 1 },
+  ml: { tense: 2, ending: 2, gender: 1, verb: 5, "word-order": 0, "missing-word": 6, "word-choice": 5, politeness: 1, spelling: 2 },
 };
 
 type Room = "review" | "check" | "shapes" | "frames" | "scenes" | "commands" | "rules" | "decks";
@@ -351,7 +360,7 @@ export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }
         </p>
 
         <div className="mt-5">
-          <SentencePath lang={lang} onLanguageChange={onLanguageChange} gender={gender} setGender={setGender} slow={slow} setSlow={setSlow} onSaved={touchReview} rm={rm} onTalk={onTalk} />
+          <SentenceLab lang={lang} onLanguageChange={onLanguageChange} gender={gender} setGender={setGender} slow={slow} setSlow={setSlow} onSaved={touchReview} rm={rm} onTalk={onTalk} />
         </div>
 
         {/* ................................................. toolbox */}
@@ -421,7 +430,7 @@ export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }
                 }
               }}
               rows={2}
-              placeholder={lang === "kn" ? "I played piano yesterday  /  naanu nenne piano nudistini  /  naanu ___ hogtini" : lang === "hi" ? "I played piano yesterday  /  main kal piano bajaata  /  main ___ jaata hoon" : "I played piano yesterday  /  naan nethu piano vaasikkiren  /  naan ___ poren"}
+              placeholder={CHECK_HINT[lang]}
               className="w-full resize-none rounded-[14px] px-4 py-3 text-[16px] focus-visible:outline focus-visible:outline-2"
               style={{ background: C.base, color: C.milk, border: `1px solid ${LINE}`, outlineColor: C.tube, fontFamily: "inherit" }}
               aria-label="Your sentence"

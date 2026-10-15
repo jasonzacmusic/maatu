@@ -4,7 +4,7 @@ import { buildPath, objectsFor, VERB_TILES, WHEN_TILES, whenAllowed, type PathCh
 import type { PersonId } from "../lib/grammar";
 
 const persons: PersonId[] = ["i", "you", "youp", "he", "she", "we", "they"];
-const out: Record<PathLang, { id: number; en: string; line: string }[]> = { kn: [], hi: [], ta: [], fr: [] };
+const out: Record<PathLang, { id: number; en: string; line: string }[]> = { kn: [], hi: [], ta: [], ml: [], fr: [] };
 let n = 0;
 let k = 0;
 for (const v of VERB_TILES) {
@@ -17,7 +17,7 @@ for (const v of VERB_TILES) {
         who: k % 11 === 0 ? "name" : persons[k % 7], name: k % 2 ? "Ravi" : "Meera", nameG: k % 2 ? "m" : "f",
         verb: v.id, object: o, when: w.id, timeWord: k % 4 !== 0, negative: k % 3 === 0, question: k % 5 === 0, gender: k % 2 ? "m" : "f",
       };
-      for (const l of ["kn", "hi", "ta", "fr"] as PathLang[]) {
+      for (const l of ["kn", "hi", "ta", "ml", "fr"] as PathLang[]) {
         const r = buildPath(l, c);
         if (!r || r.unsupported) continue;
         out[l].push({ id: n, en: r.english + (l === "hi" || l === "fr" ? ` [speaker is a ${c.gender === "f" ? "woman" : "man"}]` : ""), line: r.sentence });

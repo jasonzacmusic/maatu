@@ -11,12 +11,13 @@ export const preferredRegion = "bom1";
 const SARVAM_KEY = process.env.SARVAM_API_KEY;
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MODEL = process.env.CHECK_MODEL || "gemini-flash-lite-latest";
-const CODE: Record<string, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN" };
-const NAME: Record<string, string> = { kn: "Kannada", hi: "Hindi", ta: "Tamil" };
+const CODE: Record<string, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", ml: "ml-IN" };
+const NAME: Record<string, string> = { kn: "Kannada", hi: "Hindi", ta: "Tamil", ml: "Malayalam" };
 const SAMPLE: Record<string, string> = {
   kn: "naanu, neenu, neevu, avanu, avalu, naavu, avru, nudistini, nudiside, maadtini, hogtini, hesaru, enu, beku, illa, howdu, nenne, naale, swalpa, chennaagide",
   hi: "main, tum, aap, voh, hum, bajaata hoon, bajaayi, karta, jaata, kya, nahin, chaahiye, kal, roz, thoda, achha",
   ta: "naan, nee, neenga, avan, ava, naanga, avanga, vaasikkiren, vaasichen, pannuren, poren, enna, illa, venum, nethu, naalaikku, konjam, nalla irukku",
+  ml: "njaan, nee, ningal, avan, aval, njangal, avar, vaayikkunnu, vaayichu, vaayikkum, cheyyunnu, pokunnu, enthu, illa, venam, innale, naale, kurachu, nalla und",
 };
 
 // Sarvam's transliterator is built for names and addresses and drifts on

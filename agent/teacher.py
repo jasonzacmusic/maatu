@@ -20,15 +20,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CURRICULUM = ROOT / "curriculum.json"
 
-LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil"}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai"}
+LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "ml": "ml-IN"}
+LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "ml": "Malayalam"}
+CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "ml": "Kochi"}
 
 # Warm female teacher voices (valid bulbul:v3), distinct per language.
 TEACHER = {
     "kn": {"name": "Meera", "voice": "shreya"},
     "hi": {"name": "Anjali", "voice": "pooja"},
     "ta": {"name": "Kavya", "voice": "ishita"},
+    "ml": {"name": "Devika", "voice": "kavya"},
 }
 
 _CORE_RULES = (
@@ -112,7 +113,7 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
     if not g or lang not in g.get("persons", {}):
         return ""
     persons = g["persons"][lang]
-    sfx = g["suffix"][lang]
+    sfx = g["suffix"].get(lang, {})
     who = ", ".join(f"{p['sub']} ({p['en']}{', ' + p['hint'] if p.get('hint') else ''})" for p in persons)
     lines = ["GRAMMAR REFERENCE, vetted spoken forms. Use these exactly for any person or tense:", f"Persons, in this order: {who}."]
     verbs = g["verbs"][:verb_limit]
@@ -145,6 +146,20 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
                 f"- {v['en']['base']} = {h['dict']}: {h['stem']}- / {h.get('contStem', h['stem'])} raha / {h['perf']['m']}, {h['perf']['f']}, {h['perf']['pl']} / {'ne' if h.get('ne') else 'no ne'}{fut}"
             )
         lines.append("Worked examples: she plays the piano every day = voh roz piano bajaati hai. I played yesterday = maine kal piano bajaaya. Do you sing? = kya aap gaate hain? I want to learn = main seekhna chaahta hoon. I know how to play = mujhe bajaana aata hai.")
+    elif lang == "ml":
+        lines.append(
+            "Malayalam has NO person endings. One form fits every subject: njaan vaayikkunnu, nee "
+            "vaayikkunnu, avar vaayikkunnu. Every day and right now: stem + unnu. Happening this "
+            "second: stem + unnund. Will: stem + um. Past: the stored past form. Will not or do "
+            "not: stem + illa. Did not: the past form + illa. Not right now: stem + unnilla. "
+            "Question: add o to the verb (vaayikkumo, vaayicho, vaayikkunnundo). Want to: enikku + "
+            "stem + anam. Do not want to: stem + anda. Know how to: enikku + to-form + ariyaam."
+        )
+        lines.append("Verbs (dictionary: every-day form / past / will / doing-now form / to-form):")
+        for v in verbs:
+            m = v[lang]
+            lines.append(f"- {v['en']['base']} = {m['dict']}: {m['pres']} / {m['past']} / {m['fut']} / {m['cont']} / {m['inf']}")
+        lines.append("Worked examples: she plays the piano every day = aval dinavum piano vaayikkunnu. I played yesterday = njaan innale vaayichu. Do you sing? = ningal paadumo? I want to learn = enikku padikkanam. I know how to play = enikku vaayikkaan ariyaam.")
     else:
         lines.append(
             "Endings in the same person order. Present: -" + " -".join(sfx["pres"]) + " on the present stem. "

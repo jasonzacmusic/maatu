@@ -18,16 +18,17 @@ export type CallPhase = "idle" | "connecting" | "live" | "ended" | "error";
 export type Speaker = "character" | "learner" | null;
 export type Line = { who: "character" | "learner"; text: string };
 
-const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff]/u;
+const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff\u0d00-\u0d7f]/u;
 
 function safeRomanizedText(text: string) {
   return NATIVE_SCRIPT.test(text) ? "Romanizing speech..." : text.replace(/\u2014/gu, ",");
 }
 
 function languageCode(persona: string) {
-  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta)(?:-|$)/)?.[1];
+  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta|ml)(?:-|$)/)?.[1];
   if (language === "hi") return "hi-IN";
   if (language === "ta") return "ta-IN";
+  if (language === "ml") return "ml-IN";
   return "kn-IN";
 }
 
@@ -69,7 +70,14 @@ type PendingLine = Omit<Line, "text"> & { key: string; text: string | null };
 // A sentence built in the Build tab that the companion should drill out loud.
 export type PracticeLine = { target: string; en: string };
 
-export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, practice: PracticeLine | null = null): MaatuCall {
+export function useMaatuCall(
+  persona: string,
+  difficultyStage: 1 | 2 | 3 = 2,
+  practice: PracticeLine | null = null,
+  // Called once per finished thing the learner says, with the romanized text.
+  // The live coach listens here; the call itself is untouched.
+  onLearnerLine?: (text: string) => void,
+): MaatuCall {
   const [phase, setPhase] = useState<CallPhase>("idle");
   const [error, setError] = useState<string | null>(null);
   const [muted, setMuted] = useState(false);
@@ -85,6 +93,9 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
   const [endedUnexpectedly, setEndedUnexpectedly] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
+  // Held in a ref so a changing callback never tears down a live call.
+  const learnerLineRef = useRef(onLearnerLine);
+  learnerLineRef.current = onLearnerLine;
   const audioElRef = useRef<HTMLAudioElement | null>(null);
   const rawRef = useRef<Line[]>([]);
   const displayRef = useRef<Line[]>([]);
@@ -349,6 +360,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
                     setCaption({ who, text: romanized });
                     pending.text = romanized;
                     flushDisplay();
+                    if (who === "learner" && romanized !== "Romanization unavailable") learnerLineRef.current?.(romanized);
                   })
                   .catch(() => {
                     pending.text = "Romanization unavailable";
@@ -359,6 +371,7 @@ export function useMaatuCall(persona: string, difficultyStage: 1 | 2 | 3 = 2, pr
               } else {
                 pending.text = text;
                 flushDisplay();
+                if (who === "learner") learnerLineRef.current?.(text);
               }
             }
           }

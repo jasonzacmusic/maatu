@@ -1,12 +1,13 @@
-import { build, OBJECTS, person as personOf, TIMES, verbById, type Gender, type PersonId, type Tense } from "./grammar";
+import { build, OBJECTS, person as personOf, TIMES, verbById, type Gender, type ObjectCat, type ObjectWord, type PersonId, type Tense } from "./grammar";
 import type { Lang } from "./maatu-design";
 
-// Sentence Path: pick who, the action, what, and when with emoji tiles, get the
-// English line and the spoken line in Kannada, Hindi, Tamil, or French at once.
-// Kannada, Hindi and Tamil come from the vetted tables in grammar.json through
-// lib/grammar.ts. French lives here as explicit tables (spoken register: the
-// "ne" is dropped, "on" means we, the near future is aller plus the verb).
-// Romanized only for the Indian languages. No em dashes anywhere.
+// The Sentence Studio engine: pick who, the action, what and when, and get the
+// English line plus the spoken line in Kannada, Hindi, Tamil, Malayalam or
+// French at once. The four Indian languages come from the vetted tables in
+// grammar.json through lib/grammar.ts. French lives here as explicit tables in
+// the spoken register: the ne is dropped, on means we, and the near future is
+// aller plus the verb. Romanized only for the Indian languages, never native
+// script. No em dashes anywhere.
 
 export type PathLang = Lang | "fr";
 export type Role = "who" | "action" | "what" | "when" | "helper";
@@ -41,6 +42,7 @@ export const PATH_LANGS: { id: PathLang; label: string; flag: string; city: stri
   { id: "kn", label: "Kannada", flag: "🌼", city: "Bengaluru" },
   { id: "hi", label: "Hindi", flag: "🪔", city: "Delhi" },
   { id: "ta", label: "Tamil", flag: "🌺", city: "Chennai" },
+  { id: "ml", label: "Malayalam", flag: "🌴", city: "Kochi" },
   { id: "fr", label: "French", flag: "🥐", city: "Paris" },
 ];
 
@@ -67,43 +69,120 @@ export const WHEN_TILES: { id: When; emoji: string; en: string; time?: string; b
 
 type VerbTile = { id: string; emoji: string; en: string; short?: string; objects: string[]; music?: boolean; trick?: boolean };
 export const VERB_TILES: VerbTile[] = [
-  { id: "play", emoji: "🎹", en: "play music", short: "play", objects: ["piano", "guitar", "violin", "drums"], music: true },
-  { id: "sing", emoji: "🎤", en: "sing", objects: ["song", "thissong"], music: true },
-  { id: "practise", emoji: "🔂", en: "practise", objects: ["piano", "guitar", "violin", "drums", "thissong"], music: true },
-  { id: "listen", emoji: "🎧", en: "listen", objects: ["music", "thissong"], music: true },
-  { id: "learn", emoji: "📚", en: "learn", objects: ["language", "english", "piano", "guitar", "music"], music: true },
-  { id: "teach", emoji: "🧑‍🏫", en: "teach", objects: ["language", "english", "piano", "guitar", "music"], music: true },
+  // ................................................ the music room
+  { id: "play", emoji: "🎹", en: "play music", short: "play", objects: ["piano", "guitar", "violin", "drums", "keyboard", "flute", "tabla", "veena", "harmonium"], music: true },
+  { id: "sing", emoji: "🎤", en: "sing", objects: ["song", "thissong", "newsong", "raga"], music: true },
+  { id: "practise", emoji: "🔂", en: "practise", objects: ["piano", "guitar", "violin", "drums", "thissong", "scale", "raga", "taala", "maths"], music: true },
+  { id: "listen", emoji: "🎧", en: "listen", objects: ["music", "thissong", "song", "podcast", "news", "raga"], music: true },
+  { id: "learn", emoji: "📚", en: "learn", objects: ["language", "english", "piano", "guitar", "music", "scale", "raga", "taala", "maths", "chess"], music: true },
+  { id: "teach", emoji: "🧑‍🏫", en: "teach", objects: ["language", "english", "piano", "guitar", "music", "scale", "raga", "maths"], music: true },
+  { id: "tune", emoji: "🎛️", en: "tune", objects: ["piano", "guitar", "violin", "veena", "harmonium", "mic"], music: true },
+  { id: "record", emoji: "🎙️", en: "record", objects: ["song", "thissong", "music", "video", "lesson", "recording"], music: true },
+  { id: "count", emoji: "🔢", en: "count", objects: ["swara", "taala", "money", "number"], music: true },
+  { id: "clap", emoji: "👏", en: "clap", objects: [], music: true },
+  { id: "explain", emoji: "🗯️", en: "explain", objects: ["lesson", "scale", "raga", "taala", "chord", "homework"], music: true },
+  { id: "repeat", emoji: "🔄", en: "repeat", objects: ["song", "thissong", "lesson", "scale", "swara"], music: true },
   { id: "dance", emoji: "💃", en: "dance", objects: [], music: true },
-  { id: "do", emoji: "🪄", en: "do (the magic verb)", short: "do", objects: ["shopping", "exercise", "cleaning", "homework", "order", "download", "ticket"], trick: true },
-  { id: "go", emoji: "🛺", en: "go", objects: ["home", "class", "school", "shop", "concert", "city"] },
-  { id: "come", emoji: "👋", en: "come", objects: ["home", "class", "school"] },
-  { id: "eat", emoji: "🍽️", en: "eat", objects: ["rice"] },
-  { id: "drink", emoji: "🥤", en: "drink", objects: ["tea", "coffee", "water"] },
-  { id: "playgame", emoji: "⚽", en: "play a game", short: "play", objects: ["football", "cricket"] },
+  // ................................................ the one that unlocks hundreds
+  { id: "do", emoji: "🪄", en: "do (the magic verb)", short: "do", objects: ["shopping", "exercise", "cleaning", "homework", "order", "download", "booking", "recording", "meeting", "payment", "upload", "laundry", "packing"], trick: true },
+  // ................................................ everyday
+  { id: "go", emoji: "🛺", en: "go", objects: ["home", "class", "school", "shop", "market", "office", "temple", "church", "hospital", "station", "airport", "bank", "hotel", "park", "beach", "cinema", "gym", "village", "concert", "city"] },
+  { id: "come", emoji: "👋", en: "come", objects: ["home", "class", "school", "office", "market", "temple", "park", "station"] },
+  { id: "eat", emoji: "🍽️", en: "eat", objects: ["rice", "dosa", "idli", "chapati", "biryani", "vada", "curdrice", "egg", "chicken", "fish", "fruit", "banana", "mango", "sweet", "snack", "lunch", "vegetables", "sambar"] },
+  { id: "drink", emoji: "🥤", en: "drink", objects: ["tea", "coffee", "water", "juice", "milk", "buttermilk", "lemonsoda", "hotwater"] },
+  { id: "cook", emoji: "🍲", en: "cook", objects: ["rice", "chapati", "sambar", "biryani", "egg", "fish", "chicken", "vegetables", "lunch"] },
+  { id: "buy", emoji: "🛒", en: "buy", objects: ["vegetables", "fruit", "banana", "mango", "milk", "coffee", "book", "clothes", "shirt", "shoes", "watch", "phone", "laptop", "guitar", "ticket", "flower", "medicine"] },
+  { id: "sell", emoji: "🏷️", en: "sell", objects: ["guitar", "bike", "car", "vegetables", "fruit", "phone", "house"] },
+  { id: "pay", emoji: "💳", en: "pay", objects: ["bill", "rent", "fees", "money", "salary"] },
+  { id: "order", emoji: "📲", en: "order", objects: ["dosa", "biryani", "coffee", "juice", "medicine", "cab", "food"] },
+  { id: "book", emoji: "🎫", en: "book", objects: ["ticket", "flight", "train", "cab", "room", "booking"] },
+  { id: "cancel", emoji: "❌", en: "cancel", objects: ["ticket", "booking", "order", "meeting", "flight"] },
+  { id: "playgame", emoji: "⚽", en: "play a game", short: "play", objects: ["football", "cricket", "chess", "badminton", "carrom", "game"] },
   { id: "speak", emoji: "🗣️", en: "speak", objects: ["language", "english"] },
-  { id: "see", emoji: "👀", en: "watch", objects: ["movie"] },
-  { id: "read", emoji: "📖", en: "read", objects: ["book"] },
-  { id: "write", emoji: "✍️", en: "write", objects: ["song"] },
-  { id: "buy", emoji: "🛒", en: "buy", objects: ["book", "coffee"] },
-  { id: "give", emoji: "🤲", en: "give", objects: ["money"] },
-  { id: "take", emoji: "🫴", en: "take", objects: ["key", "phone"] },
-  { id: "call", emoji: "📞", en: "call", objects: [] },
+  { id: "ask", emoji: "🙋", en: "ask", objects: ["name", "address", "number", "bill"] },
+  { id: "answer", emoji: "💬", en: "answer", objects: [] },
+  { id: "say", emoji: "📢", en: "say", objects: [] },
+  { id: "see", emoji: "👀", en: "watch", objects: ["movie", "film", "series", "news", "video", "photo", "podcast"] },
+  { id: "read", emoji: "📖", en: "read", objects: ["book", "notebook", "newspaper", "letter", "story", "poem", "message", "email"] },
+  { id: "write", emoji: "✍️", en: "write", objects: ["song", "newsong", "letter", "story", "poem", "notebook", "email", "message"] },
+  { id: "give", emoji: "🤲", en: "give", objects: ["money", "water", "coffee", "book", "key", "gift", "flower", "medicine", "bill"] },
+  { id: "take", emoji: "🫴", en: "take", objects: ["key", "phone", "bag", "medicine", "auto", "bus", "train", "cab", "water", "photo"] },
+  { id: "bring", emoji: "🎁", en: "bring", objects: ["water", "coffee", "book", "bag", "key", "medicine", "gift"] },
+  { id: "send", emoji: "📤", en: "send", objects: ["message", "email", "photo", "video", "money", "letter"] },
+  { id: "show", emoji: "👉", en: "show", objects: ["photo", "video", "notebook", "ticket", "address", "number"] },
+  { id: "put", emoji: "📥", en: "keep", objects: ["bag", "key", "phone", "box", "plate", "flower"] },
+  { id: "open", emoji: "🚪", en: "open", objects: ["door", "window", "box", "bag", "laptop", "app"] },
+  { id: "close", emoji: "🔒", en: "close", objects: ["door", "window", "box", "bag", "laptop", "app"] },
+  { id: "wash", emoji: "🧼", en: "wash", objects: ["clothes", "plate", "cup", "car", "bike", "vegetables"] },
+  { id: "clean", emoji: "🧹", en: "clean", objects: ["room", "house", "car", "bike", "guitar", "plate"] },
+  { id: "cut", emoji: "🔪", en: "cut", objects: ["vegetables", "fruit", "mango", "banana", "paper"] },
+  { id: "repair", emoji: "🔧", en: "repair", objects: ["phone", "laptop", "bike", "car", "fan", "guitar"] },
+  { id: "change", emoji: "🔀", en: "change", objects: ["clothes", "shirt", "room", "scale", "raga", "password"] },
+  { id: "search", emoji: "🔎", en: "look for", objects: ["key", "phone", "bag", "address", "song", "house"] },
+  { id: "start", emoji: "🟢", en: "start", objects: ["song", "lesson", "car", "bike", "laptop", "work", "recording"] },
+  { id: "stop", emoji: "🛑", en: "stop", objects: ["song", "music", "car", "bike", "work"] },
+  { id: "finish", emoji: "🏁", en: "finish", objects: ["lunch", "homework", "lesson", "work", "exam"] },
+  { id: "try", emoji: "🧪", en: "try", objects: ["dosa", "biryani", "sweet", "guitar", "scale", "song"] },
+  { id: "wear", emoji: "👕", en: "wear", objects: ["shirt", "saree", "shoes", "watch", "clothes"] },
+  { id: "drive", emoji: "🚗", en: "drive", objects: ["car", "bike", "auto", "bus", "cab"] },
+  { id: "travel", emoji: "✈️", en: "travel", objects: ["city", "village", "beach", "airport", "station"] },
+  { id: "call", emoji: "📞", en: "call", objects: ["cab", "auto"] },
   { id: "work", emoji: "💼", en: "work", objects: [] },
-  { id: "cook", emoji: "🍲", en: "cook", objects: [] },
   { id: "help", emoji: "🤝", en: "help", objects: [] },
   { id: "wait", emoji: "⏳", en: "wait", objects: [] },
+  { id: "rest", emoji: "🛋️", en: "rest", objects: [] },
   { id: "sleep", emoji: "😴", en: "sleep", objects: [] },
-  { id: "sit", emoji: "🪑", en: "sit", objects: [] },
+  { id: "bathe", emoji: "🛁", en: "have a bath", short: "bath", objects: [] },
+  { id: "sit", emoji: "🪑", en: "sit", objects: ["chair"] },
+  { id: "stand", emoji: "🧍", en: "stand", objects: [] },
   { id: "walk", emoji: "🚶", en: "walk", objects: [] },
+  { id: "run", emoji: "🏃", en: "run", objects: [] },
+  { id: "swim", emoji: "🏊", en: "swim", objects: [] },
+  { id: "laugh", emoji: "😄", en: "laugh", objects: [] },
+  { id: "cry", emoji: "😢", en: "cry", objects: [] },
   { id: "think", emoji: "🤔", en: "think", objects: [] },
-  { id: "travel", emoji: "✈️", en: "travel", objects: [] },
 ];
 
 export const OBJECT_EMOJI: Record<string, string> = {
-  piano: "🎹", guitar: "🎸", violin: "🎻", drums: "🥁", song: "🎵", thissong: "🎶", music: "🎼", language: "💬", english: "🇬🇧",
-  rice: "🍚", tea: "🍵", coffee: "☕", water: "💧", movie: "🎬", book: "📘", money: "💰", phone: "📱", key: "🔑",
-  football: "⚽", cricket: "🏏", home: "🏠", class: "🎓", school: "🏫", shop: "🏪", concert: "🎙️", city: "🌆",
-  shopping: "🛍️", exercise: "🏋️", cleaning: "🧹", homework: "📝", order: "📦", download: "⬇️", ticket: "🎫",
+  // instruments and music
+  piano: "🎹", guitar: "🎸", violin: "🎻", drums: "🥁", keyboard: "🎛️", flute: "🪈", tabla: "🪘",
+  mridangam: "🪘", veena: "🪕", harmonium: "🪗", mic: "🎙️",
+  song: "🎵", thissong: "🎶", newsong: "🆕", music: "🎼", scale: "📐", raga: "🌀", taala: "🫱",
+  swara: "🎼", chord: "🎚️", lesson: "📗", exam: "📝",
+  // language and study
+  language: "💬", english: "🇬🇧", book: "📘", notebook: "📒", maths: "➗", newspaper: "📰",
+  letter: "✉️", story: "📕", poem: "🪶", name: "🪪", address: "📍", number: "🔢",
+  // food
+  rice: "🍚", dosa: "🥞", idli: "🍥", chapati: "🫓", sambar: "🥣", curdrice: "🍚", vada: "🍩",
+  biryani: "🍛", egg: "🥚", chicken: "🍗", fish: "🐟", vegetables: "🥬", fruit: "🍎",
+  banana: "🍌", mango: "🥭", sweet: "🍬", snack: "🥨", lunch: "🍱", salt: "🧂", sugar: "🍬",
+  milk: "🥛", food: "🍛",
+  // drink
+  tea: "🍵", coffee: "☕", water: "💧", juice: "🧃", buttermilk: "🥛", lemonsoda: "🍋", hotwater: "♨️",
+  // places
+  home: "🏠", class: "🎓", school: "🏫", shop: "🏪", concert: "🎙️", city: "🌆", office: "🏢",
+  market: "🧺", temple: "🛕", church: "⛪", hospital: "🏥", station: "🚉", airport: "🛫",
+  bank: "🏦", hotel: "🍽️", park: "🌳", beach: "🏖️", cinema: "🎬", gym: "🏋️", village: "🌾",
+  // things
+  phone: "📱", chair: "🪑", key: "🔑", time: "🕰️", bag: "🎒", door: "🚪", window: "🪟",
+  light: "💡", fan: "🌀", room: "🛏️", house: "🏡", cup: "🥤", plate: "🍽️", box: "📦",
+  paper: "📄", pen: "🖊️", medicine: "💊", gift: "🎁", flower: "🌸",
+  // clothes
+  clothes: "👚", shirt: "👔", saree: "🥻", shoes: "👟", watch: "⌚",
+  // transport
+  car: "🚙", bike: "🏍️", bus: "🚌", auto: "🛺", train: "🚆", cab: "🚕", flight: "✈️",
+  // tech and media
+  laptop: "💻", tv: "📺", photo: "🖼️", video: "📹", message: "💬", email: "📧",
+  password: "🔐", app: "📲", charger: "🔌", movie: "🎬", film: "🎬", series: "📺",
+  news: "📰", podcast: "🎧",
+  // money and work
+  money: "💰", work: "💼", rent: "🏠", bill: "🧾", salary: "💵", fees: "🧾", change: "🪙",
+  // sport
+  football: "⚽", cricket: "🏏", chess: "♟️", badminton: "🏸", carrom: "🎯", game: "🎮",
+  // chores
+  shopping: "🛍️", exercise: "🏋️", cleaning: "🧹", homework: "📝", order: "📦", download: "⬇️",
+  ticket: "🎫", recording: "🎙️", meeting: "🗓️", payment: "💳", booking: "📒", upload: "⬆️",
+  laundry: "🧺", packing: "🧳",
 };
 
 // English for the magic-verb objects: English uses a real verb where the
@@ -115,13 +194,20 @@ const DO_EN: Record<string, { base: string; past: string; ing: string; s: string
   homework: { base: "do", past: "did", ing: "doing", s: "does", tail: "{poss} homework" },
   order: { base: "order", past: "ordered", ing: "ordering", s: "orders" },
   download: { base: "download", past: "downloaded", ing: "downloading", s: "downloads" },
-  ticket: { base: "book", past: "booked", ing: "booking", s: "books", tail: "a ticket" },
+  recording: { base: "record", past: "recorded", ing: "recording", s: "records" },
+  meeting: { base: "have", past: "had", ing: "having", s: "has", tail: "a meeting" },
+  payment: { base: "make", past: "made", ing: "making", s: "makes", tail: "the payment" },
+  booking: { base: "make", past: "made", ing: "making", s: "makes", tail: "the booking" },
+  upload: { base: "upload", past: "uploaded", ing: "uploading", s: "uploads" },
+  laundry: { base: "do", past: "did", ing: "doing", s: "does", tail: "the laundry" },
+  packing: { base: "do", past: "did", ing: "doing", s: "does", tail: "the packing" },
 };
 
 // "Know how to" is a skill, so it only makes sense for skill verbs: I know how
 // to play the piano, not I know how to sleep. The Indian forms (barutte, aata
 // hai, theriyum) and French savoir all mean exactly this.
-export const SKILL_VERBS = new Set(["play", "sing", "dance", "speak", "read", "write", "cook", "playgame", "teach", "do"]);
+export const SKILL_VERBS = new Set(["play", "sing", "dance", "speak", "read", "write", "cook", "playgame", "teach", "do",
+  "tune", "record", "count", "clap", "explain", "repeat", "drive", "swim", "repair", "wash", "clean", "cut", "sell"]);
 export function whenAllowed(verb: string, when: When, object: string | null = null): boolean {
   if (when !== "can") return true;
   if (verb === "do") return object === "exercise" || object === "homework";
@@ -218,6 +304,7 @@ function nameForms(lang: Lang, name: string): { sub: string; dat: string; ne: st
   const vowel = /[aeiou]$/i.test(name);
   if (lang === "kn") return { sub: name, dat: vowel ? `${name}ge` : `${name}-ge`, ne: name };
   if (lang === "hi") return { sub: name, dat: `${name} ko`, ne: `${name} ne` };
+  if (lang === "ml") return { sub: name, dat: vowel ? `${name}kku` : `${name}inu`, ne: name };
   return { sub: name, dat: vowel ? `${name}kku` : `${name}ukku`, ne: name };
 }
 
@@ -258,22 +345,27 @@ function indian(lang: Lang, c: PathChoice): PathResult | null {
   const verbNote = verbById(c.verb)?.note;
   let note = built.note === verbNote ? PATH_NOTES[c.verb]?.[lang] : built.note;
   if (p !== "i" && note?.startsWith("Gender is yours")) note = undefined;
-  if (c.verb === "do") note = lang === "kn" ? "The Bangalore trick: any English word plus maadu. Shopping maadu, order maadu, homework maadu." : lang === "hi" ? "The Hinglish trick: any English word plus karna. Shopping karna, order karna, download karna." : "The Chennai trick: any English word plus pannu. Shopping pannu, order pannu, download pannu.";
+  if (c.verb === "do") note = lang === "kn" ? "The Bangalore trick: any English word plus maadu. Shopping maadu, order maadu, homework maadu." : lang === "hi" ? "The Hinglish trick: any English word plus karna. Shopping karna, order karna, download karna." : lang === "ml" ? "The Kochi trick: any English word plus cheyyuka. Shopping cheyyum, order cheyyum, download cheythu." : "The Chennai trick: any English word plus pannu. Shopping pannu, order pannu, download pannu.";
   return { english: "", enParts: [], sentence, parts, say: parts.map((x) => syllables(x.word)).join("  "), note };
 }
 
 // Short notes per verb and language, shown under the sentence.
 const trick = (w: string) => `An English word plus ${w}. This one pattern works for hundreds of actions.`;
 const PATH_NOTES: Record<string, Partial<Record<Lang, string>>> = {
-  play: { kn: "Nudisu is for instruments. In Bangalore you also hear piano play maadtini.", hi: "Bajaana is for instruments. Games and sports take khelna.", ta: "Vaasi is for instruments. Games and sports take velaiyaadu." },
-  playgame: { kn: "Aadu is for games and sports. An instrument takes nudisu.", hi: "Khelna is for games and sports. An instrument takes bajaana.", ta: "Velaiyaadu is for games and sports. An instrument takes vaasi." },
-  sing: { kn: "Haadu is both the song and to sing.", hi: "Gaana is both the song and to sing." },
-  practise: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu") },
-  listen: { kn: "Kelu means listen and also ask. Tamil has the same word: kekku.", ta: "Kekku means listen and also ask. Kannada has the same word: kelu." },
-  travel: { kn: "The formal word is pravaasa; on the street everyone says travel maadu.", hi: "The formal word is safar; everyday Hindi says travel karna.", ta: "The formal word is payanam; everyday Tamil says travel pannu." },
-  wait: { kn: "Kaayu is the Kannada word; wait maadu is just as common." },
-  call: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu") },
-  help: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu") },
+  play: { kn: "Nudisu is for instruments. In Bangalore you also hear piano play maadtini.", hi: "Bajaana is for instruments. Games and sports take khelna.", ta: "Vaasi is for instruments. Games and sports take velaiyaadu.", ml: "Vaayikkuka is for instruments, and it is also the word for read. The rest of the sentence tells you which." },
+  playgame: { kn: "Aadu is for games and sports. An instrument takes nudisu.", hi: "Khelna is for games and sports. An instrument takes bajaana.", ta: "Velaiyaadu is for games and sports. An instrument takes vaasi.", ml: "Kalikkuka is for games and sports. An instrument takes vaayikkuka." },
+  sing: { kn: "Haadu is both the song and to sing.", hi: "Gaana is both the song and to sing.", ml: "Paattu is the song, paaduka is to sing. One letter apart." },
+  practise: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka") },
+  listen: { kn: "Kelu means listen and also ask. Tamil has the same word: kekku.", ta: "Kekku means listen and also ask. Kannada has the same word: kelu.", ml: "Kelkkuka is listen; asking is chodikkuka, a separate word. Kannada and Tamil reuse one word for both." },
+  read: { ml: "Vaayikkuka means both read and play an instrument in Malayalam. Pusthakam vaayikkum is read a book; piano vaayikkum is play the piano." },
+  ask: { kn: "Kelu means ask and also listen; the sentence tells you which.", ta: "Kekku means ask and also listen; the sentence tells you which.", ml: "Chodikkuka is ask. Listening is kelkkuka, a different word." },
+  travel: { kn: "The formal word is pravaasa; on the street everyone says travel maadu.", hi: "The formal word is safar; everyday Hindi says travel karna.", ta: "The formal word is payanam; everyday Tamil says travel pannu.", ml: "The formal word is yaathra; everyday Malayalam says travel cheyyum." },
+  wait: { kn: "Kaayu is the Kannada word; wait maadu is just as common.", ml: "Kaathirikkuka is the Malayalam word; wait cheyyum is just as common." },
+  call: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: "Vilikkuka is both to call out and to phone someone." },
+  help: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: "Sahaayikkuka is the Malayalam word; help cheyyum is just as common." },
+  run: { kn: "Watch the spelling: odu is read, oodu with the long oo is run. Two different words." },
+  pay: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka") },
+  stand: { ml: "Nilkkuka is to stand and also to stop. Nirthuka is to stop something else." },
 };
 
 // ............................................................ syllables
@@ -412,6 +504,100 @@ const FR_VERBS: Record<string, FrVerb> = {
     inf: "asseoir", infSay: "a-swar", aux: "e", refl: true,
     pres: ["assois", "assois", "asseyez", "assoit", "assoit", "assoit", "assoient"], presSay: ["a-swa", "a-swa", "a-say-yay", "a-swa", "a-swa", "a-swa", "a-swa"], pp: "assis", ppSay: "a-see",
   },
+  // ................................................ added with the bigger word bank
+  open: {
+    inf: "ouvrir", infSay: "oo-vreer", aux: "a",
+    pres: ["ouvre", "ouvres", "ouvrez", "ouvre", "ouvre", "ouvre", "ouvrent"],
+    presSay: ["oovr", "oovr", "oo-vray", "oovr", "oovr", "oovr", "oovr"], pp: "ouvert", ppSay: "oo-vehr",
+  },
+  close: { inf: "fermer", infSay: "fehr-may", aux: "a", ...reg("ferm", "fehrm", "fehr-may") },
+  start: { inf: "commencer", infSay: "ko-mahn-say", aux: "a", ...reg("commenc", "ko-mahns", "ko-mahn-say") },
+  stop: { inf: "arrêter", infSay: "a-ray-tay", aux: "a", ...reg("arrêt", "a-ret", "a-ray-tay") },
+  finish: {
+    inf: "finir", infSay: "fee-neer", aux: "a",
+    pres: ["finis", "finis", "finissez", "finit", "finit", "finit", "finissent"],
+    presSay: ["fee-nee", "fee-nee", "fee-nee-say", "fee-nee", "fee-nee", "fee-nee", "fee-neess"], pp: "fini", ppSay: "fee-nee",
+  },
+  ask: { inf: "demander", infSay: "duh-mahn-day", aux: "a", ...reg("demand", "duh-mahnd", "duh-mahn-day") },
+  answer: {
+    inf: "répondre", infSay: "ray-pohndr", aux: "a",
+    pres: ["réponds", "réponds", "répondez", "répond", "répond", "répond", "répondent"],
+    presSay: ["ray-pohn", "ray-pohn", "ray-pohn-day", "ray-pohn", "ray-pohn", "ray-pohn", "ray-pohnd"], pp: "répondu", ppSay: "ray-pohn-dew",
+  },
+  show: { inf: "montrer", infSay: "mohn-tray", aux: "a", ...reg("montr", "mohntr", "mohn-tray") },
+  send: {
+    inf: "envoyer", infSay: "ahn-vwa-yay", aux: "a",
+    pres: ["envoie", "envoies", "envoyez", "envoie", "envoie", "envoie", "envoient"],
+    presSay: ["ahn-vwa", "ahn-vwa", "ahn-vwa-yay", "ahn-vwa", "ahn-vwa", "ahn-vwa", "ahn-vwa"], pp: "envoyé", ppSay: "ahn-vwa-yay",
+  },
+  bring: { inf: "apporter", infSay: "a-por-tay", aux: "a", ...reg("apport", "a-port", "a-por-tay") },
+  put: {
+    inf: "mettre", infSay: "metr", aux: "a",
+    pres: ["mets", "mets", "mettez", "met", "met", "met", "mettent"],
+    presSay: ["meh", "meh", "meh-tay", "meh", "meh", "meh", "met"], pp: "mis", ppSay: "mee",
+  },
+  wash: { inf: "laver", infSay: "la-vay", aux: "a", ...reg("lav", "lav", "la-vay") },
+  cut: { inf: "couper", infSay: "koo-pay", aux: "a", ...reg("coup", "koop", "koo-pay") },
+  run: {
+    inf: "courir", infSay: "koo-reer", aux: "a",
+    pres: ["cours", "cours", "courez", "court", "court", "court", "courent"],
+    presSay: ["koor", "koor", "koo-ray", "koor", "koor", "koor", "koor"], pp: "couru", ppSay: "koo-rew",
+  },
+  laugh: {
+    inf: "rire", infSay: "reer", aux: "a",
+    pres: ["ris", "ris", "riez", "rit", "rit", "rit", "rient"],
+    presSay: ["ree", "ree", "ree-yay", "ree", "ree", "ree", "ree"], pp: "ri", ppSay: "ree",
+  },
+  cry: { inf: "pleurer", infSay: "pluh-ray", aux: "a", ...reg("pleur", "pluhr", "pluh-ray") },
+  bathe: { inf: "doucher", infSay: "doo-shay", aux: "e", refl: true, ...reg("douch", "doosh", "doo-shay") },
+  rest: { inf: "reposer", infSay: "ruh-po-zay", aux: "e", refl: true, ...reg("repos", "ruh-poz", "ruh-po-zay") },
+  swim: { inf: "nager", infSay: "na-zhay", aux: "a", ...reg("nag", "nazh", "na-zhay") },
+  try: {
+    inf: "essayer", infSay: "ay-say-yay", aux: "a",
+    pres: ["essaie", "essaies", "essayez", "essaie", "essaie", "essaie", "essaient"],
+    presSay: ["ay-say", "ay-say", "ay-say-yay", "ay-say", "ay-say", "ay-say", "ay-say"], pp: "essayé", ppSay: "ay-say-yay",
+  },
+  search: { inf: "chercher", infSay: "shehr-shay", aux: "a", ...reg("cherch", "shehrsh", "shehr-shay") },
+  change: { inf: "changer", infSay: "shahn-zhay", aux: "a", ...reg("chang", "shahnzh", "shahn-zhay") },
+  repair: { inf: "réparer", infSay: "ray-pa-ray", aux: "a", ...reg("répar", "ray-par", "ray-pa-ray") },
+  clean: {
+    inf: "nettoyer", infSay: "nay-twa-yay", aux: "a",
+    pres: ["nettoie", "nettoies", "nettoyez", "nettoie", "nettoie", "nettoie", "nettoient"],
+    presSay: ["nay-twa", "nay-twa", "nay-twa-yay", "nay-twa", "nay-twa", "nay-twa", "nay-twa"], pp: "nettoyé", ppSay: "nay-twa-yay",
+  },
+  pay: {
+    inf: "payer", infSay: "pay-yay", aux: "a",
+    pres: ["paie", "paies", "payez", "paie", "paie", "paie", "paient"],
+    presSay: ["peh", "peh", "pay-yay", "peh", "peh", "peh", "peh"], pp: "payé", ppSay: "pay-yay",
+  },
+  sell: {
+    inf: "vendre", infSay: "vahndr", aux: "a",
+    pres: ["vends", "vends", "vendez", "vend", "vend", "vend", "vendent"],
+    presSay: ["vahn", "vahn", "vahn-day", "vahn", "vahn", "vahn", "vahnd"], pp: "vendu", ppSay: "vahn-dew",
+  },
+  order: { inf: "commander", infSay: "ko-mahn-day", aux: "a", ...reg("command", "ko-mahnd", "ko-mahn-day") },
+  book: { inf: "réserver", infSay: "ray-zehr-vay", aux: "a", ...reg("réserv", "ray-zehrv", "ray-zehr-vay") },
+  cancel: { inf: "annuler", infSay: "a-new-lay", aux: "a", ...reg("annul", "a-newl", "a-new-lay") },
+  drive: {
+    inf: "conduire", infSay: "kohn-dweer", aux: "a",
+    pres: ["conduis", "conduis", "conduisez", "conduit", "conduit", "conduit", "conduisent"],
+    presSay: ["kohn-dwee", "kohn-dwee", "kohn-dwee-zay", "kohn-dwee", "kohn-dwee", "kohn-dwee", "kohn-dweez"], pp: "conduit", ppSay: "kohn-dwee",
+  },
+  wear: { inf: "porter", infSay: "por-tay", aux: "a", ...reg("port", "port", "por-tay") },
+  count: { inf: "compter", infSay: "kohn-tay", aux: "a", ...reg("compt", "kohnt", "kohn-tay") },
+  explain: { inf: "expliquer", infSay: "eks-plee-kay", aux: "a", ...reg("expliqu", "eks-pleek", "eks-plee-kay") },
+  repeat: {
+    inf: "répéter", infSay: "ray-pay-tay", aux: "a",
+    pres: ["répète", "répètes", "répétez", "répète", "répète", "répète", "répètent"],
+    presSay: ["ray-pet", "ray-pet", "ray-pay-tay", "ray-pet", "ray-pet", "ray-pet", "ray-pet"], pp: "répété", ppSay: "ray-pay-tay",
+  },
+  record: { inf: "enregistrer", infSay: "ahn-ruh-zhee-stray", aux: "a", ...reg("enregistr", "ahn-ruh-zheestr", "ahn-ruh-zhee-stray") },
+  tune: { inf: "accorder", infSay: "a-kor-day", aux: "a", ...reg("accord", "a-kord", "a-kor-day") },
+  clap: {
+    inf: "applaudir", infSay: "a-plo-deer", aux: "a",
+    pres: ["applaudis", "applaudis", "applaudissez", "applaudit", "applaudit", "applaudit", "applaudissent"],
+    presSay: ["a-plo-dee", "a-plo-dee", "a-plo-dee-say", "a-plo-dee", "a-plo-dee", "a-plo-dee", "a-plo-deess"], pp: "applaudi", ppSay: "a-plo-dee",
+  },
 };
 
 const FR_IDX: Record<PersonId, number> = { i: 0, you: 1, youp: 2, he: 3, she: 4, we: 5, they: 6 };
@@ -475,10 +661,108 @@ const FR_OBJ: Record<string, Partial<Record<"part" | "def" | "bare" | "place" | 
   cooking: { faire: { w: "la cuisine", say: "la kwee-zeen" } },
   cleaning: { faire: { w: "le ménage", say: "luh may-nazh" } },
   homework: { faire: { w: "{poss} devoirs", say: "{possSay} duh-vwar" } },
+  // ................................................ added with the bigger word bank
+  keyboard: { part: { w: "du clavier", say: "dew kla-vyay" }, def: { w: "le clavier", say: "luh kla-vyay" } },
+  flute: { part: { w: "de la flûte", say: "duh la flewt" }, def: { w: "la flûte", say: "la flewt" } },
+  harmonium: { part: { w: "de l'harmonium", say: "duh lar-mo-nyom" }, def: { w: "l'harmonium", say: "lar-mo-nyom" } },
+  mic: { def: { w: "le micro", say: "luh mee-kro" } },
+  scale: { def: { w: "la gamme", say: "la gam" }, indef: { w: "une gamme", say: "ewn gam", neg: "de gamme", negSay: "duh gam" } },
+  swara: { def: { w: "la note", say: "la not" }, indef: { w: "une note", say: "ewn not", neg: "de note", negSay: "duh not" } },
+  chord: { def: { w: "l'accord", say: "la-kor" }, indef: { w: "un accord", say: "uhn a-kor", neg: "d'accord", negSay: "da-kor" } },
+  newsong: { indef: { w: "une nouvelle chanson", say: "ewn noo-vel shahn-sohn", neg: "de nouvelle chanson", negSay: "duh noo-vel shahn-sohn" } },
+  lesson: { def: { w: "la leçon", say: "la luh-sohn" }, indef: { w: "une leçon", say: "ewn luh-sohn", neg: "de leçon", negSay: "duh luh-sohn" } },
+  notebook: { def: { w: "le cahier", say: "luh ka-yay" }, indef: { w: "un cahier", say: "uhn ka-yay", neg: "de cahier", negSay: "duh ka-yay" } },
+  maths: { bare: { w: "les maths", say: "lay mat" }, def: { w: "les maths", say: "lay mat" } },
+  newspaper: { def: { w: "le journal", say: "luh zhoor-nal" }, indef: { w: "le journal", say: "luh zhoor-nal" } },
+  letter: { indef: { w: "une lettre", say: "ewn letr", neg: "de lettre", negSay: "duh letr" } },
+  story: { indef: { w: "une histoire", say: "ewn ees-twar", neg: "d'histoire", negSay: "dees-twar" } },
+  poem: { indef: { w: "un poème", say: "uhn po-em", neg: "de poème", negSay: "duh po-em" } },
+  name: { def: { w: "le nom", say: "luh nohn" } },
+  address: { def: { w: "l'adresse", say: "la-dress" } },
+  number: { def: { w: "le numéro", say: "luh new-may-ro" } },
+  milk: { part: { w: "du lait", say: "dew leh", neg: "de lait", negSay: "duh leh" } },
+  juice: { part: { w: "du jus", say: "dew zhew", neg: "de jus", negSay: "duh zhew" } },
+  egg: { indef: { w: "un oeuf", say: "uhn uhf", neg: "d'oeuf", negSay: "duhf" } },
+  chicken: { part: { w: "du poulet", say: "dew poo-leh", neg: "de poulet", negSay: "duh poo-leh" } },
+  fish: { part: { w: "du poisson", say: "dew pwa-sohn", neg: "de poisson", negSay: "duh pwa-sohn" } },
+  vegetables: { part: { w: "des légumes", say: "day lay-gewm", neg: "de légumes", negSay: "duh lay-gewm" } },
+  fruit: { part: { w: "des fruits", say: "day frwee", neg: "de fruits", negSay: "duh frwee" } },
+  banana: { indef: { w: "une banane", say: "ewn ba-nan", neg: "de banane", negSay: "duh ba-nan" } },
+  mango: { indef: { w: "une mangue", say: "ewn mahng", neg: "de mangue", negSay: "duh mahng" } },
+  sweet: { indef: { w: "un gâteau", say: "uhn ga-toh", neg: "de gâteau", negSay: "duh ga-toh" } },
+  lunch: { def: { w: "le déjeuner", say: "luh day-zhuh-nay" } },
+  food: { part: { w: "de la nourriture", say: "duh la noo-ree-tewr", neg: "de nourriture", negSay: "duh noo-ree-tewr" } },
+  office: { place: { w: "au bureau", say: "oh bew-roh" } },
+  market: { place: { w: "au marché", say: "oh mar-shay" } },
+  church: { place: { w: "à l'église", say: "a lay-gleez" } },
+  hospital: { place: { w: "à l'hôpital", say: "a lo-pee-tal" } },
+  station: { place: { w: "à la gare", say: "a la gar" } },
+  airport: { place: { w: "à l'aéroport", say: "a la-ay-ro-por" } },
+  bank: { place: { w: "à la banque", say: "a la bahnk" } },
+  hotel: { place: { w: "au restaurant", say: "oh res-to-rahn" } },
+  park: { place: { w: "au parc", say: "oh park" } },
+  beach: { place: { w: "à la plage", say: "a la plazh" } },
+  cinema: { place: { w: "au cinéma", say: "oh see-nay-ma" } },
+  gym: { place: { w: "à la salle de sport", say: "a la sal duh spor" } },
+  village: { place: { w: "au village", say: "oh vee-lazh" } },
+  bag: { def: { w: "le sac", say: "luh sak" } },
+  door: { def: { w: "la porte", say: "la port" } },
+  window: { def: { w: "la fenêtre", say: "la fuh-netr" } },
+  light: { def: { w: "la lumière", say: "la lew-myehr" } },
+  room: { def: { w: "la chambre", say: "la shahmbr" } },
+  house: { def: { w: "la maison", say: "la may-zohn" } },
+  cup: { def: { w: "la tasse", say: "la tass" } },
+  plate: { def: { w: "l'assiette", say: "la-syet" } },
+  box: { def: { w: "la boîte", say: "la bwat" } },
+  paper: { def: { w: "le papier", say: "luh pa-pyay" } },
+  pen: { def: { w: "le stylo", say: "luh stee-lo" } },
+  medicine: { def: { w: "le médicament", say: "luh may-dee-ka-mahn" } },
+  gift: { indef: { w: "un cadeau", say: "uhn ka-doh", neg: "de cadeau", negSay: "duh ka-doh" } },
+  flower: { indef: { w: "une fleur", say: "ewn fluhr", neg: "de fleur", negSay: "duh fluhr" } },
+  clothes: { def: { w: "les vêtements", say: "lay vet-mahn" } },
+  shirt: { def: { w: "la chemise", say: "la shuh-meez" } },
+  shoes: { def: { w: "les chaussures", say: "lay sho-sewr" } },
+  watch: { def: { w: "la montre", say: "la mohntr" } },
+  car: { def: { w: "la voiture", say: "la vwa-tewr" } },
+  bike: { def: { w: "la moto", say: "la mo-to" } },
+  bus: { def: { w: "le bus", say: "luh bewss" } },
+  train: { def: { w: "le train", say: "luh tran" } },
+  cab: { def: { w: "le taxi", say: "luh tak-see" } },
+  flight: { def: { w: "le vol", say: "luh vol" } },
+  laptop: { def: { w: "l'ordinateur", say: "lor-dee-na-tuhr" } },
+  tv: { def: { w: "la télé", say: "la tay-lay" } },
+  photo: { def: { w: "la photo", say: "la fo-to" } },
+  video: { def: { w: "la vidéo", say: "la vee-day-o" } },
+  message: { def: { w: "le message", say: "luh may-sazh" } },
+  email: { def: { w: "l'email", say: "lee-mel" } },
+  password: { def: { w: "le mot de passe", say: "luh mo duh pass" } },
+  app: { def: { w: "l'appli", say: "la-plee" } },
+  film: { indef: { w: "un film", say: "uhn feelm", neg: "de film", negSay: "duh feelm" } },
+  series: { def: { w: "la série", say: "la say-ree" } },
+  news: { def: { w: "les infos", say: "layz an-fo" } },
+  podcast: { def: { w: "le podcast", say: "luh pod-kast" } },
+  work: { def: { w: "le travail", say: "luh tra-vye" } },
+  rent: { def: { w: "le loyer", say: "luh lwa-yay" } },
+  bill: { def: { w: "l'addition", say: "la-dee-syohn" } },
+  salary: { def: { w: "le salaire", say: "luh sa-lehr" } },
+  chess: { sport: { w: "aux échecs", say: "ohz ay-shek" } },
+  badminton: { sport: { w: "au badminton", say: "oh bad-meen-tohn" } },
+  game: { sport: { w: "à un jeu", say: "a uhn zhuh" } },
+  recording: { faire: { w: "un enregistrement", say: "uhn ahn-ruh-zhee-struh-mahn" } },
+  meeting: { faire: { w: "une réunion", say: "ewn ray-ew-nyohn" } },
+  payment: { faire: { w: "le paiement", say: "luh peh-mahn" } },
+  booking: { faire: { w: "la réservation", say: "la ray-zehr-va-syohn" } },
+  laundry: { faire: { w: "la lessive", say: "la lay-seev" } },
+  packing: { faire: { w: "les valises", say: "lay va-leez" } },
 };
 const FR_FRAME: Record<string, "part" | "def" | "bare" | "place" | "sport" | "indef" | "faire"> = {
   play: "part", practise: "def", learn: "def", teach: "def", speak: "bare", listen: "part", sing: "indef", write: "indef",
   eat: "part", drink: "part", buy: "part", give: "part", take: "def", see: "indef", read: "indef", go: "place", come: "place", playgame: "sport", do: "faire",
+  tune: "def", record: "def", count: "def", explain: "def", repeat: "def", cook: "part", sell: "def", order: "part",
+  travel: "place", bring: "def", send: "def", show: "def", put: "def", open: "def", close: "def", wash: "def",
+  clean: "def", cut: "part", repair: "def", change: "def", search: "def", start: "def", stop: "def",
+  finish: "def", try: "part", wear: "def", drive: "def", pay: "def", book: "def", cancel: "def",
+  ask: "def", answer: "def", sit: "def",
 };
 const FR_POSS = [
   { w: "mes", say: "may" },
@@ -495,6 +779,14 @@ const FR_TIME: Record<string, FrObj> = {
   everyday: { w: "tous les jours", say: "too lay zhoor" },
   tomorrow: { w: "demain", say: "duh-man" },
 };
+
+export function frenchHasVerb(verb: string): boolean {
+  return Boolean(FR_VERBS[verb]);
+}
+
+export function frenchHasObject(object: string): boolean {
+  return Boolean(FR_OBJ[object]);
+}
 
 const startsVowel = (w: string) => /^[aeiouéèêh]/i.test(w);
 
@@ -537,6 +829,12 @@ function french(c: PathChoice): PathResult {
   // Verbs of motion are never "en train de" in speech: je vais à l'école, là.
   const motion = c.when === "cont" && (c.verb === "go" || c.verb === "come");
   const obj = frObject(c, idx, negObj);
+  if (c.object && !obj) {
+    return {
+      english, enParts: [], sentence: "", parts: [], say: "",
+      unsupported: `${objectEnglish(c.object, "fr").replace(/^(the|a|an|to the|to) /, "")} is not in the French word set yet. Pick another word, or switch to Kannada, Hindi, Tamil or Malayalam where every word in the bank works.`,
+    };
+  }
   const refl = v.refl ? FR_REFL[idx] : null;
   const reflBefore = (next: string) => (refl ? (startsVowel(next) && refl.w !== "vous" ? { w: refl.w[0] + "'", say: refl.say[0] } : refl) : null);
   const pas: Part = { word: "pas", role: "helper", say: "pah" };
@@ -615,10 +913,11 @@ function french(c: PathChoice): PathResult {
 // ............................................................ surprise me
 // A random but sensible sentence: any action, a fitting object, any person, any
 // time. Used for the example chips and the dice, then the learner rebuilds it.
-export function randomChoice(gender: Gender, rnd: () => number = Math.random): PathChoice {
+export function randomChoice(gender: Gender, lang: PathLang = "kn", rnd: () => number = Math.random): PathChoice {
   const pick = <T,>(list: T[]) => list[Math.floor(rnd() * list.length)];
-  const tile = pick(VERB_TILES);
-  const objects = tile.objects;
+  const pool = VERB_TILES.filter((v) => verbInLang(v.id, lang));
+  const tile = pick(pool.length ? pool : VERB_TILES);
+  const objects = tile.objects.filter((o) => wordInLang(o, lang));
   const object = objects.length ? (rnd() < 0.85 ? pick(objects) : null) : null;
   const who = pick(WHO_TILES.filter((t) => t.id !== "name")).id;
   const whens = WHEN_TILES.filter((w) => whenAllowed(tile.id, w.id, object)).map((w) => w.id);
@@ -661,6 +960,13 @@ export const HOW_TO_SAY: Record<PathLang, { k: string; v: string }[]> = {
     { k: "kk, tt, pp", v: "a double letter is held for a beat: ir·uk·ken" },
     { k: "·", v: "a dot is a beat. Say every beat evenly" },
   ],
+  ml: [
+    { k: "aa, ee, oo", v: "hold it long: father, see, moon" },
+    { k: "nj", v: "one sound, like the ny in canyon: njaan is nyaan" },
+    { k: "zh", v: "curl the tongue far back: between an r and an l" },
+    { k: "kk, tt, ll, nn", v: "a double letter is held for a beat: vaa·yik·ku·nnu" },
+    { k: "·", v: "a dot is a beat. Say every beat evenly, no stress" },
+  ],
   fr: [
     { k: "zh", v: "the s in measure: je is zhuh" },
     { k: "ew", v: "say ee with your lips rounded: tu is tew" },
@@ -669,3 +975,58 @@ export const HOW_TO_SAY: Record<PathLang, { k: string; v: string }[]> = {
     { k: "uh", v: "the a in about. Final consonants are mostly silent" },
   ],
 };
+
+// ............................................................ the word bank
+// Every noun in grammar.json, grouped so the learner can build any sentence
+// from scratch instead of only the handful each verb suggests.
+export const CAT_ORDER: { id: ObjectCat; label: string; emoji: string }[] = [
+  { id: "instrument", label: "Instruments", emoji: "🎸" },
+  { id: "music", label: "Music", emoji: "🎼" },
+  { id: "food", label: "Food", emoji: "🍛" },
+  { id: "drink", label: "Drinks", emoji: "☕" },
+  { id: "place", label: "Places", emoji: "📍" },
+  { id: "thing", label: "Things", emoji: "🔑" },
+  { id: "study", label: "Reading", emoji: "📖" },
+  { id: "clothes", label: "Clothes", emoji: "👕" },
+  { id: "transport", label: "Getting around", emoji: "🚕" },
+  { id: "tech", label: "Phone and screen", emoji: "📱" },
+  { id: "media", label: "Watch and listen", emoji: "🎬" },
+  { id: "money", label: "Money and work", emoji: "💰" },
+  { id: "sport", label: "Games", emoji: "⚽" },
+  { id: "chore", label: "Jobs to do", emoji: "🪄" },
+  { id: "language", label: "Languages", emoji: "💬" },
+];
+
+export type BankGroup = { id: ObjectCat; label: string; emoji: string; words: ObjectWord[] };
+
+export function wordBank(): BankGroup[] {
+  return CAT_ORDER.map((c) => ({ ...c, words: OBJECTS.filter((o) => o.cat === c.id) })).filter((g) => g.words.length > 0);
+}
+
+// Searching the bank: match the English, the target word, or the category.
+export function searchWords(query: string, lang: PathLang): ObjectWord[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return OBJECTS.filter((o) => {
+    const target = lang === "fr" ? "" : o[lang as Lang];
+    return objectEnglish(o.id, lang).toLowerCase().includes(q) || target.toLowerCase().includes(q) || o.cat.includes(q);
+  }).slice(0, 40);
+}
+
+export function searchVerbs(query: string): typeof VERB_TILES {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return VERB_TILES.filter((v) => v.en.toLowerCase().includes(q) || v.id.includes(q)).slice(0, 40);
+}
+
+// French carries its own hand-built verb and noun tables, so some of the bank
+// is not there yet. The picker greys those out rather than letting the learner
+// walk into a dead end.
+export function verbInLang(verb: string, lang: PathLang): boolean {
+  return lang !== "fr" || frenchHasVerb(verb);
+}
+
+export function wordInLang(object: string | null, lang: PathLang): boolean {
+  if (!object) return true;
+  return lang !== "fr" || frenchHasObject(object);
+}
