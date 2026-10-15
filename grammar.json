@@ -6,45 +6,59 @@
         "id": "i",
         "en": "I",
         "sub": "naanu",
-        "dat": "nanage"
+        "dat": "nanage",
+        "at": "nanna hatra",
+        "poss": "nanna"
       },
       {
         "id": "you",
         "en": "you",
         "sub": "neenu",
         "dat": "ninage",
-        "hint": "a friend"
+        "hint": "a friend",
+        "at": "ninna hatra",
+        "poss": "ninna"
       },
       {
         "id": "youp",
         "en": "you",
         "sub": "neevu",
         "dat": "nimage",
-        "hint": "polite"
+        "hint": "polite",
+        "at": "nimma hatra",
+        "poss": "nimma"
       },
       {
         "id": "he",
         "en": "he",
         "sub": "avanu",
-        "dat": "avanige"
+        "dat": "avanige",
+        "at": "avana hatra",
+        "poss": "avana"
       },
       {
         "id": "she",
         "en": "she",
         "sub": "avalu",
-        "dat": "avalige"
+        "dat": "avalige",
+        "at": "avala hatra",
+        "poss": "avala"
       },
       {
         "id": "we",
         "en": "we",
         "sub": "naavu",
-        "dat": "namage"
+        "dat": "namage",
+        "at": "namma hatra",
+        "poss": "namma"
       },
       {
         "id": "they",
         "en": "they",
         "sub": "avru",
-        "dat": "avrige"
+        "dat": "avrige",
+        "at": "avra hatra",
+        "poss": "avra"
       }
     ],
     "hi": [
@@ -53,7 +67,11 @@
         "en": "I",
         "sub": "main",
         "dat": "mujhe",
-        "ne": "maine"
+        "ne": "maine",
+        "at": "mere paas",
+        "possM": "mera",
+        "possF": "meri",
+        "possPl": "mere"
       },
       {
         "id": "you",
@@ -61,7 +79,11 @@
         "sub": "tum",
         "dat": "tumhe",
         "ne": "tumne",
-        "hint": "a friend"
+        "hint": "a friend",
+        "at": "tumhare paas",
+        "possM": "tumhara",
+        "possF": "tumhari",
+        "possPl": "tumhare"
       },
       {
         "id": "youp",
@@ -69,35 +91,55 @@
         "sub": "aap",
         "dat": "aapko",
         "ne": "aapne",
-        "hint": "polite"
+        "hint": "polite",
+        "at": "aapke paas",
+        "possM": "aapka",
+        "possF": "aapki",
+        "possPl": "aapke"
       },
       {
         "id": "he",
         "en": "he",
         "sub": "voh",
         "dat": "use",
-        "ne": "usne"
+        "ne": "usne",
+        "at": "uske paas",
+        "possM": "uska",
+        "possF": "uski",
+        "possPl": "uske"
       },
       {
         "id": "she",
         "en": "she",
         "sub": "voh",
         "dat": "use",
-        "ne": "usne"
+        "ne": "usne",
+        "at": "uske paas",
+        "possM": "uska",
+        "possF": "uski",
+        "possPl": "uske"
       },
       {
         "id": "we",
         "en": "we",
         "sub": "hum",
         "dat": "humein",
-        "ne": "humne"
+        "ne": "humne",
+        "at": "hamare paas",
+        "possM": "hamara",
+        "possF": "hamari",
+        "possPl": "hamare"
       },
       {
         "id": "they",
         "en": "they",
         "sub": "ve",
         "dat": "unhe",
-        "ne": "unhonne"
+        "ne": "unhonne",
+        "at": "unke paas",
+        "possM": "unka",
+        "possF": "unki",
+        "possPl": "unke"
       }
     ],
     "ta": [
@@ -105,45 +147,59 @@
         "id": "i",
         "en": "I",
         "sub": "naan",
-        "dat": "enakku"
+        "dat": "enakku",
+        "at": "en kitta",
+        "poss": "en"
       },
       {
         "id": "you",
         "en": "you",
         "sub": "nee",
         "dat": "unakku",
-        "hint": "a friend"
+        "hint": "a friend",
+        "at": "un kitta",
+        "poss": "un"
       },
       {
         "id": "youp",
         "en": "you",
         "sub": "neenga",
         "dat": "ungalukku",
-        "hint": "polite"
+        "hint": "polite",
+        "at": "unga kitta",
+        "poss": "unga"
       },
       {
         "id": "he",
         "en": "he",
         "sub": "avan",
-        "dat": "avanukku"
+        "dat": "avanukku",
+        "at": "avan kitta",
+        "poss": "avan-oda"
       },
       {
         "id": "she",
         "en": "she",
         "sub": "ava",
-        "dat": "avalukku"
+        "dat": "avalukku",
+        "at": "ava kitta",
+        "poss": "ava-oda"
       },
       {
         "id": "we",
         "en": "we",
         "sub": "naanga",
-        "dat": "engalukku"
+        "dat": "engalukku",
+        "at": "enga kitta",
+        "poss": "enga"
       },
       {
         "id": "they",
         "en": "they",
         "sub": "avanga",
-        "dat": "avangalukku"
+        "dat": "avangalukku",
+        "at": "avanga kitta",
+        "poss": "avanga-oda"
       }
     ],
     "ml": [
@@ -151,45 +207,59 @@
         "id": "i",
         "en": "I",
         "sub": "njaan",
-        "dat": "enikku"
+        "dat": "enikku",
+        "at": "ente kayyil",
+        "poss": "ente"
       },
       {
         "id": "you",
         "en": "you",
         "sub": "nee",
         "dat": "ninakku",
-        "hint": "a friend"
+        "hint": "a friend",
+        "at": "ninte kayyil",
+        "poss": "ninte"
       },
       {
         "id": "youp",
         "en": "you",
         "sub": "ningal",
         "dat": "ningalkku",
-        "hint": "polite"
+        "hint": "polite",
+        "at": "ningalude kayyil",
+        "poss": "ningalude"
       },
       {
         "id": "he",
         "en": "he",
         "sub": "avan",
-        "dat": "avanu"
+        "dat": "avanu",
+        "at": "avante kayyil",
+        "poss": "avante"
       },
       {
         "id": "she",
         "en": "she",
         "sub": "aval",
-        "dat": "avalkku"
+        "dat": "avalkku",
+        "at": "avalude kayyil",
+        "poss": "avalude"
       },
       {
         "id": "we",
         "en": "we",
         "sub": "njangal",
-        "dat": "njangalkku"
+        "dat": "njangalkku",
+        "at": "njangalude kayyil",
+        "poss": "njangalude"
       },
       {
         "id": "they",
         "en": "they",
         "sub": "avar",
-        "dat": "avarkku"
+        "dat": "avarkku",
+        "at": "avarude kayyil",
+        "poss": "avarude"
       }
     ]
   },
@@ -3828,7 +3898,13 @@
       "ta": "veetukku",
       "kind": "place",
       "ml": "veettilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "manelli",
+        "hi": "ghar pe",
+        "ta": "veettula",
+        "ml": "veettil"
+      }
     },
     {
       "id": "class",
@@ -3839,7 +3915,13 @@
       "ta": "class-ku",
       "kind": "place",
       "ml": "class-ilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "class-alli",
+        "hi": "class mein",
+        "ta": "class-la",
+        "ml": "class-il"
+      }
     },
     {
       "id": "concert",
@@ -3850,7 +3932,13 @@
       "ta": "concert-ku",
       "kind": "place",
       "ml": "concert-ilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "concert-alli",
+        "hi": "concert mein",
+        "ta": "concert-la",
+        "ml": "concert-il"
+      }
     },
     {
       "id": "city",
@@ -3861,7 +3949,13 @@
       "ta": "Bangalore-ku",
       "kind": "place",
       "ml": "Bangalore-ilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "Bangalore-alli",
+        "hi": "Bangalore mein",
+        "ta": "Bangalore-la",
+        "ml": "Bangalore-il"
+      }
     },
     {
       "id": "money",
@@ -3950,7 +4044,13 @@
       "ta": "kadaikku",
       "kind": "place",
       "ml": "kadayilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "angadiyalli",
+        "hi": "dukaan mein",
+        "ta": "kadaila",
+        "ml": "kadayil"
+      }
     },
     {
       "id": "school",
@@ -3961,7 +4061,13 @@
       "ta": "school-ku",
       "kind": "place",
       "ml": "school-ilekku",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "school-alli",
+        "hi": "school mein",
+        "ta": "school-la",
+        "ml": "school-il"
+      }
     },
     {
       "id": "football",
@@ -4599,7 +4705,13 @@
       "ta": "office-ku",
       "ml": "office-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "office-alli",
+        "hi": "office mein",
+        "ta": "office-la",
+        "ml": "office-il"
+      }
     },
     {
       "id": "market",
@@ -4610,7 +4722,13 @@
       "ta": "market-ku",
       "ml": "market-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "market-alli",
+        "hi": "bazaar mein",
+        "ta": "market-la",
+        "ml": "market-il"
+      }
     },
     {
       "id": "temple",
@@ -4621,7 +4739,13 @@
       "ta": "kovil-ku",
       "ml": "ambalathilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "devasthaanadalli",
+        "hi": "mandir mein",
+        "ta": "kovil-la",
+        "ml": "ambalathil"
+      }
     },
     {
       "id": "church",
@@ -4632,7 +4756,13 @@
       "ta": "church-ku",
       "ml": "pallyilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "church-alli",
+        "hi": "church mein",
+        "ta": "church-la",
+        "ml": "pallyil"
+      }
     },
     {
       "id": "hospital",
@@ -4643,7 +4773,13 @@
       "ta": "hospital-ku",
       "ml": "aashupathriyilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "aspatreyalli",
+        "hi": "hospital mein",
+        "ta": "hospital-la",
+        "ml": "aashupathriyil"
+      }
     },
     {
       "id": "station",
@@ -4654,7 +4790,13 @@
       "ta": "station-ku",
       "ml": "station-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "station-alli",
+        "hi": "station pe",
+        "ta": "station-la",
+        "ml": "station-il"
+      }
     },
     {
       "id": "airport",
@@ -4665,7 +4807,13 @@
       "ta": "airport-ku",
       "ml": "airport-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "airport-alli",
+        "hi": "airport pe",
+        "ta": "airport-la",
+        "ml": "airport-il"
+      }
     },
     {
       "id": "bank",
@@ -4676,7 +4824,13 @@
       "ta": "bank-ku",
       "ml": "bank-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "bank-alli",
+        "hi": "bank mein",
+        "ta": "bank-la",
+        "ml": "bank-il"
+      }
     },
     {
       "id": "hotel",
@@ -4687,7 +4841,13 @@
       "ta": "hotel-ku",
       "ml": "hotel-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "hotel-alli",
+        "hi": "hotel mein",
+        "ta": "hotel-la",
+        "ml": "hotel-il"
+      }
     },
     {
       "id": "park",
@@ -4698,7 +4858,13 @@
       "ta": "park-ku",
       "ml": "park-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "park-alli",
+        "hi": "park mein",
+        "ta": "park-la",
+        "ml": "park-il"
+      }
     },
     {
       "id": "beach",
@@ -4709,7 +4875,13 @@
       "ta": "beach-ku",
       "ml": "beach-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "beach-alli",
+        "hi": "beach pe",
+        "ta": "beach-la",
+        "ml": "beach-il"
+      }
     },
     {
       "id": "cinema",
@@ -4720,7 +4892,13 @@
       "ta": "theatre-ku",
       "ml": "theatre-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "theatre-alli",
+        "hi": "cinema mein",
+        "ta": "theatre-la",
+        "ml": "theatre-il"
+      }
     },
     {
       "id": "gym",
@@ -4731,7 +4909,13 @@
       "ta": "gym-ku",
       "ml": "gym-ilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "gym-alli",
+        "hi": "gym mein",
+        "ta": "gym-la",
+        "ml": "gym-il"
+      }
     },
     {
       "id": "village",
@@ -4742,7 +4926,13 @@
       "ta": "oor-ku",
       "ml": "naattilekku",
       "kind": "place",
-      "cat": "place"
+      "cat": "place",
+      "at": {
+        "kn": "hallilli",
+        "hi": "gaanv mein",
+        "ta": "oor-la",
+        "ml": "naattil"
+      }
     },
     {
       "id": "bag",
@@ -5372,6 +5562,226 @@
       "ml": "packing",
       "kind": "thing",
       "cat": "chore"
+    },
+    {
+      "id": "tomato",
+      "en": "tomatoes",
+      "kn": "tomato",
+      "hi": "tamaatar",
+      "hiG": "m",
+      "ta": "thakkaali",
+      "ml": "thakkaali",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "onion",
+      "en": "onions",
+      "kn": "eerulli",
+      "hi": "pyaaz",
+      "hiG": "m",
+      "ta": "vengaayam",
+      "ml": "savaala",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "potato",
+      "en": "potatoes",
+      "kn": "aalugadde",
+      "hi": "aaloo",
+      "hiG": "m",
+      "ta": "urulaikizhangu",
+      "ml": "urulakizhangu",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "carrot",
+      "en": "carrots",
+      "kn": "carrot",
+      "hi": "gaajar",
+      "hiG": "f",
+      "ta": "carrot",
+      "ml": "carrot",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "chilli",
+      "en": "chillies",
+      "kn": "menasinakaayi",
+      "hi": "mirch",
+      "hiG": "f",
+      "ta": "milagaai",
+      "ml": "mulaku",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "ginger",
+      "en": "ginger",
+      "kn": "shunti",
+      "hi": "adrak",
+      "hiG": "m",
+      "ta": "inji",
+      "ml": "inchi",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "garlic",
+      "en": "garlic",
+      "kn": "bellulli",
+      "hi": "lehsun",
+      "hiG": "m",
+      "ta": "poondu",
+      "ml": "veluthulli",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "coriander",
+      "en": "coriander",
+      "kn": "kottambari soppu",
+      "hi": "dhaniya",
+      "hiG": "m",
+      "ta": "kothamalli",
+      "ml": "mallyila",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "brinjal",
+      "en": "brinjals",
+      "kn": "badnekaayi",
+      "hi": "baingan",
+      "hiG": "m",
+      "ta": "kathirikkaai",
+      "ml": "vazhuthananga",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "okra",
+      "en": "ladies finger",
+      "kn": "bendekaayi",
+      "hi": "bhindi",
+      "hiG": "f",
+      "ta": "vendakkaai",
+      "ml": "vendakka",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "cabbage",
+      "en": "cabbage",
+      "kn": "cabbage",
+      "hi": "patta gobhi",
+      "hiG": "f",
+      "ta": "cabbage",
+      "ml": "cabbage",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "greens",
+      "en": "greens",
+      "kn": "soppu",
+      "hi": "saag",
+      "hiG": "m",
+      "ta": "keerai",
+      "ml": "cheera",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "lemon",
+      "en": "lemons",
+      "kn": "nimbe hannu",
+      "hi": "nimbu",
+      "hiG": "m",
+      "ta": "elumichai",
+      "ml": "cherunaaranga",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "apple",
+      "en": "apples",
+      "kn": "sebu",
+      "hi": "seb",
+      "hiG": "m",
+      "ta": "apple",
+      "ml": "apple",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "orange",
+      "en": "oranges",
+      "kn": "kittale",
+      "hi": "santra",
+      "hiG": "m",
+      "ta": "orange",
+      "ml": "orange",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "grapes",
+      "en": "grapes",
+      "kn": "draakshi",
+      "hi": "angoor",
+      "hiG": "m",
+      "ta": "dhraatchai",
+      "ml": "munthiri",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "watermelon",
+      "en": "watermelon",
+      "kn": "kallangadi",
+      "hi": "tarbooz",
+      "hiG": "m",
+      "ta": "tharboosani",
+      "ml": "thannimathan",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "coconut",
+      "en": "a coconut",
+      "kn": "tenginakaayi",
+      "hi": "naariyal",
+      "hiG": "m",
+      "ta": "thengaai",
+      "ml": "thenga",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "curd",
+      "en": "curd",
+      "kn": "mosaru",
+      "hi": "dahi",
+      "hiG": "m",
+      "ta": "thayir",
+      "ml": "thairu",
+      "kind": "thing",
+      "cat": "food"
+    },
+    {
+      "id": "oil",
+      "en": "oil",
+      "kn": "enne",
+      "hi": "tel",
+      "hiG": "m",
+      "ta": "ennai",
+      "ml": "enna",
+      "kind": "thing",
+      "cat": "food"
     }
   ],
   "times": [
@@ -5434,6 +5844,107 @@
       "hi": "subah",
       "ta": "kaalaila",
       "ml": "raavile"
+    },
+    {
+      "id": "night",
+      "en": "at night",
+      "kn": "raatri",
+      "hi": "raat ko",
+      "ta": "raathiri",
+      "ml": "raathri"
+    },
+    {
+      "id": "afternoon",
+      "en": "in the afternoon",
+      "kn": "madhyaahna",
+      "hi": "dopahar ko",
+      "ta": "madhyaanam",
+      "ml": "uchakku"
+    },
+    {
+      "id": "dayafter",
+      "en": "the day after tomorrow",
+      "kn": "naadiddu",
+      "hi": "parson",
+      "ta": "naalannaikku",
+      "ml": "marunnaal",
+      "tense": "future"
+    },
+    {
+      "id": "thisweek",
+      "en": "this week",
+      "kn": "ee vaara",
+      "hi": "is hafte",
+      "ta": "indha vaaram",
+      "ml": "ee aazhcha"
+    },
+    {
+      "id": "lastweek",
+      "en": "last week",
+      "kn": "hoda vaara",
+      "hi": "pichhle hafte",
+      "ta": "pona vaaram",
+      "ml": "kazhinja aazhcha",
+      "tense": "past"
+    },
+    {
+      "id": "nextweek",
+      "en": "next week",
+      "kn": "mundina vaara",
+      "hi": "agle hafte",
+      "ta": "adutha vaaram",
+      "ml": "adutha aazhcha",
+      "tense": "future"
+    },
+    {
+      "id": "sunday",
+      "en": "on Sunday",
+      "kn": "Sunday",
+      "hi": "Sunday ko",
+      "ta": "Sunday",
+      "ml": "Sunday"
+    },
+    {
+      "id": "atfive",
+      "en": "at five o'clock",
+      "kn": "aidu gantege",
+      "hi": "paanch baje",
+      "ta": "anju manikku",
+      "ml": "anchu manikku"
+    },
+    {
+      "id": "always",
+      "en": "always",
+      "kn": "yaavaagalu",
+      "hi": "hamesha",
+      "ta": "eppavum",
+      "ml": "eppozhum"
+    },
+    {
+      "id": "sometimes",
+      "en": "sometimes",
+      "kn": "ondondu sala",
+      "hi": "kabhi kabhi",
+      "ta": "sila samayam",
+      "ml": "chilappo"
+    },
+    {
+      "id": "later",
+      "en": "later",
+      "kn": "aamele",
+      "hi": "baad mein",
+      "ta": "apram",
+      "ml": "pinne",
+      "tense": "future"
+    },
+    {
+      "id": "soon",
+      "en": "soon",
+      "kn": "bega",
+      "hi": "jaldi",
+      "ta": "seekkiram",
+      "ml": "vegam",
+      "tense": "future"
     }
   ],
   "decks": {
@@ -7609,5 +8120,1121 @@
     "hi": "Polite ends in iye (bajaiye, aaiye, dijiye); friends get o (bajaao, aao, do). Do not: mat before the verb (mat bajaao).",
     "ta": "Polite ends in nga (vaasinga, vaanga, kudunga); friends get the bare verb (vaasi, vaa, kudu). Do not: verb plus aadheenga (vaasikkaadheenga).",
     "ml": "Polite ends in oo (vaayikkoo, varoo, tharoo); a friend or a child gets the short form (vaayikk, vaa, thaa). Do not: verb plus enda (vaayikkenda)."
-  }
+  },
+  "adjectives": [
+    {
+      "id": "big",
+      "en": "big",
+      "cat": "size",
+      "kn": {
+        "attr": "dodda",
+        "pred": "doddadu"
+      },
+      "hi": {
+        "m": "bada",
+        "f": "badi"
+      },
+      "ta": {
+        "attr": "periya",
+        "pred": "perisu"
+      },
+      "ml": {
+        "attr": "valiya",
+        "pred": "valuthu"
+      }
+    },
+    {
+      "id": "small",
+      "en": "small",
+      "cat": "size",
+      "kn": {
+        "attr": "chikka",
+        "pred": "chikkadu"
+      },
+      "hi": {
+        "m": "chhota",
+        "f": "chhoti"
+      },
+      "ta": {
+        "attr": "chinna",
+        "pred": "chinnadhu"
+      },
+      "ml": {
+        "attr": "cheriya",
+        "pred": "cheruthu"
+      }
+    },
+    {
+      "id": "long",
+      "en": "long",
+      "cat": "size",
+      "kn": {
+        "attr": "uddada",
+        "pred": "udda ide"
+      },
+      "hi": {
+        "m": "lamba",
+        "f": "lambi"
+      },
+      "ta": {
+        "attr": "nedhiya",
+        "pred": "nedhiya irukku"
+      },
+      "ml": {
+        "attr": "neelamulla",
+        "pred": "neelam aanu"
+      }
+    },
+    {
+      "id": "heavy",
+      "en": "heavy",
+      "cat": "size",
+      "kn": {
+        "attr": "bhaarada",
+        "pred": "bhaara ide"
+      },
+      "hi": {
+        "m": "bhaari",
+        "f": "bhaari"
+      },
+      "ta": {
+        "attr": "kanamaana",
+        "pred": "kanam-aa irukku"
+      },
+      "ml": {
+        "attr": "bhaaramulla",
+        "pred": "bhaaram aanu"
+      }
+    },
+    {
+      "id": "full",
+      "en": "full",
+      "cat": "size",
+      "kn": {
+        "attr": "full",
+        "pred": "full ide"
+      },
+      "hi": {
+        "m": "bhara",
+        "f": "bhari"
+      },
+      "ta": {
+        "attr": "full",
+        "pred": "full-aa irukku"
+      },
+      "ml": {
+        "attr": "full",
+        "pred": "full aanu"
+      }
+    },
+    {
+      "id": "empty",
+      "en": "empty",
+      "cat": "size",
+      "kn": {
+        "attr": "khaali",
+        "pred": "khaali ide"
+      },
+      "hi": {
+        "m": "khaali",
+        "f": "khaali"
+      },
+      "ta": {
+        "attr": "kaali",
+        "pred": "kaali-yaa irukku"
+      },
+      "ml": {
+        "attr": "kaali",
+        "pred": "kaali aanu"
+      }
+    },
+    {
+      "id": "good",
+      "en": "good",
+      "cat": "quality",
+      "kn": {
+        "attr": "olle",
+        "pred": "chennaagide"
+      },
+      "hi": {
+        "m": "achha",
+        "f": "achhi"
+      },
+      "ta": {
+        "attr": "nalla",
+        "pred": "nalla irukku"
+      },
+      "ml": {
+        "attr": "nalla",
+        "pred": "nalla und"
+      }
+    },
+    {
+      "id": "bad",
+      "en": "bad",
+      "cat": "quality",
+      "kn": {
+        "attr": "ketta",
+        "pred": "kettadu"
+      },
+      "hi": {
+        "m": "kharaab",
+        "f": "kharaab"
+      },
+      "ta": {
+        "attr": "mosamaana",
+        "pred": "mosam"
+      },
+      "ml": {
+        "attr": "mosham",
+        "pred": "moshamaanu"
+      }
+    },
+    {
+      "id": "beautiful",
+      "en": "beautiful",
+      "cat": "quality",
+      "kn": {
+        "attr": "sundara",
+        "pred": "sundaravaagide"
+      },
+      "hi": {
+        "m": "sundar",
+        "f": "sundar"
+      },
+      "ta": {
+        "attr": "azhagaana",
+        "pred": "azhagaa irukku"
+      },
+      "ml": {
+        "attr": "sundaramulla",
+        "pred": "sundaram aanu"
+      }
+    },
+    {
+      "id": "new",
+      "en": "new",
+      "cat": "quality",
+      "kn": {
+        "attr": "hosa",
+        "pred": "hosadu"
+      },
+      "hi": {
+        "m": "naya",
+        "f": "nayi"
+      },
+      "ta": {
+        "attr": "pudhu",
+        "pred": "pudhusu"
+      },
+      "ml": {
+        "attr": "puthiya",
+        "pred": "puthiyathaanu"
+      }
+    },
+    {
+      "id": "old",
+      "en": "old",
+      "cat": "quality",
+      "kn": {
+        "attr": "hale",
+        "pred": "haledu"
+      },
+      "hi": {
+        "m": "puraana",
+        "f": "puraani"
+      },
+      "ta": {
+        "attr": "pazhaya",
+        "pred": "pazhasu"
+      },
+      "ml": {
+        "attr": "pazhaya",
+        "pred": "pazhayathaanu"
+      }
+    },
+    {
+      "id": "clean",
+      "en": "clean",
+      "cat": "quality",
+      "kn": {
+        "attr": "clean",
+        "pred": "clean ide"
+      },
+      "hi": {
+        "m": "saaf",
+        "f": "saaf"
+      },
+      "ta": {
+        "attr": "clean",
+        "pred": "clean-aa irukku"
+      },
+      "ml": {
+        "attr": "vrithiyulla",
+        "pred": "vrithi aanu"
+      }
+    },
+    {
+      "id": "dirty",
+      "en": "dirty",
+      "cat": "quality",
+      "kn": {
+        "attr": "galeejada",
+        "pred": "galeej ide"
+      },
+      "hi": {
+        "m": "ganda",
+        "f": "gandi"
+      },
+      "ta": {
+        "attr": "azhukkaana",
+        "pred": "azhukkaa irukku"
+      },
+      "ml": {
+        "attr": "azhukkulla",
+        "pred": "azhukku aanu"
+      }
+    },
+    {
+      "id": "correct",
+      "en": "correct",
+      "cat": "quality",
+      "kn": {
+        "attr": "sariyaada",
+        "pred": "sari ide"
+      },
+      "hi": {
+        "m": "sahi",
+        "f": "sahi"
+      },
+      "ta": {
+        "attr": "sariyaana",
+        "pred": "sari-yaa irukku"
+      },
+      "ml": {
+        "attr": "shariyaaya",
+        "pred": "shari aanu"
+      }
+    },
+    {
+      "id": "wrong",
+      "en": "wrong",
+      "cat": "quality",
+      "kn": {
+        "attr": "tappaada",
+        "pred": "tappu"
+      },
+      "hi": {
+        "m": "galat",
+        "f": "galat"
+      },
+      "ta": {
+        "attr": "thappaana",
+        "pred": "thappu"
+      },
+      "ml": {
+        "attr": "thettaaya",
+        "pred": "thettaanu"
+      }
+    },
+    {
+      "id": "same",
+      "en": "the same",
+      "cat": "quality",
+      "kn": {
+        "attr": "onde",
+        "pred": "onde"
+      },
+      "hi": {
+        "m": "same",
+        "f": "same"
+      },
+      "ta": {
+        "attr": "same",
+        "pred": "same"
+      },
+      "ml": {
+        "attr": "same",
+        "pred": "same aanu"
+      }
+    },
+    {
+      "id": "different",
+      "en": "different",
+      "cat": "quality",
+      "kn": {
+        "attr": "bere",
+        "pred": "bere"
+      },
+      "hi": {
+        "m": "alag",
+        "f": "alag"
+      },
+      "ta": {
+        "attr": "vera",
+        "pred": "vera"
+      },
+      "ml": {
+        "attr": "vere",
+        "pred": "vere aanu"
+      }
+    },
+    {
+      "id": "important",
+      "en": "important",
+      "cat": "quality",
+      "kn": {
+        "attr": "mukhyavaada",
+        "pred": "mukhya"
+      },
+      "hi": {
+        "m": "zaroori",
+        "f": "zaroori"
+      },
+      "ta": {
+        "attr": "mukkiyamaana",
+        "pred": "mukkiyam"
+      },
+      "ml": {
+        "attr": "pradhaanamulla",
+        "pred": "pradhaanam aanu"
+      }
+    },
+    {
+      "id": "hot",
+      "en": "hot",
+      "cat": "feel",
+      "kn": {
+        "attr": "bisi",
+        "pred": "bisi ide"
+      },
+      "hi": {
+        "m": "garam",
+        "f": "garam"
+      },
+      "ta": {
+        "attr": "soodaana",
+        "pred": "soodaa irukku"
+      },
+      "ml": {
+        "attr": "chooda",
+        "pred": "chooda aanu"
+      }
+    },
+    {
+      "id": "cold",
+      "en": "cold",
+      "cat": "feel",
+      "kn": {
+        "attr": "tampada",
+        "pred": "tampu ide"
+      },
+      "hi": {
+        "m": "thanda",
+        "f": "thandi"
+      },
+      "ta": {
+        "attr": "kulirnda",
+        "pred": "kulira irukku"
+      },
+      "ml": {
+        "attr": "thanutha",
+        "pred": "thanuppaanu"
+      }
+    },
+    {
+      "id": "tasty",
+      "en": "tasty",
+      "cat": "feel",
+      "kn": {
+        "attr": "ruchiyaada",
+        "pred": "ruchi ide"
+      },
+      "hi": {
+        "m": "swaadisht",
+        "f": "swaadisht"
+      },
+      "ta": {
+        "attr": "suvaiyaana",
+        "pred": "tasty-aa irukku"
+      },
+      "ml": {
+        "attr": "ruchiyulla",
+        "pred": "ruchi und"
+      }
+    },
+    {
+      "id": "spicy",
+      "en": "spicy",
+      "cat": "feel",
+      "kn": {
+        "attr": "khaarada",
+        "pred": "khaara ide"
+      },
+      "hi": {
+        "m": "teekha",
+        "f": "teekhi"
+      },
+      "ta": {
+        "attr": "kaaramaana",
+        "pred": "kaaram-aa irukku"
+      },
+      "ml": {
+        "attr": "erivulla",
+        "pred": "erivu und"
+      }
+    },
+    {
+      "id": "sweet",
+      "en": "sweet",
+      "cat": "feel",
+      "kn": {
+        "attr": "sihiyaada",
+        "pred": "sihi ide"
+      },
+      "hi": {
+        "m": "meetha",
+        "f": "meethi"
+      },
+      "ta": {
+        "attr": "inippaana",
+        "pred": "inippaa irukku"
+      },
+      "ml": {
+        "attr": "madhuramulla",
+        "pred": "madhuram aanu"
+      }
+    },
+    {
+      "id": "happy",
+      "en": "happy",
+      "cat": "feel",
+      "kn": {
+        "attr": "khushiyaada",
+        "pred": "khushi ide"
+      },
+      "hi": {
+        "m": "khush",
+        "f": "khush"
+      },
+      "ta": {
+        "attr": "santhoshamaana",
+        "pred": "santhosham-aa irukku"
+      },
+      "ml": {
+        "attr": "santhoshamulla",
+        "pred": "santhosham aanu"
+      }
+    },
+    {
+      "id": "sad",
+      "en": "sad",
+      "cat": "feel",
+      "kn": {
+        "attr": "bejaarada",
+        "pred": "bejaar ide"
+      },
+      "hi": {
+        "m": "udaas",
+        "f": "udaas"
+      },
+      "ta": {
+        "attr": "sogamaana",
+        "pred": "sogam-aa irukku"
+      },
+      "ml": {
+        "attr": "sankadamulla",
+        "pred": "sankadam aanu"
+      }
+    },
+    {
+      "id": "expensive",
+      "en": "expensive",
+      "cat": "price",
+      "kn": {
+        "attr": "costly",
+        "pred": "jaasti"
+      },
+      "hi": {
+        "m": "mehenga",
+        "f": "mehengi"
+      },
+      "ta": {
+        "attr": "costly",
+        "pred": "jaasti"
+      },
+      "ml": {
+        "attr": "costly",
+        "pred": "kooduthal aanu"
+      }
+    },
+    {
+      "id": "cheap",
+      "en": "cheap",
+      "cat": "price",
+      "kn": {
+        "attr": "kammi",
+        "pred": "kammi"
+      },
+      "hi": {
+        "m": "sasta",
+        "f": "sasti"
+      },
+      "ta": {
+        "attr": "kammi",
+        "pred": "kammi"
+      },
+      "ml": {
+        "attr": "kuravulla",
+        "pred": "kuravaanu"
+      }
+    },
+    {
+      "id": "free",
+      "en": "free of cost",
+      "cat": "price",
+      "kn": {
+        "attr": "free",
+        "pred": "free"
+      },
+      "hi": {
+        "m": "muft",
+        "f": "muft"
+      },
+      "ta": {
+        "attr": "free",
+        "pred": "free"
+      },
+      "ml": {
+        "attr": "free",
+        "pred": "free aanu"
+      }
+    },
+    {
+      "id": "fast",
+      "en": "fast",
+      "cat": "speed",
+      "kn": {
+        "attr": "fast",
+        "pred": "fast ide"
+      },
+      "hi": {
+        "m": "tez",
+        "f": "tez"
+      },
+      "ta": {
+        "attr": "vegamaana",
+        "pred": "vegama irukku"
+      },
+      "ml": {
+        "attr": "vegamulla",
+        "pred": "vegam aanu"
+      }
+    },
+    {
+      "id": "slow",
+      "en": "slow",
+      "cat": "speed",
+      "kn": {
+        "attr": "nidhaanada",
+        "pred": "nidhaana ide"
+      },
+      "hi": {
+        "m": "dheema",
+        "f": "dheemi"
+      },
+      "ta": {
+        "attr": "medhuvaana",
+        "pred": "medhuva irukku"
+      },
+      "ml": {
+        "attr": "pathukkeyulla",
+        "pred": "pathukke aanu"
+      }
+    },
+    {
+      "id": "loud",
+      "en": "loud",
+      "cat": "speed",
+      "kn": {
+        "attr": "jorada",
+        "pred": "jorage ide"
+      },
+      "hi": {
+        "m": "tez",
+        "f": "tez"
+      },
+      "ta": {
+        "attr": "saththamaana",
+        "pred": "saththam-aa irukku"
+      },
+      "ml": {
+        "attr": "urakkeyulla",
+        "pred": "urakke aanu"
+      }
+    },
+    {
+      "id": "near",
+      "en": "near",
+      "cat": "place",
+      "kn": {
+        "attr": "hattirada",
+        "pred": "hattira ide"
+      },
+      "hi": {
+        "m": "paas",
+        "f": "paas"
+      },
+      "ta": {
+        "attr": "pakkathula irukkira",
+        "pred": "pakkathula irukku"
+      },
+      "ml": {
+        "attr": "aduthulla",
+        "pred": "aduthaanu"
+      }
+    },
+    {
+      "id": "far",
+      "en": "far",
+      "cat": "place",
+      "kn": {
+        "attr": "doorada",
+        "pred": "doora ide"
+      },
+      "hi": {
+        "m": "door",
+        "f": "door"
+      },
+      "ta": {
+        "attr": "dooramaana",
+        "pred": "dooram-aa irukku"
+      },
+      "ml": {
+        "attr": "dooramulla",
+        "pred": "dooram aanu"
+      }
+    },
+    {
+      "id": "ready",
+      "en": "ready",
+      "cat": "place",
+      "kn": {
+        "attr": "readyaada",
+        "pred": "ready ide"
+      },
+      "hi": {
+        "m": "taiyaar",
+        "f": "taiyaar"
+      },
+      "ta": {
+        "attr": "ready-aana",
+        "pred": "ready-aa irukku"
+      },
+      "ml": {
+        "attr": "readyaaya",
+        "pred": "ready aanu"
+      }
+    },
+    {
+      "id": "busy",
+      "en": "busy",
+      "cat": "place",
+      "kn": {
+        "attr": "busyaada",
+        "pred": "busy ide"
+      },
+      "hi": {
+        "m": "busy",
+        "f": "busy"
+      },
+      "ta": {
+        "attr": "busy-aana",
+        "pred": "busy-aa irukku"
+      },
+      "ml": {
+        "attr": "busyaaya",
+        "pred": "busy aanu"
+      }
+    },
+    {
+      "id": "easy",
+      "en": "easy",
+      "cat": "place",
+      "kn": {
+        "attr": "sulabhada",
+        "pred": "sulabha ide"
+      },
+      "hi": {
+        "m": "aasaan",
+        "f": "aasaan"
+      },
+      "ta": {
+        "attr": "easy-aana",
+        "pred": "easy-aa irukku"
+      },
+      "ml": {
+        "attr": "eluppamulla",
+        "pred": "eluppam aanu"
+      }
+    },
+    {
+      "id": "difficult",
+      "en": "difficult",
+      "cat": "place",
+      "kn": {
+        "attr": "kashtada",
+        "pred": "kashta"
+      },
+      "hi": {
+        "m": "mushkil",
+        "f": "mushkil"
+      },
+      "ta": {
+        "attr": "kashtamaana",
+        "pred": "kashtam-aa irukku"
+      },
+      "ml": {
+        "attr": "kashtamulla",
+        "pred": "kashtam aanu"
+      }
+    },
+    {
+      "id": "red",
+      "en": "red",
+      "cat": "colour",
+      "kn": {
+        "attr": "kempu",
+        "pred": "kempu"
+      },
+      "hi": {
+        "m": "laal",
+        "f": "laal"
+      },
+      "ta": {
+        "attr": "sivappu",
+        "pred": "sivappu"
+      },
+      "ml": {
+        "attr": "chuvanna",
+        "pred": "chuvappaanu"
+      }
+    },
+    {
+      "id": "white",
+      "en": "white",
+      "cat": "colour",
+      "kn": {
+        "attr": "bili",
+        "pred": "bili"
+      },
+      "hi": {
+        "m": "safed",
+        "f": "safed"
+      },
+      "ta": {
+        "attr": "vellai",
+        "pred": "vellai"
+      },
+      "ml": {
+        "attr": "vella",
+        "pred": "vellayaanu"
+      }
+    },
+    {
+      "id": "black",
+      "en": "black",
+      "cat": "colour",
+      "kn": {
+        "attr": "kappu",
+        "pred": "kappu"
+      },
+      "hi": {
+        "m": "kaala",
+        "f": "kaali"
+      },
+      "ta": {
+        "attr": "karuppu",
+        "pred": "karuppu"
+      },
+      "ml": {
+        "attr": "karutha",
+        "pred": "karuppaanu"
+      }
+    },
+    {
+      "id": "green",
+      "en": "green",
+      "cat": "colour",
+      "kn": {
+        "attr": "hasiru",
+        "pred": "hasiru"
+      },
+      "hi": {
+        "m": "hara",
+        "f": "hari"
+      },
+      "ta": {
+        "attr": "pachai",
+        "pred": "pachai"
+      },
+      "ml": {
+        "attr": "pacha",
+        "pred": "pachayaanu"
+      }
+    },
+    {
+      "id": "blue",
+      "en": "blue",
+      "cat": "colour",
+      "kn": {
+        "attr": "neeli",
+        "pred": "neeli"
+      },
+      "hi": {
+        "m": "neela",
+        "f": "neeli"
+      },
+      "ta": {
+        "attr": "neelam",
+        "pred": "neelam"
+      },
+      "ml": {
+        "attr": "neela",
+        "pred": "neelayaanu"
+      }
+    },
+    {
+      "id": "yellow",
+      "en": "yellow",
+      "cat": "colour",
+      "kn": {
+        "attr": "haladi",
+        "pred": "haladi"
+      },
+      "hi": {
+        "m": "peela",
+        "f": "peeli"
+      },
+      "ta": {
+        "attr": "manjal",
+        "pred": "manjal"
+      },
+      "ml": {
+        "attr": "manja",
+        "pred": "manjayaanu"
+      }
+    }
+  ],
+  "adjCats": [
+    {
+      "id": "size",
+      "label": "Size",
+      "emoji": "📏"
+    },
+    {
+      "id": "quality",
+      "label": "Good or bad",
+      "emoji": "👍"
+    },
+    {
+      "id": "feel",
+      "label": "Taste and feeling",
+      "emoji": "🌶️"
+    },
+    {
+      "id": "price",
+      "label": "Price",
+      "emoji": "💰"
+    },
+    {
+      "id": "speed",
+      "label": "Speed and sound",
+      "emoji": "⚡"
+    },
+    {
+      "id": "place",
+      "label": "State",
+      "emoji": "📍"
+    },
+    {
+      "id": "colour",
+      "label": "Colour",
+      "emoji": "🎨"
+    }
+  ],
+  "quantities": [
+    {
+      "id": "alittle",
+      "en": "a little",
+      "kn": "swalpa",
+      "hi": "thoda",
+      "ta": "konjam",
+      "ml": "kurachu"
+    },
+    {
+      "id": "alot",
+      "en": "a lot of",
+      "kn": "tumba",
+      "hi": "bahut",
+      "ta": "romba",
+      "ml": "orupaadu"
+    },
+    {
+      "id": "some",
+      "en": "some",
+      "kn": "kelavu",
+      "hi": "kuch",
+      "ta": "sila",
+      "ml": "chila"
+    },
+    {
+      "id": "all",
+      "en": "all the",
+      "kn": "ella",
+      "hi": "sab",
+      "ta": "ellaa",
+      "ml": "ellaa"
+    },
+    {
+      "id": "more",
+      "en": "more",
+      "kn": "innu",
+      "hi": "aur",
+      "ta": "innum",
+      "ml": "kooduthal"
+    },
+    {
+      "id": "less",
+      "en": "less",
+      "kn": "kammi",
+      "hi": "kam",
+      "ta": "kammi",
+      "ml": "kuravu"
+    },
+    {
+      "id": "only",
+      "en": "only",
+      "kn": "maatra",
+      "hi": "sirf",
+      "ta": "mattum",
+      "ml": "mathram"
+    },
+    {
+      "id": "one",
+      "en": "one",
+      "kn": "ondu",
+      "hi": "ek",
+      "ta": "oru",
+      "ml": "oru"
+    },
+    {
+      "id": "two",
+      "en": "two",
+      "kn": "eradu",
+      "hi": "do",
+      "ta": "rendu",
+      "ml": "randu"
+    },
+    {
+      "id": "three",
+      "en": "three",
+      "kn": "mooru",
+      "hi": "teen",
+      "ta": "moonu",
+      "ml": "moonu"
+    },
+    {
+      "id": "half",
+      "en": "half a",
+      "kn": "ardha",
+      "hi": "aadha",
+      "ta": "arai",
+      "ml": "ara"
+    },
+    {
+      "id": "onekilo",
+      "en": "one kilo of",
+      "kn": "ondu kilo",
+      "hi": "ek kilo",
+      "ta": "oru kilo",
+      "ml": "oru kilo"
+    }
+  ],
+  "questionWords": [
+    {
+      "id": "where",
+      "en": "where",
+      "kn": "elli",
+      "hi": "kahaan",
+      "ta": "enga",
+      "ml": "evide"
+    },
+    {
+      "id": "what",
+      "en": "what",
+      "kn": "enu",
+      "hi": "kya",
+      "ta": "enna",
+      "ml": "enthu"
+    },
+    {
+      "id": "when",
+      "en": "when",
+      "kn": "yaavaga",
+      "hi": "kab",
+      "ta": "eppo",
+      "ml": "eppo"
+    },
+    {
+      "id": "why",
+      "en": "why",
+      "kn": "yaake",
+      "hi": "kyun",
+      "ta": "aen",
+      "ml": "enthinu"
+    },
+    {
+      "id": "how",
+      "en": "how",
+      "kn": "hege",
+      "hi": "kaise",
+      "ta": "eppadi",
+      "ml": "engane"
+    },
+    {
+      "id": "howmuch",
+      "en": "how much",
+      "kn": "eshtu",
+      "hi": "kitna",
+      "ta": "evlo",
+      "ml": "ethra"
+    },
+    {
+      "id": "whatall",
+      "en": "what all",
+      "kn": "enenu",
+      "hi": "kya kya",
+      "ta": "enna enna",
+      "ml": "enthokke"
+    }
+  ],
+  "subjectExtras": [
+    {
+      "id": "this",
+      "en": "this",
+      "kn": "idu",
+      "hi": "yeh",
+      "ta": "idhu",
+      "ml": "ithu"
+    },
+    {
+      "id": "that",
+      "en": "that",
+      "kn": "adu",
+      "hi": "voh",
+      "ta": "adhu",
+      "ml": "athu"
+    }
+  ]
 }

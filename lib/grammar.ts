@@ -10,7 +10,12 @@ export type PersonId = "i" | "you" | "youp" | "he" | "she" | "we" | "they";
 export type Tense = "present" | "cont" | "past" | "future" | "want" | "can";
 export type Gender = "m" | "f";
 
-export type Person = { id: PersonId; en: string; sub: string; dat: string; ne?: string; hint?: string };
+export type Person = {
+  id: PersonId; en: string; sub: string; dat: string; ne?: string; hint?: string;
+  // The have-form (nanna hatra, mere paas, en kitta, ente kayyil) and the
+  // possessive. Hindi possessives agree with the thing owned, not the owner.
+  at: string; poss?: string; possM?: string; possF?: string; possPl?: string;
+};
 export type VerbEn = { base: string; past: string; ing: string; s: string };
 export type VerbKn = { dict: string; pres: string; past: string; cont: string; neg: string; pastNeg: string; inf: string; want: string };
 export type VerbHi = { dict: string; stem: string; contStem?: string; fut?: { m: string[]; f: string[] }; perf: { m: string; f: string; pl: string }; ne: boolean };
@@ -21,12 +26,20 @@ export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: str
 export type ObjectCat =
   | "instrument" | "music" | "language" | "study" | "food" | "drink" | "place"
   | "thing" | "clothes" | "transport" | "tech" | "media" | "money" | "sport" | "chore";
-export type ObjectWord = { id: string; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; enByLang?: Record<Lang, string> };
+export type PlaceAt = Record<Lang, string>;
+export type ObjectWord = { id: string; at?: PlaceAt; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; enByLang?: Record<Lang, string> };
 export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; tense?: Tense };
 export type DeckEntry = { en: string; kn: string; hi: string; ta: string; ml: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
 export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; ml: string; slot: "thing" | "place"; why: string };
 export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string]; ml: [string, string] };
+export type AdjForms = { attr: string; pred: string };
+export type Adjective = {
+  id: string; en: string; cat: string;
+  kn: AdjForms; hi: { m: string; f: string }; ta: AdjForms; ml: AdjForms;
+};
+export type SmallWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string };
+
 export type DeckId = "music" | "numbers" | "fruits" | "vegetables" | "countries" | "questions" | "little" | "describe" | "time";
 
 type Data = {
@@ -44,6 +57,11 @@ type Data = {
   commandNote: Record<Lang, string>;
   decks: Record<DeckId, DeckEntry[]>;
   rules: Record<Lang, Rule[]>;
+  adjectives: Adjective[];
+  adjCats: { id: string; label: string; emoji: string }[];
+  quantities: SmallWord[];
+  questionWords: SmallWord[];
+  subjectExtras: SmallWord[];
 };
 
 const DATA = grammar as unknown as Data;
@@ -57,6 +75,17 @@ export const COMMANDS: Command[] = DATA.commands;
 export const COMMAND_NOTE = DATA.commandNote;
 export const DECKS = DATA.decks;
 export const RULES = DATA.rules;
+export const ADJECTIVES: Adjective[] = DATA.adjectives;
+export const ADJ_CATS = DATA.adjCats;
+export const QUANTITIES: SmallWord[] = DATA.quantities;
+export const QUESTION_WORDS: SmallWord[] = DATA.questionWords;
+export const SUBJECT_EXTRAS: SmallWord[] = DATA.subjectExtras;
+export function adjById(id: string): Adjective | undefined {
+  return ADJECTIVES.find((a) => a.id === id);
+}
+export function objectById(id: string): ObjectWord | undefined {
+  return OBJECTS.find((o) => o.id === id);
+}
 export const DECK_ORDER: { id: DeckId; label: string; blurb: string }[] = [
   { id: "music", label: "Music", blurb: "The words you use every day in a music room." },
   { id: "questions", label: "Questions", blurb: "Thirteen words that open every conversation." },
