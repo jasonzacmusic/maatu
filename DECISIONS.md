@@ -2,6 +2,10 @@
 
 Defaults chosen without asking, per standing rules. Newest first.
 
+- 2026-10-15: Sentence shapes are vetted templates per language, not derived from the does-engine. Reason: have, want, like and there-is each put the person in a different case in all four languages, and a general rule that produced all of them would be a guess. A template per shape per language can be read and checked.
+- 2026-10-15: Adjectives store two forms, before a noun and at the end of a sentence, rather than one. Reason: dodda mane but mane doddadu; periya veedu but idhu perisu. One form would have been wrong half the time.
+- 2026-10-15: The shape picker draws each shape as the skeleton it produces instead of an icon and a heading. Reason: twelve identical cards would make the learner read twelve labels; coloured blocks in sentence order let them see the pattern they are choosing.
+- 2026-10-15: Every shape opens pre-filled with a sentence that already works. Reason: switching to a blank shape looks broken and teaches nothing.
 - 2026-10-15: Pronunciation in the live coach is measured from the speech recognizer's own spelling, not guessed by the model. Reason: the transcript is the only real evidence of how the words came out of the learner's mouth, and a model asked to score a sound it never heard would be inventing a number. A pure English turn gets no pronunciation score at all, for the same reason.
 - 2026-10-15: The live coach runs beside the scene, never inside it. The character is never told about a correction and never pauses. Reason: a scene that stops to teach stops being a scene, and the standing rule is that characters never correct the learner in character.
 - 2026-10-15: The live coach is off for structured lessons (scenario "class") and for French. Reason: the lesson teacher already corrects out loud, so a second correction would collide; French has no vetted grammar tables to judge against.

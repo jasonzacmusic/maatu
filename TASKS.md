@@ -2,6 +2,13 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
+- [x] **M20: 2026-10-15 The builder learned twelve sentence shapes.**
+  Until now Build could make one shape, "someone does something", and only swapped the words inside it. It now makes twelve: describing a thing, naming a thing, having, wanting, liking, whether a thing exists, where it is, how much it costs, asking politely for it, suggesting it, going somewhere to do something, and asking a real where-what-why question. Each is a vetted template per language, read back by eye in all four before shipping.
+  New word classes to fill them: 43 adjectives in both the shape before a noun and the shape at the end of a sentence, 12 quantities, 12 more time words, 7 question words, 20 market nouns that were previously flashcards only, the have-form and possessive on every person, and the at-form on every place.
+  Reading all 43 adjectives back in four languages caught bad, beautiful and cold stored with an already-negative or duplicate predicate, which made "chennaagilla alla" and "nalla illa illa". Fixed and re-swept clean.
+  The screen draws each shape as its own coloured skeleton rather than as a card with a heading, shows only the controls a shape has, and seeds every shape with a working sentence. Checked at 1280 and at 375 with no horizontal overflow, and the mechanical design detector is clean.
+  Not done: French has the does-shape only and says so on the others. Connectors (and, but, because) are still flashcards, because joining two clauses needs morphology the templates cannot guarantee.
+
 - [x] **M19: 2026-10-15 Malayalam, a real word bank, a visual Build screen, and a quiet live coach.**
   Malayalam is the fourth language, built to the same depth as the other three: person table, verb forms for all 69 verbs, 155 nouns, time words, 20 frames, 23 commands, 8 rules, all nine word decks, 177 scene lines, the 16-lesson course lexicon, 14 Kochi personas (Shaji the auto driver, Biju at the chaaya kada, Devika the teacher), the teacher and companion prompts, every API language list, and the romanizer. Its headline teaching point is real: Malayalam never changes the verb for the person, so one form fits every subject.
   APIs checked live before any of it was built: Sarvam bulbul:v3 speaks ml-IN, saaras:v4 transcribes ml-IN in translit mode, ml-IN to en-IN transliterates, and Gemini Live speaks Kochi Malayalam. All eight Gemini voices were transcribed back word for word by Sarvam Malayalam STT, so Zephyr was chosen for character, not accuracy.
