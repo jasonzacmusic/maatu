@@ -1,4 +1,5 @@
 import {
+  build,
   adjById,
   objectById,
   person as personOf,
@@ -361,6 +362,17 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       note = "Two ideas in one line: the reason comes first, the going comes last.";
       break;
     }
+    case "whQuestion": {
+      // Where are you going? The question word sits between the person and
+      // the verb in all four languages, and the verb keeps its plain form.
+      const q = QUESTION_WORDS.find((x) => x.id === c.qword) ?? QUESTION_WORDS[0];
+      const built = build(L, { person: c.who === "name" ? (c.nameG === "f" ? "she" : "he") : c.who, verb: c.verb, tense: c.when, object: null, gender: c.gender });
+      const verbPiece = built?.pieces.find((x) => x.role === "verb");
+      if (!verbPiece) return null;
+      parts = [part(who, "who"), part(q[L], "when"), part(verbPiece.word, "action")];
+      note = "A real question needs no change to the verb: just drop the question word in front of it.";
+      break;
+    }
     default:
       return null;
   }
@@ -441,6 +453,16 @@ export function shapeEnglish(c: ShapeChoice, lang: PathLang): string {
       return cap(`please give me ${thing(obj)}.`);
     case "lets":
       return cap(`let's ${verbById(c.verb)?.en.base ?? "go"}${obj ? " " + thing(obj) : ""}.`);
+    case "whQuestion": {
+      const qw = QUESTION_WORDS.find((x) => x.id === c.qword)?.en ?? "where";
+      const v = verbById(c.verb)?.en;
+      const ing = c.when === "cont" ? v?.ing : c.when === "past" ? v?.past : v?.base;
+      const be = c.who === "i" ? "am" : third ? "is" : "are";
+      if (c.when === "cont") return cap(`${qw} ${be} ${who} ${ing}?`);
+      if (c.when === "past") return cap(`${qw} did ${who} ${v?.base}?`);
+      if (c.when === "future") return cap(`${qw} will ${who} ${v?.base}?`);
+      return cap(`${qw} ${doDoes} ${who} ${v?.base}?`);
+    }
     case "goingTo":
       return cap(`${who} ${third ? "is" : c.who === "i" ? "am" : "are"} going ${place ? place.en.replace(/^to the /, "to the ").replace(/^to /, "to ") : "out"} to ${verbById(c.verb2)?.en.base ?? "buy"} ${thing(obj)}.`);
     default:

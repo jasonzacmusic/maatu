@@ -31,6 +31,9 @@ import {
   type Who,
 } from "@/lib/sentence-path";
 import { LILAC, Lit, SaveButton, SKY } from "./studio-bits";
+import { buildShape, shapeById, shapeEnglish, type ShapeChoice, type ShapeId } from "@/lib/shapes";
+import { AdjectivePalette, PlacePalette, QuantityPalette, QuestionWordPalette, ShapeRail, SubjectPalette } from "./WordPalettes";
+import { syllables } from "@/lib/sentence-path";
 
 // Build: the sentence is the control. One card at the top always shows the line
 // you are making in English and in the target language. Under it three visual
@@ -591,6 +594,15 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const [timeWord, setTimeWord] = useState(true);
   const [negative, setNegative] = useState(false);
   const [question, setQuestion] = useState(false);
+  // The shape of the sentence, and the slots only some shapes use.
+  const [shape, setShape] = useState<ShapeId>("does");
+  const [subject, setSubject] = useState("this");
+  const [adj, setAdj] = useState<string | null>(null);
+  const [quant, setQuant] = useState<string | null>(null);
+  const [place, setPlace] = useState<string | null>(null);
+  const [verb2, setVerb2] = useState("buy");
+  const [qword, setQword] = useState("where");
+  const [polite, setPolite] = useState(true);
   const [verbQuery, setVerbQuery] = useState("");
   const [wordQuery, setWordQuery] = useState("");
   const [bankOpen, setBankOpen] = useState(false);
@@ -610,7 +622,17 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   }, []);
 
   const choice: PathChoice = { who, name, nameG, verb, object, when, timeWord, negative, question, gender };
-  const result = useMemo(() => buildPath(plang, choice), [plang, who, name, nameG, verb, object, when, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
+  const shapeChoice: ShapeChoice = { ...choice, shape, subject, adj, quant, place, verb2, qword, polite };
+  const info = shapeById(shape);
+  const uses = (slot: string) => info.slots.includes(slot as never);
+  const can = (t: string) => info.toggles.includes(t as never);
+  const result = useMemo(() => {
+    if (shape === "does") return buildPath(plang, choice);
+    const r = buildShape(plang, shapeChoice);
+    if (!r) return null;
+    return { ...r, english: shapeEnglish(shapeChoice, plang), say: r.parts.map((x) => syllables(x.word)).join("  ") };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plang, shape, who, name, nameG, verb, object, when, timeWord, negative, question, gender, subject, adj, quant, place, verb2, qword, polite]);
   const ladder = useMemo(() => LADDER.map((w) => ({ w, r: buildPath(plang, { ...choice, when: w }) })), [plang, who, name, nameG, verb, object, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
   const people = useMemo(
     () => WHO_TILES.filter((t) => t.id !== "name").map((t) => ({ t, r: buildPath(plang, { ...choice, who: t.id, timeWord: false, question: false }) })),
@@ -652,6 +674,28 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
       return;
     }
     if (!wordInLang(object, l)) setObject(objectsFor(verb).find((o) => wordInLang(o, l)) ?? null);
+  };
+
+  // Every shape opens on a sentence that already works; a blank card teaches
+  // nothing and makes the shape look broken.
+  const pickShape = (next: ShapeId) => {
+    setShape(next);
+    const seed: Partial<Record<ShapeId, () => void>> = {
+      isAdj: () => { setSubject("tea"); setAdj("hot"); },
+      isNoun: () => { setSubject("this"); setObject("mango"); setAdj(null); setQuant(null); },
+      have: () => { setObject("change"); setAdj(null); setQuant(null); setWho("i"); },
+      want: () => { setObject("water"); setAdj("hot"); setQuant("alittle"); setWho("i"); },
+      like: () => { setObject("thissong"); setAdj(null); setWho("i"); },
+      thereIs: () => { setObject("milk"); setAdj(null); setQuant(null); setPlace(null); },
+      whereIs: () => { setObject("phone"); setAdj(null); setWho("i"); },
+      howMuch: () => { setObject("tomato"); setQuant("onekilo"); setAdj(null); },
+      request: () => { setObject("water"); setQuant("alittle"); setAdj(null); },
+      lets: () => { setVerb("drink"); setObject("tea"); setAdj(null); },
+      goingTo: () => { setPlace("market"); setVerb2("buy"); setObject("vegetables"); setAdj(null); },
+      whQuestion: () => { setQword("where"); setVerb("go"); setObject(null); setWhen("cont"); },
+      does: () => { setVerb("play"); setObject("piano"); setWhen("present"); setAdj(null); setQuant(null); },
+    };
+    seed[next]?.();
   };
 
   const res: PathResult | null = result;
@@ -739,6 +783,11 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         </span>
       </div>
 
+      {/* ................................................. what kind of sentence */}
+      <div className="mt-4">
+        <ShapeRail shape={shape} onPick={pickShape} rm={rm} />
+      </div>
+
       {/* ................................................. the sentence, always in view */}
       <div ref={sentinel} aria-hidden="true" style={{ height: 1 }} />
       <div className="sticky top-0 z-20 -mx-5 mt-3 px-5 pb-2 pt-3 sm:mx-0 sm:px-0" style={{ background: `linear-gradient(${C.night} calc(100% - 12px), rgba(10,13,22,0))` }}>
@@ -753,7 +802,9 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                 <span className="rounded-full px-1.5" style={{ background: "rgba(242,237,226,0.1)", color: C.milk }}>A</span>
                 YOUR IDEA
               </span>
-              <span className="mt-1 block text-[16px] font-semibold leading-snug">{res && <EnglishWords parts={res.enParts} question={question} />}</span>
+              <span className="mt-1 block text-[16px] font-semibold leading-snug" style={{ color: C.milk }}>
+                {res && (shape === "does" ? <EnglishWords parts={res.enParts} question={question} /> : res.english)}
+              </span>
             </span>
             <button
               type="button"
@@ -837,31 +888,43 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             </div>
           ) : null}
 
-          {/* yes or no, telling or asking: always with the sentence */}
-          <div className="mt-3 flex gap-2 border-t pt-2.5" style={{ borderColor: "rgba(242,237,226,0.10)" }}>
-            <Switch2
-              label="IS IT, OR IS IT NOT"
-              on={negative}
-              onChange={setNegative}
-              left={{ icon: "✓", text: "Yes, it is", color: GREEN }}
-              right={{ icon: "✗", text: "No, it is not", color: RED }}
-            />
-            <Switch2
-              label="TELLING, OR ASKING"
-              on={question}
-              onChange={setQuestion}
-              left={{ icon: "💬", text: "Telling", color: C.tube }}
-              right={{ icon: "❓", text: "Asking", color: SKY }}
-            />
-          </div>
+          {/* yes or no, telling or asking: always with the sentence, when the shape has them */}
+          {(can("negative") || can("question") || can("register")) && (
+            <div className="mt-3 flex gap-2 border-t pt-2.5" style={{ borderColor: "rgba(242,237,226,0.10)" }}>
+              {can("negative") && (
+                <Switch2
+                  label="IS IT, OR IS IT NOT" on={negative} onChange={setNegative}
+                  left={{ icon: "✓", text: "Yes, it is", color: GREEN }}
+                  right={{ icon: "✗", text: "No, it is not", color: RED }}
+                />
+              )}
+              {can("question") && (
+                <Switch2
+                  label="TELLING, OR ASKING" on={question} onChange={setQuestion}
+                  left={{ icon: "💬", text: "Telling", color: C.tube }}
+                  right={{ icon: "❓", text: "Asking", color: SKY }}
+                />
+              )}
+              {can("register") && (
+                <Switch2
+                  label="WHO YOU ARE ASKING" on={!polite} onChange={(v) => setPolite(!v)}
+                  left={{ icon: "🙏", text: "Politely", color: C.tube }}
+                  right={{ icon: "👋", text: "To a friend", color: SKY }}
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="mt-3">
-        <Timeline when={when} setWhen={setWhen} verb={verb} object={object} timeWord={timeWord} setTimeWord={setTimeWord} rm={rm} />
-      </div>
+      {can("tense") && (
+        <div className="mt-3">
+          <Timeline when={when} setWhen={setWhen} verb={verb} object={object} timeWord={timeWord} setTimeWord={setTimeWord} rm={rm} />
+        </div>
+      )}
 
       {/* ................................................. start from an example */}
+      {shape === "does" && (
       <div className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" style={{ scrollbarWidth: "none" }}>
         {examples.map((c, i) => {
           const r = buildPath(plang, c);
@@ -881,8 +944,62 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           );
         })}
       </div>
+      )}
+
+      {/* ................................................. the words this shape needs */}
+      {shape !== "does" && (
+        <div className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
+          {uses("subject") && <SubjectPalette value={subject} onPick={setSubject} lang={plang} />}
+          {uses("who") && (
+            <Panel tone="who" label="WHO" title="Who is it about?">
+              <div className="grid grid-cols-4 gap-1.5">
+                {WHO_TILES.filter((t) => t.id !== "name").map((t) => (
+                  <Tile key={t.id} tone="who" on={who === t.id} onClick={() => setWho(t.id)} emoji={t.emoji} title={t.hint ? `${t.en}, ${t.hint}` : t.en} />
+                ))}
+              </div>
+            </Panel>
+          )}
+          {uses("object") && (
+            <Panel tone="what" label="WHICH THING" title={`${VERB_TILES.length ? "" : ""}Any word in the bank`}>
+              <Search value={wordQuery} onChange={setWordQuery} placeholder="Search any word: dosa, rent, bus" tone="what" />
+              <div className="grid max-h-[220px] grid-cols-4 gap-1.5 overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
+                {(wordQuery ? searchWords(wordQuery, plang) : bank.flatMap((g) => g.words)).map((o) => (
+                  <Tile
+                    key={o.id} tone="what" on={object === o.id} onClick={() => setObject(o.id)}
+                    emoji={OBJECT_EMOJI[o.id] ?? "•"} title={objectEnglish(o.id, plang).replace(/^(the|a|an|to the|to) /, "")}
+                    sub={plang === "fr" ? "" : o[plang as Lang]}
+                  />
+                ))}
+              </div>
+            </Panel>
+          )}
+          {uses("adj") && <AdjectivePalette value={adj} onPick={setAdj} lang={plang} allowNone={shape !== "isAdj"} />}
+          {uses("quant") && <QuantityPalette value={quant} onPick={setQuant} lang={plang} />}
+          {uses("qword") && <QuestionWordPalette value={qword} onPick={setQword} lang={plang} />}
+          {uses("placeAt") && <PlacePalette value={place} onPick={setPlace} lang={plang} mode="at" />}
+          {uses("place") && <PlacePalette value={place} onPick={setPlace} lang={plang} mode="to" />}
+          {(uses("verb") || uses("verb2")) && (
+            <Panel tone="action" label="ACTION" title={`${VERB_TILES.length} actions`}>
+              <Search value={verbQuery} onChange={setVerbQuery} placeholder="Search an action: buy, drink, go" tone="action" />
+              <div className="grid max-h-[220px] grid-cols-4 gap-1.5 overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
+                {(verbQuery ? searchVerbs(verbQuery) : VERB_TILES).map((v) => {
+                  const picked = uses("verb2") ? verb2 : verb;
+                  return (
+                    <Tile
+                      key={v.id} tone="action" on={picked === v.id}
+                      onClick={() => (uses("verb2") ? setVerb2(v.id) : pickVerb(v.id))}
+                      emoji={v.emoji} title={v.en} sub={targetWord(v.id)} dim={!verbInLang(v.id, plang)}
+                    />
+                  );
+                })}
+              </div>
+            </Panel>
+          )}
+        </div>
+      )}
 
       {/* ................................................. the three pickers, all open */}
+      {shape === "does" && (
       <div className="mt-3 grid gap-3 lg:grid-cols-3 lg:items-start">
         <Panel tone="who" label="WHO" title="Who is doing it?">
           <div className="grid grid-cols-4 gap-1.5">
@@ -1020,8 +1137,10 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           )}
         </Panel>
       </div>
+      )}
 
       {/* ................................................. see how it is built */}
+      {shape === "does" && (
       <div className="mt-5 rounded-[18px] p-4 sm:p-5" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
         <div className="text-[10.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.3 }}>SEE HOW IT&apos;S BUILT</div>
         <div className="mt-2.5 flex flex-wrap gap-2" role="tablist" aria-label="How it is built">
@@ -1137,6 +1256,12 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           {view === "venn" && <Venn />}
         </div>
       </div>
+      )}
+      {shape !== "does" && res && !res.unsupported && (
+        <p className="mt-5 text-[12.5px] leading-relaxed" style={{ color: C.muted }}>
+          {shapeById(shape).blurb}
+        </p>
+      )}
     </div>
   );
 }
