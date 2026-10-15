@@ -3608,6 +3608,53 @@
         "cont": "idunnund",
         "inf": "idaan"
       }
+    },
+    {
+      "id": "stand",
+      "group": "core",
+      "en": {
+        "base": "stand",
+        "past": "stood",
+        "ing": "standing",
+        "s": "stands"
+      },
+      "note": "Standing up and stopping share a word in Malayalam: nilkkuka.",
+      "kn": {
+        "dict": "nillu",
+        "pres": "nill",
+        "past": "nintu",
+        "cont": "nillta",
+        "neg": "nillalla",
+        "pastNeg": "nillilla",
+        "inf": "nillakke",
+        "want": "nillbeku"
+      },
+      "hi": {
+        "dict": "uthna",
+        "stem": "uth",
+        "perf": {
+          "m": "utha",
+          "f": "uthi",
+          "pl": "uthe"
+        },
+        "ne": false
+      },
+      "ta": {
+        "dict": "nillu",
+        "pres": "nikkir",
+        "past": "nindh",
+        "fut": "nipp",
+        "cont": "nindhuttu",
+        "inf": "nikka"
+      },
+      "ml": {
+        "dict": "nilkkuka",
+        "pres": "nilkkunnu",
+        "past": "ninnu",
+        "fut": "nilkkum",
+        "cont": "nilkkunnund",
+        "inf": "nilkkaan"
+      }
     }
   ],
   "objects": [
@@ -3700,7 +3747,8 @@
       "enByLang": {
         "kn": "Kannada",
         "hi": "Hindi",
-        "ta": "Tamil"
+        "ta": "Tamil",
+        "ml": "Malayalam"
       },
       "ml": "Malayalam",
       "cat": "language"

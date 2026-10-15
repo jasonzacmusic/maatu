@@ -22,6 +22,7 @@ import { ReviewRoom } from "./ReviewRoom";
 import { countFor } from "@/lib/review";
 import { ScenesRoom, ShapesRoom, type Practice } from "./StudioRooms";
 import { SentenceLab } from "./SentenceLab";
+import { VERB_TILES } from "@/lib/sentence-path";
 
 // Build: the second mode next to the voice calls. The Sentence Path sits on
 // top (pick who, action, what, when; see and hear the spoken line in Kannada,
@@ -356,7 +357,7 @@ export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }
           From an idea to a spoken line.
         </h1>
         <p className="mt-2 max-w-[560px] text-[13.5px] leading-relaxed" style={{ color: C.muted }}>
-          Tap who, the action, what, and when. The line appears the way people actually say it.<span className="hidden sm:inline"> Then change one thing and hear only the ending move.</span>
+          Your sentence sits at the top and never leaves. Change who, the action, the word, the time, or flip it to a no or a question, and watch the line move.<span className="hidden sm:inline"> {VERB_TILES.length} actions and {OBJECTS.length} words, so you can build anything.</span>
         </p>
 
         <div className="mt-5">

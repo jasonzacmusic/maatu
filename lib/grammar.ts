@@ -472,6 +472,48 @@ export function referenceText(lang: Lang): string {
   return lines.join("\n");
 }
 
+// The handful of questions a beginner actually asks out loud. Vetted here
+// because a model asked to build one from a bare question word invents a case
+// ending that does not exist (it wrote evidekkugaanu for evidekkaanu once).
+const ASKED: Record<Lang, string[]> = {
+  kn: [
+    "where are you going = elli hogtira",
+    "what is this = idu enu",
+    "how much is this = idu eshtu",
+    "what is your name = nimma hesaru enu",
+    "do you know Kannada = nimage Kannada gottaa",
+    "what did you say = enu heldri",
+    "what time is it = eshtu gante",
+  ],
+  hi: [
+    "where are you going = aap kahaan jaa rahe hain",
+    "what is this = yeh kya hai",
+    "how much is this = yeh kitne ka hai",
+    "what is your name = aapka naam kya hai",
+    "do you know Hindi = kya aapko Hindi aati hai",
+    "what did you say = aapne kya kaha",
+    "what time is it = kitne baje hain",
+  ],
+  ta: [
+    "where are you going = enga poreenga",
+    "what is this = idhu enna",
+    "how much is this = idhu evlo",
+    "what is your name = unga peru enna",
+    "do you know Tamil = ungalukku Tamil theriyumaa",
+    "what did you say = enna sonneenga",
+    "what time is it = mani enna",
+  ],
+  ml: [
+    "where are you going = ningal evideykkaanu pokunnathu",
+    "what is this = ithu enthaanu",
+    "how much is this = ithu ethrayaanu",
+    "what is your name = ningalude peru enthaanu",
+    "do you know Malayalam = ningalkku Malayalam ariyaamo",
+    "what did you say = ningal enthu paranju",
+    "what time is it = ethra mani aayi",
+  ],
+};
+
 // A shorter reference for the live coach, which runs once per spoken turn and
 // has to answer while the conversation is still going. Rules, one line per
 // verb, the frames and the time words: enough to judge a sentence, without the
@@ -489,5 +531,10 @@ export function referenceCompact(lang: Lang): string {
   lines.push(`FRAMES: ${FRAMES.map((f) => `${f.en} = ${f[lang]}`).join("; ")}`);
   lines.push(`TIME WORDS: ${TIMES.map((t) => `${t.en} = ${t[lang]}`).join("; ")}`);
   lines.push(`COMMANDS (polite / friend): ${COMMANDS.map((c) => `${c.en} = ${c[lang][0]} / ${c[lang][1]}`).join("; ")}`);
+  // Question words and the little glue words, because a learner asking a
+  // question is exactly where a model invents a form that does not exist.
+  lines.push(`QUESTION WORDS: ${DECKS.questions.map((d) => `${d.en} = ${d[lang]}`).join("; ")}`);
+  lines.push(`LITTLE WORDS: ${DECKS.little.map((d) => `${d.en} = ${d[lang]}`).join("; ")}`);
+  lines.push(`QUESTIONS PEOPLE ACTUALLY ASK, use these exact forms: ${ASKED[lang].join("; ")}`);
   return lines.join("\n");
 }

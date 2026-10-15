@@ -196,6 +196,13 @@ function EnglishWords({ parts, question }: { parts: Part[]; question: boolean })
   );
 }
 
+// The question mark belongs to the last word, so it never wraps on its own.
+function withMark(parts: Part[], question: boolean, lang: PathLang): Part[] {
+  if (!question || parts.length === 0) return parts;
+  const last = parts[parts.length - 1];
+  return [...parts.slice(0, -1), { ...last, word: last.word + (lang === "fr" ? " ?" : "?") }];
+}
+
 // ............................................................ the two switches
 // One control, two sides, a thumb that slides. Green and a tick on one side,
 // red and a cross on the other, so positive and negative read at a glance.
@@ -589,7 +596,17 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const [bankCat, setBankCat] = useState<string | null>(null);
   const [view, setView] = useState<"order" | "all" | "venn" | "ladder">("order");
   const [showKey, setShowKey] = useState(false);
+  const [stuck, setStuck] = useState(false);
+  const sentinel = useRef<HTMLDivElement | null>(null);
   const voice = useVoice(slow);
+
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setStuck(!e.isIntersecting), { threshold: 1 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const choice: PathChoice = { who, name, nameG, verb, object, when, timeWord, negative, question, gender };
   const result = useMemo(() => buildPath(plang, choice), [plang, who, name, nameG, verb, object, when, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -722,9 +739,10 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
       </div>
 
       {/* ................................................. the sentence, always in view */}
-      <div className="sticky top-0 z-20 -mx-5 mt-3 px-5 pb-2 pt-3 sm:mx-0 sm:px-0" style={{ background: `linear-gradient(${C.night} 72%, rgba(10,13,22,0))` }}>
+      <div ref={sentinel} aria-hidden="true" style={{ height: 1 }} />
+      <div className="sticky top-0 z-20 -mx-5 mt-3 px-5 pb-2 pt-3 sm:mx-0 sm:px-0" style={{ background: `linear-gradient(${C.night} calc(100% - 12px), rgba(10,13,22,0))` }}>
         <div
-          className="rounded-[20px] p-4"
+          className={"rounded-[20px]" + (stuck ? " p-3" : " p-4")}
           style={{ background: "linear-gradient(150deg,rgba(255,179,92,0.15),rgba(232,80,58,0.05) 55%,rgba(191,239,219,0.06))", border: "1px solid rgba(255,179,92,0.34)" }}
           aria-live="polite"
         >
@@ -739,14 +757,14 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             <button
               type="button"
               onClick={surprise}
-              className="inline-flex flex-none items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-bold focus-visible:outline focus-visible:outline-2"
+              className={"inline-flex flex-none items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-bold focus-visible:outline focus-visible:outline-2" + (stuck ? " hidden" : "")}
               style={{ background: "rgba(245,194,255,0.14)", color: LILAC, border: "1px solid rgba(245,194,255,0.45)", outlineColor: LILAC }}
             >
               <span aria-hidden="true">🎲</span> Surprise me
             </button>
           </div>
 
-          <div className="my-3 flex items-center gap-2" aria-hidden="true">
+          <div className={"flex items-center gap-2" + (stuck ? " my-2" : " my-3")} aria-hidden="true">
             <span className="h-px flex-1" style={{ background: "linear-gradient(90deg,rgba(191,239,219,0.4),rgba(255,179,92,0.5))" }} />
             <span className="text-[13px]">{langInfo.flag}</span>
             <span className="h-px flex-1" style={{ background: "linear-gradient(90deg,rgba(255,179,92,0.5),rgba(245,194,255,0.4))" }} />
@@ -765,12 +783,11 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             <div key={res.sentence} style={{ animation: rm ? undefined : "mtFade 280ms ease both" }}>
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 <span className="min-w-0">
-                  <Words parts={res.parts} size={22} />
-                  {question && <span style={{ fontFamily: MONO, fontSize: 22, color: C.muted }}>{plang === "fr" ? " ?" : "?"}</span>}
+                  <Words parts={withMark(res.parts, question, plang)} size={22} />
                 </span>
                 <PlayButton voice={voice} text={res.sentence} lang={plang} big />
               </div>
-              <div className="mt-2.5 rounded-[12px] px-3 py-2" style={{ background: "rgba(10,13,22,0.45)", border: `1px solid ${LINE_SOFT}` }}>
+              <div className={"mt-2.5 rounded-[12px] px-3 py-2" + (stuck ? " hidden" : "")} style={{ background: "rgba(10,13,22,0.45)", border: `1px solid ${LINE_SOFT}` }}>
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[10px] font-bold" style={{ color: C.faint, letterSpacing: 1.1 }}>
                     {plang === "fr" ? "SOUNDS LIKE" : "SAY IT IN BEATS"}
@@ -793,7 +810,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                   </div>
                 )}
               </div>
-              <div className="mt-2.5 flex flex-wrap items-center gap-2">
+              <div className={"mt-2.5 flex flex-wrap items-center gap-2" + (stuck ? " hidden" : "")}>
                 {plang !== "fr" && <SaveButton lang={plang} en={res.english} target={res.sentence} onChange={onSaved} />}
                 {onTalk && (
                   <button
@@ -811,32 +828,32 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                   {voice.error}
                 </div>
               )}
-              {res.note && (
+              {res.note && !stuck && (
                 <p className="mt-2.5 text-[12.5px] leading-relaxed" style={{ color: "rgba(255,179,92,0.92)" }}>
                   {res.note}
                 </p>
               )}
             </div>
           ) : null}
-        </div>
-      </div>
 
-      {/* ................................................. the three dials */}
-      <div className="mt-1 flex gap-2">
-        <Switch2
-          label="IS IT, OR IS IT NOT"
-          on={negative}
-          onChange={setNegative}
-          left={{ icon: "✓", text: "Yes, it is", color: GREEN }}
-          right={{ icon: "✗", text: "No, it is not", color: RED }}
-        />
-        <Switch2
-          label="TELLING, OR ASKING"
-          on={question}
-          onChange={setQuestion}
-          left={{ icon: "💬", text: "Telling", color: C.tube }}
-          right={{ icon: "❓", text: "Asking", color: SKY }}
-        />
+          {/* yes or no, telling or asking: always with the sentence */}
+          <div className="mt-3 flex gap-2 border-t pt-2.5" style={{ borderColor: "rgba(242,237,226,0.10)" }}>
+            <Switch2
+              label="IS IT, OR IS IT NOT"
+              on={negative}
+              onChange={setNegative}
+              left={{ icon: "✓", text: "Yes, it is", color: GREEN }}
+              right={{ icon: "✗", text: "No, it is not", color: RED }}
+            />
+            <Switch2
+              label="TELLING, OR ASKING"
+              on={question}
+              onChange={setQuestion}
+              left={{ icon: "💬", text: "Telling", color: C.tube }}
+              right={{ icon: "❓", text: "Asking", color: SKY }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="mt-3">

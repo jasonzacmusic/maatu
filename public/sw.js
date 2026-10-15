@@ -1,4 +1,4 @@
-const CACHE = "maatu-shell-v3";
+const CACHE = "maatu-shell-v4";
 const SHELL = [
   "/",
   "/manifest.webmanifest",

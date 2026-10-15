@@ -8,7 +8,8 @@ import { ALL_LESSONS, FRENCH_META, teacherMeta, getDone, markDone, lessonWasMast
 import { ClassroomScreen } from "./ClassroomScreen";
 import { BuildScreen } from "./BuildScreen";
 import { countFor } from "@/lib/review";
-import type { Gender } from "@/lib/grammar";
+import { OBJECTS, type Gender } from "@/lib/grammar";
+import { VERB_TILES } from "@/lib/sentence-path";
 import { CourseProgressCard } from "./CourseProgressCard";
 import { LessonPreviewScreen } from "./LessonPreviewScreen";
 import { LessonResultScreen } from "./LessonResultScreen";
@@ -453,7 +454,7 @@ function Hub({
               Build any sentence yourself
             </span>
             <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              One sentence on screen, every part changeable. 68 actions, 155 words, four times, yes or no, telling or asking. Kannada, Hindi, Tamil, Malayalam, French.
+              One sentence on screen, every part changeable. {VERB_TILES.length} actions, {OBJECTS.length} words, four times, yes or no, telling or asking. Kannada, Hindi, Tamil, Malayalam, French.
             </span>
           </span>
           <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>

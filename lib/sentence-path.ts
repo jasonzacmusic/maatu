@@ -219,7 +219,7 @@ export function objectsFor(verb: string): string[] {
 }
 
 export function objectEnglish(id: string, lang: PathLang): string {
-  if (id === "language") return lang === "fr" ? "French" : lang === "hi" ? "Hindi" : lang === "ta" ? "Tamil" : "Kannada";
+  if (id === "language") return lang === "fr" ? "French" : lang === "hi" ? "Hindi" : lang === "ta" ? "Tamil" : lang === "ml" ? "Malayalam" : "Kannada";
   const o = OBJECTS.find((x) => x.id === id);
   return o ? o.en : id;
 }

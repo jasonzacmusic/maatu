@@ -126,7 +126,7 @@ export function ClassroomScreen({ lang, onLanguageChange, onTutor, onLesson, onB
               Build a sentence
             </span>
             <span className="mt-0.5 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              Tap who, the action, what, and when. The spoken line appears with the beats to say it, in any tense.
+              Build any sentence part by part. The spoken line appears with the beats to say it, in any tense.
             </span>
           </span>
           <span className="text-[20px]" style={{ color: C.sodium }} aria-hidden="true">
