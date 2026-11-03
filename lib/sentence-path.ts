@@ -1,5 +1,7 @@
 import { build, OBJECTS, person as personOf, TIMES, verbById, type Gender, type ObjectCat, type ObjectWord, type PersonId, type Tense } from "./grammar";
 import type { Lang } from "./maatu-design";
+import frenchExtra from "@/data/french-extra.json";
+import { LANGUAGES } from "./languages";
 
 // The Sentence Studio engine: pick who, the action, what and when, and get the
 // English line plus the spoken line in Kannada, Hindi, Tamil, Malayalam or
@@ -38,12 +40,15 @@ export type PathResult = {
   unsupported?: string; // shown instead of a sentence when a combination does not exist
 };
 
-export const PATH_LANGS: { id: PathLang; label: string; flag: string; city: string }[] = [
-  { id: "kn", label: "Kannada", flag: "🌼", city: "Bengaluru" },
-  { id: "hi", label: "Hindi", flag: "🪔", city: "Delhi" },
-  { id: "ta", label: "Tamil", flag: "🌺", city: "Chennai" },
-  { id: "ml", label: "Malayalam", flag: "🌴", city: "Kochi" },
-  { id: "fr", label: "French", flag: "🥐", city: "Paris" },
+// Each language wears its own colour from languages.json, so the screen always
+// shows which one you are in.
+const accent = (id: string) => (LANGUAGES[id] as { accent?: string } | undefined)?.accent ?? "#FFB35C";
+export const PATH_LANGS: { id: PathLang; label: string; flag: string; city: string; accent: string }[] = [
+  { id: "kn", label: "Kannada", flag: "🌼", city: "Bengaluru", accent: accent("kn") },
+  { id: "hi", label: "Hindi", flag: "🪔", city: "Delhi", accent: accent("hi") },
+  { id: "ta", label: "Tamil", flag: "🌺", city: "Chennai", accent: accent("ta") },
+  { id: "ml", label: "Malayalam", flag: "🌴", city: "Kochi", accent: accent("ml") },
+  { id: "fr", label: "French", flag: "🥐", city: "Paris", accent: accent("fr") },
 ];
 
 // ............................................................ tiles
@@ -141,6 +146,62 @@ export const VERB_TILES: VerbTile[] = [
   { id: "laugh", emoji: "😄", en: "laugh", objects: [] },
   { id: "cry", emoji: "😢", en: "cry", objects: [] },
   { id: "think", emoji: "🤔", en: "think", objects: [] },
+  // ................................................ papers, offices and queues
+  { id: "fill", emoji: "📝", en: "fill", objects: ["form", "application", "petrol", "water"] },
+  { id: "sign", emoji: "✒️", en: "sign", objects: ["form", "application", "cheque", "receipt", "document"] },
+  { id: "submit", emoji: "📨", en: "submit", objects: ["form", "application", "document", "idproof", "addressproof", "report", "complaint"] },
+  { id: "apply", emoji: "🗂️", en: "apply for", objects: ["passport", "visa", "loan", "licence", "pancard", "aadhaar"] },
+  { id: "renew", emoji: "♻️", en: "renew", objects: ["passport", "licence", "visa"] },
+  { id: "check", emoji: "✅", en: "check", objects: ["bp", "report", "balance", "document", "bill", "luggage", "ticket", "otp"] },
+  { id: "collect", emoji: "📬", en: "collect", objects: ["passport", "parcel", "report", "certificate", "ticket", "token", "luggage"] },
+  { id: "xerox", emoji: "🖨️", en: "photocopy", objects: ["aadhaar", "passport", "pancard", "document", "certificate", "form"] },
+  { id: "register", emoji: "🧾", en: "register", objects: ["complaint", "account"] },
+  { id: "complain", emoji: "😤", en: "complain", objects: [] },
+  // ................................................ on the road
+  { id: "turn", emoji: "↪️", en: "turn", objects: [] },
+  { id: "park", emoji: "🅿️", en: "park", objects: ["car", "bike", "scooter", "cycle", "auto"] },
+  { id: "drop", emoji: "🚏", en: "drop off", short: "drop", objects: ["child", "son", "daughter", "friend", "mother", "father"] },
+  { id: "pickup", emoji: "🙋‍♂️", en: "pick up", objects: ["child", "son", "daughter", "friend", "mother", "father"] },
+  { id: "reach", emoji: "📍", en: "reach", objects: ["home", "office", "station", "airport", "school", "busstand", "metrostation"] },
+  { id: "getin", emoji: "🚌", en: "get in", objects: ["bus", "auto", "cab", "train", "metro", "car"] },
+  { id: "getdown", emoji: "👇", en: "get down", objects: [] },
+  // ................................................ money and the bank
+  { id: "transfer", emoji: "💸", en: "transfer", objects: ["money"] },
+  { id: "withdraw", emoji: "🏧", en: "withdraw", objects: ["money", "cash"] },
+  { id: "deposit", emoji: "🏦", en: "deposit", objects: ["money", "cash", "cheque"] },
+  { id: "spend", emoji: "💵", en: "spend", objects: ["money", "time"] },
+  { id: "save", emoji: "🐷", en: "save", objects: ["money", "time"] },
+  { id: "borrow", emoji: "🫳", en: "borrow", objects: ["money", "book", "pen", "bike"] },
+  { id: "lend", emoji: "🪙", en: "lend", objects: ["money", "book", "pen", "bike"] },
+  { id: "return", emoji: "↩️", en: "return", objects: ["book", "key", "money", "shirt", "shoes", "phone"] },
+  { id: "exchange", emoji: "🔃", en: "exchange", objects: ["shirt", "shoes", "pants", "kurta", "phone"] },
+  // ................................................ phone and home
+  { id: "charge", emoji: "🔋", en: "charge", objects: ["phone", "laptop"] },
+  { id: "recharge", emoji: "📶", en: "recharge", objects: ["phone", "sim"] },
+  { id: "switchon", emoji: "💡", en: "switch on", objects: ["light", "fan", "ac", "tv", "bulb"] },
+  { id: "switchoff", emoji: "📴", en: "switch off", objects: ["light", "fan", "ac", "tv", "bulb"] },
+  { id: "lock", emoji: "🗝️", en: "lock", objects: ["door", "bag", "car", "bike", "phone"] },
+  { id: "use", emoji: "🧰", en: "use", objects: ["phone", "laptop", "app", "upi", "cash", "lift", "helmet"] },
+  { id: "iron", emoji: "♨️", en: "iron", objects: ["clothes", "shirt", "pants", "kurta", "uniform"] },
+  { id: "boil", emoji: "🫖", en: "boil", objects: ["water", "milk", "rice", "egg"] },
+  { id: "pack", emoji: "🥡", en: "pack", objects: ["food", "biryani", "dosa", "bag", "luggage"] },
+  { id: "shift", emoji: "🚚", en: "shift", objects: ["house"] },
+  { id: "share", emoji: "🔗", en: "share", objects: ["photo", "video", "food", "number", "address"] },
+  { id: "reply", emoji: "✉️", en: "reply", objects: ["message", "email", "letter"] },
+  { id: "forget", emoji: "🫥", en: "forget", objects: ["name", "key", "phone", "password", "bag", "address"] },
+  { id: "lose", emoji: "😟", en: "lose", objects: ["key", "phone", "bag", "passport", "money", "ticket"] },
+  // ................................................ people, study and the day
+  { id: "meet", emoji: "🫂", en: "meet", objects: ["friend", "doctor", "manager", "officer", "landlord", "neighbour"] },
+  { id: "invite", emoji: "💌", en: "invite", objects: ["friend", "neighbour", "mother", "father", "brother", "sister"] },
+  { id: "study", emoji: "🎒", en: "study", objects: ["maths", "english", "language", "lesson"] },
+  { id: "join", emoji: "➕", en: "join", objects: ["class", "college", "office", "gym", "school"] },
+  { id: "attend", emoji: "📅", en: "attend", objects: ["meeting", "lesson", "exam"] },
+  { id: "wakeup", emoji: "⏰", en: "wake up", objects: [] },
+  { id: "getready", emoji: "🪞", en: "get ready", objects: [] },
+  { id: "comeback", emoji: "🔙", en: "come back", objects: [] },
+  { id: "pray", emoji: "🙏", en: "pray", objects: [] },
+  { id: "celebrate", emoji: "🎉", en: "celebrate", objects: [] },
+  { id: "perform", emoji: "🎭", en: "perform", objects: ["song", "thissong", "music", "raga"], music: true },
 ];
 
 export const OBJECT_EMOJI: Record<string, string> = {
@@ -183,6 +244,31 @@ export const OBJECT_EMOJI: Record<string, string> = {
   shopping: "🛍️", exercise: "🏋️", cleaning: "🧹", homework: "📝", order: "📦", download: "⬇️",
   ticket: "🎫", recording: "🎙️", meeting: "🗓️", payment: "💳", booking: "📒", upload: "⬆️",
   laundry: "🧺", packing: "🧳",
+  // health
+  fever: "🤒", cough: "😷", cold: "🤧", headache: "🤕", stomachache: "🫃", toothache: "🦷", backpain: "🧍",
+  legpain: "🦵", chestpain: "🫀", vomiting: "🤮", loosemotion: "🚽", dizziness: "😵‍💫", injury: "🩹",
+  allergy: "🌼", bp: "🩺", diabetes: "🍬", tablet: "💊", injection: "💉", syrup: "🧴", prescription: "📋",
+  report: "📄", bloodtest: "🩸", xray: "🩻", scan: "🖥️",
+  // people
+  doctor: "🧑‍⚕️", nurse: "👩‍⚕️", driver: "🧑‍✈️", officer: "🧑‍💼", police: "👮", landlord: "🏠", neighbour: "🏘️",
+  friend: "🧑‍🤝‍🧑", mother: "👩", father: "👨", brother: "👦", sister: "👧", son: "👶", daughter: "👧",
+  husband: "🤵", wife: "👰", child: "🧒", plumber: "🔧", electrician: "⚡", watchman: "💂", manager: "👔",
+  // papers and IDs
+  passport: "🛂", aadhaar: "🪪", pancard: "💳", licence: "🪪", idproof: "🆔", addressproof: "🏡", form: "📝",
+  application: "🗂️", signature: "✒️", appointment: "📅", token: "🎟️", receipt: "🧾", certificate: "📜",
+  document: "📁", visa: "🛂", cheque: "🧾", account: "🏦", otp: "🔢", fine: "🚨", complaint: "📢",
+  // money, road, home, phone
+  cash: "💵", upi: "📲", loan: "🏦", balance: "⚖️", advance: "💰", emi: "📆", fare: "🪙", meter: "⏱️",
+  metro: "🚇", scooter: "🛵", cycle: "🚲", petrol: "⛽", helmet: "⛑️", tyre: "🛞", puncture: "📌", luggage: "🧳",
+  seat: "💺", traffic: "🚦", passportoffice: "🛂", policestation: "🚓", postoffice: "📮", pharmacy: "💊",
+  clinic: "🩺", busstand: "🚏", metrostation: "🚇", petrolbunk: "⛽", atm: "🏧", rto: "🚗", college: "🎓",
+  salon: "💇", restaurant: "🍽️", bakery: "🥐", apartment: "🏢", counter: "🪟", signal: "🚦", mainroad: "🛣️",
+  current: "⚡", powercut: "🕯️", cylinder: "🛢️", wifi: "📶", internet: "🌐", tap: "🚰", bulb: "💡", ac: "❄️",
+  fridge: "🧊", lift: "🛗", parking: "🅿️", bathroom: "🚿", kitchen: "🍳", bed: "🛏️", maintenance: "🧰",
+  sim: "📶", battery: "🔋", network: "📡", earphones: "🎧",
+  menu: "📜", parcel: "📦", spoon: "🥄", meals: "🍛", paneer: "🧀", dal: "🍲", curd: "🥣", pickle: "🫙",
+  onion: "🧅", potato: "🥔", chilli: "🌶️", bread: "🍞", biscuit: "🍪", icecream: "🍦",
+  pants: "👖", kurta: "👘", chappal: "🩴", uniform: "🥋",
 };
 
 // English for the magic-verb objects: English uses a real verb where the
@@ -207,6 +293,7 @@ const DO_EN: Record<string, { base: string; past: string; ing: string; s: string
 // to play the piano, not I know how to sleep. The Indian forms (barutte, aata
 // hai, theriyum) and French savoir all mean exactly this.
 export const SKILL_VERBS = new Set(["play", "sing", "dance", "speak", "read", "write", "cook", "playgame", "teach", "do",
+  "fill", "iron", "park", "perform", "use", "study",
   "tune", "record", "count", "clap", "explain", "repeat", "drive", "swim", "repair", "wash", "clean", "cut", "sell"]);
 export function whenAllowed(verb: string, when: When, object: string | null = null): boolean {
   if (when !== "can") return true;
@@ -249,6 +336,8 @@ export function englishParts(c: PathChoice, lang: PathLang): Part[] {
   let what = "";
   if (doEn) what = (doEn.tail ?? "").replace("{poss}", EN_POSS[p]);
   else if (c.object) what = objectEnglish(c.object, lang);
+  // You reach the office, never reach to the office.
+  if (c.verb === "reach") what = what.replace(/^to /, "");
   if (c.object && !doEn && c.object !== "language" && c.object !== "english" && (c.verb === "learn" || c.verb === "teach" || c.verb === "practise") && what.startsWith("the ")) what = what.slice(4);
   const tile = WHEN_TILES.find((w) => w.id === c.when);
   const when = c.timeWord && tile?.time ? (TIMES.find((t) => t.id === tile.time)?.en ?? "") : "";
@@ -764,6 +853,35 @@ const FR_FRAME: Record<string, "part" | "def" | "bare" | "place" | "sport" | "in
   finish: "def", try: "part", wear: "def", drive: "def", pay: "def", book: "def", cancel: "def",
   ask: "def", answer: "def", sit: "def",
 };
+// ................................................ added with the situations
+// The newer French verbs and nouns live in data/french-extra.json and use the
+// same ids as grammar.json, so one word added there works in every language.
+type FrImp = { imp: [string, string]; impSay: [string, string] };
+type FrExtra = {
+  verbs: Record<string, FrVerb & Partial<FrImp>>;
+  imp: Record<string, FrImp>;
+  objects: typeof FR_OBJ;
+  directions: Record<string, FrObj>;
+};
+const FX = frenchExtra as unknown as FrExtra;
+Object.assign(FR_VERBS, FX.verbs ?? {});
+Object.assign(FR_OBJ, FX.objects ?? {});
+FR_FRAME.reach = "place";
+const FR_IMP: Record<string, FrImp> = { ...(FX.imp ?? {}) };
+for (const [id, v] of Object.entries(FX.verbs ?? {})) if (v.imp && v.impSay) FR_IMP[id] = { imp: v.imp, impSay: v.impSay };
+const FR_DIR: Record<string, FrObj> = FX.directions ?? {};
+
+const FR_OWN = new Set(["phone", "password", "balance", "bag", "key", "ticket", "passport", "licence", "account"]);
+// Singular possessives: mon, ma (mon before a vowel is handled by the l' forms).
+const FR_POSS1 = [
+  { m: { w: "mon", say: "mohn" }, f: { w: "ma", say: "ma" } },
+  { m: { w: "ton", say: "tohn" }, f: { w: "ta", say: "ta" } },
+  { m: { w: "votre", say: "votr" }, f: { w: "votre", say: "votr" } },
+  { m: { w: "son", say: "sohn" }, f: { w: "sa", say: "sa" } },
+  { m: { w: "son", say: "sohn" }, f: { w: "sa", say: "sa" } },
+  { m: { w: "notre", say: "notr" }, f: { w: "notre", say: "notr" } },
+  { m: { w: "leur", say: "luhr" }, f: { w: "leur", say: "luhr" } },
+];
 const FR_POSS = [
   { w: "mes", say: "may" },
   { w: "tes", say: "tay" },
@@ -798,9 +916,19 @@ function frObject(c: PathChoice, idx: number, negForm: boolean): FrObj | null {
   const obj = (frame ? forms[frame] : undefined) ?? forms.def ?? forms.indef ?? forms.part ?? forms.bare;
   if (!obj) return null;
   const poss = FR_POSS[idx];
-  const w = obj.w.replace("{poss}", poss.w);
-  const say = obj.say.replace("{possSay}", poss.say);
+  let w = obj.w.replace("{poss}", poss.w);
+  let say = obj.say.replace("{possSay}", poss.say);
   if (negForm && obj.neg) return { w: obj.neg, say: obj.negSay ?? say };
+  // Papers and your own things are always someone's: votre passeport, mon téléphone.
+  const own = OBJECTS.find((o) => o.id === c.object)?.cat === "documents" || FR_OWN.has(c.object);
+  const m = own ? /^(le |la |l')(.*)$/.exec(w) : null;
+  if (m) {
+    const fem = m[1] === "la ";
+    const p1 = FR_POSS1[idx];
+    const pw = fem ? p1.f : p1.m;
+    w = `${pw.w} ${m[2]}`;
+    say = say.replace(/^(luh |la |l)/, `${pw.say} `);
+  }
   return { w, say };
 }
 
@@ -834,6 +962,10 @@ function french(c: PathChoice): PathResult {
       english, enParts: [], sentence: "", parts: [], say: "",
       unsupported: `${objectEnglish(c.object, "fr").replace(/^(the|a|an|to the|to) /, "")} is not in the French word set yet. Pick another word, or switch to Kannada, Hindi, Tamil or Malayalam where every word in the bank works.`,
     };
+  }
+  // Reflexive verbs with a thing after them (s'inscrire la plainte) are not French.
+  if (v.refl && obj && FR_FRAME[c.verb] !== "place") {
+    return { english, enParts: [], sentence: "", parts: [], say: "", unsupported: "This one needs a different French verb with a thing after it. It is not in the set yet." };
   }
   const refl = v.refl ? FR_REFL[idx] : null;
   const reflBefore = (next: string) => (refl ? (startsVowel(next) && refl.w !== "vous" ? { w: refl.w[0] + "'", say: refl.say[0] } : refl) : null);
@@ -908,6 +1040,37 @@ function french(c: PathChoice): PathResult {
   else if (c.question) note = "No word order change: just lift your voice at the end.";
   else if (c.verb === "do") note = "Faire is French's own magic verb for chores: faire les courses, faire le ménage, faire la cuisine, faire du sport.";
   return { english, enParts: [], sentence, parts: all, say, note };
+}
+
+// Commands in French: tu to a friend, vous to everyone else. Arrêtez ici,
+// remplissez le formulaire, ne tournez pas à gauche.
+export function frenchTell(c: PathChoice & { polite?: boolean }, direction: string | null): PathResult {
+  const empty = { english: "", enParts: [] as Part[], sentence: "", parts: [] as Part[], say: "" };
+  const v = FR_VERBS[c.verb];
+  const imp = FR_IMP[c.verb];
+  if (!v || !imp) return { ...empty, unsupported: "This action has no French command yet. Pick another action." };
+  if (c.negative && v.refl) return { ...empty, unsupported: "The do-not form of this one is irregular in French and is not in the set yet." };
+  if (v.refl && c.object) return { ...empty, unsupported: "This one needs a different French verb with a thing after it. It is not in the set yet." };
+  const polite = c.polite !== false;
+  const k = polite ? 1 : 0;
+  const obj = frObject(c, polite ? 2 : 1, c.negative);
+  if (c.object && !obj) {
+    return { ...empty, unsupported: `${objectEnglish(c.object, "fr").replace(/^(the|a|an|to the|to) /, "")} is not in the French word set yet.` };
+  }
+  const verb = imp.imp[k];
+  const parts: Part[] = [];
+  if (c.negative) parts.push(startsVowel(verb) ? { word: "n'", role: "helper", say: "n" } : { word: "ne", role: "helper", say: "nuh" });
+  parts.push({ word: verb, role: "action", say: imp.impSay[k] });
+  if (c.negative) parts.push({ word: "pas", role: "helper", say: "pah" });
+  if (obj) parts.push({ word: obj.w, role: "what", say: obj.say });
+  const d = direction ? FR_DIR[direction] : null;
+  if (d) parts.push({ word: d.w, role: "when", say: d.say });
+  const sentence = parts.reduce((acc, part, i) => (i === 0 ? part.word : acc.endsWith("'") ? acc + part.word : `${acc} ${part.word}`), "");
+  const say = parts.reduce((acc, part, i) => (i === 0 ? part.say ?? "" : parts[i - 1].word.endsWith("'") ? `${acc}${part.say ?? ""}` : `${acc}  ${part.say ?? ""}`), "");
+  const note = c.negative
+    ? "Ne and pas wrap the verb. In quick speech people often drop the ne: touchez pas."
+    : polite ? "Vous is for a stranger, an officer, anyone older. Tu is for a friend." : "Tu is for a friend or a child. Use vous with everyone else.";
+  return { ...empty, sentence: sentence.charAt(0).toUpperCase() + sentence.slice(1), parts, say, note };
 }
 
 // ............................................................ surprise me
@@ -985,6 +1148,10 @@ export const CAT_ORDER: { id: ObjectCat; label: string; emoji: string }[] = [
   { id: "food", label: "Food", emoji: "🍛" },
   { id: "drink", label: "Drinks", emoji: "☕" },
   { id: "place", label: "Places", emoji: "📍" },
+  { id: "people", label: "People", emoji: "🧑‍🤝‍🧑" },
+  { id: "health", label: "Health", emoji: "🩺" },
+  { id: "documents", label: "Papers and IDs", emoji: "🪪" },
+  { id: "home", label: "At home", emoji: "🏠" },
   { id: "thing", label: "Things", emoji: "🔑" },
   { id: "study", label: "Reading", emoji: "📖" },
   { id: "clothes", label: "Clothes", emoji: "👕" },

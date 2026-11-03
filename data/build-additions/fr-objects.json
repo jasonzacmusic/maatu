@@ -1,0 +1,1452 @@
+{
+  "fever": {
+    "part": {
+      "w": "de la fièvre",
+      "say": "duh la fyevr",
+      "neg": "de fièvre",
+      "negSay": "duh fyevr"
+    },
+    "def": {
+      "w": "la fièvre",
+      "say": "la fyevr"
+    }
+  },
+  "cough": {
+    "part": {
+      "w": "de la toux",
+      "say": "duh la too",
+      "neg": "de toux",
+      "negSay": "duh too"
+    },
+    "def": {
+      "w": "la toux",
+      "say": "la too"
+    }
+  },
+  "cold": {
+    "indef": {
+      "w": "un rhume",
+      "say": "uhn rewm",
+      "neg": "de rhume",
+      "negSay": "duh rewm"
+    },
+    "def": {
+      "w": "le rhume",
+      "say": "luh rewm"
+    }
+  },
+  "headache": {
+    "indef": {
+      "w": "un mal de tête",
+      "say": "uhn mal duh tet",
+      "neg": "de mal de tête",
+      "negSay": "duh mal duh tet"
+    },
+    "def": {
+      "w": "le mal de tête",
+      "say": "luh mal duh tet"
+    }
+  },
+  "stomachache": {
+    "indef": {
+      "w": "un mal de ventre",
+      "say": "uhn mal duh vahntr",
+      "neg": "de mal de ventre",
+      "negSay": "duh mal duh vahntr"
+    },
+    "def": {
+      "w": "le mal de ventre",
+      "say": "luh mal duh vahntr"
+    }
+  },
+  "toothache": {
+    "indef": {
+      "w": "un mal de dents",
+      "say": "uhn mal duh dahn",
+      "neg": "de mal de dents",
+      "negSay": "duh mal duh dahn"
+    },
+    "def": {
+      "w": "le mal de dents",
+      "say": "luh mal duh dahn"
+    }
+  },
+  "backpain": {
+    "indef": {
+      "w": "un mal de dos",
+      "say": "uhn mal duh doh",
+      "neg": "de mal de dos",
+      "negSay": "duh mal duh doh"
+    },
+    "def": {
+      "w": "le mal de dos",
+      "say": "luh mal duh doh"
+    }
+  },
+  "legpain": {
+    "indef": {
+      "w": "une douleur à la jambe",
+      "say": "ewn doo-luhr a la zhahmb",
+      "neg": "de douleur à la jambe",
+      "negSay": "duh doo-luhr a la zhahmb"
+    },
+    "def": {
+      "w": "la douleur à la jambe",
+      "say": "la doo-luhr a la zhahmb"
+    }
+  },
+  "chestpain": {
+    "indef": {
+      "w": "une douleur à la poitrine",
+      "say": "ewn doo-luhr a la pwa-treen",
+      "neg": "de douleur à la poitrine",
+      "negSay": "duh doo-luhr a la pwa-treen"
+    },
+    "def": {
+      "w": "la douleur à la poitrine",
+      "say": "la doo-luhr a la pwa-treen"
+    }
+  },
+  "vomiting": {
+    "part": {
+      "w": "des vomissements",
+      "say": "day vo-mees-mahn",
+      "neg": "de vomissements",
+      "negSay": "duh vo-mees-mahn"
+    }
+  },
+  "loosemotion": {
+    "part": {
+      "w": "de la diarrhée",
+      "say": "duh la dya-ray",
+      "neg": "de diarrhée",
+      "negSay": "duh dya-ray"
+    },
+    "def": {
+      "w": "la diarrhée",
+      "say": "la dya-ray"
+    }
+  },
+  "dizziness": {
+    "part": {
+      "w": "des vertiges",
+      "say": "day vehr-teezh",
+      "neg": "de vertiges",
+      "negSay": "duh vehr-teezh"
+    }
+  },
+  "injury": {
+    "indef": {
+      "w": "une blessure",
+      "say": "ewn bleh-sewr",
+      "neg": "de blessure",
+      "negSay": "duh bleh-sewr"
+    },
+    "def": {
+      "w": "la blessure",
+      "say": "la bleh-sewr"
+    }
+  },
+  "allergy": {
+    "indef": {
+      "w": "une allergie",
+      "say": "ewn a-lehr-zhee",
+      "neg": "d'allergie",
+      "negSay": "da-lehr-zhee"
+    },
+    "def": {
+      "w": "l'allergie",
+      "say": "la-lehr-zhee"
+    }
+  },
+  "bp": {
+    "part": {
+      "w": "de la tension",
+      "say": "duh la tahn-syohn",
+      "neg": "de tension",
+      "negSay": "duh tahn-syohn"
+    },
+    "def": {
+      "w": "la tension",
+      "say": "la tahn-syohn"
+    }
+  },
+  "diabetes": {
+    "part": {
+      "w": "du diabète",
+      "say": "dew dya-bet",
+      "neg": "de diabète",
+      "negSay": "duh dya-bet"
+    },
+    "def": {
+      "w": "le diabète",
+      "say": "luh dya-bet"
+    }
+  },
+  "tablet": {
+    "part": {
+      "w": "des comprimés",
+      "say": "day kohn-pree-may",
+      "neg": "de comprimés",
+      "negSay": "duh kohn-pree-may"
+    },
+    "def": {
+      "w": "le comprimé",
+      "say": "luh kohn-pree-may"
+    },
+    "indef": {
+      "w": "un comprimé",
+      "say": "uhn kohn-pree-may",
+      "neg": "de comprimé",
+      "negSay": "duh kohn-pree-may"
+    }
+  },
+  "injection": {
+    "indef": {
+      "w": "une piqûre",
+      "say": "ewn pee-kewr",
+      "neg": "de piqûre",
+      "negSay": "duh pee-kewr"
+    },
+    "def": {
+      "w": "la piqûre",
+      "say": "la pee-kewr"
+    }
+  },
+  "syrup": {
+    "part": {
+      "w": "du sirop",
+      "say": "dew see-ro",
+      "neg": "de sirop",
+      "negSay": "duh see-ro"
+    },
+    "def": {
+      "w": "le sirop",
+      "say": "luh see-ro"
+    }
+  },
+  "prescription": {
+    "def": {
+      "w": "l'ordonnance",
+      "say": "lor-do-nahns"
+    },
+    "indef": {
+      "w": "une ordonnance",
+      "say": "ewn or-do-nahns",
+      "neg": "d'ordonnance",
+      "negSay": "dor-do-nahns"
+    }
+  },
+  "report": {
+    "def": {
+      "w": "le compte rendu",
+      "say": "luh kohnt rahn-dew"
+    },
+    "indef": {
+      "w": "un compte rendu",
+      "say": "uhn kohnt rahn-dew",
+      "neg": "de compte rendu",
+      "negSay": "duh kohnt rahn-dew"
+    }
+  },
+  "bloodtest": {
+    "indef": {
+      "w": "une prise de sang",
+      "say": "ewn preez duh sahn",
+      "neg": "de prise de sang",
+      "negSay": "duh preez duh sahn"
+    },
+    "def": {
+      "w": "la prise de sang",
+      "say": "la preez duh sahn"
+    }
+  },
+  "xray": {
+    "indef": {
+      "w": "une radio",
+      "say": "ewn ra-dyo",
+      "neg": "de radio",
+      "negSay": "duh ra-dyo"
+    },
+    "def": {
+      "w": "la radio",
+      "say": "la ra-dyo"
+    }
+  },
+  "scan": {
+    "indef": {
+      "w": "un scanner",
+      "say": "uhn skan-nehr",
+      "neg": "de scanner",
+      "negSay": "duh skan-nehr"
+    },
+    "def": {
+      "w": "le scanner",
+      "say": "luh skan-nehr"
+    }
+  },
+  "doctor": {
+    "def": {
+      "w": "le médecin",
+      "say": "luh mayd-san"
+    },
+    "indef": {
+      "w": "un médecin",
+      "say": "uhn mayd-san",
+      "neg": "de médecin",
+      "negSay": "duh mayd-san"
+    }
+  },
+  "nurse": {
+    "def": {
+      "w": "l'infirmière",
+      "say": "lan-feer-myehr"
+    },
+    "indef": {
+      "w": "une infirmière",
+      "say": "ewn an-feer-myehr",
+      "neg": "d'infirmière",
+      "negSay": "dan-feer-myehr"
+    }
+  },
+  "driver": {
+    "def": {
+      "w": "le chauffeur",
+      "say": "luh sho-fuhr"
+    },
+    "indef": {
+      "w": "un chauffeur",
+      "say": "uhn sho-fuhr",
+      "neg": "de chauffeur",
+      "negSay": "duh sho-fuhr"
+    }
+  },
+  "officer": {
+    "def": {
+      "w": "le fonctionnaire",
+      "say": "luh fohnk-syo-nehr"
+    },
+    "indef": {
+      "w": "un fonctionnaire",
+      "say": "uhn fohnk-syo-nehr",
+      "neg": "de fonctionnaire",
+      "negSay": "duh fohnk-syo-nehr"
+    }
+  },
+  "police": {
+    "def": {
+      "w": "le policier",
+      "say": "luh po-lee-syay"
+    },
+    "indef": {
+      "w": "un policier",
+      "say": "uhn po-lee-syay",
+      "neg": "de policier",
+      "negSay": "duh po-lee-syay"
+    }
+  },
+  "landlord": {
+    "def": {
+      "w": "le propriétaire",
+      "say": "luh pro-pree-ay-tehr"
+    }
+  },
+  "neighbour": {
+    "def": {
+      "w": "le voisin",
+      "say": "luh vwa-zan"
+    },
+    "indef": {
+      "w": "un voisin",
+      "say": "uhn vwa-zan",
+      "neg": "de voisin",
+      "negSay": "duh vwa-zan"
+    }
+  },
+  "friend": {
+    "indef": {
+      "w": "un ami",
+      "say": "uhn a-mee",
+      "neg": "d'ami",
+      "negSay": "da-mee"
+    },
+    "def": {
+      "w": "l'ami",
+      "say": "la-mee"
+    }
+  },
+  "mother": {
+    "def": {
+      "w": "maman",
+      "say": "ma-mahn"
+    }
+  },
+  "father": {
+    "def": {
+      "w": "papa",
+      "say": "pa-pa"
+    }
+  },
+  "brother": {
+    "indef": {
+      "w": "un frère",
+      "say": "uhn frehr",
+      "neg": "de frère",
+      "negSay": "duh frehr"
+    }
+  },
+  "sister": {
+    "indef": {
+      "w": "une soeur",
+      "say": "ewn suhr",
+      "neg": "de soeur",
+      "negSay": "duh suhr"
+    }
+  },
+  "son": {
+    "indef": {
+      "w": "un fils",
+      "say": "uhn feess",
+      "neg": "de fils",
+      "negSay": "duh feess"
+    }
+  },
+  "daughter": {
+    "indef": {
+      "w": "une fille",
+      "say": "ewn fee-y",
+      "neg": "de fille",
+      "negSay": "duh fee-y"
+    }
+  },
+  "husband": {
+    "def": {
+      "w": "le mari",
+      "say": "luh ma-ree"
+    }
+  },
+  "wife": {
+    "def": {
+      "w": "la femme",
+      "say": "la fam"
+    }
+  },
+  "child": {
+    "indef": {
+      "w": "un enfant",
+      "say": "uhn ahn-fahn",
+      "neg": "d'enfant",
+      "negSay": "dahn-fahn"
+    },
+    "def": {
+      "w": "l'enfant",
+      "say": "lahn-fahn"
+    }
+  },
+  "plumber": {
+    "def": {
+      "w": "le plombier",
+      "say": "luh plohn-byay"
+    },
+    "indef": {
+      "w": "un plombier",
+      "say": "uhn plohn-byay",
+      "neg": "de plombier",
+      "negSay": "duh plohn-byay"
+    }
+  },
+  "electrician": {
+    "def": {
+      "w": "l'électricien",
+      "say": "lay-lek-tree-syan"
+    },
+    "indef": {
+      "w": "un électricien",
+      "say": "uhn ay-lek-tree-syan",
+      "neg": "d'électricien",
+      "negSay": "day-lek-tree-syan"
+    }
+  },
+  "watchman": {
+    "def": {
+      "w": "le gardien",
+      "say": "luh gar-dyan"
+    }
+  },
+  "manager": {
+    "def": {
+      "w": "le gérant",
+      "say": "luh zhay-rahn"
+    }
+  },
+  "passport": {
+    "def": {
+      "w": "le passeport",
+      "say": "luh pass-por"
+    }
+  },
+  "aadhaar": {
+    "def": {
+      "w": "la carte Aadhaar",
+      "say": "la kart a-dar"
+    }
+  },
+  "pancard": {
+    "def": {
+      "w": "la carte PAN",
+      "say": "la kart pan"
+    }
+  },
+  "licence": {
+    "def": {
+      "w": "le permis",
+      "say": "luh pehr-mee"
+    }
+  },
+  "idproof": {
+    "def": {
+      "w": "la pièce d'identité",
+      "say": "la pyess dee-dahn-tee-tay"
+    },
+    "indef": {
+      "w": "une pièce d'identité",
+      "say": "ewn pyess dee-dahn-tee-tay",
+      "neg": "de pièce d'identité",
+      "negSay": "duh pyess dee-dahn-tee-tay"
+    }
+  },
+  "addressproof": {
+    "def": {
+      "w": "le justificatif de domicile",
+      "say": "luh zhew-stee-fee-ka-teef duh do-mee-seel"
+    },
+    "indef": {
+      "w": "un justificatif de domicile",
+      "say": "uhn zhew-stee-fee-ka-teef duh do-mee-seel",
+      "neg": "de justificatif de domicile",
+      "negSay": "duh zhew-stee-fee-ka-teef duh do-mee-seel"
+    }
+  },
+  "form": {
+    "def": {
+      "w": "le formulaire",
+      "say": "luh for-mew-lehr"
+    },
+    "indef": {
+      "w": "un formulaire",
+      "say": "uhn for-mew-lehr",
+      "neg": "de formulaire",
+      "negSay": "duh for-mew-lehr"
+    }
+  },
+  "application": {
+    "def": {
+      "w": "la demande",
+      "say": "la duh-mahnd"
+    },
+    "indef": {
+      "w": "une demande",
+      "say": "ewn duh-mahnd",
+      "neg": "de demande",
+      "negSay": "duh duh-mahnd"
+    }
+  },
+  "signature": {
+    "def": {
+      "w": "la signature",
+      "say": "la see-nya-tewr"
+    }
+  },
+  "appointment": {
+    "indef": {
+      "w": "un rendez-vous",
+      "say": "uhn rahn-day-voo",
+      "neg": "de rendez-vous",
+      "negSay": "duh rahn-day-voo"
+    },
+    "def": {
+      "w": "le rendez-vous",
+      "say": "luh rahn-day-voo"
+    }
+  },
+  "token": {
+    "def": {
+      "w": "le ticket",
+      "say": "luh tee-keh"
+    },
+    "indef": {
+      "w": "un ticket",
+      "say": "uhn tee-keh",
+      "neg": "de ticket",
+      "negSay": "duh tee-keh"
+    }
+  },
+  "receipt": {
+    "def": {
+      "w": "le reçu",
+      "say": "luh ruh-sew"
+    },
+    "indef": {
+      "w": "un reçu",
+      "say": "uhn ruh-sew",
+      "neg": "de reçu",
+      "negSay": "duh ruh-sew"
+    }
+  },
+  "certificate": {
+    "def": {
+      "w": "le certificat",
+      "say": "luh sehr-tee-fee-ka"
+    },
+    "indef": {
+      "w": "un certificat",
+      "say": "uhn sehr-tee-fee-ka",
+      "neg": "de certificat",
+      "negSay": "duh sehr-tee-fee-ka"
+    }
+  },
+  "document": {
+    "def": {
+      "w": "le document",
+      "say": "luh do-kew-mahn"
+    },
+    "indef": {
+      "w": "un document",
+      "say": "uhn do-kew-mahn",
+      "neg": "de document",
+      "negSay": "duh do-kew-mahn"
+    }
+  },
+  "visa": {
+    "def": {
+      "w": "le visa",
+      "say": "luh vee-za"
+    }
+  },
+  "cheque": {
+    "def": {
+      "w": "le chèque",
+      "say": "luh shek"
+    },
+    "indef": {
+      "w": "un chèque",
+      "say": "uhn shek",
+      "neg": "de chèque",
+      "negSay": "duh shek"
+    }
+  },
+  "account": {
+    "def": {
+      "w": "le compte",
+      "say": "luh kohnt"
+    },
+    "indef": {
+      "w": "un compte",
+      "say": "uhn kohnt",
+      "neg": "de compte",
+      "negSay": "duh kohnt"
+    }
+  },
+  "otp": {
+    "def": {
+      "w": "le code",
+      "say": "luh kod"
+    }
+  },
+  "fine": {
+    "indef": {
+      "w": "une amende",
+      "say": "ewn a-mahnd",
+      "neg": "d'amende",
+      "negSay": "da-mahnd"
+    },
+    "def": {
+      "w": "l'amende",
+      "say": "la-mahnd"
+    }
+  },
+  "complaint": {
+    "indef": {
+      "w": "une plainte",
+      "say": "ewn plant",
+      "neg": "de plainte",
+      "negSay": "duh plant"
+    },
+    "def": {
+      "w": "la plainte",
+      "say": "la plant"
+    }
+  },
+  "cash": {
+    "part": {
+      "w": "du liquide",
+      "say": "dew lee-keed",
+      "neg": "de liquide",
+      "negSay": "duh lee-keed"
+    },
+    "def": {
+      "w": "le liquide",
+      "say": "luh lee-keed"
+    }
+  },
+  "upi": {
+    "def": {
+      "w": "l'UPI",
+      "say": "lew-pay-ee"
+    }
+  },
+  "loan": {
+    "indef": {
+      "w": "un prêt",
+      "say": "uhn preh",
+      "neg": "de prêt",
+      "negSay": "duh preh"
+    },
+    "def": {
+      "w": "le prêt",
+      "say": "luh preh"
+    }
+  },
+  "balance": {
+    "def": {
+      "w": "le solde",
+      "say": "luh sold"
+    }
+  },
+  "advance": {
+    "def": {
+      "w": "la caution",
+      "say": "la ko-syohn"
+    }
+  },
+  "emi": {
+    "def": {
+      "w": "la mensualité",
+      "say": "la mahn-swa-lee-tay"
+    }
+  },
+  "fare": {
+    "def": {
+      "w": "le prix de la course",
+      "say": "luh pree duh la koors"
+    }
+  },
+  "meter": {
+    "def": {
+      "w": "le compteur",
+      "say": "luh kohn-tuhr"
+    }
+  },
+  "metro": {
+    "def": {
+      "w": "le métro",
+      "say": "luh may-tro"
+    }
+  },
+  "scooter": {
+    "def": {
+      "w": "le scooter",
+      "say": "luh skoo-tuhr"
+    }
+  },
+  "cycle": {
+    "def": {
+      "w": "le vélo",
+      "say": "luh vay-lo"
+    }
+  },
+  "petrol": {
+    "part": {
+      "w": "de l'essence",
+      "say": "duh lay-sahns",
+      "neg": "d'essence",
+      "negSay": "day-sahns"
+    },
+    "def": {
+      "w": "l'essence",
+      "say": "lay-sahns"
+    }
+  },
+  "helmet": {
+    "def": {
+      "w": "le casque",
+      "say": "luh kask"
+    }
+  },
+  "tyre": {
+    "def": {
+      "w": "le pneu",
+      "say": "luh pnuh"
+    }
+  },
+  "puncture": {
+    "indef": {
+      "w": "une crevaison",
+      "say": "ewn kruh-veh-zohn",
+      "neg": "de crevaison",
+      "negSay": "duh kruh-veh-zohn"
+    }
+  },
+  "luggage": {
+    "def": {
+      "w": "les bagages",
+      "say": "lay ba-gazh"
+    }
+  },
+  "seat": {
+    "def": {
+      "w": "la place",
+      "say": "la plass"
+    },
+    "indef": {
+      "w": "une place",
+      "say": "ewn plass",
+      "neg": "de place",
+      "negSay": "duh plass"
+    }
+  },
+  "traffic": {
+    "def": {
+      "w": "la circulation",
+      "say": "la seer-kew-la-syohn"
+    }
+  },
+  "passportoffice": {
+    "place": {
+      "w": "au bureau des passeports",
+      "say": "oh bew-roh day pass-por"
+    }
+  },
+  "policestation": {
+    "place": {
+      "w": "au commissariat",
+      "say": "oh ko-mee-sar-ya"
+    }
+  },
+  "postoffice": {
+    "place": {
+      "w": "à la poste",
+      "say": "a la post"
+    }
+  },
+  "pharmacy": {
+    "place": {
+      "w": "à la pharmacie",
+      "say": "a la far-ma-see"
+    }
+  },
+  "clinic": {
+    "place": {
+      "w": "au cabinet médical",
+      "say": "oh ka-bee-neh may-dee-kal"
+    }
+  },
+  "busstand": {
+    "place": {
+      "w": "à la gare routière",
+      "say": "a la gar roo-tyehr"
+    }
+  },
+  "metrostation": {
+    "place": {
+      "w": "à la station de métro",
+      "say": "a la sta-syohn duh may-tro"
+    }
+  },
+  "petrolbunk": {
+    "place": {
+      "w": "à la station-service",
+      "say": "a la sta-syohn sehr-veess"
+    }
+  },
+  "atm": {
+    "place": {
+      "w": "au distributeur",
+      "say": "oh dees-tree-bew-tuhr"
+    }
+  },
+  "rto": {
+    "place": {
+      "w": "à la préfecture",
+      "say": "a la pray-fek-tewr"
+    }
+  },
+  "college": {
+    "place": {
+      "w": "à la fac",
+      "say": "a la fak"
+    }
+  },
+  "salon": {
+    "place": {
+      "w": "chez le coiffeur",
+      "say": "shay luh kwa-fuhr"
+    }
+  },
+  "restaurant": {
+    "place": {
+      "w": "au restaurant",
+      "say": "oh res-to-rahn"
+    }
+  },
+  "bakery": {
+    "place": {
+      "w": "à la boulangerie",
+      "say": "a la boo-lahnzh-ree"
+    }
+  },
+  "apartment": {
+    "place": {
+      "w": "à l'appartement",
+      "say": "a la-par-tuh-mahn"
+    }
+  },
+  "counter": {
+    "place": {
+      "w": "au guichet",
+      "say": "oh gee-sheh"
+    }
+  },
+  "signal": {
+    "place": {
+      "w": "au feu",
+      "say": "oh fuh"
+    }
+  },
+  "mainroad": {
+    "place": {
+      "w": "sur la route principale",
+      "say": "sewr la root pran-see-pal"
+    }
+  },
+  "current": {
+    "part": {
+      "w": "de l'électricité",
+      "say": "duh lay-lek-tree-see-tay",
+      "neg": "d'électricité",
+      "negSay": "day-lek-tree-see-tay"
+    },
+    "def": {
+      "w": "l'électricité",
+      "say": "lay-lek-tree-see-tay"
+    }
+  },
+  "powercut": {
+    "indef": {
+      "w": "une coupure de courant",
+      "say": "ewn koo-pewr duh koo-rahn",
+      "neg": "de coupure de courant",
+      "negSay": "duh koo-pewr duh koo-rahn"
+    }
+  },
+  "cylinder": {
+    "def": {
+      "w": "la bouteille de gaz",
+      "say": "la boo-tay duh gaz"
+    }
+  },
+  "wifi": {
+    "def": {
+      "w": "le wifi",
+      "say": "luh wee-fee"
+    }
+  },
+  "internet": {
+    "def": {
+      "w": "internet",
+      "say": "an-tehr-net"
+    }
+  },
+  "tap": {
+    "def": {
+      "w": "le robinet",
+      "say": "luh ro-bee-neh"
+    }
+  },
+  "bulb": {
+    "def": {
+      "w": "l'ampoule",
+      "say": "lahm-pool"
+    }
+  },
+  "ac": {
+    "def": {
+      "w": "la clim",
+      "say": "la kleem"
+    }
+  },
+  "fridge": {
+    "def": {
+      "w": "le frigo",
+      "say": "luh free-go"
+    }
+  },
+  "lift": {
+    "def": {
+      "w": "l'ascenseur",
+      "say": "la-sahn-suhr"
+    }
+  },
+  "parking": {
+    "def": {
+      "w": "le parking",
+      "say": "luh par-keeng"
+    }
+  },
+  "bathroom": {
+    "def": {
+      "w": "la salle de bain",
+      "say": "la sal duh ban"
+    }
+  },
+  "kitchen": {
+    "def": {
+      "w": "la cuisine",
+      "say": "la kwee-zeen"
+    }
+  },
+  "bed": {
+    "def": {
+      "w": "le lit",
+      "say": "luh lee"
+    }
+  },
+  "maintenance": {
+    "def": {
+      "w": "les charges",
+      "say": "lay sharzh"
+    }
+  },
+  "sim": {
+    "def": {
+      "w": "la carte SIM",
+      "say": "la kart seem"
+    }
+  },
+  "battery": {
+    "def": {
+      "w": "la batterie",
+      "say": "la bat-ree"
+    }
+  },
+  "network": {
+    "def": {
+      "w": "le réseau",
+      "say": "luh ray-zoh"
+    }
+  },
+  "earphones": {
+    "def": {
+      "w": "les écouteurs",
+      "say": "layz ay-koo-tuhr"
+    }
+  },
+  "menu": {
+    "def": {
+      "w": "la carte",
+      "say": "la kart"
+    }
+  },
+  "parcel": {
+    "def": {
+      "w": "le plat à emporter",
+      "say": "luh pla a ahn-por-tay"
+    },
+    "indef": {
+      "w": "un plat à emporter",
+      "say": "uhn pla a ahn-por-tay",
+      "neg": "de plat à emporter",
+      "negSay": "duh pla a ahn-por-tay"
+    }
+  },
+  "spoon": {
+    "def": {
+      "w": "la cuillère",
+      "say": "la kwee-yehr"
+    },
+    "indef": {
+      "w": "une cuillère",
+      "say": "ewn kwee-yehr",
+      "neg": "de cuillère",
+      "negSay": "duh kwee-yehr"
+    }
+  },
+  "meals": {
+    "def": {
+      "w": "le repas",
+      "say": "luh ruh-pa"
+    },
+    "indef": {
+      "w": "un repas",
+      "say": "uhn ruh-pa",
+      "neg": "de repas",
+      "negSay": "duh ruh-pa"
+    }
+  },
+  "paneer": {
+    "part": {
+      "w": "du paneer",
+      "say": "dew pa-neer",
+      "neg": "de paneer",
+      "negSay": "duh pa-neer"
+    },
+    "def": {
+      "w": "le paneer",
+      "say": "luh pa-neer"
+    }
+  },
+  "dal": {
+    "part": {
+      "w": "des lentilles",
+      "say": "day lahn-tee",
+      "neg": "de lentilles",
+      "negSay": "duh lahn-tee"
+    },
+    "def": {
+      "w": "les lentilles",
+      "say": "lay lahn-tee"
+    }
+  },
+  "pickle": {
+    "part": {
+      "w": "des achards",
+      "say": "day za-shar",
+      "neg": "d'achards",
+      "negSay": "da-shar"
+    }
+  },
+  "bread": {
+    "part": {
+      "w": "du pain",
+      "say": "dew pan",
+      "neg": "de pain",
+      "negSay": "duh pan"
+    },
+    "def": {
+      "w": "le pain",
+      "say": "luh pan"
+    }
+  },
+  "biscuit": {
+    "part": {
+      "w": "des biscuits",
+      "say": "day bees-kwee",
+      "neg": "de biscuits",
+      "negSay": "duh bees-kwee"
+    },
+    "indef": {
+      "w": "un biscuit",
+      "say": "uhn bees-kwee",
+      "neg": "de biscuit",
+      "negSay": "duh bees-kwee"
+    }
+  },
+  "icecream": {
+    "indef": {
+      "w": "une glace",
+      "say": "ewn glass",
+      "neg": "de glace",
+      "negSay": "duh glass"
+    },
+    "part": {
+      "w": "de la glace",
+      "say": "duh la glass",
+      "neg": "de glace",
+      "negSay": "duh glass"
+    }
+  },
+  "pants": {
+    "def": {
+      "w": "le pantalon",
+      "say": "luh pahn-ta-lohn"
+    }
+  },
+  "kurta": {
+    "def": {
+      "w": "la kurta",
+      "say": "la koor-ta"
+    }
+  },
+  "chappal": {
+    "def": {
+      "w": "les sandales",
+      "say": "lay sahn-dal"
+    }
+  },
+  "uniform": {
+    "def": {
+      "w": "l'uniforme",
+      "say": "lew-nee-form"
+    }
+  },
+  "_adjectives": {
+    "sick": {
+      "m": "malade",
+      "f": "malade",
+      "mSay": "ma-lad",
+      "fSay": "ma-lad"
+    },
+    "tired": {
+      "m": "fatigué",
+      "f": "fatiguée",
+      "mSay": "fa-tee-gay",
+      "fSay": "fa-tee-gay"
+    },
+    "hungry": {
+      "m": "affamé",
+      "f": "affamée",
+      "mSay": "a-fa-may",
+      "fSay": "a-fa-may"
+    },
+    "thirsty": {
+      "m": "assoiffé",
+      "f": "assoiffée",
+      "mSay": "a-swa-fay",
+      "fSay": "a-swa-fay"
+    },
+    "sleepy": {
+      "m": "somnolent",
+      "f": "somnolente",
+      "mSay": "som-no-lahn",
+      "fSay": "som-no-lahnt"
+    },
+    "angry": {
+      "m": "fâché",
+      "f": "fâchée",
+      "mSay": "fa-shay",
+      "fSay": "fa-shay"
+    },
+    "late": {
+      "m": "en retard",
+      "f": "en retard",
+      "mSay": "ahn ruh-tar",
+      "fSay": "ahn ruh-tar"
+    },
+    "early": {
+      "m": "en avance",
+      "f": "en avance",
+      "mSay": "ahn a-vahns",
+      "fSay": "ahn a-vahns"
+    },
+    "open": {
+      "m": "ouvert",
+      "f": "ouverte",
+      "mSay": "oo-vehr",
+      "fSay": "oo-vehrt"
+    },
+    "closed": {
+      "m": "fermé",
+      "f": "fermée",
+      "mSay": "fehr-may",
+      "fSay": "fehr-may"
+    },
+    "broken": {
+      "m": "cassé",
+      "f": "cassée",
+      "mSay": "ka-say",
+      "fSay": "ka-say"
+    },
+    "wet": {
+      "m": "mouillé",
+      "f": "mouillée",
+      "mSay": "moo-yay",
+      "fSay": "moo-yay"
+    },
+    "dry": {
+      "m": "sec",
+      "f": "sèche",
+      "mSay": "sek",
+      "fSay": "sesh"
+    },
+    "soft": {
+      "m": "doux",
+      "f": "douce",
+      "mSay": "doo",
+      "fSay": "dooss"
+    },
+    "hard": {
+      "m": "dur",
+      "f": "dure",
+      "mSay": "dewr",
+      "fSay": "dewr"
+    },
+    "fresh": {
+      "m": "frais",
+      "f": "fraîche",
+      "mSay": "freh",
+      "fSay": "fresh"
+    },
+    "crowded": {
+      "m": "bondé",
+      "f": "bondée",
+      "mSay": "bohn-day",
+      "fSay": "bohn-day"
+    },
+    "quiet": {
+      "m": "calme",
+      "f": "calme",
+      "mSay": "kalm",
+      "fSay": "kalm"
+    },
+    "safe": {
+      "m": "sûr",
+      "f": "sûre",
+      "mSay": "sewr",
+      "fSay": "sewr"
+    },
+    "dangerous": {
+      "m": "dangereux",
+      "f": "dangereuse",
+      "mSay": "dahn-zhuh-ruh",
+      "fSay": "dahn-zhuh-ruhz"
+    },
+    "urgent": {
+      "m": "urgent",
+      "f": "urgente",
+      "mSay": "ewr-zhahn",
+      "fSay": "ewr-zhahnt"
+    },
+    "short": {
+      "m": "court",
+      "f": "courte",
+      "mSay": "koor",
+      "fSay": "koort"
+    },
+    "tall": {
+      "m": "grand",
+      "f": "grande",
+      "mSay": "grahn",
+      "fSay": "grahnd"
+    },
+    "thin": {
+      "m": "mince",
+      "f": "mince",
+      "mSay": "manss",
+      "fSay": "manss"
+    },
+    "young": {
+      "m": "jeune",
+      "f": "jeune",
+      "mSay": "zhuhn",
+      "fSay": "zhuhn"
+    },
+    "light": {
+      "m": "léger",
+      "f": "légère",
+      "mSay": "lay-zhay",
+      "fSay": "lay-zhehr"
+    },
+    "dark": {
+      "m": "foncé",
+      "f": "foncée",
+      "mSay": "fohn-say",
+      "fSay": "fohn-say"
+    },
+    "pink": {
+      "m": "rose",
+      "f": "rose",
+      "mSay": "roz",
+      "fSay": "roz"
+    },
+    "orange": {
+      "m": "orange",
+      "f": "orange",
+      "mSay": "o-rahnzh",
+      "fSay": "o-rahnzh"
+    },
+    "brown": {
+      "m": "marron",
+      "f": "marron",
+      "mSay": "ma-rohn",
+      "fSay": "ma-rohn"
+    },
+    "grey": {
+      "m": "gris",
+      "f": "grise",
+      "mSay": "gree",
+      "fSay": "greez"
+    }
+  },
+  "_directions": {
+    "here": {
+      "w": "ici",
+      "say": "ee-see"
+    },
+    "there": {
+      "w": "là-bas",
+      "say": "la-ba"
+    },
+    "straight": {
+      "w": "tout droit",
+      "say": "too drwa"
+    },
+    "left": {
+      "w": "à gauche",
+      "say": "a gohsh"
+    },
+    "right": {
+      "w": "à droite",
+      "say": "a drwat"
+    },
+    "ahead": {
+      "w": "devant",
+      "say": "duh-vahn"
+    },
+    "back": {
+      "w": "en arrière",
+      "say": "ahn a-ryehr"
+    },
+    "near": {
+      "w": "près d'ici",
+      "say": "preh dee-see"
+    },
+    "slowly": {
+      "w": "lentement",
+      "say": "lahnt-mahn"
+    },
+    "quickly": {
+      "w": "vite",
+      "say": "veet"
+    },
+    "carefully": {
+      "w": "prudemment",
+      "say": "prew-da-mahn"
+    },
+    "now": {
+      "w": "maintenant",
+      "say": "man-tuh-nahn"
+    },
+    "later": {
+      "w": "plus tard",
+      "say": "plew tar"
+    },
+    "today": {
+      "w": "aujourd'hui",
+      "say": "oh-zhoor-dwee"
+    },
+    "tomorrow": {
+      "w": "demain",
+      "say": "duh-man"
+    },
+    "again": {
+      "w": "encore",
+      "say": "ahn-kor"
+    },
+    "inside": {
+      "w": "dedans",
+      "say": "duh-dahn"
+    },
+    "outside": {
+      "w": "dehors",
+      "say": "duh-or"
+    },
+    "upstairs": {
+      "w": "en haut",
+      "say": "ahn oh"
+    },
+    "downstairs": {
+      "w": "en bas",
+      "say": "ahn ba"
+    }
+  }
+}

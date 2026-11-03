@@ -156,3 +156,11 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Sarvam stays as the fallback: STT moved from the sunset saarika:v2.5 to saaras:v4 translit locked to the call language; prompts now tell the text brain to write target words in native script for the voice.
 - French: Chat with Camille (Gemini 3.8 Live, voice Aoede, spoken Paris register) on Talk, and Say it out loud for French lines in Build. No coach report for French yet; the call returns to where it started.
 - Cost note: Gemini Live is roughly 1.2 to 2 INR per call minute (research estimate), charged to the existing Gemini key.
+
+## 2026-11-03 Build by situation, one source for every language
+- Situations are engine choices, not sentences: each line says which shape, verb, noun, person, time and direction, and each language builds it from its own tables. Adding a situation once adds it to Kannada, Hindi, Tamil, Malayalam and French together. scripts/check_situations.ts builds every line in every language and fails loudly on anything empty.
+- Related lines come from the choice too (lib/related.ts). Suggested swaps only use nouns that fit the action (objectsFor) or the same kind of thing, so the strip never offers "drink a lot of fever". Accidents (lose, forget) get no "let's" or "please"; one-off errands (renew, register) get no "every day".
+- Illnesses carry an "ill" flag and take the to-me form (nanage jvara ide, mujhe bukhaar hai); medicines and reports are things you hold (nanna hatra syrup ide). Hindi illnesses that need a verb carry hiTail (chot lagi hai).
+- Commands are stored per verb as [friend, polite] for yes and for do-not, in all four Indian languages; French imperatives live in data/french-extra.json beside the new French nouns.
+- New words were written by two Opus helpers, then read back line by line by two more Opus reviewers per language pair; their word fixes went into the data and their rule fixes into lib/shapes.ts. The review dumps stay in docs/review for the next pass.
+- The service worker cache moved to v7 so returning phones drop the old Build.

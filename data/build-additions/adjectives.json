@@ -1,0 +1,653 @@
+[
+  {
+    "id": "sick",
+    "en": "unwell",
+    "cat": "feel",
+    "kn": {
+      "attr": "husharillada",
+      "pred": "sick aagide"
+    },
+    "hi": {
+      "m": "beemaar",
+      "f": "beemaar"
+    },
+    "ta": {
+      "attr": "udambu sariyillaadha",
+      "pred": "sick-aa irukku"
+    },
+    "ml": {
+      "attr": "asukhamulla",
+      "pred": "asukham und"
+    }
+  },
+  {
+    "id": "tired",
+    "en": "tired",
+    "cat": "feel",
+    "kn": {
+      "attr": "sustaada",
+      "pred": "sustaagide"
+    },
+    "hi": {
+      "m": "thaka",
+      "f": "thaki"
+    },
+    "ta": {
+      "attr": "tired-aana",
+      "pred": "tired-aa irukku"
+    },
+    "ml": {
+      "attr": "ksheenicha",
+      "pred": "ksheenam und"
+    }
+  },
+  {
+    "id": "hungry",
+    "en": "hungry",
+    "cat": "feel",
+    "kn": {
+      "attr": "hasida",
+      "pred": "hasidide"
+    },
+    "hi": {
+      "m": "bhookha",
+      "f": "bhookhi"
+    },
+    "ta": {
+      "attr": "pasiyaana",
+      "pred": "pasiyaa irukku"
+    },
+    "ml": {
+      "attr": "vishakkunna",
+      "pred": "vishappu und"
+    }
+  },
+  {
+    "id": "thirsty",
+    "en": "thirsty",
+    "cat": "feel",
+    "kn": {
+      "attr": "baayaarida",
+      "pred": "baayaarike aagide"
+    },
+    "hi": {
+      "m": "pyaasa",
+      "f": "pyaasi"
+    },
+    "ta": {
+      "attr": "thaagamaana",
+      "pred": "thaagamaa irukku"
+    },
+    "ml": {
+      "attr": "daahikkunna",
+      "pred": "daaham und"
+    }
+  },
+  {
+    "id": "sleepy",
+    "en": "sleepy",
+    "cat": "feel",
+    "kn": {
+      "attr": "nidde bartiro",
+      "pred": "nidde bartide"
+    },
+    "hi": {
+      "m": "uneenda",
+      "f": "uneendi"
+    },
+    "ta": {
+      "attr": "thookkam varra",
+      "pred": "thookkamaa irukku"
+    },
+    "ml": {
+      "attr": "urakkam varunna",
+      "pred": "urakkam und"
+    }
+  },
+  {
+    "id": "angry",
+    "en": "angry",
+    "cat": "feel",
+    "kn": {
+      "attr": "kopada",
+      "pred": "kopadalli ide"
+    },
+    "hi": {
+      "m": "naraaz",
+      "f": "naraaz"
+    },
+    "ta": {
+      "attr": "kobamaana",
+      "pred": "kobamaa irukku"
+    },
+    "ml": {
+      "attr": "deshyamulla",
+      "pred": "deshyam und"
+    }
+  },
+  {
+    "id": "late",
+    "en": "late",
+    "cat": "speed",
+    "kn": {
+      "attr": "late aada",
+      "pred": "late aagide"
+    },
+    "hi": {
+      "m": "late",
+      "f": "late"
+    },
+    "ta": {
+      "attr": "late-aana",
+      "pred": "late-aa irukku"
+    },
+    "ml": {
+      "attr": "late aaya",
+      "pred": "late aanu"
+    }
+  },
+  {
+    "id": "early",
+    "en": "early",
+    "cat": "speed",
+    "kn": {
+      "attr": "early",
+      "pred": "early ide"
+    },
+    "hi": {
+      "m": "jaldi",
+      "f": "jaldi"
+    },
+    "ta": {
+      "attr": "early-aana",
+      "pred": "early-aa irukku"
+    },
+    "ml": {
+      "attr": "nerathe ulla",
+      "pred": "nerathe aanu"
+    }
+  },
+  {
+    "id": "open",
+    "en": "open",
+    "cat": "place",
+    "kn": {
+      "attr": "tegediro",
+      "pred": "tegedide"
+    },
+    "hi": {
+      "m": "khula",
+      "f": "khuli"
+    },
+    "ta": {
+      "attr": "thorandha",
+      "pred": "open-aa irukku"
+    },
+    "ml": {
+      "attr": "thuranna",
+      "pred": "thurannathaanu"
+    }
+  },
+  {
+    "id": "closed",
+    "en": "closed",
+    "cat": "place",
+    "kn": {
+      "attr": "muchchiro",
+      "pred": "muchchide"
+    },
+    "hi": {
+      "m": "band",
+      "f": "band"
+    },
+    "ta": {
+      "attr": "moodina",
+      "pred": "close-aa irukku"
+    },
+    "ml": {
+      "attr": "adacha",
+      "pred": "adachathaanu"
+    }
+  },
+  {
+    "id": "broken",
+    "en": "broken",
+    "cat": "quality",
+    "kn": {
+      "attr": "haalaada",
+      "pred": "haalaagide"
+    },
+    "hi": {
+      "m": "toota",
+      "f": "tooti"
+    },
+    "ta": {
+      "attr": "odanja",
+      "pred": "repair-aa irukku"
+    },
+    "ml": {
+      "attr": "pottiya",
+      "pred": "pottiyathaanu"
+    }
+  },
+  {
+    "id": "wet",
+    "en": "wet",
+    "cat": "feel",
+    "kn": {
+      "attr": "odde",
+      "pred": "odde aagide"
+    },
+    "hi": {
+      "m": "geela",
+      "f": "geeli"
+    },
+    "ta": {
+      "attr": "eeramaana",
+      "pred": "eeramaa irukku"
+    },
+    "ml": {
+      "attr": "nananja",
+      "pred": "nananjathaanu"
+    }
+  },
+  {
+    "id": "dry",
+    "en": "dry",
+    "cat": "feel",
+    "kn": {
+      "attr": "onagida",
+      "pred": "onagide"
+    },
+    "hi": {
+      "m": "sookha",
+      "f": "sookhi"
+    },
+    "ta": {
+      "attr": "kaanja",
+      "pred": "dry-aa irukku"
+    },
+    "ml": {
+      "attr": "unangiya",
+      "pred": "unangiyathaanu"
+    }
+  },
+  {
+    "id": "soft",
+    "en": "soft",
+    "cat": "feel",
+    "kn": {
+      "attr": "mettana",
+      "pred": "mettage ide"
+    },
+    "hi": {
+      "m": "naram",
+      "f": "naram"
+    },
+    "ta": {
+      "attr": "soft-aana",
+      "pred": "soft-aa irukku"
+    },
+    "ml": {
+      "attr": "mrudhuvaaya",
+      "pred": "soft aanu"
+    }
+  },
+  {
+    "id": "hard",
+    "en": "hard",
+    "cat": "feel",
+    "kn": {
+      "attr": "gattiyaada",
+      "pred": "gatti ide"
+    },
+    "hi": {
+      "m": "sakht",
+      "f": "sakht"
+    },
+    "ta": {
+      "attr": "kettiyaana",
+      "pred": "kettiyaa irukku"
+    },
+    "ml": {
+      "attr": "kattiyulla",
+      "pred": "katti aanu"
+    }
+  },
+  {
+    "id": "fresh",
+    "en": "fresh",
+    "cat": "quality",
+    "kn": {
+      "attr": "fresh",
+      "pred": "fresh ide"
+    },
+    "hi": {
+      "m": "taaza",
+      "f": "taazi"
+    },
+    "ta": {
+      "attr": "fresh-aana",
+      "pred": "fresh-aa irukku"
+    },
+    "ml": {
+      "attr": "fresh",
+      "pred": "fresh aanu"
+    }
+  },
+  {
+    "id": "crowded",
+    "en": "crowded",
+    "cat": "place",
+    "kn": {
+      "attr": "rush iro",
+      "pred": "rush ide"
+    },
+    "hi": {
+      "m": "bheed waala",
+      "f": "bheed waali"
+    },
+    "ta": {
+      "attr": "kootamaana",
+      "pred": "kootamaa irukku"
+    },
+    "ml": {
+      "attr": "thirakkulla",
+      "pred": "thirakku und"
+    }
+  },
+  {
+    "id": "quiet",
+    "en": "quiet",
+    "cat": "speed",
+    "kn": {
+      "attr": "shaantavaada",
+      "pred": "shaanta ide"
+    },
+    "hi": {
+      "m": "shaant",
+      "f": "shaant"
+    },
+    "ta": {
+      "attr": "amaidhiyaana",
+      "pred": "amaidhiyaa irukku"
+    },
+    "ml": {
+      "attr": "shaanthamaaya",
+      "pred": "shaantham aanu"
+    }
+  },
+  {
+    "id": "safe",
+    "en": "safe",
+    "cat": "quality",
+    "kn": {
+      "attr": "safe",
+      "pred": "safe ide"
+    },
+    "hi": {
+      "m": "safe",
+      "f": "safe"
+    },
+    "ta": {
+      "attr": "safe-aana",
+      "pred": "safe-aa irukku"
+    },
+    "ml": {
+      "attr": "safe aaya",
+      "pred": "safe aanu"
+    }
+  },
+  {
+    "id": "dangerous",
+    "en": "dangerous",
+    "cat": "quality",
+    "kn": {
+      "attr": "apaayakaari",
+      "pred": "apaaya ide"
+    },
+    "hi": {
+      "m": "khatarnaak",
+      "f": "khatarnaak"
+    },
+    "ta": {
+      "attr": "aabathaana",
+      "pred": "aabathaa irukku"
+    },
+    "ml": {
+      "attr": "apakadakaramaaya",
+      "pred": "apakadakaramaanu"
+    }
+  },
+  {
+    "id": "urgent",
+    "en": "urgent",
+    "cat": "quality",
+    "kn": {
+      "attr": "urgent",
+      "pred": "urgent ide"
+    },
+    "hi": {
+      "m": "urgent",
+      "f": "urgent"
+    },
+    "ta": {
+      "attr": "urgent-aana",
+      "pred": "urgent"
+    },
+    "ml": {
+      "attr": "urgent aaya",
+      "pred": "urgent aanu"
+    }
+  },
+  {
+    "id": "short",
+    "en": "short",
+    "cat": "size",
+    "kn": {
+      "attr": "short",
+      "pred": "short ide"
+    },
+    "hi": {
+      "m": "chhota",
+      "f": "chhoti"
+    },
+    "ta": {
+      "attr": "kuttaiyaana",
+      "pred": "kuttaiyaa irukku"
+    },
+    "ml": {
+      "attr": "kuriya",
+      "pred": "kuriyathaanu"
+    }
+  },
+  {
+    "id": "tall",
+    "en": "tall",
+    "cat": "size",
+    "kn": {
+      "attr": "ettarada",
+      "pred": "ettara ide"
+    },
+    "hi": {
+      "m": "lamba",
+      "f": "lambi"
+    },
+    "ta": {
+      "attr": "uyaramaana",
+      "pred": "uyaramaa irukku"
+    },
+    "ml": {
+      "attr": "pokkamulla",
+      "pred": "pokkam und"
+    }
+  },
+  {
+    "id": "thin",
+    "en": "thin",
+    "cat": "size",
+    "kn": {
+      "attr": "sanna",
+      "pred": "sanna ide"
+    },
+    "hi": {
+      "m": "patla",
+      "f": "patli"
+    },
+    "ta": {
+      "attr": "olliyaana",
+      "pred": "olliyaa irukku"
+    },
+    "ml": {
+      "attr": "melinja",
+      "pred": "melinjathaanu"
+    }
+  },
+  {
+    "id": "young",
+    "en": "young",
+    "cat": "quality",
+    "kn": {
+      "attr": "chikka vayasina",
+      "pred": "chikka vayasu"
+    },
+    "hi": {
+      "m": "jawaan",
+      "f": "jawaan"
+    },
+    "ta": {
+      "attr": "chinna vayasu",
+      "pred": "chinna vayasu"
+    },
+    "ml": {
+      "attr": "praayam kuranja",
+      "pred": "cheruppam aanu"
+    }
+  },
+  {
+    "id": "light",
+    "en": "light",
+    "cat": "size",
+    "kn": {
+      "attr": "haguraada",
+      "pred": "hagura ide"
+    },
+    "hi": {
+      "m": "halka",
+      "f": "halki"
+    },
+    "ta": {
+      "attr": "lesaana",
+      "pred": "lesaa irukku"
+    },
+    "ml": {
+      "attr": "bhaaram kuranja",
+      "pred": "bhaaram kuravaanu"
+    }
+  },
+  {
+    "id": "dark",
+    "en": "dark",
+    "cat": "colour",
+    "kn": {
+      "attr": "dark",
+      "pred": "dark"
+    },
+    "hi": {
+      "m": "dark",
+      "f": "dark"
+    },
+    "ta": {
+      "attr": "dark",
+      "pred": "dark"
+    },
+    "ml": {
+      "attr": "dark",
+      "pred": "dark aanu"
+    }
+  },
+  {
+    "id": "pink",
+    "en": "pink",
+    "cat": "colour",
+    "kn": {
+      "attr": "pink",
+      "pred": "pink"
+    },
+    "hi": {
+      "m": "gulaabi",
+      "f": "gulaabi"
+    },
+    "ta": {
+      "attr": "pink",
+      "pred": "pink"
+    },
+    "ml": {
+      "attr": "pink",
+      "pred": "pink aanu"
+    }
+  },
+  {
+    "id": "orange",
+    "en": "orange",
+    "cat": "colour",
+    "kn": {
+      "attr": "orange",
+      "pred": "orange"
+    },
+    "hi": {
+      "m": "orange",
+      "f": "orange"
+    },
+    "ta": {
+      "attr": "orange",
+      "pred": "orange"
+    },
+    "ml": {
+      "attr": "orange",
+      "pred": "orange aanu"
+    }
+  },
+  {
+    "id": "brown",
+    "en": "brown",
+    "cat": "colour",
+    "kn": {
+      "attr": "brown",
+      "pred": "brown"
+    },
+    "hi": {
+      "m": "bhoora",
+      "f": "bhoori"
+    },
+    "ta": {
+      "attr": "brown",
+      "pred": "brown"
+    },
+    "ml": {
+      "attr": "brown",
+      "pred": "brown aanu"
+    }
+  },
+  {
+    "id": "grey",
+    "en": "grey",
+    "cat": "colour",
+    "kn": {
+      "attr": "grey",
+      "pred": "grey"
+    },
+    "hi": {
+      "m": "grey",
+      "f": "grey"
+    },
+    "ta": {
+      "attr": "grey",
+      "pred": "grey"
+    },
+    "ml": {
+      "attr": "grey",
+      "pred": "grey aanu"
+    }
+  }
+]

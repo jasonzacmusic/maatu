@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { verbById, type Gender, type ObjectWord } from "@/lib/grammar";
+import { OBJECTS, objectById, verbById, type Gender, type ObjectWord } from "@/lib/grammar";
 import { C, DISPLAY, HOST, LINE, LINE_SOFT, MONO, type Lang } from "@/lib/maatu-design";
 import {
   buildPath,
@@ -31,9 +31,10 @@ import {
   type Who,
 } from "@/lib/sentence-path";
 import { LILAC, Lit, SaveButton, SKY } from "./studio-bits";
-import { buildShape, shapeById, shapeEnglish, type ShapeChoice, type ShapeId } from "@/lib/shapes";
-import { AdjectivePalette, PlacePalette, QuantityPalette, QuestionWordPalette, ShapeRail, SubjectPalette } from "./WordPalettes";
-import { syllables } from "@/lib/sentence-path";
+import { shapeById, type ShapeChoice, type ShapeId } from "@/lib/shapes";
+import { AdjectivePalette, DirectionPalette, PlacePalette, QuantityPalette, QuestionWordPalette, ShapeRail, SubjectPalette } from "./WordPalettes";
+import { SITUATIONS, situationById, situationWords, type Line, type LineSpec } from "@/lib/situations";
+import { buildLine, conversationAround, fullChoice, relatedTo, surpriseLine } from "@/lib/related";
 
 // Build: the sentence is the control. One card at the top always shows the line
 // you are making in English and in the target language. Under it three visual
@@ -70,10 +71,10 @@ function useVoice(slow: boolean) {
   }, []);
 
   const speak = useCallback(
-    async (text: string, lang: PathLang) => {
+    async (text: string, lang: PathLang, slowNow: boolean = slow) => {
       const clean = text.replace(/\s+\?$/, "?").trim();
       if (!clean) return;
-      const id = `${lang}:${clean}`;
+      const id = `${lang}:${clean}:${slowNow ? "slow" : "normal"}`;
       setError(null);
       stop();
       if (lang === "fr") {
@@ -91,15 +92,15 @@ function useVoice(slow: boolean) {
         const u = new SpeechSynthesisUtterance(clean);
         u.lang = "fr-FR";
         if (voice) u.voice = voice;
-        u.rate = slow ? 0.72 : 0.92;
+        u.rate = slowNow ? 0.72 : 0.92;
         u.onend = () => setPlaying(null);
         u.onerror = () => setPlaying(null);
         setPlaying(id);
         window.speechSynthesis.speak(u);
         return;
       }
-      const pace = slow ? 0.72 : 0.9;
-      const key = `${id}:${pace}`;
+      const pace = slowNow ? 0.72 : 0.9;
+      const key = id;
       let src = cache.current.get(key);
       if (!src) {
         setLoading(id);
@@ -143,44 +144,57 @@ function useVoice(slow: boolean) {
 }
 type Voice = ReturnType<typeof useVoice>;
 
-function PlayButton({ voice, text, lang, big, label }: { voice: Voice; text: string; lang: PathLang; big?: boolean; label?: string }) {
-  const id = `${lang}:${text.replace(/\s+\?$/, "?").trim()}`;
+function PlayButton({ voice, text, lang, big, label, slow, ghost }: { voice: Voice; text: string; lang: PathLang; big?: boolean; label?: string; slow?: boolean; ghost?: boolean }) {
+  const pace = slow ?? false;
+  const id = `${lang}:${text.replace(/\s+\?$/, "?").trim()}:${pace ? "slow" : "normal"}`;
   const active = voice.playing === id;
   const busy = voice.loading === id;
   return (
     <button
       type="button"
-      onClick={() => (active ? voice.stop() : void voice.speak(text, lang))}
-      aria-label={`${active ? "Stop" : "Hear"}: ${text}`}
-      className={`inline-flex flex-none items-center justify-center gap-2 rounded-full font-bold focus-visible:outline focus-visible:outline-2 ${big ? "h-12 px-5 text-[15px]" : "h-8 w-8 text-[11px]"}`}
+      onClick={() => (active ? voice.stop() : void voice.speak(text, lang, pace))}
+      aria-label={`${active ? "Stop" : pace ? "Hear slowly" : "Hear"}: ${text}`}
+      className={`inline-flex flex-none items-center justify-center gap-2 rounded-full font-bold focus-visible:outline focus-visible:outline-2 ${big ? "h-11 px-4 text-[14px]" : "h-8 w-8 text-[11px]"}`}
       style={{
-        background: active ? C.sodium : big ? C.sodium : "rgba(255,179,92,0.12)",
-        color: active || big ? C.ink : C.sodium,
-        border: big ? "none" : "1px solid rgba(255,179,92,0.34)",
-        boxShadow: big ? "0 8px 26px -8px rgba(255,179,92,0.55)" : undefined,
+        background: active ? C.sodium : big && !ghost ? C.sodium : "rgba(255,179,92,0.12)",
+        color: active || (big && !ghost) ? C.ink : C.sodium,
+        border: big && !ghost ? "none" : "1px solid rgba(255,179,92,0.34)",
+        boxShadow: big && !ghost ? "0 8px 26px -8px rgba(255,179,92,0.55)" : undefined,
         outlineColor: C.milk,
         opacity: busy ? 0.7 : 1,
       }}
     >
-      <span aria-hidden="true">{busy ? "…" : active ? "◼" : "▶"}</span>
-      {big && (label ?? "Hear it")}
+      <span aria-hidden="true">{busy ? "…" : active ? "◼" : pace && big ? "🐢" : "▶"}</span>
+      {big && (label ?? (pace ? "Slowly" : "Hear it"))}
     </button>
   );
 }
 
 // ............................................................ words
-function Words({ parts, size, lit = true }: { parts: Part[]; size: number; lit?: boolean }) {
+function Words({ parts, size, lit = true, onPick }: { parts: Part[]; size: number; lit?: boolean; onPick?: (role: Role) => void }) {
   return (
     <span className="flex flex-wrap items-baseline" style={{ columnGap: size * 0.42, rowGap: size * 0.3 }}>
-      {parts.map((p, i) =>
-        p.role === "action" && lit && p.stem ? (
-          <Lit key={i} word={p.word} stem={p.stem} size={size} />
-        ) : (
-          <span key={i} style={{ fontFamily: MONO, fontSize: size, fontWeight: 600, color: p.role === "helper" ? C.muted : p.role === "action" ? C.sodium : ROLE[p.role].color }}>
-            {p.word}
-          </span>
-        ),
-      )}
+      {parts.map((p, i) => {
+        const inner =
+          p.role === "action" && lit && p.stem ? (
+            <Lit word={p.word} stem={p.stem} size={size} />
+          ) : (
+            <span style={{ fontFamily: MONO, fontSize: size, fontWeight: 600, color: p.role === "helper" ? C.muted : p.role === "action" ? C.sodium : ROLE[p.role].color }}>{p.word}</span>
+          );
+        if (!onPick || p.role === "helper") return <span key={i}>{inner}</span>;
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onPick(p.role)}
+            aria-label={`Change the ${ROLE[p.role].label} word: ${p.word}`}
+            className="rounded-[6px] focus-visible:outline focus-visible:outline-2"
+            style={{ borderBottom: `1.5px dashed rgba(${ROLE[p.role].rgb},0.45)`, outlineColor: ROLE[p.role].color, paddingBottom: 1 }}
+          >
+            {inner}
+          </button>
+        );
+      })}
     </span>
   );
 }
@@ -417,10 +431,14 @@ function Tile({ on, onClick, emoji, title, sub, tone, badge, disabled, dim }: { 
   );
 }
 
-function Panel({ tone, label, title, children, right }: { tone: Role; label: string; title: string; children: React.ReactNode; right?: React.ReactNode }) {
+function Panel({ tone, label, title, children, right, at, glow }: { tone: Role; label: string; title: string; children: React.ReactNode; right?: React.ReactNode; at?: React.Ref<HTMLElement>; glow?: boolean }) {
   const r = ROLE[tone];
   return (
-    <section className="rounded-[18px] p-3.5" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
+    <section
+      ref={at}
+      className="scroll-mt-[220px] rounded-[18px] p-3.5"
+      style={{ background: C.tar, border: `1px solid ${glow ? r.color : LINE}`, boxShadow: glow ? `0 0 0 3px ${r.color}33` : undefined, transition: "border-color 300ms ease, box-shadow 300ms ease" }}
+    >
       <div className="mb-2 flex items-center justify-between gap-2">
         <span className="min-w-0">
           <span className="block text-[9.5px] font-bold" style={{ color: r.color, letterSpacing: 1.2 }}>
@@ -603,6 +621,25 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const [verb2, setVerb2] = useState("buy");
   const [qword, setQword] = useState("where");
   const [polite, setPolite] = useState(true);
+  const [direction, setDirection] = useState<string | null>(null);
+  const [the, setThe] = useState(false);
+  const [need, setNeed] = useState(false);
+  // Where the learner is: an auto, the passport office, the doctor. Remembered.
+  const [situationId, setSituationIdState] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem("maatu-build-situation");
+      if (saved && situationById(saved)) setSituationIdState(saved);
+    } catch {}
+  }, []);
+  const situation = situationById(situationId);
+  const sitWords = useMemo(() => (situation ? situationWords(situation) : { objects: [], verbs: [] }), [situation]);
+  const [flash, setFlash] = useState<Role | null>(null);
+  const whoRef = useRef<HTMLDivElement | null>(null);
+  const actionRef = useRef<HTMLDivElement | null>(null);
+  const whatRef = useRef<HTMLDivElement | null>(null);
+  const whenRef = useRef<HTMLDivElement | null>(null);
+  const pickersRef = useRef<HTMLDivElement | null>(null);
   const [verbQuery, setVerbQuery] = useState("");
   const [wordQuery, setWordQuery] = useState("");
   const [bankOpen, setBankOpen] = useState(false);
@@ -622,17 +659,16 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   }, []);
 
   const choice: PathChoice = { who, name, nameG, verb, object, when, timeWord, negative, question, gender };
-  const shapeChoice: ShapeChoice = { ...choice, shape, subject, adj, quant, place, verb2, qword, polite };
+  const shapeChoice: ShapeChoice = { ...choice, shape, subject, adj, quant, place, verb2, qword, polite, direction, the, need };
+  const key = JSON.stringify(shapeChoice);
   const info = shapeById(shape);
   const uses = (slot: string) => info.slots.includes(slot as never);
   const can = (t: string) => info.toggles.includes(t as never);
-  const result = useMemo(() => {
-    if (shape === "does") return buildPath(plang, choice);
-    const r = buildShape(plang, shapeChoice);
-    if (!r) return null;
-    return { ...r, english: shapeEnglish(shapeChoice, plang), say: r.parts.map((x) => syllables(x.word)).join("  ") };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plang, shape, who, name, nameG, verb, object, when, timeWord, negative, question, gender, subject, adj, quant, place, verb2, qword, polite]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const result = useMemo(() => buildLine(plang, shapeChoice), [plang, key]);
+  // Only show the man or woman switch when it changes this very line.
+  const genderAlt = useMemo(() => buildLine(plang, { ...shapeChoice, gender: gender === "m" ? "f" : "m" }), [plang, key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const genderMatters = Boolean(result && genderAlt && !result.unsupported && genderAlt.sentence !== result.sentence);
   const ladder = useMemo(() => LADDER.map((w) => ({ w, r: buildPath(plang, { ...choice, when: w }) })), [plang, who, name, nameG, verb, object, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
   const people = useMemo(
     () => WHO_TILES.filter((t) => t.id !== "name").map((t) => ({ t, r: buildPath(plang, { ...choice, who: t.id, timeWord: false, question: false }) })),
@@ -640,27 +676,86 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   );
   const everyLang = useMemo(() => PATH_LANGS.map((l) => ({ l, r: buildPath(l.id, choice) })), [who, name, nameG, verb, object, when, timeWord, negative, question, gender]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const load = useCallback((c: PathChoice) => {
+  // Put any line into the builder: a situation line, a related line, a dice roll.
+  const loadSpec = useCallback((spec: LineSpec) => {
+    const c = fullChoice(spec, gender);
+    setShape(c.shape);
     setWho(c.who);
+    setName(c.name ?? "");
+    setNameG(c.nameG ?? "m");
     setVerb(c.verb);
     setObject(c.object);
     setWhen(c.when);
     setTimeWord(c.timeWord);
     setNegative(c.negative);
     setQuestion(c.question);
-  }, []);
+    setSubject(c.subject);
+    setAdj(c.adj);
+    setQuant(c.quant);
+    setPlace(c.place);
+    setVerb2(c.verb2);
+    setQword(c.qword);
+    setPolite(c.polite);
+    setDirection(c.direction ?? null);
+    setThe(Boolean(c.the));
+    setNeed(Boolean(c.need));
+  }, [gender]);
 
-  const [examples, setExamples] = useState<PathChoice[]>([]);
-  const rollExamples = useCallback((l: PathLang) => setExamples(Array.from({ length: 4 }, () => randomChoice(gender, l))), [gender]);
-  useEffect(() => {
-    rollExamples(plang);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plang]);
-
-  const surprise = () => {
-    load(randomChoice(gender, plang));
-    rollExamples(plang);
+  const pickSituation = (id: string | null) => {
+    setSituationIdState(id);
+    try {
+      if (id) window.localStorage.setItem("maatu-build-situation", id);
+      else window.localStorage.removeItem("maatu-build-situation");
+    } catch {}
+    const s = situationById(id);
+    if (s) loadSpec(s.lines[0].c);
   };
+
+  // Surprise me: a real line from the place you are in (or any place), so the
+  // related lines and the conversation underneath have a real world to grow from.
+  const surprise = () => {
+    if (!situation && Math.random() < 0.35) {
+      const r = randomChoice(gender, plang);
+      loadSpec({ shape: "does", ...r });
+      return;
+    }
+    for (let i = 0; i < 6; i += 1) {
+      const { line } = surpriseLine(situation);
+      const r = buildLine(plang, fullChoice(line.c, gender));
+      if (r && !r.unsupported) {
+        loadSpec(line.c);
+        return;
+      }
+    }
+    loadSpec({ shape: "does", ...randomChoice(gender, plang) });
+  };
+
+  const jumpTo = (role: Role) => {
+    const target = ({ who: whoRef, action: actionRef, what: whatRef, when: whenRef } as Partial<Record<Role, typeof whoRef>>)[role];
+    const el = target?.current ?? pickersRef.current;
+    el?.scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" });
+    setFlash(role);
+    window.setTimeout(() => setFlash(null), 1400);
+  };
+
+  const related = useMemo(() => {
+    const seen = new Set<string>([result?.sentence ?? ""]);
+    return relatedTo(shapeChoice, situation)
+      .map((r) => ({ ...r, res: buildLine(plang, fullChoice(r.c, gender)) }))
+      .filter((r) => {
+        if (!r.res || r.res.unsupported || !r.res.sentence || seen.has(r.res.sentence)) return false;
+        seen.add(r.res.sentence);
+        return true;
+      })
+      .slice(0, 12);
+  }, [plang, key, situationId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // The conversation under the sentence: the place's own script, or one grown
+  // from the everyday sentence on the card.
+  const talk = useMemo(() => {
+    const lines: Line[] = situation ? situation.lines : conversationAround(shapeChoice);
+    return lines.map((l) => ({ l, res: buildLine(plang, fullChoice(l.c, gender)) })).filter((x) => x.res && !x.res.unsupported && x.res.sentence);
+  }, [plang, situationId, gender, situation ? "" : key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Switching language must never leave the learner on a word that language
   // does not have yet: move to the nearest thing that works and say nothing.
@@ -680,6 +775,8 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   // nothing and makes the shape look broken.
   const pickShape = (next: ShapeId) => {
     setShape(next);
+    setThe(false);
+    setNeed(false);
     const seed: Partial<Record<ShapeId, () => void>> = {
       isAdj: () => { setSubject("tea"); setAdj("hot"); },
       isNoun: () => { setSubject("this"); setObject("mango"); setAdj(null); setQuant(null); },
@@ -694,6 +791,8 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
       goingTo: () => { setPlace("market"); setVerb2("buy"); setObject("vegetables"); setAdj(null); },
       whQuestion: () => { setQword("where"); setVerb("go"); setObject(null); setWhen("cont"); },
       does: () => { setVerb("play"); setObject("piano"); setWhen("present"); setAdj(null); setQuant(null); },
+      tell: () => { setVerb("stop"); setObject(null); setDirection("here"); setAdj(null); setQuant(null); setNegative(false); setPolite(true); },
+      feel: () => { setObject("fever"); setWho("i"); setAdj(null); setQuant(null); },
     };
     seed[next]?.();
   };
@@ -702,8 +801,9 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const langInfo = PATH_LANGS.find((l) => l.id === plang)!;
   const suggested = objectsFor(verb);
   const verbTiles = verbQuery ? searchVerbs(verbQuery) : VERB_TILES;
-  const musicVerbs = verbTiles.filter((v) => v.music);
-  const otherVerbs = verbTiles.filter((v) => !v.music);
+  const sitVerbIds = new Set(situation ? situationWords(situation).verbs : []);
+  const musicVerbs = verbTiles.filter((v) => (situation ? sitVerbIds.has(v.id) : v.music));
+  const otherVerbs = verbTiles.filter((v) => !(situation ? sitVerbIds.has(v.id) : v.music));
 
   const pickVerb = (id: string) => {
     setVerb(id);
@@ -738,13 +838,43 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   };
 
   const bank = useMemo(() => wordBank(), []);
+  const genderPick = (
+    <span className="flex flex-none gap-1" role="group" aria-label="Who is speaking">
+      {(["m", "f"] as Gender[]).map((g) => (
+        <button
+          key={g}
+          type="button"
+          aria-pressed={gender === g}
+          onClick={() => setGender(g)}
+          className="rounded-full px-2.5 py-1 text-[11.5px] font-semibold focus-visible:outline focus-visible:outline-2"
+          style={{ background: gender === g ? "rgba(191,239,219,0.16)" : C.base, color: gender === g ? C.tube : C.muted, border: `1px solid ${gender === g ? "rgba(191,239,219,0.5)" : LINE}`, outlineColor: C.tube }}
+        >
+          {g === "m" ? "🙋‍♂️ I'm a man" : "🙋‍♀️ I'm a woman"}
+        </button>
+      ))}
+    </span>
+  );
+
+  // The place you are in puts its own words first, so the right word is one tap away.
+  const firstOf = <T extends { id: string }>(list: T[], ids: string[]) => {
+    if (!ids.length) return list;
+    const rank = new Map(ids.map((id, i) => [id, i]));
+    return [...list].sort((a, b) => (rank.get(a.id) ?? 1e4) - (rank.get(b.id) ?? 1e4));
+  };
+  const sitVerbTiles = firstOf(VERB_TILES, sitWords.verbs);
+  const shapeWords: ObjectWord[] = useMemo(() => {
+    const all = bank.flatMap((g) => g.words);
+    if (shape === "feel") return all.filter((o) => objectById(o.id)?.ill);
+    return firstOf(all, sitWords.objects);
+  }, [shape, situationId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const found = wordQuery ? searchWords(wordQuery, plang) : [];
   const bankWords: ObjectWord[] = wordQuery ? found : bankCat ? (bank.find((g) => g.id === bankCat)?.words ?? []) : bank.flatMap((g) => g.words);
 
   return (
     <div>
-      {/* ................................................. language and voice */}
-      <div className="grid grid-cols-3 gap-1.5 sm:flex sm:flex-wrap sm:items-center sm:gap-2" role="group" aria-label="Language">
+      {/* ................................................. which language: its own bar, its own colour */}
+      <div className="grid grid-cols-5 gap-1 rounded-[18px] p-1" style={{ background: C.tar, border: `1px solid ${LINE}` }} role="group" aria-label="Language you are learning">
         {PATH_LANGS.map((l) => {
           const on = plang === l.id;
           return (
@@ -753,39 +883,43 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
               type="button"
               onClick={() => pickLang(l.id)}
               aria-pressed={on}
-              className="inline-flex items-center justify-center gap-1 rounded-full px-1 py-2 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2 sm:gap-1.5 sm:px-3.5 sm:text-[13px]"
-              style={{ background: on ? C.sodium : C.base, color: on ? C.ink : C.muted, border: `1px solid ${on ? C.sodium : LINE}`, outlineColor: C.milk }}
+              className="flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-[14px] px-0.5 py-2 focus-visible:outline focus-visible:outline-2"
+              style={{ background: on ? l.accent : "transparent", color: on ? C.ink : C.muted, outlineColor: l.accent, transition: "background 160ms ease, color 160ms ease" }}
             >
-              <span aria-hidden="true">{l.flag}</span>
-              {l.label}
+              <span className="text-[17px] leading-none" aria-hidden="true">{l.flag}</span>
+              <span className="w-full truncate text-center text-[11.5px] font-bold sm:text-[13px]">{l.label}</span>
             </button>
           );
         })}
-        <span className="col-span-3 mt-1 flex justify-end gap-1.5 sm:col-auto sm:mt-0 sm:ml-auto">
-          <button
-            type="button"
-            aria-pressed={gender === "f"}
-            onClick={() => setGender(gender === "f" ? "m" : "f")}
-            className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2"
-            style={{ background: "rgba(191,239,219,0.10)", color: C.tube, border: `1px solid rgba(191,239,219,0.4)`, outlineColor: C.tube }}
-          >
-            {gender === "f" ? "🙋‍♀️ I'm a woman" : "🙋‍♂️ I'm a man"}
-          </button>
-          <button
-            type="button"
-            aria-pressed={slow}
-            onClick={() => setSlow(!slow)}
-            className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2"
-            style={{ background: slow ? "rgba(191,239,219,0.16)" : C.base, color: slow ? C.tube : C.muted, border: `1px solid ${slow ? "rgba(191,239,219,0.5)" : LINE}`, outlineColor: C.tube }}
-          >
-            🐢 {slow ? "Slow voice" : "Slow"}
-          </button>
-        </span>
       </div>
+      <p className="mt-2 text-[12.5px]" style={{ color: langInfo.accent }}>
+        Learning {langInfo.label}, the way people speak it in {langInfo.city}.
+      </p>
 
-      {/* ................................................. what kind of sentence */}
+      {/* ................................................. where are you */}
       <div className="mt-4">
-        <ShapeRail shape={shape} onPick={pickShape} rm={rm} />
+        <div className="mb-2 flex items-baseline justify-between gap-2">
+          <span className="text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>WHERE ARE YOU?</span>
+          <span className="text-[11.5px]" style={{ color: C.faint }}>Pick a place, get the whole conversation</span>
+        </div>
+        <div className="-mx-5 flex gap-1.5 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" style={{ scrollbarWidth: "none" }} role="group" aria-label="Situations">
+          {[{ id: null as string | null, emoji: "✨", title: "Anything" }, ...SITUATIONS].map((t) => {
+            const on = situationId === t.id;
+            return (
+              <button
+                key={t.id ?? "any"}
+                type="button"
+                onClick={() => pickSituation(t.id)}
+                aria-pressed={on}
+                className="inline-flex flex-none items-center gap-1.5 rounded-full px-3 py-2 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2"
+                style={{ background: on ? C.milk : C.base, color: on ? C.ink : C.muted, border: `1px solid ${on ? C.milk : LINE}`, outlineColor: C.milk }}
+              >
+                <span aria-hidden="true">{t.emoji}</span>
+                {t.title}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* ................................................. the sentence, always in view */}
@@ -793,7 +927,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
       <div className="sticky top-0 z-20 -mx-5 mt-3 px-5 pb-2 pt-3 sm:mx-0 sm:px-0" style={{ background: `linear-gradient(${C.night} calc(100% - 12px), rgba(10,13,22,0))` }}>
         <div
           className={"rounded-[20px]" + (stuck ? " p-3" : " p-4")}
-          style={{ background: "linear-gradient(150deg,rgba(255,179,92,0.15),rgba(232,80,58,0.05) 55%,rgba(191,239,219,0.06))", border: "1px solid rgba(255,179,92,0.34)" }}
+          style={{ background: `linear-gradient(150deg,${langInfo.accent}26,rgba(232,80,58,0.05) 55%,rgba(191,239,219,0.05))`, border: `1px solid ${langInfo.accent}66` }}
           aria-live="polite"
         >
           <div className="flex items-start justify-between gap-3">
@@ -809,22 +943,26 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             <button
               type="button"
               onClick={surprise}
-              className={"inline-flex flex-none items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-bold focus-visible:outline focus-visible:outline-2" + (stuck ? " hidden" : "")}
+              className="inline-flex flex-none items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-bold focus-visible:outline focus-visible:outline-2"
               style={{ background: "rgba(245,194,255,0.14)", color: LILAC, border: "1px solid rgba(245,194,255,0.45)", outlineColor: LILAC }}
             >
-              <span aria-hidden="true">🎲</span> Surprise me
+              <span aria-hidden="true">🎲</span>
+              <span className={stuck ? "sr-only" : undefined}>Surprise me</span>
             </button>
           </div>
 
           <div className={"flex items-center gap-2" + (stuck ? " my-2" : " my-3")} aria-hidden="true">
-            <span className="h-px flex-1" style={{ background: "linear-gradient(90deg,rgba(191,239,219,0.4),rgba(255,179,92,0.5))" }} />
+            <span className="h-px flex-1" style={{ background: `linear-gradient(90deg,rgba(191,239,219,0.4),${langInfo.accent}88)` }} />
             <span className="text-[13px]">{langInfo.flag}</span>
-            <span className="h-px flex-1" style={{ background: "linear-gradient(90deg,rgba(255,179,92,0.5),rgba(245,194,255,0.4))" }} />
+            <span className="h-px flex-1" style={{ background: `linear-gradient(90deg,${langInfo.accent}88,rgba(245,194,255,0.4))` }} />
           </div>
 
-          <div className="flex items-center gap-1.5 text-[9.5px] font-bold" style={{ color: C.sodium, letterSpacing: 1.2 }}>
-            <span className="rounded-full px-1.5" style={{ background: C.sodium, color: C.ink }}>B</span>
-            SAY IT IN {langInfo.label.toUpperCase()}
+          <div className="flex items-center justify-between gap-2">
+            <span className="flex items-center gap-1.5 text-[9.5px] font-bold" style={{ color: langInfo.accent, letterSpacing: 1.2 }}>
+              <span className="rounded-full px-1.5" style={{ background: langInfo.accent, color: C.ink }}>B</span>
+              SAY IT IN {langInfo.label.toUpperCase()}
+            </span>
+            {!stuck && res && !res.unsupported && <span className="text-[10.5px]" style={{ color: C.faint }}>tap a coloured word to change it</span>}
           </div>
 
           {res?.unsupported ? (
@@ -833,11 +971,23 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             </p>
           ) : res ? (
             <div key={res.sentence} style={{ animation: rm ? undefined : "mtFade 280ms ease both" }}>
-              <div className="mt-2 flex flex-wrap items-center gap-3">
-                <span className="min-w-0">
-                  <Words parts={withMark(res.parts, question, plang)} size={22} />
-                </span>
+              <div className="mt-2">
+                <Words parts={withMark(res.parts, question || /\?$/.test(res.english), plang)} size={22} onPick={jumpTo} />
+              </div>
+              <div className="mt-2.5 flex flex-wrap items-center gap-2">
                 <PlayButton voice={voice} text={res.sentence} lang={plang} big />
+                <PlayButton voice={voice} text={res.sentence} lang={plang} big slow ghost />
+                {genderMatters && (
+                  <button
+                    type="button"
+                    onClick={() => setGender(gender === "f" ? "m" : "f")}
+                    aria-label={`Said by a ${gender === "f" ? "woman" : "man"}. Tap to switch.`}
+                    className="inline-flex h-11 items-center gap-1.5 rounded-full px-3.5 text-[12.5px] font-semibold focus-visible:outline focus-visible:outline-2"
+                    style={{ background: "rgba(191,239,219,0.10)", color: C.tube, border: "1px solid rgba(191,239,219,0.4)", outlineColor: C.tube }}
+                  >
+                    {gender === "f" ? "🙋‍♀️ Said by a woman" : "🙋‍♂️ Said by a man"}
+                  </button>
+                )}
               </div>
               <div className={"mt-2.5 rounded-[12px] px-3 py-2" + (stuck ? " hidden" : "")} style={{ background: "rgba(10,13,22,0.45)", border: `1px solid ${LINE_SOFT}` }}>
                 <div className="flex items-center justify-between gap-2">
@@ -881,7 +1031,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                 </div>
               )}
               {res.note && !stuck && (
-                <p className="mt-2.5 text-[12.5px] leading-relaxed" style={{ color: "rgba(255,179,92,0.92)" }}>
+                <p className="mt-2.5 text-[12.5px] leading-relaxed" style={{ color: `${langInfo.accent}EE` }}>
                   {res.note}
                 </p>
               )}
@@ -890,12 +1040,12 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
 
           {/* yes or no, telling or asking: always with the sentence, when the shape has them */}
           {(can("negative") || can("question") || can("register")) && (
-            <div className="mt-3 flex gap-2 border-t pt-2.5" style={{ borderColor: "rgba(242,237,226,0.10)" }}>
+            <div className={"mt-3 flex gap-2 border-t pt-2.5" + (stuck ? " hidden sm:flex" : "")} style={{ borderColor: "rgba(242,237,226,0.10)" }}>
               {can("negative") && (
                 <Switch2
-                  label="IS IT, OR IS IT NOT" on={negative} onChange={setNegative}
-                  left={{ icon: "✓", text: "Yes, it is", color: GREEN }}
-                  right={{ icon: "✗", text: "No, it is not", color: RED }}
+                  label={shape === "tell" ? "DO IT, OR DO NOT" : "IS IT, OR IS IT NOT"} on={negative} onChange={setNegative}
+                  left={{ icon: "✓", text: shape === "tell" ? "Do it" : "Yes, it is", color: GREEN }}
+                  right={{ icon: "✗", text: shape === "tell" ? "Do not" : "No, it is not", color: RED }}
                 />
               )}
               {can("question") && (
@@ -907,9 +1057,9 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
               )}
               {can("register") && (
                 <Switch2
-                  label="WHO YOU ARE ASKING" on={!polite} onChange={(v) => setPolite(!v)}
+                  label="WHO YOU ARE TALKING TO" on={!polite} onChange={(v) => setPolite(!v)}
                   left={{ icon: "🙏", text: "Politely", color: C.tube }}
-                  right={{ icon: "👋", text: "To a friend", color: SKY }}
+                  right={{ icon: "👋", text: "A friend", color: SKY }}
                 />
               )}
             </div>
@@ -917,41 +1067,95 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         </div>
       </div>
 
+      {/* ................................................. say more: the lines around this one */}
+      {related.length > 0 && (
+        <div className="mt-2">
+          <div className="mb-1.5 flex items-baseline justify-between gap-2">
+            <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.2 }}>SAY MORE</span>
+            <span className="text-[11.5px]" style={{ color: C.faint }}>Lines that go with this one. Tap to make it yours.</span>
+          </div>
+          <div className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-1.5 sm:mx-0 sm:px-0" style={{ scrollbarWidth: "none" }}>
+            {related.map((r) => (
+              <button
+                key={r.label + r.res!.sentence}
+                type="button"
+                onClick={() => loadSpec(r.c)}
+                className="flex w-[196px] flex-none snap-start flex-col gap-1 rounded-[14px] px-3 py-2.5 text-left focus-visible:outline focus-visible:outline-2"
+                style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: LILAC }}
+              >
+                <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.1 }}>{r.label.toUpperCase()}</span>
+                <span className="text-[13.5px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r.res!.sentence}</span>
+                <span className="text-[11.5px] leading-snug" style={{ color: C.muted }}>{r.res!.english}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ................................................. the conversation */}
+      {talk.length > 0 && (
+        <section className="mt-3 rounded-[18px] p-3.5 sm:p-4" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="min-w-0">
+              <span className="block text-[9.5px] font-bold" style={{ color: C.tube, letterSpacing: 1.2 }}>
+                {situation ? `${situation.emoji} ${situation.title.toUpperCase()}` : "A LITTLE CONVERSATION AROUND IT"}
+              </span>
+              <span className="block text-[13px] font-semibold" style={{ color: C.milk }}>
+                {situation ? situation.blurb : "Someone asks, you answer, and it carries on."}
+              </span>
+            </span>
+          </div>
+          <ol className="mt-2.5 flex flex-col gap-1.5">
+            {talk.map(({ l, res: r }, i) => {
+              const mine = l.by === "you";
+              const current = r!.sentence === res?.sentence;
+              return (
+                <li key={i} className={"flex items-center gap-2" + (mine ? " flex-row-reverse" : "")}>
+                  <button
+                    type="button"
+                    onClick={() => loadSpec(l.c)}
+                    aria-pressed={current}
+                    className="min-w-0 max-w-[86%] rounded-[14px] px-3 py-2 text-left focus-visible:outline focus-visible:outline-2"
+                    style={{
+                      background: current ? `${langInfo.accent}22` : mine ? "rgba(191,239,219,0.07)" : C.base,
+                      border: `1px solid ${current ? langInfo.accent : mine ? "rgba(191,239,219,0.22)" : LINE}`,
+                      outlineColor: langInfo.accent,
+                    }}
+                  >
+                    <span className="block text-[9.5px] font-bold" style={{ color: mine ? C.tube : C.mono, letterSpacing: 1.1 }}>
+                      {mine ? "YOU" : (situation?.them ?? "FRIEND").toUpperCase()}
+                    </span>
+                    <span className="block text-[14px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r!.sentence}</span>
+                    <span className="block text-[11.5px] leading-snug" style={{ color: C.muted }}>{r!.english}</span>
+                  </button>
+                  <PlayButton voice={voice} text={r!.sentence} lang={plang} />
+                </li>
+              );
+            })}
+          </ol>
+          {situation && plang === "fr" && talk.length < situation.lines.length && (
+            <p className="mt-2 text-[11.5px]" style={{ color: C.faint }}>French has the everyday lines and the commands. The rest of this conversation is in the four Indian languages.</p>
+          )}
+        </section>
+      )}
+
+      {/* ................................................. or make your own */}
+      <div className="mt-5">
+        <ShapeRail shape={shape} onPick={pickShape} rm={rm} />
+      </div>
+
       {can("tense") && (
-        <div className="mt-3">
+        <div ref={whenRef} className="mt-3 scroll-mt-[220px] rounded-[18px]" style={{ boxShadow: flash === "when" ? `0 0 0 3px ${ROLE.when.color}55` : undefined, transition: "box-shadow 300ms ease" }}>
           <Timeline when={when} setWhen={setWhen} verb={verb} object={object} timeWord={timeWord} setTimeWord={setTimeWord} rm={rm} />
         </div>
       )}
 
-      {/* ................................................. start from an example */}
-      {shape === "does" && (
-      <div className="-mx-5 mt-3 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" style={{ scrollbarWidth: "none" }}>
-        {examples.map((c, i) => {
-          const r = buildPath(plang, c);
-          if (!r || r.unsupported) return null;
-          const v = VERB_TILES.find((t) => t.id === c.verb);
-          return (
-            <button
-              key={`${i}-${r.english}`}
-              type="button"
-              onClick={() => load(c)}
-              className="flex flex-none items-center gap-2 rounded-full px-3.5 py-2 text-left text-[12.5px] focus-visible:outline focus-visible:outline-2"
-              style={{ background: C.base, color: C.milk, border: `1px solid ${LINE}`, outlineColor: LILAC }}
-            >
-              <span aria-hidden="true">{v?.emoji}</span>
-              {r.english}
-            </button>
-          );
-        })}
-      </div>
-      )}
-
       {/* ................................................. the words this shape needs */}
       {shape !== "does" && (
-        <div className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
+        <div ref={pickersRef} className="mt-3 grid scroll-mt-[220px] gap-3 lg:grid-cols-2 lg:items-start">
           {uses("subject") && <SubjectPalette value={subject} onPick={setSubject} lang={plang} />}
           {uses("who") && (
-            <Panel tone="who" label="WHO" title="Who is it about?">
+            <Panel tone="who" label="WHO" title="Who is it about?" right={genderPick} at={whoRef} glow={flash === "who"}>
               <div className="grid grid-cols-4 gap-1.5">
                 {WHO_TILES.filter((t) => t.id !== "name").map((t) => (
                   <Tile key={t.id} tone="who" on={who === t.id} onClick={() => setWho(t.id)} emoji={t.emoji} title={t.hint ? `${t.en}, ${t.hint}` : t.en} />
@@ -960,10 +1164,10 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             </Panel>
           )}
           {uses("object") && (
-            <Panel tone="what" label="WHICH THING" title={`${VERB_TILES.length ? "" : ""}Any word in the bank`}>
-              <Search value={wordQuery} onChange={setWordQuery} placeholder="Search any word: dosa, rent, bus" tone="what" />
+            <Panel tone="what" label="WHICH THING" at={whatRef} title={shape === "feel" ? "What is wrong?" : situation ? `Words for ${situation.title.toLowerCase()} come first` : "Any word in the bank"} glow={flash === "what"}>
+              <Search value={wordQuery} onChange={setWordQuery} placeholder={shape === "feel" ? "Search: fever, cough, pain" : "Search any word: dosa, rent, bus"} tone="what" />
               <div className="grid max-h-[220px] grid-cols-4 gap-1.5 overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
-                {(wordQuery ? searchWords(wordQuery, plang) : bank.flatMap((g) => g.words)).map((o) => (
+                {(wordQuery ? searchWords(wordQuery, plang).filter((o) => shape !== "feel" || objectById(o.id)?.ill) : shapeWords).map((o) => (
                   <Tile
                     key={o.id} tone="what" on={object === o.id} onClick={() => setObject(o.id)}
                     emoji={OBJECT_EMOJI[o.id] ?? "•"} title={objectEnglish(o.id, plang).replace(/^(the|a|an|to the|to) /, "")}
@@ -976,13 +1180,30 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           {uses("adj") && <AdjectivePalette value={adj} onPick={setAdj} lang={plang} allowNone={shape !== "isAdj"} />}
           {uses("quant") && <QuantityPalette value={quant} onPick={setQuant} lang={plang} />}
           {uses("qword") && <QuestionWordPalette value={qword} onPick={setQword} lang={plang} />}
+          {uses("direction") && <DirectionPalette value={direction} onPick={setDirection} lang={plang} />}
+          {shape === "whereIs" && (
+            <Panel tone="who" label="WHOSE" title="Mine, or just the one here?">
+              <div className="grid grid-cols-2 gap-1.5">
+                <Tile tone="who" on={!the} onClick={() => setThe(false)} emoji="🙋" title={who === "i" ? "my" : "whose"} />
+                <Tile tone="who" on={the} onClick={() => setThe(true)} emoji="👉" title="the" />
+              </div>
+            </Panel>
+          )}
+          {shape === "want" && (
+            <Panel tone="action" label="HOW MUCH YOU MEAN IT" title="Want it, or need it?">
+              <div className="grid grid-cols-2 gap-1.5">
+                <Tile tone="action" on={!need} onClick={() => setNeed(false)} emoji="🙂" title="I want" />
+                <Tile tone="action" on={need} onClick={() => setNeed(true)} emoji="❗" title="I need" />
+              </div>
+            </Panel>
+          )}
           {uses("placeAt") && <PlacePalette value={place} onPick={setPlace} lang={plang} mode="at" />}
           {uses("place") && <PlacePalette value={place} onPick={setPlace} lang={plang} mode="to" />}
           {(uses("verb") || uses("verb2")) && (
-            <Panel tone="action" label="ACTION" title={`${VERB_TILES.length} actions`}>
+            <Panel tone="action" label="ACTION" title={`${VERB_TILES.length} actions`} at={actionRef} glow={flash === "action"}>
               <Search value={verbQuery} onChange={setVerbQuery} placeholder="Search an action: buy, drink, go" tone="action" />
               <div className="grid max-h-[220px] grid-cols-4 gap-1.5 overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
-                {(verbQuery ? searchVerbs(verbQuery) : VERB_TILES).map((v) => {
+                {(verbQuery ? searchVerbs(verbQuery) : sitVerbTiles).map((v) => {
                   const picked = uses("verb2") ? verb2 : verb;
                   return (
                     <Tile
@@ -1001,7 +1222,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
       {/* ................................................. the three pickers, all open */}
       {shape === "does" && (
       <div className="mt-3 grid gap-3 lg:grid-cols-3 lg:items-start">
-        <Panel tone="who" label="WHO" title="Who is doing it?">
+        <Panel tone="who" label="WHO" title="Who is doing it?" right={genderPick} at={whoRef} glow={flash === "who"}>
           <div className="grid grid-cols-4 gap-1.5">
             {WHO_TILES.map((t) => (
               <Tile key={t.id} tone="who" on={who === t.id} onClick={() => setWho(t.id)} emoji={t.emoji} title={t.hint && t.id !== "name" ? `${t.en}, ${t.hint}` : t.en} sub={whoWord(t.id)} />
@@ -1038,7 +1259,9 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           tone="action"
           label="ACTION"
           title={`${VERB_TILES.length} actions`}
-          right={<span className="flex-none text-[11px]" style={{ color: C.sodium }}>music first</span>}
+          right={<span className="flex-none text-[11px]" style={{ color: C.sodium }}>{situation ? `${situation.emoji} first` : "music first"}</span>}
+          at={actionRef}
+          glow={flash === "action"}
         >
           <Search value={verbQuery} onChange={setVerbQuery} placeholder="Search an action: cook, pay, open" tone="action" />
           <div className="max-h-[332px] overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
@@ -1067,6 +1290,8 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         <Panel
           tone="what"
           label="WHAT"
+          at={whatRef}
+          glow={flash === "what"}
           title={suggested.length ? (verb === "go" || verb === "come" ? "Where to?" : verb === "do" ? "Which English word?" : "What?") : "This action needs nothing after it"}
           right={
             <button

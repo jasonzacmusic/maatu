@@ -4,10 +4,12 @@
     "engine: 'sarvam' = Sarvam recognition locked to the language, the Gemini teaching brain, and a fixed Sarvam voice that reads native script (sounds local and never drifts). 'gemini-live' = one Google model that hears and speaks (French only: Sarvam has no French voice).",
     "voiceModel + speakers: the Sarvam voice used on live calls. When speakers is empty, each character keeps its own Bulbul v3 voice from its persona file.",
     "teacher.voice: the Bulbul v3 voice for the teacher, the Hear it button and spoken coach notes.",
+    "accent: the colour the app uses for that language, so you always know which one you are in.",
     "To add a language: add one block here, then add its persona files and curriculum entries. No em dashes anywhere."
   ],
   "languages": {
     "kn": {
+      "accent": "#FFD54A",
       "name": "Kannada",
       "code": "kn-IN",
       "city": "Bengaluru",
@@ -18,6 +20,7 @@
       "hearingHints": "namaskara, hegiddira, chennaagide, illi, alli, beku, beda, gottilla, swalpa, Meera"
     },
     "hi": {
+      "accent": "#FF9A3D",
       "name": "Hindi",
       "code": "hi-IN",
       "city": "Delhi",
@@ -28,6 +31,7 @@
       "hearingHints": "namaste, kaise ho, theek hai, achha, haan, nahin, kitna, bhaiya, Anjali"
     },
     "ta": {
+      "accent": "#FF7A6B",
       "name": "Tamil",
       "code": "ta-IN",
       "city": "Chennai",
@@ -38,6 +42,7 @@
       "hearingHints": "vanakkam, eppadi irukkeenga, seri, romba, illa, venum, evlo, anna, Kavya"
     },
     "ml": {
+      "accent": "#4FD6A5",
       "name": "Malayalam",
       "code": "ml-IN",
       "city": "Kochi",
@@ -48,6 +53,7 @@
       "hearingHints": "namaskaram, sukhamano, sheri, venam, venda, ethra, chetta, chechi, Devika"
     },
     "fr": {
+      "accent": "#7FAEFF",
       "name": "French",
       "code": "fr-FR",
       "city": "Paris",

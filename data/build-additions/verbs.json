@@ -1,0 +1,4219 @@
+[
+  {
+    "id": "fill",
+    "group": "core",
+    "en": {
+      "base": "fill",
+      "past": "filled",
+      "ing": "filling",
+      "s": "fills"
+    },
+    "note": "For petrol: petrol haaksu (kn), petrol daalo (hi), petrol podu (ta), petrol adikkuka (ml).",
+    "kn": {
+      "dict": "fill maadu",
+      "pres": "fill maad",
+      "past": "fill maadid",
+      "cont": "fill maadta",
+      "neg": "fill maadalla",
+      "pastNeg": "fill maadlilla",
+      "inf": "fill maadakke",
+      "want": "fill maadbeku",
+      "imp": [
+        "fill maadu",
+        "fill maadi"
+      ],
+      "impNot": [
+        "fill maadbeda",
+        "fill maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "bharna",
+      "stem": "bhar",
+      "perf": {
+        "m": "bhara",
+        "f": "bhari",
+        "pl": "bhare"
+      },
+      "ne": true,
+      "imp": [
+        "bharo",
+        "bhariye"
+      ],
+      "impNot": [
+        "mat bharo",
+        "mat bhariye"
+      ]
+    },
+    "ta": {
+      "dict": "fill pannu",
+      "pres": "fill pannu",
+      "past": "fill pann",
+      "fut": "fill pannuv",
+      "cont": "fill pannittu",
+      "inf": "fill panna",
+      "imp": [
+        "fill pannu",
+        "fill pannunga"
+      ],
+      "impNot": [
+        "fill pannaadhe",
+        "fill pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "fill cheyyuka",
+      "pres": "fill cheyyunnu",
+      "past": "fill cheythu",
+      "fut": "fill cheyyum",
+      "cont": "fill cheyyunnund",
+      "inf": "fill cheyyaan",
+      "imp": [
+        "fill cheyy",
+        "fill cheyyoo"
+      ],
+      "impNot": [
+        "fill cheyyalle",
+        "fill cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "sign",
+    "group": "core",
+    "en": {
+      "base": "sign",
+      "past": "signed",
+      "ing": "signing",
+      "s": "signs"
+    },
+    "note": "In Chennai you also hear sign podunga.",
+    "kn": {
+      "dict": "sign maadu",
+      "pres": "sign maad",
+      "past": "sign maadid",
+      "cont": "sign maadta",
+      "neg": "sign maadalla",
+      "pastNeg": "sign maadlilla",
+      "inf": "sign maadakke",
+      "want": "sign maadbeku",
+      "imp": [
+        "sign maadu",
+        "sign maadi"
+      ],
+      "impNot": [
+        "sign maadbeda",
+        "sign maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "sign karna",
+      "stem": "sign kar",
+      "perf": {
+        "m": "sign kiya",
+        "f": "sign ki",
+        "pl": "sign kiye"
+      },
+      "ne": true,
+      "imp": [
+        "sign karo",
+        "sign kijiye"
+      ],
+      "impNot": [
+        "sign mat karo",
+        "sign mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "sign pannu",
+      "pres": "sign pannu",
+      "past": "sign pann",
+      "fut": "sign pannuv",
+      "cont": "sign pannittu",
+      "inf": "sign panna",
+      "imp": [
+        "sign pannu",
+        "sign pannunga"
+      ],
+      "impNot": [
+        "sign pannaadhe",
+        "sign pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "sign cheyyuka",
+      "pres": "sign cheyyunnu",
+      "past": "sign cheythu",
+      "fut": "sign cheyyum",
+      "cont": "sign cheyyunnund",
+      "inf": "sign cheyyaan",
+      "imp": [
+        "sign cheyy",
+        "sign cheyyoo"
+      ],
+      "impNot": [
+        "sign cheyyalle",
+        "sign cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "submit",
+    "group": "core",
+    "en": {
+      "base": "submit",
+      "past": "submitted",
+      "ing": "submitting",
+      "s": "submits"
+    },
+    "kn": {
+      "dict": "submit maadu",
+      "pres": "submit maad",
+      "past": "submit maadid",
+      "cont": "submit maadta",
+      "neg": "submit maadalla",
+      "pastNeg": "submit maadlilla",
+      "inf": "submit maadakke",
+      "want": "submit maadbeku",
+      "imp": [
+        "submit maadu",
+        "submit maadi"
+      ],
+      "impNot": [
+        "submit maadbeda",
+        "submit maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "submit karna",
+      "stem": "submit kar",
+      "perf": {
+        "m": "submit kiya",
+        "f": "submit ki",
+        "pl": "submit kiye"
+      },
+      "ne": true,
+      "imp": [
+        "submit karo",
+        "submit kijiye"
+      ],
+      "impNot": [
+        "submit mat karo",
+        "submit mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "submit pannu",
+      "pres": "submit pannu",
+      "past": "submit pann",
+      "fut": "submit pannuv",
+      "cont": "submit pannittu",
+      "inf": "submit panna",
+      "imp": [
+        "submit pannu",
+        "submit pannunga"
+      ],
+      "impNot": [
+        "submit pannaadhe",
+        "submit pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "submit cheyyuka",
+      "pres": "submit cheyyunnu",
+      "past": "submit cheythu",
+      "fut": "submit cheyyum",
+      "cont": "submit cheyyunnund",
+      "inf": "submit cheyyaan",
+      "imp": [
+        "submit cheyy",
+        "submit cheyyoo"
+      ],
+      "impNot": [
+        "submit cheyyalle",
+        "submit cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "apply",
+    "group": "core",
+    "en": {
+      "base": "apply",
+      "past": "applied",
+      "ing": "applying",
+      "s": "applies"
+    },
+    "kn": {
+      "dict": "apply maadu",
+      "pres": "apply maad",
+      "past": "apply maadid",
+      "cont": "apply maadta",
+      "neg": "apply maadalla",
+      "pastNeg": "apply maadlilla",
+      "inf": "apply maadakke",
+      "want": "apply maadbeku",
+      "imp": [
+        "apply maadu",
+        "apply maadi"
+      ],
+      "impNot": [
+        "apply maadbeda",
+        "apply maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "apply karna",
+      "stem": "apply kar",
+      "perf": {
+        "m": "apply kiya",
+        "f": "apply ki",
+        "pl": "apply kiye"
+      },
+      "ne": true,
+      "imp": [
+        "apply karo",
+        "apply kijiye"
+      ],
+      "impNot": [
+        "apply mat karo",
+        "apply mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "apply pannu",
+      "pres": "apply pannu",
+      "past": "apply pann",
+      "fut": "apply pannuv",
+      "cont": "apply pannittu",
+      "inf": "apply panna",
+      "imp": [
+        "apply pannu",
+        "apply pannunga"
+      ],
+      "impNot": [
+        "apply pannaadhe",
+        "apply pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "apply cheyyuka",
+      "pres": "apply cheyyunnu",
+      "past": "apply cheythu",
+      "fut": "apply cheyyum",
+      "cont": "apply cheyyunnund",
+      "inf": "apply cheyyaan",
+      "imp": [
+        "apply cheyy",
+        "apply cheyyoo"
+      ],
+      "impNot": [
+        "apply cheyyalle",
+        "apply cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "renew",
+    "group": "core",
+    "en": {
+      "base": "renew",
+      "past": "renewed",
+      "ing": "renewing",
+      "s": "renews"
+    },
+    "kn": {
+      "dict": "renew maadu",
+      "pres": "renew maad",
+      "past": "renew maadid",
+      "cont": "renew maadta",
+      "neg": "renew maadalla",
+      "pastNeg": "renew maadlilla",
+      "inf": "renew maadakke",
+      "want": "renew maadbeku",
+      "imp": [
+        "renew maadu",
+        "renew maadi"
+      ],
+      "impNot": [
+        "renew maadbeda",
+        "renew maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "renew karna",
+      "stem": "renew kar",
+      "perf": {
+        "m": "renew kiya",
+        "f": "renew ki",
+        "pl": "renew kiye"
+      },
+      "ne": true,
+      "imp": [
+        "renew karo",
+        "renew kijiye"
+      ],
+      "impNot": [
+        "renew mat karo",
+        "renew mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "renew pannu",
+      "pres": "renew pannu",
+      "past": "renew pann",
+      "fut": "renew pannuv",
+      "cont": "renew pannittu",
+      "inf": "renew panna",
+      "imp": [
+        "renew pannu",
+        "renew pannunga"
+      ],
+      "impNot": [
+        "renew pannaadhe",
+        "renew pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "renew cheyyuka",
+      "pres": "renew cheyyunnu",
+      "past": "renew cheythu",
+      "fut": "renew cheyyum",
+      "cont": "renew cheyyunnund",
+      "inf": "renew cheyyaan",
+      "imp": [
+        "renew cheyy",
+        "renew cheyyoo"
+      ],
+      "impNot": [
+        "renew cheyyalle",
+        "renew cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "check",
+    "group": "core",
+    "en": {
+      "base": "check",
+      "past": "checked",
+      "ing": "checking",
+      "s": "checks"
+    },
+    "kn": {
+      "dict": "check maadu",
+      "pres": "check maad",
+      "past": "check maadid",
+      "cont": "check maadta",
+      "neg": "check maadalla",
+      "pastNeg": "check maadlilla",
+      "inf": "check maadakke",
+      "want": "check maadbeku",
+      "imp": [
+        "check maadu",
+        "check maadi"
+      ],
+      "impNot": [
+        "check maadbeda",
+        "check maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "check karna",
+      "stem": "check kar",
+      "perf": {
+        "m": "check kiya",
+        "f": "check ki",
+        "pl": "check kiye"
+      },
+      "ne": true,
+      "imp": [
+        "check karo",
+        "check kijiye"
+      ],
+      "impNot": [
+        "check mat karo",
+        "check mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "check pannu",
+      "pres": "check pannu",
+      "past": "check pann",
+      "fut": "check pannuv",
+      "cont": "check pannittu",
+      "inf": "check panna",
+      "imp": [
+        "check pannu",
+        "check pannunga"
+      ],
+      "impNot": [
+        "check pannaadhe",
+        "check pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "check cheyyuka",
+      "pres": "check cheyyunnu",
+      "past": "check cheythu",
+      "fut": "check cheyyum",
+      "cont": "check cheyyunnund",
+      "inf": "check cheyyaan",
+      "imp": [
+        "check cheyy",
+        "check cheyyoo"
+      ],
+      "impNot": [
+        "check cheyyalle",
+        "check cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "collect",
+    "group": "core",
+    "en": {
+      "base": "collect",
+      "past": "collected",
+      "ing": "collecting",
+      "s": "collects"
+    },
+    "note": "For a parcel people also just say take it: togo, le lo, vaangu, vaanguka.",
+    "kn": {
+      "dict": "collect maadu",
+      "pres": "collect maad",
+      "past": "collect maadid",
+      "cont": "collect maadta",
+      "neg": "collect maadalla",
+      "pastNeg": "collect maadlilla",
+      "inf": "collect maadakke",
+      "want": "collect maadbeku",
+      "imp": [
+        "collect maadu",
+        "collect maadi"
+      ],
+      "impNot": [
+        "collect maadbeda",
+        "collect maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "collect karna",
+      "stem": "collect kar",
+      "perf": {
+        "m": "collect kiya",
+        "f": "collect ki",
+        "pl": "collect kiye"
+      },
+      "ne": true,
+      "imp": [
+        "collect karo",
+        "collect kijiye"
+      ],
+      "impNot": [
+        "collect mat karo",
+        "collect mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "collect pannu",
+      "pres": "collect pannu",
+      "past": "collect pann",
+      "fut": "collect pannuv",
+      "cont": "collect pannittu",
+      "inf": "collect panna",
+      "imp": [
+        "collect pannu",
+        "collect pannunga"
+      ],
+      "impNot": [
+        "collect pannaadhe",
+        "collect pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "collect cheyyuka",
+      "pres": "collect cheyyunnu",
+      "past": "collect cheythu",
+      "fut": "collect cheyyum",
+      "cont": "collect cheyyunnund",
+      "inf": "collect cheyyaan",
+      "imp": [
+        "collect cheyy",
+        "collect cheyyoo"
+      ],
+      "impNot": [
+        "collect cheyyalle",
+        "collect cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "xerox",
+    "group": "core",
+    "en": {
+      "base": "photocopy",
+      "past": "photocopied",
+      "ing": "photocopying",
+      "s": "photocopies"
+    },
+    "note": "Indians say xerox. In Chennai and Kochi you take a xerox: xerox edu, xerox edukkuka.",
+    "kn": {
+      "dict": "xerox maadu",
+      "pres": "xerox maad",
+      "past": "xerox maadid",
+      "cont": "xerox maadta",
+      "neg": "xerox maadalla",
+      "pastNeg": "xerox maadlilla",
+      "inf": "xerox maadakke",
+      "want": "xerox maadbeku",
+      "imp": [
+        "xerox maadu",
+        "xerox maadi"
+      ],
+      "impNot": [
+        "xerox maadbeda",
+        "xerox maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "xerox karna",
+      "stem": "xerox kar",
+      "perf": {
+        "m": "xerox kiya",
+        "f": "xerox ki",
+        "pl": "xerox kiye"
+      },
+      "ne": true,
+      "imp": [
+        "xerox karo",
+        "xerox kijiye"
+      ],
+      "impNot": [
+        "xerox mat karo",
+        "xerox mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "xerox edu",
+      "pres": "xerox edukku",
+      "past": "xerox edutt",
+      "fut": "xerox edupp",
+      "cont": "xerox eduthuttu",
+      "inf": "xerox edukka",
+      "imp": [
+        "xerox edu",
+        "xerox edunga"
+      ],
+      "impNot": [
+        "xerox edukkaadhe",
+        "xerox edukkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "xerox edukkuka",
+      "pres": "xerox edukkunnu",
+      "past": "xerox eduthu",
+      "fut": "xerox edukkum",
+      "cont": "xerox edukkunnund",
+      "inf": "xerox edukkaan",
+      "imp": [
+        "xerox edukk",
+        "xerox edukkoo"
+      ],
+      "impNot": [
+        "xerox edukkalle",
+        "xerox edukkalle"
+      ]
+    }
+  },
+  {
+    "id": "register",
+    "group": "core",
+    "en": {
+      "base": "register",
+      "past": "registered",
+      "ing": "registering",
+      "s": "registers"
+    },
+    "kn": {
+      "dict": "register maadu",
+      "pres": "register maad",
+      "past": "register maadid",
+      "cont": "register maadta",
+      "neg": "register maadalla",
+      "pastNeg": "register maadlilla",
+      "inf": "register maadakke",
+      "want": "register maadbeku",
+      "imp": [
+        "register maadu",
+        "register maadi"
+      ],
+      "impNot": [
+        "register maadbeda",
+        "register maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "register karna",
+      "stem": "register kar",
+      "perf": {
+        "m": "register kiya",
+        "f": "register ki",
+        "pl": "register kiye"
+      },
+      "ne": true,
+      "imp": [
+        "register karo",
+        "register kijiye"
+      ],
+      "impNot": [
+        "register mat karo",
+        "register mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "register pannu",
+      "pres": "register pannu",
+      "past": "register pann",
+      "fut": "register pannuv",
+      "cont": "register pannittu",
+      "inf": "register panna",
+      "imp": [
+        "register pannu",
+        "register pannunga"
+      ],
+      "impNot": [
+        "register pannaadhe",
+        "register pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "register cheyyuka",
+      "pres": "register cheyyunnu",
+      "past": "register cheythu",
+      "fut": "register cheyyum",
+      "cont": "register cheyyunnund",
+      "inf": "register cheyyaan",
+      "imp": [
+        "register cheyy",
+        "register cheyyoo"
+      ],
+      "impNot": [
+        "register cheyyalle",
+        "register cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "complain",
+    "group": "core",
+    "en": {
+      "base": "complain",
+      "past": "complained",
+      "ing": "complaining",
+      "s": "complains"
+    },
+    "note": "Everyone uses the noun: complaint maadi, complaint kijiye, complaint pannunga, complaint cheyyoo.",
+    "kn": {
+      "dict": "complaint maadu",
+      "pres": "complaint maad",
+      "past": "complaint maadid",
+      "cont": "complaint maadta",
+      "neg": "complaint maadalla",
+      "pastNeg": "complaint maadlilla",
+      "inf": "complaint maadakke",
+      "want": "complaint maadbeku",
+      "imp": [
+        "complaint maadu",
+        "complaint maadi"
+      ],
+      "impNot": [
+        "complaint maadbeda",
+        "complaint maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "complaint karna",
+      "stem": "complaint kar",
+      "perf": {
+        "m": "complaint ki",
+        "f": "complaint ki",
+        "pl": "complaint ki"
+      },
+      "ne": true,
+      "imp": [
+        "complaint karo",
+        "complaint kijiye"
+      ],
+      "impNot": [
+        "complaint mat karo",
+        "complaint mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "complaint pannu",
+      "pres": "complaint pannu",
+      "past": "complaint pann",
+      "fut": "complaint pannuv",
+      "cont": "complaint pannittu",
+      "inf": "complaint panna",
+      "imp": [
+        "complaint pannu",
+        "complaint pannunga"
+      ],
+      "impNot": [
+        "complaint pannaadhe",
+        "complaint pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "complaint cheyyuka",
+      "pres": "complaint cheyyunnu",
+      "past": "complaint cheythu",
+      "fut": "complaint cheyyum",
+      "cont": "complaint cheyyunnund",
+      "inf": "complaint cheyyaan",
+      "imp": [
+        "complaint cheyy",
+        "complaint cheyyoo"
+      ],
+      "impNot": [
+        "complaint cheyyalle",
+        "complaint cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "turn",
+    "group": "core",
+    "en": {
+      "base": "turn",
+      "past": "turned",
+      "ing": "turning",
+      "s": "turns"
+    },
+    "note": "To an auto driver: left-ge tirugi, left mudiye, left-la thirumbunga, idathottu thiriyoo.",
+    "kn": {
+      "dict": "tirugu",
+      "pres": "tirug",
+      "past": "tirugid",
+      "cont": "tirugta",
+      "neg": "tirugalla",
+      "pastNeg": "tiruglilla",
+      "inf": "tirugakke",
+      "want": "tirugbeku",
+      "imp": [
+        "tirugu",
+        "tirugi"
+      ],
+      "impNot": [
+        "tirugbeda",
+        "tirugbedi"
+      ]
+    },
+    "hi": {
+      "dict": "mudna",
+      "stem": "mud",
+      "perf": {
+        "m": "muda",
+        "f": "mudi",
+        "pl": "mude"
+      },
+      "ne": false,
+      "imp": [
+        "mudo",
+        "mudiye"
+      ],
+      "impNot": [
+        "mat mudo",
+        "mat mudiye"
+      ]
+    },
+    "ta": {
+      "dict": "thirumbu",
+      "pres": "thirumbu",
+      "past": "thirumbin",
+      "fut": "thirumbuv",
+      "cont": "thirumbittu",
+      "inf": "thirumba",
+      "imp": [
+        "thirumbu",
+        "thirumbunga"
+      ],
+      "impNot": [
+        "thirumbaadhe",
+        "thirumbaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "thiriyuka",
+      "pres": "thiriyunnu",
+      "past": "thirinju",
+      "fut": "thiriyum",
+      "cont": "thiriyunnund",
+      "inf": "thiriyaan",
+      "imp": [
+        "thiri",
+        "thiriyoo"
+      ],
+      "impNot": [
+        "thiriyalle",
+        "thiriyalle"
+      ]
+    }
+  },
+  {
+    "id": "park",
+    "group": "core",
+    "en": {
+      "base": "park",
+      "past": "parked",
+      "ing": "parking",
+      "s": "parks"
+    },
+    "kn": {
+      "dict": "park maadu",
+      "pres": "park maad",
+      "past": "park maadid",
+      "cont": "park maadta",
+      "neg": "park maadalla",
+      "pastNeg": "park maadlilla",
+      "inf": "park maadakke",
+      "want": "park maadbeku",
+      "imp": [
+        "park maadu",
+        "park maadi"
+      ],
+      "impNot": [
+        "park maadbeda",
+        "park maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "park karna",
+      "stem": "park kar",
+      "perf": {
+        "m": "park kiya",
+        "f": "park ki",
+        "pl": "park kiye"
+      },
+      "ne": true,
+      "imp": [
+        "park karo",
+        "park kijiye"
+      ],
+      "impNot": [
+        "park mat karo",
+        "park mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "park pannu",
+      "pres": "park pannu",
+      "past": "park pann",
+      "fut": "park pannuv",
+      "cont": "park pannittu",
+      "inf": "park panna",
+      "imp": [
+        "park pannu",
+        "park pannunga"
+      ],
+      "impNot": [
+        "park pannaadhe",
+        "park pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "park cheyyuka",
+      "pres": "park cheyyunnu",
+      "past": "park cheythu",
+      "fut": "park cheyyum",
+      "cont": "park cheyyunnund",
+      "inf": "park cheyyaan",
+      "imp": [
+        "park cheyy",
+        "park cheyyoo"
+      ],
+      "impNot": [
+        "park cheyyalle",
+        "park cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "drop",
+    "group": "core",
+    "en": {
+      "base": "drop",
+      "past": "dropped",
+      "ing": "dropping",
+      "s": "drops"
+    },
+    "note": "Drop someone off: station-ge drop maadi.",
+    "kn": {
+      "dict": "drop maadu",
+      "pres": "drop maad",
+      "past": "drop maadid",
+      "cont": "drop maadta",
+      "neg": "drop maadalla",
+      "pastNeg": "drop maadlilla",
+      "inf": "drop maadakke",
+      "want": "drop maadbeku",
+      "imp": [
+        "drop maadu",
+        "drop maadi"
+      ],
+      "impNot": [
+        "drop maadbeda",
+        "drop maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "drop karna",
+      "stem": "drop kar",
+      "perf": {
+        "m": "drop kiya",
+        "f": "drop ki",
+        "pl": "drop kiye"
+      },
+      "ne": true,
+      "imp": [
+        "drop karo",
+        "drop kijiye"
+      ],
+      "impNot": [
+        "drop mat karo",
+        "drop mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "drop pannu",
+      "pres": "drop pannu",
+      "past": "drop pann",
+      "fut": "drop pannuv",
+      "cont": "drop pannittu",
+      "inf": "drop panna",
+      "imp": [
+        "drop pannu",
+        "drop pannunga"
+      ],
+      "impNot": [
+        "drop pannaadhe",
+        "drop pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "drop cheyyuka",
+      "pres": "drop cheyyunnu",
+      "past": "drop cheythu",
+      "fut": "drop cheyyum",
+      "cont": "drop cheyyunnund",
+      "inf": "drop cheyyaan",
+      "imp": [
+        "drop cheyy",
+        "drop cheyyoo"
+      ],
+      "impNot": [
+        "drop cheyyalle",
+        "drop cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "pickup",
+    "group": "core",
+    "en": {
+      "base": "pick up",
+      "past": "picked up",
+      "ing": "picking up",
+      "s": "picks up"
+    },
+    "note": "Delhi says pick karna, Kochi says pick cheyyuka.",
+    "kn": {
+      "dict": "pick up maadu",
+      "pres": "pick up maad",
+      "past": "pick up maadid",
+      "cont": "pick up maadta",
+      "neg": "pick up maadalla",
+      "pastNeg": "pick up maadlilla",
+      "inf": "pick up maadakke",
+      "want": "pick up maadbeku",
+      "imp": [
+        "pick up maadu",
+        "pick up maadi"
+      ],
+      "impNot": [
+        "pick up maadbeda",
+        "pick up maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "pick karna",
+      "stem": "pick kar",
+      "perf": {
+        "m": "pick kiya",
+        "f": "pick ki",
+        "pl": "pick kiye"
+      },
+      "ne": true,
+      "imp": [
+        "pick karo",
+        "pick kijiye"
+      ],
+      "impNot": [
+        "pick mat karo",
+        "pick mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "pick up pannu",
+      "pres": "pick up pannu",
+      "past": "pick up pann",
+      "fut": "pick up pannuv",
+      "cont": "pick up pannittu",
+      "inf": "pick up panna",
+      "imp": [
+        "pick up pannu",
+        "pick up pannunga"
+      ],
+      "impNot": [
+        "pick up pannaadhe",
+        "pick up pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "pick cheyyuka",
+      "pres": "pick cheyyunnu",
+      "past": "pick cheythu",
+      "fut": "pick cheyyum",
+      "cont": "pick cheyyunnund",
+      "inf": "pick cheyyaan",
+      "imp": [
+        "pick cheyy",
+        "pick cheyyoo"
+      ],
+      "impNot": [
+        "pick cheyyalle",
+        "pick cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "reach",
+    "group": "core",
+    "en": {
+      "base": "reach",
+      "past": "reached",
+      "ing": "reaching",
+      "s": "reaches"
+    },
+    "note": "Bangalore and Chennai say reach aagu: reach aade, reach aayitten. The proper Kannada word is talupu. Delhi often says pahunch gaya.",
+    "kn": {
+      "dict": "reach aagu",
+      "pres": "reach aag",
+      "past": "reach aad",
+      "cont": "reach aagta",
+      "neg": "reach aagalla",
+      "pastNeg": "reach aaglilla",
+      "inf": "reach aagakke",
+      "want": "reach aagbeku",
+      "imp": [
+        "reach aagu",
+        "reach aagi"
+      ],
+      "impNot": [
+        "reach aagbeda",
+        "reach aagbedi"
+      ]
+    },
+    "hi": {
+      "dict": "pahunchna",
+      "stem": "pahunch",
+      "perf": {
+        "m": "pahuncha",
+        "f": "pahunchi",
+        "pl": "pahunche"
+      },
+      "ne": false,
+      "imp": [
+        "pahuncho",
+        "pahunchiye"
+      ],
+      "impNot": [
+        "mat pahuncho",
+        "mat pahunchiye"
+      ]
+    },
+    "ta": {
+      "dict": "reach aagu",
+      "pres": "reach aagu",
+      "past": "reach aayitt",
+      "fut": "reach aaguv",
+      "cont": "reach aagittu",
+      "inf": "reach aaga",
+      "imp": [
+        "reach aagu",
+        "reach aagunga"
+      ],
+      "impNot": [
+        "reach aagaadhe",
+        "reach aagaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "ethuka",
+      "pres": "ethunnu",
+      "past": "ethi",
+      "fut": "ethum",
+      "cont": "ethunnund",
+      "inf": "ethaan",
+      "imp": [
+        "ethu",
+        "ethoo"
+      ],
+      "impNot": [
+        "ethalle",
+        "ethalle"
+      ]
+    }
+  },
+  {
+    "id": "getdown",
+    "group": "core",
+    "en": {
+      "base": "get off",
+      "past": "got off",
+      "ing": "getting off",
+      "s": "gets off"
+    },
+    "note": "a bus, an auto, a train",
+    "kn": {
+      "dict": "ili",
+      "pres": "ili",
+      "past": "ilid",
+      "cont": "ilita",
+      "neg": "iliyalla",
+      "pastNeg": "ililla",
+      "inf": "iliyakke",
+      "want": "ilibeku",
+      "imp": [
+        "ili",
+        "iliri"
+      ],
+      "impNot": [
+        "ilibeda",
+        "ilibedi"
+      ]
+    },
+    "hi": {
+      "dict": "utarna",
+      "stem": "utar",
+      "perf": {
+        "m": "utra",
+        "f": "utri",
+        "pl": "utre"
+      },
+      "ne": false,
+      "fut": {
+        "m": [
+          "utrunga",
+          "utroge",
+          "utrenge",
+          "utrega",
+          "utregi",
+          "utrenge",
+          "utrenge"
+        ],
+        "f": [
+          "utrungi",
+          "utrogi",
+          "utrengi",
+          "utregi",
+          "utregi",
+          "utrengi",
+          "utrengi"
+        ]
+      },
+      "imp": [
+        "utro",
+        "utariye"
+      ],
+      "impNot": [
+        "mat utro",
+        "mat utariye"
+      ]
+    },
+    "ta": {
+      "dict": "erangu",
+      "pres": "erangu",
+      "past": "erangin",
+      "fut": "eranguv",
+      "cont": "erangittu",
+      "inf": "eranga",
+      "imp": [
+        "erangu",
+        "erangunga"
+      ],
+      "impNot": [
+        "erangaadhe",
+        "erangaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "iranguka",
+      "pres": "irangunnu",
+      "past": "irangi",
+      "fut": "irangum",
+      "cont": "irangunnund",
+      "inf": "irangaan",
+      "imp": [
+        "irangu",
+        "irangoo"
+      ],
+      "impNot": [
+        "irangalle",
+        "irangalle"
+      ]
+    }
+  },
+  {
+    "id": "getin",
+    "group": "core",
+    "en": {
+      "base": "get in",
+      "past": "got in",
+      "ing": "getting in",
+      "s": "gets in"
+    },
+    "note": "a bus or train. For a car or an auto, Delhi just says baitho (sit).",
+    "kn": {
+      "dict": "hattu",
+      "pres": "hattu",
+      "past": "hattid",
+      "cont": "hattuta",
+      "neg": "hattalla",
+      "pastNeg": "hattlilla",
+      "inf": "hattakke",
+      "want": "hattbeku",
+      "imp": [
+        "hattu",
+        "hatti"
+      ],
+      "impNot": [
+        "hattbeda",
+        "hattbedi"
+      ]
+    },
+    "hi": {
+      "dict": "chadhna",
+      "stem": "chadh",
+      "perf": {
+        "m": "chadha",
+        "f": "chadhi",
+        "pl": "chadhe"
+      },
+      "ne": false,
+      "imp": [
+        "chadho",
+        "chadhiye"
+      ],
+      "impNot": [
+        "mat chadho",
+        "mat chadhiye"
+      ]
+    },
+    "ta": {
+      "dict": "eru",
+      "pres": "eru",
+      "past": "erin",
+      "fut": "eruv",
+      "cont": "erittu",
+      "inf": "era",
+      "imp": [
+        "eru",
+        "erunga"
+      ],
+      "impNot": [
+        "eraadhe",
+        "eraadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "kayaruka",
+      "pres": "kayarunnu",
+      "past": "kayari",
+      "fut": "kayarum",
+      "cont": "kayarunnund",
+      "inf": "kayaraan",
+      "imp": [
+        "kayaru",
+        "kayaroo"
+      ],
+      "impNot": [
+        "kayaralle",
+        "kayaralle"
+      ]
+    }
+  },
+  {
+    "id": "charge",
+    "group": "core",
+    "en": {
+      "base": "charge",
+      "past": "charged",
+      "ing": "charging",
+      "s": "charges"
+    },
+    "note": "a phone. Chennai puts it on charge: charge podu.",
+    "kn": {
+      "dict": "charge maadu",
+      "pres": "charge maad",
+      "past": "charge maadid",
+      "cont": "charge maadta",
+      "neg": "charge maadalla",
+      "pastNeg": "charge maadlilla",
+      "inf": "charge maadakke",
+      "want": "charge maadbeku",
+      "imp": [
+        "charge maadu",
+        "charge maadi"
+      ],
+      "impNot": [
+        "charge maadbeda",
+        "charge maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "charge karna",
+      "stem": "charge kar",
+      "perf": {
+        "m": "charge kiya",
+        "f": "charge ki",
+        "pl": "charge kiye"
+      },
+      "ne": true,
+      "imp": [
+        "charge karo",
+        "charge kijiye"
+      ],
+      "impNot": [
+        "charge mat karo",
+        "charge mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "charge podu",
+      "pres": "charge podu",
+      "past": "charge pott",
+      "fut": "charge poduv",
+      "cont": "charge pottuttu",
+      "inf": "charge poda",
+      "imp": [
+        "charge podu",
+        "charge podunga"
+      ],
+      "impNot": [
+        "charge podaadhe",
+        "charge podaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "charge cheyyuka",
+      "pres": "charge cheyyunnu",
+      "past": "charge cheythu",
+      "fut": "charge cheyyum",
+      "cont": "charge cheyyunnund",
+      "inf": "charge cheyyaan",
+      "imp": [
+        "charge cheyy",
+        "charge cheyyoo"
+      ],
+      "impNot": [
+        "charge cheyyalle",
+        "charge cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "recharge",
+    "group": "core",
+    "en": {
+      "base": "recharge",
+      "past": "recharged",
+      "ing": "recharging",
+      "s": "recharges"
+    },
+    "kn": {
+      "dict": "recharge maadu",
+      "pres": "recharge maad",
+      "past": "recharge maadid",
+      "cont": "recharge maadta",
+      "neg": "recharge maadalla",
+      "pastNeg": "recharge maadlilla",
+      "inf": "recharge maadakke",
+      "want": "recharge maadbeku",
+      "imp": [
+        "recharge maadu",
+        "recharge maadi"
+      ],
+      "impNot": [
+        "recharge maadbeda",
+        "recharge maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "recharge karna",
+      "stem": "recharge kar",
+      "perf": {
+        "m": "recharge kiya",
+        "f": "recharge ki",
+        "pl": "recharge kiye"
+      },
+      "ne": true,
+      "imp": [
+        "recharge karo",
+        "recharge kijiye"
+      ],
+      "impNot": [
+        "recharge mat karo",
+        "recharge mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "recharge pannu",
+      "pres": "recharge pannu",
+      "past": "recharge pann",
+      "fut": "recharge pannuv",
+      "cont": "recharge pannittu",
+      "inf": "recharge panna",
+      "imp": [
+        "recharge pannu",
+        "recharge pannunga"
+      ],
+      "impNot": [
+        "recharge pannaadhe",
+        "recharge pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "recharge cheyyuka",
+      "pres": "recharge cheyyunnu",
+      "past": "recharge cheythu",
+      "fut": "recharge cheyyum",
+      "cont": "recharge cheyyunnund",
+      "inf": "recharge cheyyaan",
+      "imp": [
+        "recharge cheyy",
+        "recharge cheyyoo"
+      ],
+      "impNot": [
+        "recharge cheyyalle",
+        "recharge cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "transfer",
+    "group": "core",
+    "en": {
+      "base": "transfer",
+      "past": "transferred",
+      "ing": "transferring",
+      "s": "transfers"
+    },
+    "note": "money. Most people now just say GPay maadi, GPay kar do, GPay pannunga.",
+    "kn": {
+      "dict": "transfer maadu",
+      "pres": "transfer maad",
+      "past": "transfer maadid",
+      "cont": "transfer maadta",
+      "neg": "transfer maadalla",
+      "pastNeg": "transfer maadlilla",
+      "inf": "transfer maadakke",
+      "want": "transfer maadbeku",
+      "imp": [
+        "transfer maadu",
+        "transfer maadi"
+      ],
+      "impNot": [
+        "transfer maadbeda",
+        "transfer maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "transfer karna",
+      "stem": "transfer kar",
+      "perf": {
+        "m": "transfer kiya",
+        "f": "transfer ki",
+        "pl": "transfer kiye"
+      },
+      "ne": true,
+      "imp": [
+        "transfer karo",
+        "transfer kijiye"
+      ],
+      "impNot": [
+        "transfer mat karo",
+        "transfer mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "transfer pannu",
+      "pres": "transfer pannu",
+      "past": "transfer pann",
+      "fut": "transfer pannuv",
+      "cont": "transfer pannittu",
+      "inf": "transfer panna",
+      "imp": [
+        "transfer pannu",
+        "transfer pannunga"
+      ],
+      "impNot": [
+        "transfer pannaadhe",
+        "transfer pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "transfer cheyyuka",
+      "pres": "transfer cheyyunnu",
+      "past": "transfer cheythu",
+      "fut": "transfer cheyyum",
+      "cont": "transfer cheyyunnund",
+      "inf": "transfer cheyyaan",
+      "imp": [
+        "transfer cheyy",
+        "transfer cheyyoo"
+      ],
+      "impNot": [
+        "transfer cheyyalle",
+        "transfer cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "withdraw",
+    "group": "core",
+    "en": {
+      "base": "withdraw",
+      "past": "withdrew",
+      "ing": "withdrawing",
+      "s": "withdraws"
+    },
+    "note": "With money as the object most people say take out: duddu tegi, paise nikaalo, panam edu, paisa edukk.",
+    "kn": {
+      "dict": "withdraw maadu",
+      "pres": "withdraw maad",
+      "past": "withdraw maadid",
+      "cont": "withdraw maadta",
+      "neg": "withdraw maadalla",
+      "pastNeg": "withdraw maadlilla",
+      "inf": "withdraw maadakke",
+      "want": "withdraw maadbeku",
+      "imp": [
+        "withdraw maadu",
+        "withdraw maadi"
+      ],
+      "impNot": [
+        "withdraw maadbeda",
+        "withdraw maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "nikaalna",
+      "stem": "nikaal",
+      "perf": {
+        "m": "nikaala",
+        "f": "nikaali",
+        "pl": "nikaale"
+      },
+      "ne": true,
+      "imp": [
+        "nikaalo",
+        "nikaaliye"
+      ],
+      "impNot": [
+        "mat nikaalo",
+        "mat nikaaliye"
+      ]
+    },
+    "ta": {
+      "dict": "withdraw pannu",
+      "pres": "withdraw pannu",
+      "past": "withdraw pann",
+      "fut": "withdraw pannuv",
+      "cont": "withdraw pannittu",
+      "inf": "withdraw panna",
+      "imp": [
+        "withdraw pannu",
+        "withdraw pannunga"
+      ],
+      "impNot": [
+        "withdraw pannaadhe",
+        "withdraw pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "withdraw cheyyuka",
+      "pres": "withdraw cheyyunnu",
+      "past": "withdraw cheythu",
+      "fut": "withdraw cheyyum",
+      "cont": "withdraw cheyyunnund",
+      "inf": "withdraw cheyyaan",
+      "imp": [
+        "withdraw cheyy",
+        "withdraw cheyyoo"
+      ],
+      "impNot": [
+        "withdraw cheyyalle",
+        "withdraw cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "deposit",
+    "group": "core",
+    "en": {
+      "base": "deposit",
+      "past": "deposited",
+      "ing": "depositing",
+      "s": "deposits"
+    },
+    "note": "Hindi says jama karna: paise jama karo.",
+    "kn": {
+      "dict": "deposit maadu",
+      "pres": "deposit maad",
+      "past": "deposit maadid",
+      "cont": "deposit maadta",
+      "neg": "deposit maadalla",
+      "pastNeg": "deposit maadlilla",
+      "inf": "deposit maadakke",
+      "want": "deposit maadbeku",
+      "imp": [
+        "deposit maadu",
+        "deposit maadi"
+      ],
+      "impNot": [
+        "deposit maadbeda",
+        "deposit maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "jama karna",
+      "stem": "jama kar",
+      "perf": {
+        "m": "jama kiya",
+        "f": "jama ki",
+        "pl": "jama kiye"
+      },
+      "ne": true,
+      "imp": [
+        "jama karo",
+        "jama kijiye"
+      ],
+      "impNot": [
+        "jama mat karo",
+        "jama mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "deposit pannu",
+      "pres": "deposit pannu",
+      "past": "deposit pann",
+      "fut": "deposit pannuv",
+      "cont": "deposit pannittu",
+      "inf": "deposit panna",
+      "imp": [
+        "deposit pannu",
+        "deposit pannunga"
+      ],
+      "impNot": [
+        "deposit pannaadhe",
+        "deposit pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "deposit cheyyuka",
+      "pres": "deposit cheyyunnu",
+      "past": "deposit cheythu",
+      "fut": "deposit cheyyum",
+      "cont": "deposit cheyyunnund",
+      "inf": "deposit cheyyaan",
+      "imp": [
+        "deposit cheyy",
+        "deposit cheyyoo"
+      ],
+      "impNot": [
+        "deposit cheyyalle",
+        "deposit cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "return",
+    "group": "core",
+    "en": {
+      "base": "give back",
+      "past": "gave back",
+      "ing": "giving back",
+      "s": "gives back"
+    },
+    "note": "Give it back to me is thirichu thaa in Malayalam. A shop return is return maadi, return kijiye, return pannunga.",
+    "kn": {
+      "dict": "vaapas kodu",
+      "pres": "vaapas kod",
+      "past": "vaapas kott",
+      "cont": "vaapas kodta",
+      "neg": "vaapas kodalla",
+      "pastNeg": "vaapas kodlilla",
+      "inf": "vaapas kodakke",
+      "want": "vaapas kodbeku",
+      "imp": [
+        "vaapas kodu",
+        "vaapas kodi"
+      ],
+      "impNot": [
+        "vaapas kodbeda",
+        "vaapas kodbedi"
+      ]
+    },
+    "hi": {
+      "dict": "vaapas karna",
+      "stem": "vaapas kar",
+      "perf": {
+        "m": "vaapas kiya",
+        "f": "vaapas ki",
+        "pl": "vaapas kiye"
+      },
+      "ne": true,
+      "imp": [
+        "vaapas karo",
+        "vaapas kijiye"
+      ],
+      "impNot": [
+        "vaapas mat karo",
+        "vaapas mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "thirumba kudu",
+      "pres": "thirumba kudukku",
+      "past": "thirumba kudutt",
+      "fut": "thirumba kudupp",
+      "cont": "thirumba kuduthuttu",
+      "inf": "thirumba kudukka",
+      "imp": [
+        "thirumba kudu",
+        "thirumba kudunga"
+      ],
+      "impNot": [
+        "thirumba kudukkaadhe",
+        "thirumba kudukkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "thirichu kodukkuka",
+      "pres": "thirichu kodukkunnu",
+      "past": "thirichu koduthu",
+      "fut": "thirichu kodukkum",
+      "cont": "thirichu kodukkunnund",
+      "inf": "thirichu kodukkaan",
+      "imp": [
+        "thirichu kodukk",
+        "thirichu kodukkoo"
+      ],
+      "impNot": [
+        "thirichu kodukkalle",
+        "thirichu kodukkalle"
+      ]
+    }
+  },
+  {
+    "id": "borrow",
+    "group": "core",
+    "en": {
+      "base": "borrow",
+      "past": "borrowed",
+      "ing": "borrowing",
+      "s": "borrows"
+    },
+    "note": "saala, udhaar, kadan and kadam all mean a loan. For a pen or a book people just ask: kodi, de do, kudunga, tharoo.",
+    "kn": {
+      "dict": "saala togo",
+      "pres": "saala togo",
+      "past": "saala togond",
+      "cont": "saala togota",
+      "neg": "saala togolalla",
+      "pastNeg": "saala togollilla",
+      "inf": "saala togolakke",
+      "want": "saala togobeku",
+      "imp": [
+        "saala togo",
+        "saala togolli"
+      ],
+      "impNot": [
+        "saala togobeda",
+        "saala togobedi"
+      ]
+    },
+    "hi": {
+      "dict": "udhaar lena",
+      "stem": "udhaar le",
+      "perf": {
+        "m": "udhaar liya",
+        "f": "udhaar li",
+        "pl": "udhaar liye"
+      },
+      "ne": true,
+      "fut": {
+        "m": [
+          "udhaar lunga",
+          "udhaar loge",
+          "udhaar lenge",
+          "udhaar lega",
+          "udhaar legi",
+          "udhaar lenge",
+          "udhaar lenge"
+        ],
+        "f": [
+          "udhaar lungi",
+          "udhaar logi",
+          "udhaar lengi",
+          "udhaar legi",
+          "udhaar legi",
+          "udhaar lengi",
+          "udhaar lengi"
+        ]
+      },
+      "imp": [
+        "udhaar lo",
+        "udhaar lijiye"
+      ],
+      "impNot": [
+        "udhaar mat lo",
+        "udhaar mat lijiye"
+      ]
+    },
+    "ta": {
+      "dict": "kadan vaangu",
+      "pres": "kadan vaangu",
+      "past": "kadan vaangin",
+      "fut": "kadan vaanguv",
+      "cont": "kadan vaangittu",
+      "inf": "kadan vaanga",
+      "imp": [
+        "kadan vaangu",
+        "kadan vaangunga"
+      ],
+      "impNot": [
+        "kadan vaangaadhe",
+        "kadan vaangaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "kadam vaanguka",
+      "pres": "kadam vaangunnu",
+      "past": "kadam vaangi",
+      "fut": "kadam vaangum",
+      "cont": "kadam vaangunnund",
+      "inf": "kadam vaangaan",
+      "imp": [
+        "kadam vaangu",
+        "kadam vaangoo"
+      ],
+      "impNot": [
+        "kadam vaangalle",
+        "kadam vaangalle"
+      ]
+    }
+  },
+  {
+    "id": "lend",
+    "group": "core",
+    "en": {
+      "base": "lend",
+      "past": "lent",
+      "ing": "lending",
+      "s": "lends"
+    },
+    "kn": {
+      "dict": "saala kodu",
+      "pres": "saala kod",
+      "past": "saala kott",
+      "cont": "saala kodta",
+      "neg": "saala kodalla",
+      "pastNeg": "saala kodlilla",
+      "inf": "saala kodakke",
+      "want": "saala kodbeku",
+      "imp": [
+        "saala kodu",
+        "saala kodi"
+      ],
+      "impNot": [
+        "saala kodbeda",
+        "saala kodbedi"
+      ]
+    },
+    "hi": {
+      "dict": "udhaar dena",
+      "stem": "udhaar de",
+      "perf": {
+        "m": "udhaar diya",
+        "f": "udhaar di",
+        "pl": "udhaar diye"
+      },
+      "ne": true,
+      "fut": {
+        "m": [
+          "udhaar dunga",
+          "udhaar doge",
+          "udhaar denge",
+          "udhaar dega",
+          "udhaar degi",
+          "udhaar denge",
+          "udhaar denge"
+        ],
+        "f": [
+          "udhaar dungi",
+          "udhaar dogi",
+          "udhaar dengi",
+          "udhaar degi",
+          "udhaar degi",
+          "udhaar dengi",
+          "udhaar dengi"
+        ]
+      },
+      "imp": [
+        "udhaar do",
+        "udhaar dijiye"
+      ],
+      "impNot": [
+        "udhaar mat do",
+        "udhaar mat dijiye"
+      ]
+    },
+    "ta": {
+      "dict": "kadan kudu",
+      "pres": "kadan kudukku",
+      "past": "kadan kudutt",
+      "fut": "kadan kudupp",
+      "cont": "kadan kuduthuttu",
+      "inf": "kadan kudukka",
+      "imp": [
+        "kadan kudu",
+        "kadan kudunga"
+      ],
+      "impNot": [
+        "kadan kudukkaadhe",
+        "kadan kudukkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "kadam kodukkuka",
+      "pres": "kadam kodukkunnu",
+      "past": "kadam koduthu",
+      "fut": "kadam kodukkum",
+      "cont": "kadam kodukkunnund",
+      "inf": "kadam kodukkaan",
+      "imp": [
+        "kadam kodukk",
+        "kadam kodukkoo"
+      ],
+      "impNot": [
+        "kadam kodukkalle",
+        "kadam kodukkalle"
+      ]
+    }
+  },
+  {
+    "id": "spend",
+    "group": "core",
+    "en": {
+      "base": "spend",
+      "past": "spent",
+      "ing": "spending",
+      "s": "spends"
+    },
+    "note": "money. For time everyone says time spend maadu, karna, pannu, cheyyuka.",
+    "kn": {
+      "dict": "kharchu maadu",
+      "pres": "kharchu maad",
+      "past": "kharchu maadid",
+      "cont": "kharchu maadta",
+      "neg": "kharchu maadalla",
+      "pastNeg": "kharchu maadlilla",
+      "inf": "kharchu maadakke",
+      "want": "kharchu maadbeku",
+      "imp": [
+        "kharchu maadu",
+        "kharchu maadi"
+      ],
+      "impNot": [
+        "kharchu maadbeda",
+        "kharchu maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "kharch karna",
+      "stem": "kharch kar",
+      "perf": {
+        "m": "kharch kiya",
+        "f": "kharch ki",
+        "pl": "kharch kiye"
+      },
+      "ne": true,
+      "imp": [
+        "kharch karo",
+        "kharch kijiye"
+      ],
+      "impNot": [
+        "kharch mat karo",
+        "kharch mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "selavu pannu",
+      "pres": "selavu pannu",
+      "past": "selavu pann",
+      "fut": "selavu pannuv",
+      "cont": "selavu pannittu",
+      "inf": "selavu panna",
+      "imp": [
+        "selavu pannu",
+        "selavu pannunga"
+      ],
+      "impNot": [
+        "selavu pannaadhe",
+        "selavu pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "chelavaakkuka",
+      "pres": "chelavaakkunnu",
+      "past": "chelavaakki",
+      "fut": "chelavaakkum",
+      "cont": "chelavaakkunnund",
+      "inf": "chelavaakkaan",
+      "imp": [
+        "chelavaakk",
+        "chelavaakkoo"
+      ],
+      "impNot": [
+        "chelavaakkalle",
+        "chelavaakkalle"
+      ]
+    }
+  },
+  {
+    "id": "save",
+    "group": "core",
+    "en": {
+      "base": "save",
+      "past": "saved",
+      "ing": "saving",
+      "s": "saves"
+    },
+    "note": "money",
+    "kn": {
+      "dict": "ulisu",
+      "pres": "ulis",
+      "past": "ulisid",
+      "cont": "ulista",
+      "neg": "ulisalla",
+      "pastNeg": "ulislilla",
+      "inf": "ulisakke",
+      "want": "ulisbeku",
+      "imp": [
+        "ulisu",
+        "ulisi"
+      ],
+      "impNot": [
+        "ulisbeda",
+        "ulisbedi"
+      ]
+    },
+    "hi": {
+      "dict": "bachaana",
+      "stem": "bachaa",
+      "perf": {
+        "m": "bachaaya",
+        "f": "bachaayi",
+        "pl": "bachaaye"
+      },
+      "ne": true,
+      "contStem": "bacha",
+      "imp": [
+        "bachaao",
+        "bachaaiye"
+      ],
+      "impNot": [
+        "mat bachaao",
+        "mat bachaaiye"
+      ]
+    },
+    "ta": {
+      "dict": "save pannu",
+      "pres": "save pannu",
+      "past": "save pann",
+      "fut": "save pannuv",
+      "cont": "save pannittu",
+      "inf": "save panna",
+      "imp": [
+        "save pannu",
+        "save pannunga"
+      ],
+      "impNot": [
+        "save pannaadhe",
+        "save pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "save cheyyuka",
+      "pres": "save cheyyunnu",
+      "past": "save cheythu",
+      "fut": "save cheyyum",
+      "cont": "save cheyyunnund",
+      "inf": "save cheyyaan",
+      "imp": [
+        "save cheyy",
+        "save cheyyoo"
+      ],
+      "impNot": [
+        "save cheyyalle",
+        "save cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "switchon",
+    "group": "core",
+    "en": {
+      "base": "switch on",
+      "past": "switched on",
+      "ing": "switching on",
+      "s": "switches on"
+    },
+    "note": "Just say on: fan on maadi, fan on karo, fan on pannunga, fan on aakkoo.",
+    "kn": {
+      "dict": "on maadu",
+      "pres": "on maad",
+      "past": "on maadid",
+      "cont": "on maadta",
+      "neg": "on maadalla",
+      "pastNeg": "on maadlilla",
+      "inf": "on maadakke",
+      "want": "on maadbeku",
+      "imp": [
+        "on maadu",
+        "on maadi"
+      ],
+      "impNot": [
+        "on maadbeda",
+        "on maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "on karna",
+      "stem": "on kar",
+      "perf": {
+        "m": "on kiya",
+        "f": "on ki",
+        "pl": "on kiye"
+      },
+      "ne": true,
+      "imp": [
+        "on karo",
+        "on kijiye"
+      ],
+      "impNot": [
+        "on mat karo",
+        "on mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "on pannu",
+      "pres": "on pannu",
+      "past": "on pann",
+      "fut": "on pannuv",
+      "cont": "on pannittu",
+      "inf": "on panna",
+      "imp": [
+        "on pannu",
+        "on pannunga"
+      ],
+      "impNot": [
+        "on pannaadhe",
+        "on pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "on aakkuka",
+      "pres": "on aakkunnu",
+      "past": "on aakki",
+      "fut": "on aakkum",
+      "cont": "on aakkunnund",
+      "inf": "on aakkaan",
+      "imp": [
+        "on aakk",
+        "on aakkoo"
+      ],
+      "impNot": [
+        "on aakkalle",
+        "on aakkalle"
+      ]
+    }
+  },
+  {
+    "id": "switchoff",
+    "group": "core",
+    "en": {
+      "base": "switch off",
+      "past": "switched off",
+      "ing": "switching off",
+      "s": "switches off"
+    },
+    "note": "Delhi also says band karo for a light or a fan.",
+    "kn": {
+      "dict": "off maadu",
+      "pres": "off maad",
+      "past": "off maadid",
+      "cont": "off maadta",
+      "neg": "off maadalla",
+      "pastNeg": "off maadlilla",
+      "inf": "off maadakke",
+      "want": "off maadbeku",
+      "imp": [
+        "off maadu",
+        "off maadi"
+      ],
+      "impNot": [
+        "off maadbeda",
+        "off maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "off karna",
+      "stem": "off kar",
+      "perf": {
+        "m": "off kiya",
+        "f": "off ki",
+        "pl": "off kiye"
+      },
+      "ne": true,
+      "imp": [
+        "off karo",
+        "off kijiye"
+      ],
+      "impNot": [
+        "off mat karo",
+        "off mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "off pannu",
+      "pres": "off pannu",
+      "past": "off pann",
+      "fut": "off pannuv",
+      "cont": "off pannittu",
+      "inf": "off panna",
+      "imp": [
+        "off pannu",
+        "off pannunga"
+      ],
+      "impNot": [
+        "off pannaadhe",
+        "off pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "off aakkuka",
+      "pres": "off aakkunnu",
+      "past": "off aakki",
+      "fut": "off aakkum",
+      "cont": "off aakkunnund",
+      "inf": "off aakkaan",
+      "imp": [
+        "off aakk",
+        "off aakkoo"
+      ],
+      "impNot": [
+        "off aakkalle",
+        "off aakkalle"
+      ]
+    }
+  },
+  {
+    "id": "iron",
+    "group": "core",
+    "en": {
+      "base": "iron",
+      "past": "ironed",
+      "ing": "ironing",
+      "s": "irons"
+    },
+    "note": "clothes. Delhi says press karna. The iron man on the street is the istriwala.",
+    "kn": {
+      "dict": "iron maadu",
+      "pres": "iron maad",
+      "past": "iron maadid",
+      "cont": "iron maadta",
+      "neg": "iron maadalla",
+      "pastNeg": "iron maadlilla",
+      "inf": "iron maadakke",
+      "want": "iron maadbeku",
+      "imp": [
+        "iron maadu",
+        "iron maadi"
+      ],
+      "impNot": [
+        "iron maadbeda",
+        "iron maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "press karna",
+      "stem": "press kar",
+      "perf": {
+        "m": "press kiya",
+        "f": "press ki",
+        "pl": "press kiye"
+      },
+      "ne": true,
+      "imp": [
+        "press karo",
+        "press kijiye"
+      ],
+      "impNot": [
+        "press mat karo",
+        "press mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "iron pannu",
+      "pres": "iron pannu",
+      "past": "iron pann",
+      "fut": "iron pannuv",
+      "cont": "iron pannittu",
+      "inf": "iron panna",
+      "imp": [
+        "iron pannu",
+        "iron pannunga"
+      ],
+      "impNot": [
+        "iron pannaadhe",
+        "iron pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "iron cheyyuka",
+      "pres": "iron cheyyunnu",
+      "past": "iron cheythu",
+      "fut": "iron cheyyum",
+      "cont": "iron cheyyunnund",
+      "inf": "iron cheyyaan",
+      "imp": [
+        "iron cheyy",
+        "iron cheyyoo"
+      ],
+      "impNot": [
+        "iron cheyyalle",
+        "iron cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "shift",
+    "group": "core",
+    "en": {
+      "base": "move house",
+      "past": "moved house",
+      "ing": "moving house",
+      "s": "moves house"
+    },
+    "note": "Indians say shift: mane shift maadide, ghar shift kiya, veedu shift pannom.",
+    "kn": {
+      "dict": "shift maadu",
+      "pres": "shift maad",
+      "past": "shift maadid",
+      "cont": "shift maadta",
+      "neg": "shift maadalla",
+      "pastNeg": "shift maadlilla",
+      "inf": "shift maadakke",
+      "want": "shift maadbeku",
+      "imp": [
+        "shift maadu",
+        "shift maadi"
+      ],
+      "impNot": [
+        "shift maadbeda",
+        "shift maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "shift karna",
+      "stem": "shift kar",
+      "perf": {
+        "m": "shift kiya",
+        "f": "shift ki",
+        "pl": "shift kiye"
+      },
+      "ne": true,
+      "imp": [
+        "shift karo",
+        "shift kijiye"
+      ],
+      "impNot": [
+        "shift mat karo",
+        "shift mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "shift pannu",
+      "pres": "shift pannu",
+      "past": "shift pann",
+      "fut": "shift pannuv",
+      "cont": "shift pannittu",
+      "inf": "shift panna",
+      "imp": [
+        "shift pannu",
+        "shift pannunga"
+      ],
+      "impNot": [
+        "shift pannaadhe",
+        "shift pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "shift cheyyuka",
+      "pres": "shift cheyyunnu",
+      "past": "shift cheythu",
+      "fut": "shift cheyyum",
+      "cont": "shift cheyyunnund",
+      "inf": "shift cheyyaan",
+      "imp": [
+        "shift cheyy",
+        "shift cheyyoo"
+      ],
+      "impNot": [
+        "shift cheyyalle",
+        "shift cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "lock",
+    "group": "core",
+    "en": {
+      "base": "lock",
+      "past": "locked",
+      "ing": "locking",
+      "s": "locks"
+    },
+    "kn": {
+      "dict": "lock maadu",
+      "pres": "lock maad",
+      "past": "lock maadid",
+      "cont": "lock maadta",
+      "neg": "lock maadalla",
+      "pastNeg": "lock maadlilla",
+      "inf": "lock maadakke",
+      "want": "lock maadbeku",
+      "imp": [
+        "lock maadu",
+        "lock maadi"
+      ],
+      "impNot": [
+        "lock maadbeda",
+        "lock maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "lock karna",
+      "stem": "lock kar",
+      "perf": {
+        "m": "lock kiya",
+        "f": "lock ki",
+        "pl": "lock kiye"
+      },
+      "ne": true,
+      "imp": [
+        "lock karo",
+        "lock kijiye"
+      ],
+      "impNot": [
+        "lock mat karo",
+        "lock mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "lock pannu",
+      "pres": "lock pannu",
+      "past": "lock pann",
+      "fut": "lock pannuv",
+      "cont": "lock pannittu",
+      "inf": "lock panna",
+      "imp": [
+        "lock pannu",
+        "lock pannunga"
+      ],
+      "impNot": [
+        "lock pannaadhe",
+        "lock pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "lock cheyyuka",
+      "pres": "lock cheyyunnu",
+      "past": "lock cheythu",
+      "fut": "lock cheyyum",
+      "cont": "lock cheyyunnund",
+      "inf": "lock cheyyaan",
+      "imp": [
+        "lock cheyy",
+        "lock cheyyoo"
+      ],
+      "impNot": [
+        "lock cheyyalle",
+        "lock cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "meet",
+    "group": "core",
+    "en": {
+      "base": "meet",
+      "past": "met",
+      "ing": "meeting",
+      "s": "meets"
+    },
+    "note": "Hindi milna takes se: main usse milta hoon.",
+    "kn": {
+      "dict": "meet maadu",
+      "pres": "meet maad",
+      "past": "meet maadid",
+      "cont": "meet maadta",
+      "neg": "meet maadalla",
+      "pastNeg": "meet maadlilla",
+      "inf": "meet maadakke",
+      "want": "meet maadbeku",
+      "imp": [
+        "meet maadu",
+        "meet maadi"
+      ],
+      "impNot": [
+        "meet maadbeda",
+        "meet maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "milna",
+      "stem": "mil",
+      "perf": {
+        "m": "mila",
+        "f": "mili",
+        "pl": "mile"
+      },
+      "ne": false,
+      "imp": [
+        "milo",
+        "miliye"
+      ],
+      "impNot": [
+        "mat milo",
+        "mat miliye"
+      ]
+    },
+    "ta": {
+      "dict": "meet pannu",
+      "pres": "meet pannu",
+      "past": "meet pann",
+      "fut": "meet pannuv",
+      "cont": "meet pannittu",
+      "inf": "meet panna",
+      "imp": [
+        "meet pannu",
+        "meet pannunga"
+      ],
+      "impNot": [
+        "meet pannaadhe",
+        "meet pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "meet cheyyuka",
+      "pres": "meet cheyyunnu",
+      "past": "meet cheythu",
+      "fut": "meet cheyyum",
+      "cont": "meet cheyyunnund",
+      "inf": "meet cheyyaan",
+      "imp": [
+        "meet cheyy",
+        "meet cheyyoo"
+      ],
+      "impNot": [
+        "meet cheyyalle",
+        "meet cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "invite",
+    "group": "core",
+    "en": {
+      "base": "invite",
+      "past": "invited",
+      "ing": "inviting",
+      "s": "invites"
+    },
+    "note": "bulaana and koopdu also mean call someone over. kshanikkuka is for weddings and functions.",
+    "kn": {
+      "dict": "invite maadu",
+      "pres": "invite maad",
+      "past": "invite maadid",
+      "cont": "invite maadta",
+      "neg": "invite maadalla",
+      "pastNeg": "invite maadlilla",
+      "inf": "invite maadakke",
+      "want": "invite maadbeku",
+      "imp": [
+        "invite maadu",
+        "invite maadi"
+      ],
+      "impNot": [
+        "invite maadbeda",
+        "invite maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "bulaana",
+      "stem": "bulaa",
+      "perf": {
+        "m": "bulaaya",
+        "f": "bulaayi",
+        "pl": "bulaaye"
+      },
+      "ne": true,
+      "contStem": "bula",
+      "imp": [
+        "bulaao",
+        "bulaaiye"
+      ],
+      "impNot": [
+        "mat bulaao",
+        "mat bulaaiye"
+      ]
+    },
+    "ta": {
+      "dict": "koopdu",
+      "pres": "koopd",
+      "past": "koopt",
+      "fut": "koopduv",
+      "cont": "kooptuttu",
+      "inf": "koopda",
+      "imp": [
+        "koopdu",
+        "koopdunga"
+      ],
+      "impNot": [
+        "koopdaadhe",
+        "koopdaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "kshanikkuka",
+      "pres": "kshanikkunnu",
+      "past": "kshanichu",
+      "fut": "kshanikkum",
+      "cont": "kshanikkunnund",
+      "inf": "kshanikkaan",
+      "imp": [
+        "kshanikk",
+        "kshanikkoo"
+      ],
+      "impNot": [
+        "kshanikkalle",
+        "kshanikkalle"
+      ]
+    }
+  },
+  {
+    "id": "understand",
+    "group": "core",
+    "en": {
+      "base": "understand",
+      "past": "understood",
+      "ing": "understanding",
+      "s": "understands"
+    },
+    "note": "The everyday line puts I in the to-form: nanage artha aaytu, mujhe samajh aaya, enakku puriyudhu, enikku manassilaayi.",
+    "kn": {
+      "dict": "artha maadko",
+      "pres": "artha maadko",
+      "past": "artha maadkond",
+      "cont": "artha maadkota",
+      "neg": "artha maadkolalla",
+      "pastNeg": "artha maadkollilla",
+      "inf": "artha maadkolakke",
+      "want": "artha maadkobeku",
+      "imp": [
+        "artha maadko",
+        "artha maadkolli"
+      ],
+      "impNot": [
+        "artha maadkobeda",
+        "artha maadkobedi"
+      ]
+    },
+    "hi": {
+      "dict": "samajhna",
+      "stem": "samajh",
+      "perf": {
+        "m": "samjha",
+        "f": "samjhi",
+        "pl": "samjhe"
+      },
+      "ne": true,
+      "fut": {
+        "m": [
+          "samjhunga",
+          "samjhoge",
+          "samjhenge",
+          "samjhega",
+          "samjhegi",
+          "samjhenge",
+          "samjhenge"
+        ],
+        "f": [
+          "samjhungi",
+          "samjhogi",
+          "samjhengi",
+          "samjhegi",
+          "samjhegi",
+          "samjhengi",
+          "samjhengi"
+        ]
+      },
+      "imp": [
+        "samjho",
+        "samjhiye"
+      ],
+      "impNot": [
+        "mat samjho",
+        "mat samjhiye"
+      ]
+    },
+    "ta": {
+      "dict": "purinjukko",
+      "pres": "purinjukku",
+      "past": "purinjukitt",
+      "fut": "purinjukkuv",
+      "cont": "purinjukittu",
+      "inf": "purinjukka",
+      "imp": [
+        "purinjukko",
+        "purinjukkonga"
+      ],
+      "impNot": [
+        "purinjukkaadhe",
+        "purinjukkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "manassilaakkuka",
+      "pres": "manassilaakkunnu",
+      "past": "manassilaakki",
+      "fut": "manassilaakkum",
+      "cont": "manassilaakkunnund",
+      "inf": "manassilaakkaan",
+      "imp": [
+        "manassilaakk",
+        "manassilaakkoo"
+      ],
+      "impNot": [
+        "manassilaakkalle",
+        "manassilaakkalle"
+      ]
+    }
+  },
+  {
+    "id": "forget",
+    "group": "core",
+    "en": {
+      "base": "forget",
+      "past": "forgot",
+      "ing": "forgetting",
+      "s": "forgets"
+    },
+    "note": "Also said with I in the to-form: nanage maretoytu, enakku marandhu pochu, enikku marannu poyi. Delhi says main bhool gaya.",
+    "kn": {
+      "dict": "maretbidu",
+      "pres": "maretbid",
+      "past": "maretbitt",
+      "cont": "maretbidta",
+      "neg": "mareyalla",
+      "pastNeg": "maretilla",
+      "inf": "mareyakke",
+      "want": "marebeku",
+      "imp": [
+        "maretbidu",
+        "maretbidi"
+      ],
+      "impNot": [
+        "marebeda",
+        "marebedi"
+      ]
+    },
+    "hi": {
+      "dict": "bhoolna",
+      "stem": "bhool",
+      "perf": {
+        "m": "bhoola",
+        "f": "bhooli",
+        "pl": "bhoole"
+      },
+      "ne": false,
+      "imp": [
+        "bhool jaao",
+        "bhool jaaiye"
+      ],
+      "impNot": [
+        "mat bhoolo",
+        "mat bhooliye"
+      ]
+    },
+    "ta": {
+      "dict": "mara",
+      "pres": "marakku",
+      "past": "marandh",
+      "fut": "marapp",
+      "cont": "marandhuttu",
+      "inf": "marakka",
+      "imp": [
+        "marandhudu",
+        "marandhudunga"
+      ],
+      "impNot": [
+        "marakkaadhe",
+        "marakkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "marakkuka",
+      "pres": "marakkunnu",
+      "past": "marannu",
+      "fut": "marakkum",
+      "cont": "marakkunnund",
+      "inf": "marakkaan",
+      "imp": [
+        "marakk",
+        "marakkoo"
+      ],
+      "impNot": [
+        "marakkalle",
+        "marakkalle"
+      ]
+    }
+  },
+  {
+    "id": "lose",
+    "group": "core",
+    "en": {
+      "base": "lose",
+      "past": "lost",
+      "ing": "losing",
+      "s": "loses"
+    },
+    "note": "a thing. Often said as it got lost: phone kaltu hoytu, phone kho gaya, phone tholanjiduchu, phone poyi.",
+    "kn": {
+      "dict": "kalko",
+      "pres": "kalko",
+      "past": "kalkond",
+      "cont": "kalkota",
+      "neg": "kalkolalla",
+      "pastNeg": "kalkollilla",
+      "inf": "kalkolakke",
+      "want": "kalkobeku",
+      "imp": [
+        "kalko",
+        "kalkolli"
+      ],
+      "impNot": [
+        "kalkobeda",
+        "kalkobedi"
+      ]
+    },
+    "hi": {
+      "dict": "khona",
+      "stem": "kho",
+      "perf": {
+        "m": "kho diya",
+        "f": "kho di",
+        "pl": "kho diye"
+      },
+      "ne": true,
+      "fut": {
+        "m": [
+          "khoonga",
+          "khooge",
+          "khoenge",
+          "khoega",
+          "khoegi",
+          "khoenge",
+          "khoenge"
+        ],
+        "f": [
+          "khoongi",
+          "khoogi",
+          "khoengi",
+          "khoegi",
+          "khoegi",
+          "khoengi",
+          "khoengi"
+        ]
+      },
+      "imp": [
+        "kho do",
+        "kho dijiye"
+      ],
+      "impNot": [
+        "mat khona",
+        "mat khoiye"
+      ]
+    },
+    "ta": {
+      "dict": "tholai",
+      "pres": "tholaikki",
+      "past": "tholaich",
+      "fut": "tholaipp",
+      "cont": "tholaichittu",
+      "inf": "tholaikka",
+      "imp": [
+        "tholai",
+        "tholainga"
+      ],
+      "impNot": [
+        "tholaikkaadhe",
+        "tholaikkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "kalayuka",
+      "pres": "kalayunnu",
+      "past": "kalanju",
+      "fut": "kalayum",
+      "cont": "kalayunnund",
+      "inf": "kalayaan",
+      "imp": [
+        "kala",
+        "kalayoo"
+      ],
+      "impNot": [
+        "kalayalle",
+        "kalayalle"
+      ]
+    }
+  },
+  {
+    "id": "use",
+    "group": "core",
+    "en": {
+      "base": "use",
+      "past": "used",
+      "ing": "using",
+      "s": "uses"
+    },
+    "kn": {
+      "dict": "use maadu",
+      "pres": "use maad",
+      "past": "use maadid",
+      "cont": "use maadta",
+      "neg": "use maadalla",
+      "pastNeg": "use maadlilla",
+      "inf": "use maadakke",
+      "want": "use maadbeku",
+      "imp": [
+        "use maadu",
+        "use maadi"
+      ],
+      "impNot": [
+        "use maadbeda",
+        "use maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "use karna",
+      "stem": "use kar",
+      "perf": {
+        "m": "use kiya",
+        "f": "use ki",
+        "pl": "use kiye"
+      },
+      "ne": true,
+      "imp": [
+        "use karo",
+        "use kijiye"
+      ],
+      "impNot": [
+        "use mat karo",
+        "use mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "use pannu",
+      "pres": "use pannu",
+      "past": "use pann",
+      "fut": "use pannuv",
+      "cont": "use pannittu",
+      "inf": "use panna",
+      "imp": [
+        "use pannu",
+        "use pannunga"
+      ],
+      "impNot": [
+        "use pannaadhe",
+        "use pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "use cheyyuka",
+      "pres": "use cheyyunnu",
+      "past": "use cheythu",
+      "fut": "use cheyyum",
+      "cont": "use cheyyunnund",
+      "inf": "use cheyyaan",
+      "imp": [
+        "use cheyy",
+        "use cheyyoo"
+      ],
+      "impNot": [
+        "use cheyyalle",
+        "use cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "join",
+    "group": "core",
+    "en": {
+      "base": "join",
+      "past": "joined",
+      "ing": "joining",
+      "s": "joins"
+    },
+    "note": "a class, a company. Bangalore says join aagu: naanu company-ge join aade.",
+    "kn": {
+      "dict": "join aagu",
+      "pres": "join aag",
+      "past": "join aad",
+      "cont": "join aagta",
+      "neg": "join aagalla",
+      "pastNeg": "join aaglilla",
+      "inf": "join aagakke",
+      "want": "join aagbeku",
+      "imp": [
+        "join aagu",
+        "join aagi"
+      ],
+      "impNot": [
+        "join aagbeda",
+        "join aagbedi"
+      ]
+    },
+    "hi": {
+      "dict": "join karna",
+      "stem": "join kar",
+      "perf": {
+        "m": "join kiya",
+        "f": "join ki",
+        "pl": "join kiye"
+      },
+      "ne": true,
+      "imp": [
+        "join karo",
+        "join kijiye"
+      ],
+      "impNot": [
+        "join mat karo",
+        "join mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "join pannu",
+      "pres": "join pannu",
+      "past": "join pann",
+      "fut": "join pannuv",
+      "cont": "join pannittu",
+      "inf": "join panna",
+      "imp": [
+        "join pannu",
+        "join pannunga"
+      ],
+      "impNot": [
+        "join pannaadhe",
+        "join pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "join cheyyuka",
+      "pres": "join cheyyunnu",
+      "past": "join cheythu",
+      "fut": "join cheyyum",
+      "cont": "join cheyyunnund",
+      "inf": "join cheyyaan",
+      "imp": [
+        "join cheyy",
+        "join cheyyoo"
+      ],
+      "impNot": [
+        "join cheyyalle",
+        "join cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "attend",
+    "group": "core",
+    "en": {
+      "base": "attend",
+      "past": "attended",
+      "ing": "attending",
+      "s": "attends"
+    },
+    "kn": {
+      "dict": "attend maadu",
+      "pres": "attend maad",
+      "past": "attend maadid",
+      "cont": "attend maadta",
+      "neg": "attend maadalla",
+      "pastNeg": "attend maadlilla",
+      "inf": "attend maadakke",
+      "want": "attend maadbeku",
+      "imp": [
+        "attend maadu",
+        "attend maadi"
+      ],
+      "impNot": [
+        "attend maadbeda",
+        "attend maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "attend karna",
+      "stem": "attend kar",
+      "perf": {
+        "m": "attend kiya",
+        "f": "attend ki",
+        "pl": "attend kiye"
+      },
+      "ne": true,
+      "imp": [
+        "attend karo",
+        "attend kijiye"
+      ],
+      "impNot": [
+        "attend mat karo",
+        "attend mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "attend pannu",
+      "pres": "attend pannu",
+      "past": "attend pann",
+      "fut": "attend pannuv",
+      "cont": "attend pannittu",
+      "inf": "attend panna",
+      "imp": [
+        "attend pannu",
+        "attend pannunga"
+      ],
+      "impNot": [
+        "attend pannaadhe",
+        "attend pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "attend cheyyuka",
+      "pres": "attend cheyyunnu",
+      "past": "attend cheythu",
+      "fut": "attend cheyyum",
+      "cont": "attend cheyyunnund",
+      "inf": "attend cheyyaan",
+      "imp": [
+        "attend cheyy",
+        "attend cheyyoo"
+      ],
+      "impNot": [
+        "attend cheyyalle",
+        "attend cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "study",
+    "group": "core",
+    "en": {
+      "base": "study",
+      "past": "studied",
+      "ing": "studying",
+      "s": "studies"
+    },
+    "note": "Tamil uses the same word for read and study (padi); Malayalam the same word for learn and study (padikkuka).",
+    "kn": {
+      "dict": "odko",
+      "pres": "odko",
+      "past": "odkond",
+      "cont": "odkota",
+      "neg": "odkolalla",
+      "pastNeg": "odkollilla",
+      "inf": "odkolakke",
+      "want": "odkobeku",
+      "imp": [
+        "odko",
+        "odkolli"
+      ],
+      "impNot": [
+        "odkobeda",
+        "odkobedi"
+      ]
+    },
+    "hi": {
+      "dict": "padhai karna",
+      "stem": "padhai kar",
+      "perf": {
+        "m": "padhai ki",
+        "f": "padhai ki",
+        "pl": "padhai ki"
+      },
+      "ne": true,
+      "imp": [
+        "padhai karo",
+        "padhai kijiye"
+      ],
+      "impNot": [
+        "padhai mat karo",
+        "padhai mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "padi",
+      "pres": "padikki",
+      "past": "padich",
+      "fut": "padipp",
+      "cont": "padichittu",
+      "inf": "padikka",
+      "imp": [
+        "padi",
+        "padinga"
+      ],
+      "impNot": [
+        "padikkaadhe",
+        "padikkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "padikkuka",
+      "pres": "padikkunnu",
+      "past": "padichu",
+      "fut": "padikkum",
+      "cont": "padikkunnund",
+      "inf": "padikkaan",
+      "imp": [
+        "padikk",
+        "padikkoo"
+      ],
+      "impNot": [
+        "padikkalle",
+        "padikkalle"
+      ]
+    }
+  },
+  {
+    "id": "reply",
+    "group": "core",
+    "en": {
+      "base": "reply",
+      "past": "replied",
+      "ing": "replying",
+      "s": "replies"
+    },
+    "kn": {
+      "dict": "reply maadu",
+      "pres": "reply maad",
+      "past": "reply maadid",
+      "cont": "reply maadta",
+      "neg": "reply maadalla",
+      "pastNeg": "reply maadlilla",
+      "inf": "reply maadakke",
+      "want": "reply maadbeku",
+      "imp": [
+        "reply maadu",
+        "reply maadi"
+      ],
+      "impNot": [
+        "reply maadbeda",
+        "reply maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "reply karna",
+      "stem": "reply kar",
+      "perf": {
+        "m": "reply kiya",
+        "f": "reply ki",
+        "pl": "reply kiye"
+      },
+      "ne": true,
+      "imp": [
+        "reply karo",
+        "reply kijiye"
+      ],
+      "impNot": [
+        "reply mat karo",
+        "reply mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "reply pannu",
+      "pres": "reply pannu",
+      "past": "reply pann",
+      "fut": "reply pannuv",
+      "cont": "reply pannittu",
+      "inf": "reply panna",
+      "imp": [
+        "reply pannu",
+        "reply pannunga"
+      ],
+      "impNot": [
+        "reply pannaadhe",
+        "reply pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "reply cheyyuka",
+      "pres": "reply cheyyunnu",
+      "past": "reply cheythu",
+      "fut": "reply cheyyum",
+      "cont": "reply cheyyunnund",
+      "inf": "reply cheyyaan",
+      "imp": [
+        "reply cheyy",
+        "reply cheyyoo"
+      ],
+      "impNot": [
+        "reply cheyyalle",
+        "reply cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "share",
+    "group": "core",
+    "en": {
+      "base": "share",
+      "past": "shared",
+      "ing": "sharing",
+      "s": "shares"
+    },
+    "kn": {
+      "dict": "share maadu",
+      "pres": "share maad",
+      "past": "share maadid",
+      "cont": "share maadta",
+      "neg": "share maadalla",
+      "pastNeg": "share maadlilla",
+      "inf": "share maadakke",
+      "want": "share maadbeku",
+      "imp": [
+        "share maadu",
+        "share maadi"
+      ],
+      "impNot": [
+        "share maadbeda",
+        "share maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "share karna",
+      "stem": "share kar",
+      "perf": {
+        "m": "share kiya",
+        "f": "share ki",
+        "pl": "share kiye"
+      },
+      "ne": true,
+      "imp": [
+        "share karo",
+        "share kijiye"
+      ],
+      "impNot": [
+        "share mat karo",
+        "share mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "share pannu",
+      "pres": "share pannu",
+      "past": "share pann",
+      "fut": "share pannuv",
+      "cont": "share pannittu",
+      "inf": "share panna",
+      "imp": [
+        "share pannu",
+        "share pannunga"
+      ],
+      "impNot": [
+        "share pannaadhe",
+        "share pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "share cheyyuka",
+      "pres": "share cheyyunnu",
+      "past": "share cheythu",
+      "fut": "share cheyyum",
+      "cont": "share cheyyunnund",
+      "inf": "share cheyyaan",
+      "imp": [
+        "share cheyy",
+        "share cheyyoo"
+      ],
+      "impNot": [
+        "share cheyyalle",
+        "share cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "pack",
+    "group": "core",
+    "en": {
+      "base": "pack",
+      "past": "packed",
+      "ing": "packing",
+      "s": "packs"
+    },
+    "note": "At a restaurant say parcel: parcel kodi, parcel kar dijiye, parcel pannunga, parcel tharoo.",
+    "kn": {
+      "dict": "pack maadu",
+      "pres": "pack maad",
+      "past": "pack maadid",
+      "cont": "pack maadta",
+      "neg": "pack maadalla",
+      "pastNeg": "pack maadlilla",
+      "inf": "pack maadakke",
+      "want": "pack maadbeku",
+      "imp": [
+        "pack maadu",
+        "pack maadi"
+      ],
+      "impNot": [
+        "pack maadbeda",
+        "pack maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "pack karna",
+      "stem": "pack kar",
+      "perf": {
+        "m": "pack kiya",
+        "f": "pack ki",
+        "pl": "pack kiye"
+      },
+      "ne": true,
+      "imp": [
+        "pack karo",
+        "pack kijiye"
+      ],
+      "impNot": [
+        "pack mat karo",
+        "pack mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "pack pannu",
+      "pres": "pack pannu",
+      "past": "pack pann",
+      "fut": "pack pannuv",
+      "cont": "pack pannittu",
+      "inf": "pack panna",
+      "imp": [
+        "pack pannu",
+        "pack pannunga"
+      ],
+      "impNot": [
+        "pack pannaadhe",
+        "pack pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "pack cheyyuka",
+      "pres": "pack cheyyunnu",
+      "past": "pack cheythu",
+      "fut": "pack cheyyum",
+      "cont": "pack cheyyunnund",
+      "inf": "pack cheyyaan",
+      "imp": [
+        "pack cheyy",
+        "pack cheyyoo"
+      ],
+      "impNot": [
+        "pack cheyyalle",
+        "pack cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "exchange",
+    "group": "core",
+    "en": {
+      "base": "exchange",
+      "past": "exchanged",
+      "ing": "exchanging",
+      "s": "exchanges"
+    },
+    "kn": {
+      "dict": "exchange maadu",
+      "pres": "exchange maad",
+      "past": "exchange maadid",
+      "cont": "exchange maadta",
+      "neg": "exchange maadalla",
+      "pastNeg": "exchange maadlilla",
+      "inf": "exchange maadakke",
+      "want": "exchange maadbeku",
+      "imp": [
+        "exchange maadu",
+        "exchange maadi"
+      ],
+      "impNot": [
+        "exchange maadbeda",
+        "exchange maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "exchange karna",
+      "stem": "exchange kar",
+      "perf": {
+        "m": "exchange kiya",
+        "f": "exchange ki",
+        "pl": "exchange kiye"
+      },
+      "ne": true,
+      "imp": [
+        "exchange karo",
+        "exchange kijiye"
+      ],
+      "impNot": [
+        "exchange mat karo",
+        "exchange mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "exchange pannu",
+      "pres": "exchange pannu",
+      "past": "exchange pann",
+      "fut": "exchange pannuv",
+      "cont": "exchange pannittu",
+      "inf": "exchange panna",
+      "imp": [
+        "exchange pannu",
+        "exchange pannunga"
+      ],
+      "impNot": [
+        "exchange pannaadhe",
+        "exchange pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "exchange cheyyuka",
+      "pres": "exchange cheyyunnu",
+      "past": "exchange cheythu",
+      "fut": "exchange cheyyum",
+      "cont": "exchange cheyyunnund",
+      "inf": "exchange cheyyaan",
+      "imp": [
+        "exchange cheyy",
+        "exchange cheyyoo"
+      ],
+      "impNot": [
+        "exchange cheyyalle",
+        "exchange cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "pray",
+    "group": "core",
+    "en": {
+      "base": "pray",
+      "past": "prayed",
+      "ing": "praying",
+      "s": "prays"
+    },
+    "note": "kumbidu is folding your hands before God. Delhi also says dua karna; Chennai churches say jebam pannu.",
+    "kn": {
+      "dict": "praarthane maadu",
+      "pres": "praarthane maad",
+      "past": "praarthane maadid",
+      "cont": "praarthane maadta",
+      "neg": "praarthane maadalla",
+      "pastNeg": "praarthane maadlilla",
+      "inf": "praarthane maadakke",
+      "want": "praarthane maadbeku",
+      "imp": [
+        "praarthane maadu",
+        "praarthane maadi"
+      ],
+      "impNot": [
+        "praarthane maadbeda",
+        "praarthane maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "praarthana karna",
+      "stem": "praarthana kar",
+      "perf": {
+        "m": "praarthana ki",
+        "f": "praarthana ki",
+        "pl": "praarthana ki"
+      },
+      "ne": true,
+      "imp": [
+        "praarthana karo",
+        "praarthana kijiye"
+      ],
+      "impNot": [
+        "praarthana mat karo",
+        "praarthana mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "kumbidu",
+      "pres": "kumbid",
+      "past": "kumbitt",
+      "fut": "kumbiduv",
+      "cont": "kumbittuttu",
+      "inf": "kumbida",
+      "imp": [
+        "kumbidu",
+        "kumbidunga"
+      ],
+      "impNot": [
+        "kumbidaadhe",
+        "kumbidaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "praarthikkuka",
+      "pres": "praarthikkunnu",
+      "past": "praarthichu",
+      "fut": "praarthikkum",
+      "cont": "praarthikkunnund",
+      "inf": "praarthikkaan",
+      "imp": [
+        "praarthikk",
+        "praarthikkoo"
+      ],
+      "impNot": [
+        "praarthikkalle",
+        "praarthikkalle"
+      ]
+    }
+  },
+  {
+    "id": "celebrate",
+    "group": "core",
+    "en": {
+      "base": "celebrate",
+      "past": "celebrated",
+      "ing": "celebrating",
+      "s": "celebrates"
+    },
+    "note": "a festival, a birthday: Diwali manaate hain, Deepavali kondaaduvom, Onam aaghoshichu.",
+    "kn": {
+      "dict": "celebrate maadu",
+      "pres": "celebrate maad",
+      "past": "celebrate maadid",
+      "cont": "celebrate maadta",
+      "neg": "celebrate maadalla",
+      "pastNeg": "celebrate maadlilla",
+      "inf": "celebrate maadakke",
+      "want": "celebrate maadbeku",
+      "imp": [
+        "celebrate maadu",
+        "celebrate maadi"
+      ],
+      "impNot": [
+        "celebrate maadbeda",
+        "celebrate maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "manaana",
+      "stem": "manaa",
+      "perf": {
+        "m": "manaaya",
+        "f": "manaayi",
+        "pl": "manaaye"
+      },
+      "ne": true,
+      "contStem": "mana",
+      "imp": [
+        "manaao",
+        "manaaiye"
+      ],
+      "impNot": [
+        "mat manaao",
+        "mat manaaiye"
+      ]
+    },
+    "ta": {
+      "dict": "kondaadu",
+      "pres": "kondaad",
+      "past": "kondaadin",
+      "fut": "kondaaduv",
+      "cont": "kondaadittu",
+      "inf": "kondaada",
+      "imp": [
+        "kondaadu",
+        "kondaadunga"
+      ],
+      "impNot": [
+        "kondaadaadhe",
+        "kondaadaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "aaghoshikkuka",
+      "pres": "aaghoshikkunnu",
+      "past": "aaghoshichu",
+      "fut": "aaghoshikkum",
+      "cont": "aaghoshikkunnund",
+      "inf": "aaghoshikkaan",
+      "imp": [
+        "aaghoshikk",
+        "aaghoshikkoo"
+      ],
+      "impNot": [
+        "aaghoshikkalle",
+        "aaghoshikkalle"
+      ]
+    }
+  },
+  {
+    "id": "perform",
+    "group": "core",
+    "en": {
+      "base": "perform",
+      "past": "performed",
+      "ing": "performing",
+      "s": "performs"
+    },
+    "note": "on stage",
+    "kn": {
+      "dict": "perform maadu",
+      "pres": "perform maad",
+      "past": "perform maadid",
+      "cont": "perform maadta",
+      "neg": "perform maadalla",
+      "pastNeg": "perform maadlilla",
+      "inf": "perform maadakke",
+      "want": "perform maadbeku",
+      "imp": [
+        "perform maadu",
+        "perform maadi"
+      ],
+      "impNot": [
+        "perform maadbeda",
+        "perform maadbedi"
+      ]
+    },
+    "hi": {
+      "dict": "perform karna",
+      "stem": "perform kar",
+      "perf": {
+        "m": "perform kiya",
+        "f": "perform ki",
+        "pl": "perform kiye"
+      },
+      "ne": true,
+      "imp": [
+        "perform karo",
+        "perform kijiye"
+      ],
+      "impNot": [
+        "perform mat karo",
+        "perform mat kijiye"
+      ]
+    },
+    "ta": {
+      "dict": "perform pannu",
+      "pres": "perform pannu",
+      "past": "perform pann",
+      "fut": "perform pannuv",
+      "cont": "perform pannittu",
+      "inf": "perform panna",
+      "imp": [
+        "perform pannu",
+        "perform pannunga"
+      ],
+      "impNot": [
+        "perform pannaadhe",
+        "perform pannaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "perform cheyyuka",
+      "pres": "perform cheyyunnu",
+      "past": "perform cheythu",
+      "fut": "perform cheyyum",
+      "cont": "perform cheyyunnund",
+      "inf": "perform cheyyaan",
+      "imp": [
+        "perform cheyy",
+        "perform cheyyoo"
+      ],
+      "impNot": [
+        "perform cheyyalle",
+        "perform cheyyalle"
+      ]
+    }
+  },
+  {
+    "id": "boil",
+    "group": "core",
+    "en": {
+      "base": "boil",
+      "past": "boiled",
+      "ing": "boiling",
+      "s": "boils"
+    },
+    "note": "water, milk. For milk Bangalore also says haalu kaayisu.",
+    "kn": {
+      "dict": "kudisu",
+      "pres": "kudis",
+      "past": "kudisid",
+      "cont": "kudista",
+      "neg": "kudisalla",
+      "pastNeg": "kudislilla",
+      "inf": "kudisakke",
+      "want": "kudisbeku",
+      "imp": [
+        "kudisu",
+        "kudisi"
+      ],
+      "impNot": [
+        "kudisbeda",
+        "kudisbedi"
+      ]
+    },
+    "hi": {
+      "dict": "ubaalna",
+      "stem": "ubaal",
+      "perf": {
+        "m": "ubaala",
+        "f": "ubaali",
+        "pl": "ubaale"
+      },
+      "ne": true,
+      "imp": [
+        "ubaalo",
+        "ubaaliye"
+      ],
+      "impNot": [
+        "mat ubaalo",
+        "mat ubaaliye"
+      ]
+    },
+    "ta": {
+      "dict": "kaachu",
+      "pres": "kaachu",
+      "past": "kaachin",
+      "fut": "kaachuv",
+      "cont": "kaachittu",
+      "inf": "kaacha",
+      "imp": [
+        "kaachu",
+        "kaachunga"
+      ],
+      "impNot": [
+        "kaachaadhe",
+        "kaachaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "thilappikkuka",
+      "pres": "thilappikkunnu",
+      "past": "thilappichu",
+      "fut": "thilappikkum",
+      "cont": "thilappikkunnund",
+      "inf": "thilappikkaan",
+      "imp": [
+        "thilappikk",
+        "thilappikkoo"
+      ],
+      "impNot": [
+        "thilappikkalle",
+        "thilappikkalle"
+      ]
+    }
+  },
+  {
+    "id": "wakeup",
+    "group": "core",
+    "en": {
+      "base": "wake up",
+      "past": "woke up",
+      "ing": "waking up",
+      "s": "wakes up"
+    },
+    "note": "get up in the morning. Hindi uthna is both wake up and get up.",
+    "kn": {
+      "dict": "eddelu",
+      "pres": "eddel",
+      "past": "edd",
+      "cont": "eddelta",
+      "neg": "eddelalla",
+      "pastNeg": "eddelilla",
+      "inf": "eddelakke",
+      "want": "eddelbeku",
+      "imp": [
+        "eddelu",
+        "eddeli"
+      ],
+      "impNot": [
+        "eddelbeda",
+        "eddelbedi"
+      ]
+    },
+    "hi": {
+      "dict": "uthna",
+      "stem": "uth",
+      "perf": {
+        "m": "utha",
+        "f": "uthi",
+        "pl": "uthe"
+      },
+      "ne": false,
+      "imp": [
+        "utho",
+        "uthiye"
+      ],
+      "impNot": [
+        "mat utho",
+        "mat uthiye"
+      ]
+    },
+    "ta": {
+      "dict": "ezhundhiru",
+      "pres": "ezhundhirikki",
+      "past": "ezhundh",
+      "fut": "ezhundhirupp",
+      "cont": "ezhundhuttu",
+      "inf": "ezhundhirikka",
+      "imp": [
+        "ezhundhiru",
+        "ezhundhirunga"
+      ],
+      "impNot": [
+        "ezhundhirikkaadhe",
+        "ezhundhirikkaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "ezhunnelkkuka",
+      "pres": "ezhunnelkkunnu",
+      "past": "ezhunnettu",
+      "fut": "ezhunnelkkum",
+      "cont": "ezhunnelkkunnund",
+      "inf": "ezhunnelkkaan",
+      "imp": [
+        "ezhunnelkk",
+        "ezhunnelkkoo"
+      ],
+      "impNot": [
+        "ezhunnelkkalle",
+        "ezhunnelkkalle"
+      ]
+    }
+  },
+  {
+    "id": "getready",
+    "group": "core",
+    "en": {
+      "base": "get ready",
+      "past": "got ready",
+      "ing": "getting ready",
+      "s": "gets ready"
+    },
+    "note": "Everyone says ready. Delhi: ready ho jaao.",
+    "kn": {
+      "dict": "ready aagu",
+      "pres": "ready aag",
+      "past": "ready aad",
+      "cont": "ready aagta",
+      "neg": "ready aagalla",
+      "pastNeg": "ready aaglilla",
+      "inf": "ready aagakke",
+      "want": "ready aagbeku",
+      "imp": [
+        "ready aagu",
+        "ready aagi"
+      ],
+      "impNot": [
+        "ready aagbeda",
+        "ready aagbedi"
+      ]
+    },
+    "hi": {
+      "dict": "ready hona",
+      "stem": "ready ho",
+      "perf": {
+        "m": "ready hua",
+        "f": "ready hui",
+        "pl": "ready hue"
+      },
+      "ne": false,
+      "fut": {
+        "m": [
+          "ready hoonga",
+          "ready hoge",
+          "ready honge",
+          "ready hoga",
+          "ready hogi",
+          "ready honge",
+          "ready honge"
+        ],
+        "f": [
+          "ready hoongi",
+          "ready hogi",
+          "ready hongi",
+          "ready hogi",
+          "ready hogi",
+          "ready hongi",
+          "ready hongi"
+        ]
+      },
+      "imp": [
+        "ready ho jaao",
+        "ready ho jaaiye"
+      ],
+      "impNot": [
+        "ready mat ho",
+        "ready mat hoiye"
+      ]
+    },
+    "ta": {
+      "dict": "ready aagu",
+      "pres": "ready aagu",
+      "past": "ready aayitt",
+      "fut": "ready aaguv",
+      "cont": "ready aagittu",
+      "inf": "ready aaga",
+      "imp": [
+        "ready aagu",
+        "ready aagunga"
+      ],
+      "impNot": [
+        "ready aagaadhe",
+        "ready aagaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "ready aavuka",
+      "pres": "ready aavunnu",
+      "past": "ready aayi",
+      "fut": "ready aavum",
+      "cont": "ready aavunnund",
+      "inf": "ready aavaan",
+      "pastNeg": "ready aayilla",
+      "imp": [
+        "ready aavu",
+        "ready aavoo"
+      ],
+      "impNot": [
+        "ready aavalle",
+        "ready aavalle"
+      ]
+    }
+  },
+  {
+    "id": "comeback",
+    "group": "core",
+    "en": {
+      "base": "come back",
+      "past": "came back",
+      "ing": "coming back",
+      "s": "comes back"
+    },
+    "kn": {
+      "dict": "vaapas baa",
+      "pres": "vaapas bar",
+      "past": "vaapas band",
+      "cont": "vaapas barta",
+      "neg": "vaapas baralla",
+      "pastNeg": "vaapas barlilla",
+      "inf": "vaapas barakke",
+      "want": "vaapas barbeku",
+      "imp": [
+        "vaapas baa",
+        "vaapas banni"
+      ],
+      "impNot": [
+        "vaapas barbeda",
+        "vaapas barbedi"
+      ]
+    },
+    "hi": {
+      "dict": "vaapas aana",
+      "stem": "vaapas aa",
+      "perf": {
+        "m": "vaapas aaya",
+        "f": "vaapas aayi",
+        "pl": "vaapas aaye"
+      },
+      "ne": false,
+      "imp": [
+        "vaapas aao",
+        "vaapas aaiye"
+      ],
+      "impNot": [
+        "vaapas mat aao",
+        "vaapas mat aaiye"
+      ]
+    },
+    "ta": {
+      "dict": "thirumbi vaa",
+      "pres": "thirumbi va",
+      "past": "thirumbi vandh",
+      "fut": "thirumbi varuv",
+      "cont": "thirumbi vandhuttu",
+      "inf": "thirumbi vara",
+      "imp": [
+        "thirumbi vaa",
+        "thirumbi vaanga"
+      ],
+      "impNot": [
+        "thirumbi varaadhe",
+        "thirumbi varaadheenga"
+      ]
+    },
+    "ml": {
+      "dict": "thirichu varuka",
+      "pres": "thirichu varunnu",
+      "past": "thirichu vannu",
+      "fut": "thirichu varum",
+      "cont": "thirichu varunnund",
+      "inf": "thirichu varaan",
+      "imp": [
+        "thirichu vaa",
+        "thirichu varoo"
+      ],
+      "impNot": [
+        "thirichu varalle",
+        "thirichu varalle"
+      ]
+    }
+  }
+]

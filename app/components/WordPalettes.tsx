@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {
   ADJECTIVES,
   ADJ_CATS,
+  DIRECTIONS,
   OBJECTS,
   QUANTITIES,
   QUESTION_WORDS,
@@ -47,6 +48,8 @@ const SKELETON: Record<ShapeId, { w: number; role: keyof typeof ROLE_COLOR }[]> 
   request: [{ w: 22, role: "when" }, { w: 36, role: "what" }, { w: 22, role: "action" }],
   goingTo: [{ w: 18, role: "who" }, { w: 26, role: "what" }, { w: 22, role: "action" }, { w: 24, role: "when" }],
   lets: [{ w: 34, role: "what" }, { w: 32, role: "action" }],
+  tell: [{ w: 30, role: "what" }, { w: 20, role: "when" }, { w: 30, role: "action" }],
+  feel: [{ w: 28, role: "who" }, { w: 34, role: "what" }, { w: 18, role: "action" }],
 };
 
 export function ShapeRail({ shape, onPick, rm }: { shape: ShapeId; onPick: (s: ShapeId) => void; rm: boolean }) {
@@ -215,6 +218,21 @@ export function QuestionWordPalette({ value, onPick, lang }: { value: string; on
             key={q.id} on={value === q.id} onClick={() => onPick(q.id)} tone="when"
             label={q.en} sub={lang === "fr" ? "" : q[lang as Lang]}
           />
+        ))}
+      </div>
+    </PaletteFrame>
+  );
+}
+
+// ............................................................ directions
+// Here, straight, left, slowly: the word that sits right before a command.
+export function DirectionPalette({ value, onPick, lang }: { value: string | null; onPick: (id: string | null) => void; lang: PathLang }) {
+  return (
+    <PaletteFrame label="WHERE OR HOW" title="Here, straight, left, slowly">
+      <div className="flex flex-wrap gap-1.5">
+        <WordChip on={value === null} onClick={() => onPick(null)} label="nothing" tone="when" />
+        {DIRECTIONS.map((d) => (
+          <WordChip key={d.id} on={value === d.id} onClick={() => onPick(d.id)} tone="when" label={d.en} sub={lang === "fr" ? "" : d[lang as Lang]} />
         ))}
       </div>
     </PaletteFrame>

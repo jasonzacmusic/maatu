@@ -1,0 +1,2404 @@
+{
+  "fill": {
+    "inf": "remplir",
+    "infSay": "rahn-pleer",
+    "aux": "a",
+    "pres": [
+      "remplis",
+      "remplis",
+      "remplissez",
+      "remplit",
+      "remplit",
+      "remplit",
+      "remplissent"
+    ],
+    "presSay": [
+      "rahn-plee",
+      "rahn-plee",
+      "rahn-plee-say",
+      "rahn-plee",
+      "rahn-plee",
+      "rahn-plee",
+      "rahn-pleess"
+    ],
+    "pp": "rempli",
+    "ppSay": "rahn-plee",
+    "imp": [
+      "remplis",
+      "remplissez"
+    ],
+    "impSay": [
+      "rahn-plee",
+      "rahn-plee-say"
+    ]
+  },
+  "sign": {
+    "inf": "signer",
+    "infSay": "see-nyay",
+    "aux": "a",
+    "pres": [
+      "signe",
+      "signes",
+      "signez",
+      "signe",
+      "signe",
+      "signe",
+      "signent"
+    ],
+    "presSay": [
+      "seeny",
+      "seeny",
+      "see-nyay",
+      "seeny",
+      "seeny",
+      "seeny",
+      "seeny"
+    ],
+    "pp": "signé",
+    "ppSay": "see-nyay",
+    "imp": [
+      "signe",
+      "signez"
+    ],
+    "impSay": [
+      "seeny",
+      "see-nyay"
+    ]
+  },
+  "submit": {
+    "inf": "remettre",
+    "infSay": "ruh-metr",
+    "aux": "a",
+    "pres": [
+      "remets",
+      "remets",
+      "remettez",
+      "remet",
+      "remet",
+      "remet",
+      "remettent"
+    ],
+    "presSay": [
+      "ruh-meh",
+      "ruh-meh",
+      "ruh-meh-tay",
+      "ruh-meh",
+      "ruh-meh",
+      "ruh-meh",
+      "ruh-met"
+    ],
+    "pp": "remis",
+    "ppSay": "ruh-mee",
+    "imp": [
+      "remets",
+      "remettez"
+    ],
+    "impSay": [
+      "ruh-meh",
+      "ruh-meh-tay"
+    ]
+  },
+  "apply": {
+    "inf": "postuler",
+    "infSay": "pos-tew-lay",
+    "aux": "a",
+    "pres": [
+      "postule",
+      "postules",
+      "postulez",
+      "postule",
+      "postule",
+      "postule",
+      "postulent"
+    ],
+    "presSay": [
+      "pos-tewl",
+      "pos-tewl",
+      "pos-tew-lay",
+      "pos-tewl",
+      "pos-tewl",
+      "pos-tewl",
+      "pos-tewl"
+    ],
+    "pp": "postulé",
+    "ppSay": "pos-tew-lay",
+    "imp": [
+      "postule",
+      "postulez"
+    ],
+    "impSay": [
+      "pos-tewl",
+      "pos-tew-lay"
+    ]
+  },
+  "renew": {
+    "inf": "renouveler",
+    "infSay": "ruh-noov-lay",
+    "aux": "a",
+    "pres": [
+      "renouvelle",
+      "renouvelles",
+      "renouvelez",
+      "renouvelle",
+      "renouvelle",
+      "renouvelle",
+      "renouvellent"
+    ],
+    "presSay": [
+      "ruh-noo-vel",
+      "ruh-noo-vel",
+      "ruh-noov-lay",
+      "ruh-noo-vel",
+      "ruh-noo-vel",
+      "ruh-noo-vel",
+      "ruh-noo-vel"
+    ],
+    "pp": "renouvelé",
+    "ppSay": "ruh-noov-lay",
+    "imp": [
+      "renouvelle",
+      "renouvelez"
+    ],
+    "impSay": [
+      "ruh-noo-vel",
+      "ruh-noov-lay"
+    ]
+  },
+  "check": {
+    "inf": "vérifier",
+    "infSay": "vay-ree-fyay",
+    "aux": "a",
+    "pres": [
+      "vérifie",
+      "vérifies",
+      "vérifiez",
+      "vérifie",
+      "vérifie",
+      "vérifie",
+      "vérifient"
+    ],
+    "presSay": [
+      "vay-ree-fee",
+      "vay-ree-fee",
+      "vay-ree-fyay",
+      "vay-ree-fee",
+      "vay-ree-fee",
+      "vay-ree-fee",
+      "vay-ree-fee"
+    ],
+    "pp": "vérifié",
+    "ppSay": "vay-ree-fyay",
+    "imp": [
+      "vérifie",
+      "vérifiez"
+    ],
+    "impSay": [
+      "vay-ree-fee",
+      "vay-ree-fyay"
+    ]
+  },
+  "collect": {
+    "inf": "récupérer",
+    "infSay": "ray-kew-pay-ray",
+    "aux": "a",
+    "pres": [
+      "récupère",
+      "récupères",
+      "récupérez",
+      "récupère",
+      "récupère",
+      "récupère",
+      "récupèrent"
+    ],
+    "presSay": [
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pay-ray",
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pehr"
+    ],
+    "pp": "récupéré",
+    "ppSay": "ray-kew-pay-ray",
+    "imp": [
+      "récupère",
+      "récupérez"
+    ],
+    "impSay": [
+      "ray-kew-pehr",
+      "ray-kew-pay-ray"
+    ]
+  },
+  "xerox": {
+    "inf": "photocopier",
+    "infSay": "fo-to-ko-pyay",
+    "aux": "a",
+    "pres": [
+      "photocopie",
+      "photocopies",
+      "photocopiez",
+      "photocopie",
+      "photocopie",
+      "photocopie",
+      "photocopient"
+    ],
+    "presSay": [
+      "fo-to-ko-pee",
+      "fo-to-ko-pee",
+      "fo-to-ko-pyay",
+      "fo-to-ko-pee",
+      "fo-to-ko-pee",
+      "fo-to-ko-pee",
+      "fo-to-ko-pee"
+    ],
+    "pp": "photocopié",
+    "ppSay": "fo-to-ko-pyay",
+    "imp": [
+      "photocopie",
+      "photocopiez"
+    ],
+    "impSay": [
+      "fo-to-ko-pee",
+      "fo-to-ko-pyay"
+    ]
+  },
+  "register": {
+    "inf": "inscrire",
+    "infSay": "an-skreer",
+    "aux": "e",
+    "refl": true,
+    "pres": [
+      "inscris",
+      "inscris",
+      "inscrivez",
+      "inscrit",
+      "inscrit",
+      "inscrit",
+      "inscrivent"
+    ],
+    "presSay": [
+      "an-skree",
+      "an-skree",
+      "an-skree-vay",
+      "an-skree",
+      "an-skree",
+      "an-skree",
+      "an-skreev"
+    ],
+    "pp": "inscrit",
+    "ppSay": "an-skree",
+    "imp": [
+      "inscris-toi",
+      "inscrivez-vous"
+    ],
+    "impSay": [
+      "an-skree-twa",
+      "an-skree-vay-voo"
+    ]
+  },
+  "complain": {
+    "inf": "plaindre",
+    "infSay": "plandr",
+    "aux": "e",
+    "refl": true,
+    "pres": [
+      "plains",
+      "plains",
+      "plaignez",
+      "plaint",
+      "plaint",
+      "plaint",
+      "plaignent"
+    ],
+    "presSay": [
+      "plan",
+      "plan",
+      "pleh-nyay",
+      "plan",
+      "plan",
+      "plan",
+      "plehny"
+    ],
+    "pp": "plaint",
+    "ppSay": "plan",
+    "imp": [
+      "plains-toi",
+      "plaignez-vous"
+    ],
+    "impSay": [
+      "plan-twa",
+      "pleh-nyay-voo"
+    ]
+  },
+  "turn": {
+    "inf": "tourner",
+    "infSay": "toor-nay",
+    "aux": "a",
+    "pres": [
+      "tourne",
+      "tournes",
+      "tournez",
+      "tourne",
+      "tourne",
+      "tourne",
+      "tournent"
+    ],
+    "presSay": [
+      "toorn",
+      "toorn",
+      "toor-nay",
+      "toorn",
+      "toorn",
+      "toorn",
+      "toorn"
+    ],
+    "pp": "tourné",
+    "ppSay": "toor-nay",
+    "imp": [
+      "tourne",
+      "tournez"
+    ],
+    "impSay": [
+      "toorn",
+      "toor-nay"
+    ]
+  },
+  "park": {
+    "inf": "garer",
+    "infSay": "ga-ray",
+    "aux": "a",
+    "pres": [
+      "gare",
+      "gares",
+      "garez",
+      "gare",
+      "gare",
+      "gare",
+      "garent"
+    ],
+    "presSay": [
+      "gar",
+      "gar",
+      "ga-ray",
+      "gar",
+      "gar",
+      "gar",
+      "gar"
+    ],
+    "pp": "garé",
+    "ppSay": "ga-ray",
+    "imp": [
+      "gare",
+      "garez"
+    ],
+    "impSay": [
+      "gar",
+      "ga-ray"
+    ]
+  },
+  "drop": {
+    "inf": "déposer",
+    "infSay": "day-po-zay",
+    "aux": "a",
+    "pres": [
+      "dépose",
+      "déposes",
+      "déposez",
+      "dépose",
+      "dépose",
+      "dépose",
+      "déposent"
+    ],
+    "presSay": [
+      "day-poz",
+      "day-poz",
+      "day-po-zay",
+      "day-poz",
+      "day-poz",
+      "day-poz",
+      "day-poz"
+    ],
+    "pp": "déposé",
+    "ppSay": "day-po-zay",
+    "imp": [
+      "dépose",
+      "déposez"
+    ],
+    "impSay": [
+      "day-poz",
+      "day-po-zay"
+    ]
+  },
+  "pickup": {
+    "inf": "récupérer",
+    "infSay": "ray-kew-pay-ray",
+    "aux": "a",
+    "pres": [
+      "récupère",
+      "récupères",
+      "récupérez",
+      "récupère",
+      "récupère",
+      "récupère",
+      "récupèrent"
+    ],
+    "presSay": [
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pay-ray",
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pehr",
+      "ray-kew-pehr"
+    ],
+    "pp": "récupéré",
+    "ppSay": "ray-kew-pay-ray",
+    "imp": [
+      "récupère",
+      "récupérez"
+    ],
+    "impSay": [
+      "ray-kew-pehr",
+      "ray-kew-pay-ray"
+    ]
+  },
+  "reach": {
+    "inf": "arriver",
+    "infSay": "a-ree-vay",
+    "aux": "e",
+    "pres": [
+      "arrive",
+      "arrives",
+      "arrivez",
+      "arrive",
+      "arrive",
+      "arrive",
+      "arrivent"
+    ],
+    "presSay": [
+      "a-reev",
+      "a-reev",
+      "a-ree-vay",
+      "a-reev",
+      "a-reev",
+      "a-reev",
+      "a-reev"
+    ],
+    "pp": "arrivé",
+    "ppSay": "a-ree-vay",
+    "imp": [
+      "arrive",
+      "arrivez"
+    ],
+    "impSay": [
+      "a-reev",
+      "a-ree-vay"
+    ]
+  },
+  "getdown": {
+    "inf": "descendre",
+    "infSay": "day-sahndr",
+    "aux": "e",
+    "pres": [
+      "descends",
+      "descends",
+      "descendez",
+      "descend",
+      "descend",
+      "descend",
+      "descendent"
+    ],
+    "presSay": [
+      "day-sahn",
+      "day-sahn",
+      "day-sahn-day",
+      "day-sahn",
+      "day-sahn",
+      "day-sahn",
+      "day-sahnd"
+    ],
+    "pp": "descendu",
+    "ppSay": "day-sahn-dew",
+    "imp": [
+      "descends",
+      "descendez"
+    ],
+    "impSay": [
+      "day-sahn",
+      "day-sahn-day"
+    ]
+  },
+  "getin": {
+    "inf": "monter",
+    "infSay": "mohn-tay",
+    "aux": "e",
+    "pres": [
+      "monte",
+      "montes",
+      "montez",
+      "monte",
+      "monte",
+      "monte",
+      "montent"
+    ],
+    "presSay": [
+      "mohnt",
+      "mohnt",
+      "mohn-tay",
+      "mohnt",
+      "mohnt",
+      "mohnt",
+      "mohnt"
+    ],
+    "pp": "monté",
+    "ppSay": "mohn-tay",
+    "imp": [
+      "monte",
+      "montez"
+    ],
+    "impSay": [
+      "mohnt",
+      "mohn-tay"
+    ]
+  },
+  "charge": {
+    "inf": "charger",
+    "infSay": "shar-zhay",
+    "aux": "a",
+    "pres": [
+      "charge",
+      "charges",
+      "chargez",
+      "charge",
+      "charge",
+      "charge",
+      "chargent"
+    ],
+    "presSay": [
+      "sharzh",
+      "sharzh",
+      "shar-zhay",
+      "sharzh",
+      "sharzh",
+      "sharzh",
+      "sharzh"
+    ],
+    "pp": "chargé",
+    "ppSay": "shar-zhay",
+    "imp": [
+      "charge",
+      "chargez"
+    ],
+    "impSay": [
+      "sharzh",
+      "shar-zhay"
+    ]
+  },
+  "recharge": {
+    "inf": "recharger",
+    "infSay": "ruh-shar-zhay",
+    "aux": "a",
+    "pres": [
+      "recharge",
+      "recharges",
+      "rechargez",
+      "recharge",
+      "recharge",
+      "recharge",
+      "rechargent"
+    ],
+    "presSay": [
+      "ruh-sharzh",
+      "ruh-sharzh",
+      "ruh-shar-zhay",
+      "ruh-sharzh",
+      "ruh-sharzh",
+      "ruh-sharzh",
+      "ruh-sharzh"
+    ],
+    "pp": "rechargé",
+    "ppSay": "ruh-shar-zhay",
+    "imp": [
+      "recharge",
+      "rechargez"
+    ],
+    "impSay": [
+      "ruh-sharzh",
+      "ruh-shar-zhay"
+    ]
+  },
+  "transfer": {
+    "inf": "transférer",
+    "infSay": "trahns-fay-ray",
+    "aux": "a",
+    "pres": [
+      "transfère",
+      "transfères",
+      "transférez",
+      "transfère",
+      "transfère",
+      "transfère",
+      "transfèrent"
+    ],
+    "presSay": [
+      "trahns-fehr",
+      "trahns-fehr",
+      "trahns-fay-ray",
+      "trahns-fehr",
+      "trahns-fehr",
+      "trahns-fehr",
+      "trahns-fehr"
+    ],
+    "pp": "transféré",
+    "ppSay": "trahns-fay-ray",
+    "imp": [
+      "transfère",
+      "transférez"
+    ],
+    "impSay": [
+      "trahns-fehr",
+      "trahns-fay-ray"
+    ]
+  },
+  "withdraw": {
+    "inf": "retirer",
+    "infSay": "ruh-tee-ray",
+    "aux": "a",
+    "pres": [
+      "retire",
+      "retires",
+      "retirez",
+      "retire",
+      "retire",
+      "retire",
+      "retirent"
+    ],
+    "presSay": [
+      "ruh-teer",
+      "ruh-teer",
+      "ruh-tee-ray",
+      "ruh-teer",
+      "ruh-teer",
+      "ruh-teer",
+      "ruh-teer"
+    ],
+    "pp": "retiré",
+    "ppSay": "ruh-tee-ray",
+    "imp": [
+      "retire",
+      "retirez"
+    ],
+    "impSay": [
+      "ruh-teer",
+      "ruh-tee-ray"
+    ]
+  },
+  "deposit": {
+    "inf": "déposer",
+    "infSay": "day-po-zay",
+    "aux": "a",
+    "pres": [
+      "dépose",
+      "déposes",
+      "déposez",
+      "dépose",
+      "dépose",
+      "dépose",
+      "déposent"
+    ],
+    "presSay": [
+      "day-poz",
+      "day-poz",
+      "day-po-zay",
+      "day-poz",
+      "day-poz",
+      "day-poz",
+      "day-poz"
+    ],
+    "pp": "déposé",
+    "ppSay": "day-po-zay",
+    "imp": [
+      "dépose",
+      "déposez"
+    ],
+    "impSay": [
+      "day-poz",
+      "day-po-zay"
+    ]
+  },
+  "return": {
+    "inf": "rendre",
+    "infSay": "rahndr",
+    "aux": "a",
+    "pres": [
+      "rends",
+      "rends",
+      "rendez",
+      "rend",
+      "rend",
+      "rend",
+      "rendent"
+    ],
+    "presSay": [
+      "rahn",
+      "rahn",
+      "rahn-day",
+      "rahn",
+      "rahn",
+      "rahn",
+      "rahnd"
+    ],
+    "pp": "rendu",
+    "ppSay": "rahn-dew",
+    "imp": [
+      "rends",
+      "rendez"
+    ],
+    "impSay": [
+      "rahn",
+      "rahn-day"
+    ]
+  },
+  "borrow": {
+    "inf": "emprunter",
+    "infSay": "ahn-pruhn-tay",
+    "aux": "a",
+    "pres": [
+      "emprunte",
+      "empruntes",
+      "empruntez",
+      "emprunte",
+      "emprunte",
+      "emprunte",
+      "empruntent"
+    ],
+    "presSay": [
+      "ahn-pruhnt",
+      "ahn-pruhnt",
+      "ahn-pruhn-tay",
+      "ahn-pruhnt",
+      "ahn-pruhnt",
+      "ahn-pruhnt",
+      "ahn-pruhnt"
+    ],
+    "pp": "emprunté",
+    "ppSay": "ahn-pruhn-tay",
+    "imp": [
+      "emprunte",
+      "empruntez"
+    ],
+    "impSay": [
+      "ahn-pruhnt",
+      "ahn-pruhn-tay"
+    ]
+  },
+  "lend": {
+    "inf": "prêter",
+    "infSay": "preh-tay",
+    "aux": "a",
+    "pres": [
+      "prête",
+      "prêtes",
+      "prêtez",
+      "prête",
+      "prête",
+      "prête",
+      "prêtent"
+    ],
+    "presSay": [
+      "pret",
+      "pret",
+      "preh-tay",
+      "pret",
+      "pret",
+      "pret",
+      "pret"
+    ],
+    "pp": "prêté",
+    "ppSay": "preh-tay",
+    "imp": [
+      "prête",
+      "prêtez"
+    ],
+    "impSay": [
+      "pret",
+      "preh-tay"
+    ]
+  },
+  "spend": {
+    "inf": "dépenser",
+    "infSay": "day-pahn-say",
+    "aux": "a",
+    "pres": [
+      "dépense",
+      "dépenses",
+      "dépensez",
+      "dépense",
+      "dépense",
+      "dépense",
+      "dépensent"
+    ],
+    "presSay": [
+      "day-pahns",
+      "day-pahns",
+      "day-pahn-say",
+      "day-pahns",
+      "day-pahns",
+      "day-pahns",
+      "day-pahns"
+    ],
+    "pp": "dépensé",
+    "ppSay": "day-pahn-say",
+    "imp": [
+      "dépense",
+      "dépensez"
+    ],
+    "impSay": [
+      "day-pahns",
+      "day-pahn-say"
+    ]
+  },
+  "save": {
+    "inf": "économiser",
+    "infSay": "ay-ko-no-mee-zay",
+    "aux": "a",
+    "pres": [
+      "économise",
+      "économises",
+      "économisez",
+      "économise",
+      "économise",
+      "économise",
+      "économisent"
+    ],
+    "presSay": [
+      "ay-ko-no-meez",
+      "ay-ko-no-meez",
+      "ay-ko-no-mee-zay",
+      "ay-ko-no-meez",
+      "ay-ko-no-meez",
+      "ay-ko-no-meez",
+      "ay-ko-no-meez"
+    ],
+    "pp": "économisé",
+    "ppSay": "ay-ko-no-mee-zay",
+    "imp": [
+      "économise",
+      "économisez"
+    ],
+    "impSay": [
+      "ay-ko-no-meez",
+      "ay-ko-no-mee-zay"
+    ]
+  },
+  "switchon": {
+    "inf": "allumer",
+    "infSay": "a-lew-may",
+    "aux": "a",
+    "pres": [
+      "allume",
+      "allumes",
+      "allumez",
+      "allume",
+      "allume",
+      "allume",
+      "allument"
+    ],
+    "presSay": [
+      "a-lewm",
+      "a-lewm",
+      "a-lew-may",
+      "a-lewm",
+      "a-lewm",
+      "a-lewm",
+      "a-lewm"
+    ],
+    "pp": "allumé",
+    "ppSay": "a-lew-may",
+    "imp": [
+      "allume",
+      "allumez"
+    ],
+    "impSay": [
+      "a-lewm",
+      "a-lew-may"
+    ]
+  },
+  "switchoff": {
+    "inf": "éteindre",
+    "infSay": "ay-tandr",
+    "aux": "a",
+    "pres": [
+      "éteins",
+      "éteins",
+      "éteignez",
+      "éteint",
+      "éteint",
+      "éteint",
+      "éteignent"
+    ],
+    "presSay": [
+      "ay-tan",
+      "ay-tan",
+      "ay-teh-nyay",
+      "ay-tan",
+      "ay-tan",
+      "ay-tan",
+      "ay-tehny"
+    ],
+    "pp": "éteint",
+    "ppSay": "ay-tan",
+    "imp": [
+      "éteins",
+      "éteignez"
+    ],
+    "impSay": [
+      "ay-tan",
+      "ay-teh-nyay"
+    ]
+  },
+  "iron": {
+    "inf": "repasser",
+    "infSay": "ruh-pa-say",
+    "aux": "a",
+    "pres": [
+      "repasse",
+      "repasses",
+      "repassez",
+      "repasse",
+      "repasse",
+      "repasse",
+      "repassent"
+    ],
+    "presSay": [
+      "ruh-pass",
+      "ruh-pass",
+      "ruh-pa-say",
+      "ruh-pass",
+      "ruh-pass",
+      "ruh-pass",
+      "ruh-pass"
+    ],
+    "pp": "repassé",
+    "ppSay": "ruh-pa-say",
+    "imp": [
+      "repasse",
+      "repassez"
+    ],
+    "impSay": [
+      "ruh-pass",
+      "ruh-pa-say"
+    ]
+  },
+  "shift": {
+    "inf": "déménager",
+    "infSay": "day-may-na-zhay",
+    "aux": "a",
+    "pres": [
+      "déménage",
+      "déménages",
+      "déménagez",
+      "déménage",
+      "déménage",
+      "déménage",
+      "déménagent"
+    ],
+    "presSay": [
+      "day-may-nazh",
+      "day-may-nazh",
+      "day-may-na-zhay",
+      "day-may-nazh",
+      "day-may-nazh",
+      "day-may-nazh",
+      "day-may-nazh"
+    ],
+    "pp": "déménagé",
+    "ppSay": "day-may-na-zhay",
+    "imp": [
+      "déménage",
+      "déménagez"
+    ],
+    "impSay": [
+      "day-may-nazh",
+      "day-may-na-zhay"
+    ]
+  },
+  "lock": {
+    "inf": "verrouiller",
+    "infSay": "veh-roo-yay",
+    "aux": "a",
+    "pres": [
+      "verrouille",
+      "verrouilles",
+      "verrouillez",
+      "verrouille",
+      "verrouille",
+      "verrouille",
+      "verrouillent"
+    ],
+    "presSay": [
+      "veh-rooy",
+      "veh-rooy",
+      "veh-roo-yay",
+      "veh-rooy",
+      "veh-rooy",
+      "veh-rooy",
+      "veh-rooy"
+    ],
+    "pp": "verrouillé",
+    "ppSay": "veh-roo-yay",
+    "imp": [
+      "verrouille",
+      "verrouillez"
+    ],
+    "impSay": [
+      "veh-rooy",
+      "veh-roo-yay"
+    ]
+  },
+  "meet": {
+    "inf": "rencontrer",
+    "infSay": "rahn-kohn-tray",
+    "aux": "a",
+    "pres": [
+      "rencontre",
+      "rencontres",
+      "rencontrez",
+      "rencontre",
+      "rencontre",
+      "rencontre",
+      "rencontrent"
+    ],
+    "presSay": [
+      "rahn-kohntr",
+      "rahn-kohntr",
+      "rahn-kohn-tray",
+      "rahn-kohntr",
+      "rahn-kohntr",
+      "rahn-kohntr",
+      "rahn-kohntr"
+    ],
+    "pp": "rencontré",
+    "ppSay": "rahn-kohn-tray",
+    "imp": [
+      "rencontre",
+      "rencontrez"
+    ],
+    "impSay": [
+      "rahn-kohntr",
+      "rahn-kohn-tray"
+    ]
+  },
+  "invite": {
+    "inf": "inviter",
+    "infSay": "an-vee-tay",
+    "aux": "a",
+    "pres": [
+      "invite",
+      "invites",
+      "invitez",
+      "invite",
+      "invite",
+      "invite",
+      "invitent"
+    ],
+    "presSay": [
+      "an-veet",
+      "an-veet",
+      "an-vee-tay",
+      "an-veet",
+      "an-veet",
+      "an-veet",
+      "an-veet"
+    ],
+    "pp": "invité",
+    "ppSay": "an-vee-tay",
+    "imp": [
+      "invite",
+      "invitez"
+    ],
+    "impSay": [
+      "an-veet",
+      "an-vee-tay"
+    ]
+  },
+  "understand": {
+    "inf": "comprendre",
+    "infSay": "kohn-prahndr",
+    "aux": "a",
+    "pres": [
+      "comprends",
+      "comprends",
+      "comprenez",
+      "comprend",
+      "comprend",
+      "comprend",
+      "comprennent"
+    ],
+    "presSay": [
+      "kohn-prahn",
+      "kohn-prahn",
+      "kohn-pruh-nay",
+      "kohn-prahn",
+      "kohn-prahn",
+      "kohn-prahn",
+      "kohn-pren"
+    ],
+    "pp": "compris",
+    "ppSay": "kohn-pree",
+    "imp": [
+      "comprends",
+      "comprenez"
+    ],
+    "impSay": [
+      "kohn-prahn",
+      "kohn-pruh-nay"
+    ]
+  },
+  "forget": {
+    "inf": "oublier",
+    "infSay": "oo-blee-yay",
+    "aux": "a",
+    "pres": [
+      "oublie",
+      "oublies",
+      "oubliez",
+      "oublie",
+      "oublie",
+      "oublie",
+      "oublient"
+    ],
+    "presSay": [
+      "oo-blee",
+      "oo-blee",
+      "oo-blee-yay",
+      "oo-blee",
+      "oo-blee",
+      "oo-blee",
+      "oo-blee"
+    ],
+    "pp": "oublié",
+    "ppSay": "oo-blee-yay",
+    "imp": [
+      "oublie",
+      "oubliez"
+    ],
+    "impSay": [
+      "oo-blee",
+      "oo-blee-yay"
+    ]
+  },
+  "lose": {
+    "inf": "perdre",
+    "infSay": "pehrdr",
+    "aux": "a",
+    "pres": [
+      "perds",
+      "perds",
+      "perdez",
+      "perd",
+      "perd",
+      "perd",
+      "perdent"
+    ],
+    "presSay": [
+      "pehr",
+      "pehr",
+      "pehr-day",
+      "pehr",
+      "pehr",
+      "pehr",
+      "pehrd"
+    ],
+    "pp": "perdu",
+    "ppSay": "pehr-dew",
+    "imp": [
+      "perds",
+      "perdez"
+    ],
+    "impSay": [
+      "pehr",
+      "pehr-day"
+    ]
+  },
+  "use": {
+    "inf": "utiliser",
+    "infSay": "ew-tee-lee-zay",
+    "aux": "a",
+    "pres": [
+      "utilise",
+      "utilises",
+      "utilisez",
+      "utilise",
+      "utilise",
+      "utilise",
+      "utilisent"
+    ],
+    "presSay": [
+      "ew-tee-leez",
+      "ew-tee-leez",
+      "ew-tee-lee-zay",
+      "ew-tee-leez",
+      "ew-tee-leez",
+      "ew-tee-leez",
+      "ew-tee-leez"
+    ],
+    "pp": "utilisé",
+    "ppSay": "ew-tee-lee-zay",
+    "imp": [
+      "utilise",
+      "utilisez"
+    ],
+    "impSay": [
+      "ew-tee-leez",
+      "ew-tee-lee-zay"
+    ]
+  },
+  "join": {
+    "inf": "rejoindre",
+    "infSay": "ruh-zhwandr",
+    "aux": "a",
+    "pres": [
+      "rejoins",
+      "rejoins",
+      "rejoignez",
+      "rejoint",
+      "rejoint",
+      "rejoint",
+      "rejoignent"
+    ],
+    "presSay": [
+      "ruh-zhwan",
+      "ruh-zhwan",
+      "ruh-zhwa-nyay",
+      "ruh-zhwan",
+      "ruh-zhwan",
+      "ruh-zhwan",
+      "ruh-zhwany"
+    ],
+    "pp": "rejoint",
+    "ppSay": "ruh-zhwan",
+    "imp": [
+      "rejoins",
+      "rejoignez"
+    ],
+    "impSay": [
+      "ruh-zhwan",
+      "ruh-zhwa-nyay"
+    ]
+  },
+  "attend": {
+    "inf": "assister",
+    "infSay": "a-sees-tay",
+    "aux": "a",
+    "pres": [
+      "assiste",
+      "assistes",
+      "assistez",
+      "assiste",
+      "assiste",
+      "assiste",
+      "assistent"
+    ],
+    "presSay": [
+      "a-seest",
+      "a-seest",
+      "a-sees-tay",
+      "a-seest",
+      "a-seest",
+      "a-seest",
+      "a-seest"
+    ],
+    "pp": "assisté",
+    "ppSay": "a-sees-tay",
+    "imp": [
+      "assiste",
+      "assistez"
+    ],
+    "impSay": [
+      "a-seest",
+      "a-sees-tay"
+    ]
+  },
+  "study": {
+    "inf": "étudier",
+    "infSay": "ay-tew-dyay",
+    "aux": "a",
+    "pres": [
+      "étudie",
+      "étudies",
+      "étudiez",
+      "étudie",
+      "étudie",
+      "étudie",
+      "étudient"
+    ],
+    "presSay": [
+      "ay-tew-dee",
+      "ay-tew-dee",
+      "ay-tew-dyay",
+      "ay-tew-dee",
+      "ay-tew-dee",
+      "ay-tew-dee",
+      "ay-tew-dee"
+    ],
+    "pp": "étudié",
+    "ppSay": "ay-tew-dyay",
+    "imp": [
+      "étudie",
+      "étudiez"
+    ],
+    "impSay": [
+      "ay-tew-dee",
+      "ay-tew-dyay"
+    ]
+  },
+  "reply": {
+    "inf": "répondre",
+    "infSay": "ray-pohndr",
+    "aux": "a",
+    "pres": [
+      "réponds",
+      "réponds",
+      "répondez",
+      "répond",
+      "répond",
+      "répond",
+      "répondent"
+    ],
+    "presSay": [
+      "ray-pohn",
+      "ray-pohn",
+      "ray-pohn-day",
+      "ray-pohn",
+      "ray-pohn",
+      "ray-pohn",
+      "ray-pohnd"
+    ],
+    "pp": "répondu",
+    "ppSay": "ray-pohn-dew",
+    "imp": [
+      "réponds",
+      "répondez"
+    ],
+    "impSay": [
+      "ray-pohn",
+      "ray-pohn-day"
+    ]
+  },
+  "share": {
+    "inf": "partager",
+    "infSay": "par-ta-zhay",
+    "aux": "a",
+    "pres": [
+      "partage",
+      "partages",
+      "partagez",
+      "partage",
+      "partage",
+      "partage",
+      "partagent"
+    ],
+    "presSay": [
+      "par-tazh",
+      "par-tazh",
+      "par-ta-zhay",
+      "par-tazh",
+      "par-tazh",
+      "par-tazh",
+      "par-tazh"
+    ],
+    "pp": "partagé",
+    "ppSay": "par-ta-zhay",
+    "imp": [
+      "partage",
+      "partagez"
+    ],
+    "impSay": [
+      "par-tazh",
+      "par-ta-zhay"
+    ]
+  },
+  "pack": {
+    "inf": "emballer",
+    "infSay": "ahn-ba-lay",
+    "aux": "a",
+    "pres": [
+      "emballe",
+      "emballes",
+      "emballez",
+      "emballe",
+      "emballe",
+      "emballe",
+      "emballent"
+    ],
+    "presSay": [
+      "ahn-bal",
+      "ahn-bal",
+      "ahn-ba-lay",
+      "ahn-bal",
+      "ahn-bal",
+      "ahn-bal",
+      "ahn-bal"
+    ],
+    "pp": "emballé",
+    "ppSay": "ahn-ba-lay",
+    "imp": [
+      "emballe",
+      "emballez"
+    ],
+    "impSay": [
+      "ahn-bal",
+      "ahn-ba-lay"
+    ]
+  },
+  "exchange": {
+    "inf": "échanger",
+    "infSay": "ay-shahn-zhay",
+    "aux": "a",
+    "pres": [
+      "échange",
+      "échanges",
+      "échangez",
+      "échange",
+      "échange",
+      "échange",
+      "échangent"
+    ],
+    "presSay": [
+      "ay-shahnzh",
+      "ay-shahnzh",
+      "ay-shahn-zhay",
+      "ay-shahnzh",
+      "ay-shahnzh",
+      "ay-shahnzh",
+      "ay-shahnzh"
+    ],
+    "pp": "échangé",
+    "ppSay": "ay-shahn-zhay",
+    "imp": [
+      "échange",
+      "échangez"
+    ],
+    "impSay": [
+      "ay-shahnzh",
+      "ay-shahn-zhay"
+    ]
+  },
+  "pray": {
+    "inf": "prier",
+    "infSay": "pree-yay",
+    "aux": "a",
+    "pres": [
+      "prie",
+      "pries",
+      "priez",
+      "prie",
+      "prie",
+      "prie",
+      "prient"
+    ],
+    "presSay": [
+      "pree",
+      "pree",
+      "pree-yay",
+      "pree",
+      "pree",
+      "pree",
+      "pree"
+    ],
+    "pp": "prié",
+    "ppSay": "pree-yay",
+    "imp": [
+      "prie",
+      "priez"
+    ],
+    "impSay": [
+      "pree",
+      "pree-yay"
+    ]
+  },
+  "celebrate": {
+    "inf": "fêter",
+    "infSay": "feh-tay",
+    "aux": "a",
+    "pres": [
+      "fête",
+      "fêtes",
+      "fêtez",
+      "fête",
+      "fête",
+      "fête",
+      "fêtent"
+    ],
+    "presSay": [
+      "fet",
+      "fet",
+      "feh-tay",
+      "fet",
+      "fet",
+      "fet",
+      "fet"
+    ],
+    "pp": "fêté",
+    "ppSay": "feh-tay",
+    "imp": [
+      "fête",
+      "fêtez"
+    ],
+    "impSay": [
+      "fet",
+      "feh-tay"
+    ]
+  },
+  "perform": {
+    "inf": "jouer",
+    "infSay": "zhoo-ay",
+    "aux": "a",
+    "pres": [
+      "joue",
+      "joues",
+      "jouez",
+      "joue",
+      "joue",
+      "joue",
+      "jouent"
+    ],
+    "presSay": [
+      "zhoo",
+      "zhoo",
+      "zhoo-ay",
+      "zhoo",
+      "zhoo",
+      "zhoo",
+      "zhoo"
+    ],
+    "pp": "joué",
+    "ppSay": "zhoo-ay",
+    "imp": [
+      "joue",
+      "jouez"
+    ],
+    "impSay": [
+      "zhoo",
+      "zhoo-ay"
+    ]
+  },
+  "boil": {
+    "inf": "faire bouillir",
+    "infSay": "fehr boo-yeer",
+    "aux": "a",
+    "pres": [
+      "fais bouillir",
+      "fais bouillir",
+      "faites bouillir",
+      "fait bouillir",
+      "fait bouillir",
+      "fait bouillir",
+      "font bouillir"
+    ],
+    "presSay": [
+      "feh boo-yeer",
+      "feh boo-yeer",
+      "fet boo-yeer",
+      "feh boo-yeer",
+      "feh boo-yeer",
+      "feh boo-yeer",
+      "fohn boo-yeer"
+    ],
+    "pp": "fait bouillir",
+    "ppSay": "feh boo-yeer",
+    "imp": [
+      "fais bouillir",
+      "faites bouillir"
+    ],
+    "impSay": [
+      "feh boo-yeer",
+      "fet boo-yeer"
+    ]
+  },
+  "wakeup": {
+    "inf": "lever",
+    "infSay": "luh-vay",
+    "aux": "e",
+    "refl": true,
+    "pres": [
+      "lève",
+      "lèves",
+      "levez",
+      "lève",
+      "lève",
+      "lève",
+      "lèvent"
+    ],
+    "presSay": [
+      "lev",
+      "lev",
+      "luh-vay",
+      "lev",
+      "lev",
+      "lev",
+      "lev"
+    ],
+    "pp": "levé",
+    "ppSay": "luh-vay",
+    "imp": [
+      "lève-toi",
+      "levez-vous"
+    ],
+    "impSay": [
+      "lev-twa",
+      "luh-vay-voo"
+    ]
+  },
+  "getready": {
+    "inf": "préparer",
+    "infSay": "pray-pa-ray",
+    "aux": "e",
+    "refl": true,
+    "pres": [
+      "prépare",
+      "prépares",
+      "préparez",
+      "prépare",
+      "prépare",
+      "prépare",
+      "préparent"
+    ],
+    "presSay": [
+      "pray-par",
+      "pray-par",
+      "pray-pa-ray",
+      "pray-par",
+      "pray-par",
+      "pray-par",
+      "pray-par"
+    ],
+    "pp": "préparé",
+    "ppSay": "pray-pa-ray",
+    "imp": [
+      "prépare-toi",
+      "préparez-vous"
+    ],
+    "impSay": [
+      "pray-par-twa",
+      "pray-pa-ray-voo"
+    ]
+  },
+  "comeback": {
+    "inf": "revenir",
+    "infSay": "ruh-vuh-neer",
+    "aux": "e",
+    "pres": [
+      "reviens",
+      "reviens",
+      "revenez",
+      "revient",
+      "revient",
+      "revient",
+      "reviennent"
+    ],
+    "presSay": [
+      "ruh-vyan",
+      "ruh-vyan",
+      "ruh-vuh-nay",
+      "ruh-vyan",
+      "ruh-vyan",
+      "ruh-vyan",
+      "ruh-vyen"
+    ],
+    "pp": "revenu",
+    "ppSay": "ruh-vuh-new",
+    "imp": [
+      "reviens",
+      "revenez"
+    ],
+    "impSay": [
+      "ruh-vyan",
+      "ruh-vuh-nay"
+    ]
+  },
+  "_existing": {
+    "play": {
+      "imp": [
+        "joue",
+        "jouez"
+      ],
+      "impSay": [
+        "zhoo",
+        "zhoo-ay"
+      ]
+    },
+    "playgame": {
+      "imp": [
+        "joue",
+        "jouez"
+      ],
+      "impSay": [
+        "zhoo",
+        "zhoo-ay"
+      ]
+    },
+    "sing": {
+      "imp": [
+        "chante",
+        "chantez"
+      ],
+      "impSay": [
+        "shahnt",
+        "shahn-tay"
+      ]
+    },
+    "practise": {
+      "imp": [
+        "travaille",
+        "travaillez"
+      ],
+      "impSay": [
+        "tra-vy",
+        "tra-va-yay"
+      ]
+    },
+    "work": {
+      "imp": [
+        "travaille",
+        "travaillez"
+      ],
+      "impSay": [
+        "tra-vy",
+        "tra-va-yay"
+      ]
+    },
+    "listen": {
+      "imp": [
+        "écoute",
+        "écoutez"
+      ],
+      "impSay": [
+        "ay-koot",
+        "ay-koo-tay"
+      ]
+    },
+    "teach": {
+      "imp": [
+        "enseigne",
+        "enseignez"
+      ],
+      "impSay": [
+        "ahn-seny",
+        "ahn-sen-yay"
+      ]
+    },
+    "dance": {
+      "imp": [
+        "danse",
+        "dansez"
+      ],
+      "impSay": [
+        "dahns",
+        "dahn-say"
+      ]
+    },
+    "travel": {
+      "imp": [
+        "voyage",
+        "voyagez"
+      ],
+      "impSay": [
+        "vwa-yazh",
+        "vwa-ya-zhay"
+      ]
+    },
+    "speak": {
+      "imp": [
+        "parle",
+        "parlez"
+      ],
+      "impSay": [
+        "parl",
+        "par-lay"
+      ]
+    },
+    "eat": {
+      "imp": [
+        "mange",
+        "mangez"
+      ],
+      "impSay": [
+        "mahnzh",
+        "mahn-zhay"
+      ]
+    },
+    "give": {
+      "imp": [
+        "donne",
+        "donnez"
+      ],
+      "impSay": [
+        "don",
+        "do-nay"
+      ]
+    },
+    "walk": {
+      "imp": [
+        "marche",
+        "marchez"
+      ],
+      "impSay": [
+        "marsh",
+        "mar-shay"
+      ]
+    },
+    "cook": {
+      "imp": [
+        "cuisine",
+        "cuisinez"
+      ],
+      "impSay": [
+        "kwee-zeen",
+        "kwee-zee-nay"
+      ]
+    },
+    "help": {
+      "imp": [
+        "aide",
+        "aidez"
+      ],
+      "impSay": [
+        "ed",
+        "ay-day"
+      ]
+    },
+    "learn": {
+      "imp": [
+        "apprends",
+        "apprenez"
+      ],
+      "impSay": [
+        "a-prahn",
+        "a-pruh-nay"
+      ]
+    },
+    "do": {
+      "imp": [
+        "fais",
+        "faites"
+      ],
+      "impSay": [
+        "feh",
+        "fet"
+      ]
+    },
+    "go": {
+      "imp": [
+        "va",
+        "allez"
+      ],
+      "impSay": [
+        "vah",
+        "a-lay"
+      ]
+    },
+    "come": {
+      "imp": [
+        "viens",
+        "venez"
+      ],
+      "impSay": [
+        "vyan",
+        "vuh-nay"
+      ]
+    },
+    "think": {
+      "imp": [
+        "réfléchis",
+        "réfléchissez"
+      ],
+      "impSay": [
+        "ray-flay-shee",
+        "ray-flay-shee-say"
+      ]
+    },
+    "drink": {
+      "imp": [
+        "bois",
+        "buvez"
+      ],
+      "impSay": [
+        "bwa",
+        "bew-vay"
+      ]
+    },
+    "see": {
+      "imp": [
+        "regarde",
+        "regardez"
+      ],
+      "impSay": [
+        "ruh-gard",
+        "ruh-gar-day"
+      ]
+    },
+    "rentrer": {
+      "imp": [
+        "rentre",
+        "rentrez"
+      ],
+      "impSay": [
+        "rahntr",
+        "rahn-tray"
+      ]
+    },
+    "read": {
+      "imp": [
+        "lis",
+        "lisez"
+      ],
+      "impSay": [
+        "lee",
+        "lee-zay"
+      ]
+    },
+    "write": {
+      "imp": [
+        "écris",
+        "écrivez"
+      ],
+      "impSay": [
+        "ay-kree",
+        "ay-kree-vay"
+      ]
+    },
+    "sleep": {
+      "imp": [
+        "dors",
+        "dormez"
+      ],
+      "impSay": [
+        "dor",
+        "dor-may"
+      ]
+    },
+    "take": {
+      "imp": [
+        "prends",
+        "prenez"
+      ],
+      "impSay": [
+        "prahn",
+        "pruh-nay"
+      ]
+    },
+    "buy": {
+      "imp": [
+        "achète",
+        "achetez"
+      ],
+      "impSay": [
+        "a-shet",
+        "ash-tay"
+      ]
+    },
+    "wait": {
+      "imp": [
+        "attends",
+        "attendez"
+      ],
+      "impSay": [
+        "a-tahn",
+        "a-tahn-day"
+      ]
+    },
+    "call": {
+      "imp": [
+        "appelle",
+        "appelez"
+      ],
+      "impSay": [
+        "a-pel",
+        "ap-lay"
+      ]
+    },
+    "sit": {
+      "imp": [
+        "assieds-toi",
+        "asseyez-vous"
+      ],
+      "impSay": [
+        "a-syay-twa",
+        "a-say-yay-voo"
+      ]
+    },
+    "open": {
+      "imp": [
+        "ouvre",
+        "ouvrez"
+      ],
+      "impSay": [
+        "oovr",
+        "oo-vray"
+      ]
+    },
+    "close": {
+      "imp": [
+        "ferme",
+        "fermez"
+      ],
+      "impSay": [
+        "fehrm",
+        "fehr-may"
+      ]
+    },
+    "start": {
+      "imp": [
+        "commence",
+        "commencez"
+      ],
+      "impSay": [
+        "ko-mahns",
+        "ko-mahn-say"
+      ]
+    },
+    "stop": {
+      "imp": [
+        "arrête",
+        "arrêtez"
+      ],
+      "impSay": [
+        "a-ret",
+        "a-ray-tay"
+      ]
+    },
+    "finish": {
+      "imp": [
+        "finis",
+        "finissez"
+      ],
+      "impSay": [
+        "fee-nee",
+        "fee-nee-say"
+      ]
+    },
+    "ask": {
+      "imp": [
+        "demande",
+        "demandez"
+      ],
+      "impSay": [
+        "duh-mahnd",
+        "duh-mahn-day"
+      ]
+    },
+    "answer": {
+      "imp": [
+        "réponds",
+        "répondez"
+      ],
+      "impSay": [
+        "ray-pohn",
+        "ray-pohn-day"
+      ]
+    },
+    "show": {
+      "imp": [
+        "montre",
+        "montrez"
+      ],
+      "impSay": [
+        "mohntr",
+        "mohn-tray"
+      ]
+    },
+    "send": {
+      "imp": [
+        "envoie",
+        "envoyez"
+      ],
+      "impSay": [
+        "ahn-vwa",
+        "ahn-vwa-yay"
+      ]
+    },
+    "bring": {
+      "imp": [
+        "apporte",
+        "apportez"
+      ],
+      "impSay": [
+        "a-port",
+        "a-por-tay"
+      ]
+    },
+    "put": {
+      "imp": [
+        "mets",
+        "mettez"
+      ],
+      "impSay": [
+        "meh",
+        "meh-tay"
+      ]
+    },
+    "wash": {
+      "imp": [
+        "lave",
+        "lavez"
+      ],
+      "impSay": [
+        "lav",
+        "la-vay"
+      ]
+    },
+    "cut": {
+      "imp": [
+        "coupe",
+        "coupez"
+      ],
+      "impSay": [
+        "koop",
+        "koo-pay"
+      ]
+    },
+    "run": {
+      "imp": [
+        "cours",
+        "courez"
+      ],
+      "impSay": [
+        "koor",
+        "koo-ray"
+      ]
+    },
+    "laugh": {
+      "imp": [
+        "ris",
+        "riez"
+      ],
+      "impSay": [
+        "ree",
+        "ree-yay"
+      ]
+    },
+    "cry": {
+      "imp": [
+        "pleure",
+        "pleurez"
+      ],
+      "impSay": [
+        "pluhr",
+        "pluh-ray"
+      ]
+    },
+    "bathe": {
+      "imp": [
+        "douche-toi",
+        "douchez-vous"
+      ],
+      "impSay": [
+        "doosh-twa",
+        "doo-shay-voo"
+      ]
+    },
+    "rest": {
+      "imp": [
+        "repose-toi",
+        "reposez-vous"
+      ],
+      "impSay": [
+        "ruh-poz-twa",
+        "ruh-po-zay-voo"
+      ]
+    },
+    "swim": {
+      "imp": [
+        "nage",
+        "nagez"
+      ],
+      "impSay": [
+        "nazh",
+        "na-zhay"
+      ]
+    },
+    "try": {
+      "imp": [
+        "essaie",
+        "essayez"
+      ],
+      "impSay": [
+        "ay-say",
+        "ay-say-yay"
+      ]
+    },
+    "search": {
+      "imp": [
+        "cherche",
+        "cherchez"
+      ],
+      "impSay": [
+        "shehrsh",
+        "shehr-shay"
+      ]
+    },
+    "change": {
+      "imp": [
+        "change",
+        "changez"
+      ],
+      "impSay": [
+        "shahnzh",
+        "shahn-zhay"
+      ]
+    },
+    "repair": {
+      "imp": [
+        "répare",
+        "réparez"
+      ],
+      "impSay": [
+        "ray-par",
+        "ray-pa-ray"
+      ]
+    },
+    "clean": {
+      "imp": [
+        "nettoie",
+        "nettoyez"
+      ],
+      "impSay": [
+        "nay-twa",
+        "nay-twa-yay"
+      ]
+    },
+    "pay": {
+      "imp": [
+        "paie",
+        "payez"
+      ],
+      "impSay": [
+        "peh",
+        "pay-yay"
+      ]
+    },
+    "sell": {
+      "imp": [
+        "vends",
+        "vendez"
+      ],
+      "impSay": [
+        "vahn",
+        "vahn-day"
+      ]
+    },
+    "order": {
+      "imp": [
+        "commande",
+        "commandez"
+      ],
+      "impSay": [
+        "ko-mahnd",
+        "ko-mahn-day"
+      ]
+    },
+    "book": {
+      "imp": [
+        "réserve",
+        "réservez"
+      ],
+      "impSay": [
+        "ray-zehrv",
+        "ray-zehr-vay"
+      ]
+    },
+    "cancel": {
+      "imp": [
+        "annule",
+        "annulez"
+      ],
+      "impSay": [
+        "a-newl",
+        "a-new-lay"
+      ]
+    },
+    "drive": {
+      "imp": [
+        "conduis",
+        "conduisez"
+      ],
+      "impSay": [
+        "kohn-dwee",
+        "kohn-dwee-zay"
+      ]
+    },
+    "wear": {
+      "imp": [
+        "porte",
+        "portez"
+      ],
+      "impSay": [
+        "port",
+        "por-tay"
+      ]
+    },
+    "count": {
+      "imp": [
+        "compte",
+        "comptez"
+      ],
+      "impSay": [
+        "kohnt",
+        "kohn-tay"
+      ]
+    },
+    "explain": {
+      "imp": [
+        "explique",
+        "expliquez"
+      ],
+      "impSay": [
+        "eks-pleek",
+        "eks-plee-kay"
+      ]
+    },
+    "repeat": {
+      "imp": [
+        "répète",
+        "répétez"
+      ],
+      "impSay": [
+        "ray-pet",
+        "ray-pay-tay"
+      ]
+    },
+    "record": {
+      "imp": [
+        "enregistre",
+        "enregistrez"
+      ],
+      "impSay": [
+        "ahn-ruh-zheestr",
+        "ahn-ruh-zhee-stray"
+      ]
+    },
+    "tune": {
+      "imp": [
+        "accorde",
+        "accordez"
+      ],
+      "impSay": [
+        "a-kord",
+        "a-kor-day"
+      ]
+    },
+    "clap": {
+      "imp": [
+        "applaudis",
+        "applaudissez"
+      ],
+      "impSay": [
+        "a-plo-dee",
+        "a-plo-dee-say"
+      ]
+    }
+  }
+}

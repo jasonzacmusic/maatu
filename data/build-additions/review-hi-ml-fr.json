@@ -1,0 +1,48 @@
+{
+  "verbs": {
+    "say": { "hi": { "imp": ["bolo", "boliye"], "impNot": ["mat bolo", "mat boliye"] } },
+    "forget": { "hi": { "perf": { "m": "bhool gaya", "f": "bhool gayi", "pl": "bhool gaye" } } },
+    "sit": { "ml": { "imp": ["irikk", "irikkoo"] } },
+    "wear": { "ml": { "dict": "iduka" } }
+  },
+  "objects": {},
+  "directions": {},
+  "french": {
+    "verbs": {},
+    "imp": {},
+    "objects": {
+      "parcel": {
+        "def": { "w": "le colis", "say": "luh ko-lee" },
+        "indef": { "w": "un colis", "say": "uhn ko-lee", "neg": "de colis", "negSay": "duh ko-lee" }
+      },
+      "manager": { "def": { "w": "le responsable", "say": "luh res-pohn-sabl" } },
+      "report": { "def": { "w": "les résultats", "say": "lay ray-zewl-ta" } }
+    },
+    "directions": {
+      "again": { "w": "encore une fois", "say": "ahn-kor ewn fwa" }
+    }
+  },
+  "engine": [
+    "Hindi how-much (HOWMUCH in shapes.ts) is always 'kitne ka hai'. It must agree with the noun and use 'kitna/kitni hai' for amounts of money (fare, rent, fees, fine, bill, advance). Wrong: 'kiraaya kitne ka hai?', 'fees kitne ka hai?', 'fine kitne ka hai?', 'bill kitne ka hai?', 'advance kitne ka hai?', 'dawa kitne ka hai?', 'SIM kitne ka hai?'. Right: 'kiraaya kitna hai?', 'fees kitni hai?', 'fine kitna hai?', 'bill kitna hai?', 'advance kitna hai?', 'dawa kitne ki hai?', 'SIM kitne ki hai?'. Goods stay 'kitne ka/ki hai': 'ek kilo tamaatar kitne ka hai?' is right.",
+    "Have-shape treats every health object as an illness (to-me there is). Medicines and papers are things you hold or a shop stocks. Wrong: 'kya aapko syrup hai?', 'kya aapko parchi hai?', 'mujhe parchi hai', 'ningalkku syrup undo?', 'ningalkku prescription undo?', 'enikku prescription und'. Right: 'kya aapke paas syrup hai?', 'kya aapke paas parchi hai?', 'mere paas parchi hai', 'syrup undo?', 'ningalude kayyil prescription undo?', 'ente kayyil prescription und'. Split cat health into conditions (fever to diabetes) and medical things (tablet, injection, syrup, prescription, report, bloodtest, xray, scan), and drop the medical things from the Illness list: 'mujhe goli hai', 'mujhe injection hai', 'enikku gulika und' mean nothing.",
+    "Hindi illness lines that need a verb, not 'hai': 'mujhe ulti hai' should be 'mujhe ulti ho rahi hai'; 'mujhe chakkar hai' should be 'mujhe chakkar aa rahe hain'; 'mujhe chot hai' should be 'mujhe chot lagi hai'; 'mujhe loose motion hai' should be 'mujhe loose motion ho rahe hain'. Suggest an optional hiTail per health object.",
+    "Hindi where-is for people: WHERE_PERSON uses respectful 'kahaan hain' but the possessive stays singular, which is ungrammatical. Wrong: 'mera doctor kahaan hain?', 'mera papa kahaan hain?', 'mera dost kahaan hain?'. Right for elders and professionals (doctor, officer, landlord, father, mother, husband, manager): 'mere doctor kahaan hain?', 'mere papa kahaan hain?', 'meri mummy kahaan hain?', 'mere makaan maalik kahaan hain?'. Right for everyone else (friend, brother, sister, son, daughter, wife, child, driver, plumber, electrician, watchman, neighbour, nurse, policewala): 'mera dost kahaan hai?', 'mera bhai kahaan hai?', 'meri behen kahaan hai?', 'mera driver kahaan hai?'. Needs a per-object respect flag.",
+    "Hindi where-is for places: placePlain returns the Hindi destination word unchanged, so suffixes leak in. Wrong: 'counter pe kahaan hai?', 'concert mein kahaan hai?', 'red light tak kahaan hai?', 'main road tak kahaan hai?'. Right: 'counter kahaan hai?', 'concert kahaan hai?', 'red light kahaan hai?', 'main road kahaan hai?'. Strip a trailing ' pe', ' mein' or ' tak' for hi in placePlain. The airport script line 'counter pe kahaan hai?' is the same bug.",
+    "Hindi quantity words do not agree with gender. Wrong: 'thoda mirch dijiye'. Right: 'thodi mirch dijiye'. 'thoda' becomes 'thodi' before a feminine noun (hiG f).",
+    "People as objects need a case marker. Hindi takes 'ko', Malayalam takes '-e'. Wrong: 'bachcha aaj pick kijiye', 'manager call kijiye', 'kutti innu pick cheyyoo', 'manager vilikkoo'. Right: 'bachche ko aaj pick kijiye', 'manager ko call kijiye', 'kuttiye innu pick cheyyoo', 'manager-ine vilikkoo'.",
+    "Where-do-I questions asking for instructions use the should-form, not the habitual. Wrong: 'main kahaan sign karta hoon', 'njaan evide sign cheyyunnu'. Right: 'main kahaan sign karoon?', 'njaan evide sign cheyyanam?'.",
+    "Wh-questions (whQuestion shape) never get a question mark, and Malayalam uses the continuous '-unnund' form, which cannot carry a question word. Wrong: 'aap kahaan jaa rahe hain', 'ningal evide pokunnund', 'aap kab aaenge', 'ningal eppo varum'. Right: 'aap kahaan jaa rahe hain?', 'ningal evide pokunnu?', 'aap kab aaenge?', 'ningal eppo varum?'. For ml whQuestion use pres (pokunnu), not cont.",
+    "Understand takes the to-me form in both languages. Wrong: 'main lesson nahin samajhta', 'njaan lesson manassilaakkilla' (that means I will not make it understood). Right: 'mujhe lesson samajh nahin aaya', 'enikku lesson manassilaayilla'. The ml present 'njaan manassilaakkunnu' should be 'enikku manassilaavunnund'.",
+    "Hindi past of arriving and forgetting verbs sounds bare without 'gaya'. I changed forget perf to 'bhool gaya', which fixes 'main password bhoola' to 'main password bhool gaya'. The negative then reads 'main password nahin bhool gaya'; the right negative is 'main password nahin bhoola'. Same for 'main utha' (right: 'main uth gaya'), 'main ready hua' (right: 'main ready ho gaya'), 'main utra' (right: 'main utar gaya'). Add a perfNeg or a positive-only compound so the negative keeps the simple form.",
+    "Malayalam reach takes the at-form, and 'I am reaching' is said as about-to-reach. Wrong: 'njaan office-ilekku ethunnund'. Right: 'njaan office-il ethaaraayi'. French has the same line wrong: 'je suis en train d'arriver au bureau' should be 'j'arrive au bureau' (arriver joins the motion verbs that use the plain present).",
+    "Adjective fixes (grammar.json adjectives, not in this file's shape): expensive ml pred 'kooduthal aanu' means 'is more'; set it to 'vila kooduthal aanu' so 'ithu kooduthal aanu' becomes 'ithu vila kooduthal aanu'. Spicy ml pred 'erivu und' gives 'ithu erivu undo?'; set it to 'erivaanu' so it reads 'ithu erivaano?'. Broken ml pred 'pottiyathaanu' means burst and cannot be said of a fan; set attr 'kedaaya', pred 'kedaayi' so 'fan pottiyathaanu' becomes 'fan kedaayi' and 'pipe kedaayi'. Broken hi 'toota hai' is fine for a cup but a Delhi person says 'pankha kharaab hai', 'nal toot gaya hai' for appliances.",
+    "Situation script word choices (situations.ts), where the verb picked is wrong for the context: Malayalam 'gulika edukkoo' should be 'gulika kazhikkoo' (use eat, not take, for a tablet); 'helmet idoo' should be 'helmet vaykkoo'; 'mukalil varoo' should be 'mukalilekku varoo'. Come back again for a guest: 'phir se vaapas aaiye' should be 'phir aaiye', 'onnu koodi thirichu varoo' should be 'iniyum varoo', French 'Revenez encore' should be 'Revenez nous voir'.",
+    "French pay with cash: frenchTell puts the plain object after payer. Wrong: 'je vais payer le liquide'. Right: 'je vais payer en liquide'. Withdraw needs the partitive: 'je veux retirer le liquide' should be 'je veux retirer du liquide'.",
+    "French register with an object builds a reflexive plus object, which is ungrammatical. Wrong: 'je veux m'inscrire la plainte'. Right: 'je veux porter plainte'. Map register + complaint to 'porter plainte'.",
+    "French papers and the speaker's own things take a possessive, as the English already does. Wrong: 'Montrez le passeport', 'Montrez le permis', 'Montrez la pièce d'identité', 'Montrez la carte Aadhaar', 'Montrez le ticket', 'je veux renouveler le passeport', 'j'ai perdu le téléphone', 'j'ai oublié le mot de passe', 'je veux vérifier le solde'. Right: 'Montrez votre passeport', 'Montrez votre permis', 'Montrez votre pièce d'identité', 'Montrez votre carte Aadhaar', 'Montrez votre ticket', 'je veux renouveler mon passeport', 'j'ai perdu mon téléphone', 'j'ai oublié mon mot de passe', 'je veux consulter mon solde'. Also 'a cheque' should give 'un chèque': 'je veux déposer un chèque'.",
+    "French quantity is dropped in commands. Wrong: 'Buvez de l'eau' for 'Please drink a lot of water'. Right: 'Buvez beaucoup d'eau'.",
+    "French come plus a direction should be one verb. Wrong: 'Venez en haut', 'Venez dedans'. Right: 'Montez', 'Entrez'. Switch off electricity: 'Éteignez l'électricité' should be 'Coupez le courant'.",
+    "French park with no object needs the reflexive. Wrong: 'Ne garez pas ici'. Right: 'Ne vous garez pas ici' (friend: 'Ne te gare pas ici'). Reflexive do-not forms show '-' today; they are regular: 'Ne vous asseyez pas', 'Ne vous reposez pas', 'Ne vous levez pas', 'Ne vous inscrivez pas', 'Ne vous plaignez pas', 'Ne vous préparez pas', 'Ne vous douchez pas'.",
+    "English side (meaning check): articles come out wrong in several lines. 'Where is the home?' should be 'Where is home?', 'Where is the Bangalore?' should be 'Where is Bangalore?', 'Please give me a little chillies' should be 'Please give me a few chillies', 'Please give me menu' and 'Please give me bill' need 'the', 'I have prescription' and 'I have report' need 'a', 'I'm reaching to the office' should be 'I'm reaching the office', 'Please keep a parcel outside', 'Please pick up a child today', 'Please attend a meeting', 'Please pay a fine', 'How much is a fine?', 'Please show a token' should all use 'the'."
+  ]
+}

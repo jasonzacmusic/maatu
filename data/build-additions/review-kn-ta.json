@@ -1,0 +1,37 @@
+{
+  "verbs": {
+    "wash": {
+      "kn": {
+        "dict": "tole",
+        "pres": "tole",
+        "past": "toled",
+        "cont": "toleyta",
+        "neg": "toleyalla",
+        "pastNeg": "tolelilla",
+        "inf": "toleyakke",
+        "want": "tolebeku",
+        "imp": ["tole", "toleyiri"],
+        "impNot": ["tolebeda", "tolebedi"]
+      }
+    },
+    "invite": {
+      "ta": {
+        "pres": "koopdu"
+      }
+    }
+  },
+  "objects": {
+    "tap": { "ta": "tap" }
+  },
+  "directions": {},
+  "engine": [
+    "Medicines and documents (tablet, syrup, prescription, report, injection, blood test, X-ray, scan) share the health group with illnesses, so they get the to-me form. Only real illnesses and pains take nanage/enakku; things you hold take hatra/kitta. Wrong: 'nimage syrup ideyaa?' / 'ungalukku syrup irukkaa?' Right: 'nimma hatra syrup ideyaa?' / 'unga kitta syrup irukkaa?'. Wrong: 'nanage prescription ide' / 'enakku prescription irukku'. Right: 'nanna hatra prescription ide' / 'en kitta prescription irukku'. Same for 'nanage tablet ide' (right: 'nanna hatra tablet ide') and 'enakku maathirai irukku' (right: 'en kitta maathirai irukku').",
+    "Understand takes the to-me form, not I. 'naanu lesson artha maadkolalla' means 'I will not bother to understand'. Right: 'nanage lesson artha aagalla'. Tamil 'naan lesson purinjukka maatten' means 'I refuse to understand'. Right: 'enakku lesson puriyala'.",
+    "'Where do I sign?' is built as a plain present statement. Wrong: 'naanu elli sign maadtini' / 'naan enga sign pannuren'. Right: 'elli sign maadbeku?' / 'enga sign pannanum?'.",
+    "'Come back' plus 'again' says again twice in Tamil and is redundant in Kannada. Wrong: 'thirumba thirumbi vaanga' / 'innomme vaapas banni'. Right: 'thirumba vaanga' / 'innomme banni'. Use the plain come verb when again is added.",
+    "'Where is my...' uses the respectful they-form for everyone, which sounds odd for your own child or wife. Wrong: 'nanna maga elli iddaare?', 'nanna magalu elli iddaare?', 'nanna hendti elli iddaare?', 'nanna magu elli iddaare?'. Right: 'nanna maga elli iddaane?', 'nanna magalu elli iddaale?', 'nanna hendti elli iddaale?', 'nanna magu elli ide?'. Tamil wrong: 'en paiyan enga irukkaanga?', 'en ponnu enga irukkaanga?', 'en pondaatti enga irukkaanga?', 'en kozhandhai enga irukkaanga?'. Right: 'en paiyan enga irukkaan?', 'en ponnu enga irukkaa?', 'en pondaatti enga irukkaa?', 'en kozhandhai enga irukku?'. Parents, elder siblings, husband and workers keep the respectful form.",
+    "Tamil plain place word for home: placePlain strips 'kku' from 'veetukku' and leaves the joining form 'veetu'. Wrong: 'veetu enga irukku?'. Right: 'veedu enga irukku?'. Add home: 'veedu' to a Tamil override table like the Malayalam one.",
+    "Picking up a person needs the object ending. Wrong: 'magu ivattu pick up maadi' / 'kozhandhai innikki pick up pannunga'. Right: 'magunna ivattu pick up maadi' / 'kozhandhaiya innikki pick up pannunga'.",
+    "English glosses use the wrong article. Wrong to right: 'Where is the Bangalore?' to 'Where is Bangalore?'; 'Where is the home?' to 'Where is home?'; 'Please show a token' to 'Please show your token'; 'Please pick up a child today' to 'Please pick up the child today'; 'Please keep a parcel outside' to 'Please keep the parcel outside'; 'Please attend a meeting' to 'Please attend the meeting'; 'Please pay a fine' to 'Please pay the fine'; 'How much is a fine?' to 'How much is the fine?'; 'Please give me menu' to 'Please give me the menu'; 'Please give me bill' to 'Please give me the bill'; 'Please pack biryani' to 'Please pack the biryani'; 'I have prescription' to 'I have a prescription'; 'I have report' to 'I have the report'; 'Please give me a little chillies' to 'Please give me a few chillies'; 'I'm reaching to the office' to 'I'm reaching the office'; 'Please switch off electricity' to 'Please switch off the power'."
+  ]
+}

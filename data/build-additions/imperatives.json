@@ -1,0 +1,2900 @@
+{
+  "play": {
+    "kn": {
+      "imp": [
+        "nudisu",
+        "nudisi"
+      ],
+      "impNot": [
+        "nudisbeda",
+        "nudisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "bajaao",
+        "bajaaiye"
+      ],
+      "impNot": [
+        "mat bajaao",
+        "mat bajaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vaasi",
+        "vaasinga"
+      ],
+      "impNot": [
+        "vaasikkaadhe",
+        "vaasikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vaayikk",
+        "vaayikkoo"
+      ],
+      "impNot": [
+        "vaayikkalle",
+        "vaayikkalle"
+      ]
+    }
+  },
+  "sing": {
+    "kn": {
+      "imp": [
+        "haadu",
+        "haadi"
+      ],
+      "impNot": [
+        "haadbeda",
+        "haadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "gaao",
+        "gaaiye"
+      ],
+      "impNot": [
+        "mat gaao",
+        "mat gaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "paadu",
+        "paadunga"
+      ],
+      "impNot": [
+        "paadaadhe",
+        "paadaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "paadu",
+        "paadoo"
+      ],
+      "impNot": [
+        "paadalle",
+        "paadalle"
+      ]
+    }
+  },
+  "practise": {
+    "kn": {
+      "imp": [
+        "practice maadu",
+        "practice maadi"
+      ],
+      "impNot": [
+        "practice maadbeda",
+        "practice maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "practice karo",
+        "practice kijiye"
+      ],
+      "impNot": [
+        "practice mat karo",
+        "practice mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "practice pannu",
+        "practice pannunga"
+      ],
+      "impNot": [
+        "practice pannaadhe",
+        "practice pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "practice cheyy",
+        "practice cheyyoo"
+      ],
+      "impNot": [
+        "practice cheyyalle",
+        "practice cheyyalle"
+      ]
+    }
+  },
+  "listen": {
+    "kn": {
+      "imp": [
+        "kelu",
+        "keli"
+      ],
+      "impNot": [
+        "kelbeda",
+        "kelbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "suno",
+        "suniye"
+      ],
+      "impNot": [
+        "mat suno",
+        "mat suniye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kelu",
+        "kelunga"
+      ],
+      "impNot": [
+        "kekkaadhe",
+        "kekkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kelkk",
+        "kelkkoo"
+      ],
+      "impNot": [
+        "kelkkalle",
+        "kelkkalle"
+      ]
+    }
+  },
+  "learn": {
+    "kn": {
+      "imp": [
+        "kali",
+        "kaliri"
+      ],
+      "impNot": [
+        "kalibeda",
+        "kalibedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "seekho",
+        "seekhiye"
+      ],
+      "impNot": [
+        "mat seekho",
+        "mat seekhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kathukko",
+        "kathukkonga"
+      ],
+      "impNot": [
+        "kathukkaadhe",
+        "kathukkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "padikk",
+        "padikkoo"
+      ],
+      "impNot": [
+        "padikkalle",
+        "padikkalle"
+      ]
+    }
+  },
+  "teach": {
+    "kn": {
+      "imp": [
+        "helikodu",
+        "helikodi"
+      ],
+      "impNot": [
+        "helikodbeda",
+        "helikodbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "sikhaao",
+        "sikhaaiye"
+      ],
+      "impNot": [
+        "mat sikhaao",
+        "mat sikhaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "solli kodu",
+        "solli kodunga"
+      ],
+      "impNot": [
+        "solli kodukkaadhe",
+        "solli kodukkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "padippikk",
+        "padippikkoo"
+      ],
+      "impNot": [
+        "padippikkalle",
+        "padippikkalle"
+      ]
+    }
+  },
+  "dance": {
+    "kn": {
+      "imp": [
+        "dance maadu",
+        "dance maadi"
+      ],
+      "impNot": [
+        "dance maadbeda",
+        "dance maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "naacho",
+        "naachiye"
+      ],
+      "impNot": [
+        "mat naacho",
+        "mat naachiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "dance pannu",
+        "dance pannunga"
+      ],
+      "impNot": [
+        "dance pannaadhe",
+        "dance pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "dance cheyy",
+        "dance cheyyoo"
+      ],
+      "impNot": [
+        "dance cheyyalle",
+        "dance cheyyalle"
+      ]
+    }
+  },
+  "do": {
+    "kn": {
+      "imp": [
+        "maadu",
+        "maadi"
+      ],
+      "impNot": [
+        "maadbeda",
+        "maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "karo",
+        "kijiye"
+      ],
+      "impNot": [
+        "mat karo",
+        "mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "pannu",
+        "pannunga"
+      ],
+      "impNot": [
+        "pannaadhe",
+        "pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "cheyy",
+        "cheyyoo"
+      ],
+      "impNot": [
+        "cheyyalle",
+        "cheyyalle"
+      ]
+    }
+  },
+  "go": {
+    "kn": {
+      "imp": [
+        "hogu",
+        "hogi"
+      ],
+      "impNot": [
+        "hogbeda",
+        "hogbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "jaao",
+        "jaaiye"
+      ],
+      "impNot": [
+        "mat jaao",
+        "mat jaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "po",
+        "ponga"
+      ],
+      "impNot": [
+        "pogaadhe",
+        "pogaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "po",
+        "pokoo"
+      ],
+      "impNot": [
+        "pokalle",
+        "pokalle"
+      ]
+    }
+  },
+  "come": {
+    "kn": {
+      "imp": [
+        "baa",
+        "banni"
+      ],
+      "impNot": [
+        "barbeda",
+        "barbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "aao",
+        "aaiye"
+      ],
+      "impNot": [
+        "mat aao",
+        "mat aaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vaa",
+        "vaanga"
+      ],
+      "impNot": [
+        "varaadhe",
+        "varaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vaa",
+        "varoo"
+      ],
+      "impNot": [
+        "varalle",
+        "varalle"
+      ]
+    }
+  },
+  "think": {
+    "kn": {
+      "imp": [
+        "yochne maadu",
+        "yochne maadi"
+      ],
+      "impNot": [
+        "yochne maadbeda",
+        "yochne maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "socho",
+        "sochiye"
+      ],
+      "impNot": [
+        "mat socho",
+        "mat sochiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "yosi",
+        "yosinga"
+      ],
+      "impNot": [
+        "yosikkaadhe",
+        "yosikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "aalochikk",
+        "aalochikkoo"
+      ],
+      "impNot": [
+        "aalochikkalle",
+        "aalochikkalle"
+      ]
+    }
+  },
+  "travel": {
+    "kn": {
+      "imp": [
+        "travel maadu",
+        "travel maadi"
+      ],
+      "impNot": [
+        "travel maadbeda",
+        "travel maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "travel karo",
+        "travel kijiye"
+      ],
+      "impNot": [
+        "travel mat karo",
+        "travel mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "travel pannu",
+        "travel pannunga"
+      ],
+      "impNot": [
+        "travel pannaadhe",
+        "travel pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "travel cheyy",
+        "travel cheyyoo"
+      ],
+      "impNot": [
+        "travel cheyyalle",
+        "travel cheyyalle"
+      ]
+    }
+  },
+  "speak": {
+    "kn": {
+      "imp": [
+        "maatadu",
+        "maatadi"
+      ],
+      "impNot": [
+        "maatadbeda",
+        "maatadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "bolo",
+        "boliye"
+      ],
+      "impNot": [
+        "mat bolo",
+        "mat boliye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "pesu",
+        "pesunga"
+      ],
+      "impNot": [
+        "pesaadhe",
+        "pesaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "samsaarikk",
+        "samsaarikkoo"
+      ],
+      "impNot": [
+        "samsaarikkalle",
+        "samsaarikkalle"
+      ]
+    }
+  },
+  "eat": {
+    "kn": {
+      "imp": [
+        "tinnu",
+        "tinni"
+      ],
+      "impNot": [
+        "tinbeda",
+        "tinbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "khaao",
+        "khaaiye"
+      ],
+      "impNot": [
+        "mat khaao",
+        "mat khaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "saapdu",
+        "saapdunga"
+      ],
+      "impNot": [
+        "saapdaadhe",
+        "saapdaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kazhikk",
+        "kazhikkoo"
+      ],
+      "impNot": [
+        "kazhikkalle",
+        "kazhikkalle"
+      ]
+    }
+  },
+  "drink": {
+    "kn": {
+      "imp": [
+        "kudi",
+        "kudiri"
+      ],
+      "impNot": [
+        "kudibeda",
+        "kudibedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "piyo",
+        "pijiye"
+      ],
+      "impNot": [
+        "mat piyo",
+        "mat pijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kudi",
+        "kudinga"
+      ],
+      "impNot": [
+        "kudikkaadhe",
+        "kudikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kudikk",
+        "kudikkoo"
+      ],
+      "impNot": [
+        "kudikkalle",
+        "kudikkalle"
+      ]
+    }
+  },
+  "see": {
+    "kn": {
+      "imp": [
+        "nodu",
+        "nodi"
+      ],
+      "impNot": [
+        "nodbeda",
+        "nodbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "dekho",
+        "dekhiye"
+      ],
+      "impNot": [
+        "mat dekho",
+        "mat dekhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "paaru",
+        "paarunga"
+      ],
+      "impNot": [
+        "paakkaadhe",
+        "paakkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "nokku",
+        "nokkoo"
+      ],
+      "impNot": [
+        "nokkalle",
+        "nokkalle"
+      ]
+    }
+  },
+  "read": {
+    "kn": {
+      "imp": [
+        "odu",
+        "odi"
+      ],
+      "impNot": [
+        "odbeda",
+        "odbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "padho",
+        "padhiye"
+      ],
+      "impNot": [
+        "mat padho",
+        "mat padhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "padi",
+        "padinga"
+      ],
+      "impNot": [
+        "padikkaadhe",
+        "padikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vaayikk",
+        "vaayikkoo"
+      ],
+      "impNot": [
+        "vaayikkalle",
+        "vaayikkalle"
+      ]
+    }
+  },
+  "write": {
+    "kn": {
+      "imp": [
+        "bari",
+        "bariri"
+      ],
+      "impNot": [
+        "baribeda",
+        "baribedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "likho",
+        "likhiye"
+      ],
+      "impNot": [
+        "mat likho",
+        "mat likhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "ezhudhu",
+        "ezhudhunga"
+      ],
+      "impNot": [
+        "ezhudhaadhe",
+        "ezhudhaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "ezhuthu",
+        "ezhuthoo"
+      ],
+      "impNot": [
+        "ezhuthalle",
+        "ezhuthalle"
+      ]
+    }
+  },
+  "work": {
+    "kn": {
+      "imp": [
+        "kelsa maadu",
+        "kelsa maadi"
+      ],
+      "impNot": [
+        "kelsa maadbeda",
+        "kelsa maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "kaam karo",
+        "kaam kijiye"
+      ],
+      "impNot": [
+        "kaam mat karo",
+        "kaam mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "velai pannu",
+        "velai pannunga"
+      ],
+      "impNot": [
+        "velai pannaadhe",
+        "velai pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "joli cheyy",
+        "joli cheyyoo"
+      ],
+      "impNot": [
+        "joli cheyyalle",
+        "joli cheyyalle"
+      ]
+    }
+  },
+  "sleep": {
+    "kn": {
+      "imp": [
+        "malagu",
+        "malagi"
+      ],
+      "impNot": [
+        "malagbeda",
+        "malagbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "so jaao",
+        "so jaaiye"
+      ],
+      "impNot": [
+        "mat so",
+        "mat soiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "thoongu",
+        "thoongunga"
+      ],
+      "impNot": [
+        "thoongaadhe",
+        "thoongaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "urangu",
+        "urangoo"
+      ],
+      "impNot": [
+        "urangalle",
+        "urangalle"
+      ]
+    }
+  },
+  "playgame": {
+    "kn": {
+      "imp": [
+        "aadu",
+        "aadi"
+      ],
+      "impNot": [
+        "aadbeda",
+        "aadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "khelo",
+        "kheliye"
+      ],
+      "impNot": [
+        "mat khelo",
+        "mat kheliye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "velaiyaadu",
+        "velaiyaadunga"
+      ],
+      "impNot": [
+        "velaiyaadaadhe",
+        "velaiyaadaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kalikk",
+        "kalikkoo"
+      ],
+      "impNot": [
+        "kalikkalle",
+        "kalikkalle"
+      ]
+    }
+  },
+  "give": {
+    "kn": {
+      "imp": [
+        "kodu",
+        "kodi"
+      ],
+      "impNot": [
+        "kodbeda",
+        "kodbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "do",
+        "dijiye"
+      ],
+      "impNot": [
+        "mat do",
+        "mat dijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kudu",
+        "kudunga"
+      ],
+      "impNot": [
+        "kudukkaadhe",
+        "kudukkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "thaa",
+        "tharoo"
+      ],
+      "impNot": [
+        "tharalle",
+        "tharalle"
+      ]
+    }
+  },
+  "take": {
+    "kn": {
+      "imp": [
+        "togo",
+        "togolli"
+      ],
+      "impNot": [
+        "togobeda",
+        "togobedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "lo",
+        "lijiye"
+      ],
+      "impNot": [
+        "mat lo",
+        "mat lijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "edu",
+        "edunga"
+      ],
+      "impNot": [
+        "edukkaadhe",
+        "edukkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "edukk",
+        "edukkoo"
+      ],
+      "impNot": [
+        "edukkalle",
+        "edukkalle"
+      ]
+    }
+  },
+  "buy": {
+    "kn": {
+      "imp": [
+        "kharidi maadu",
+        "kharidi maadi"
+      ],
+      "impNot": [
+        "kharidi maadbeda",
+        "kharidi maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "khareedo",
+        "khareediye"
+      ],
+      "impNot": [
+        "mat khareedo",
+        "mat khareediye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vaangu",
+        "vaangunga"
+      ],
+      "impNot": [
+        "vaangaadhe",
+        "vaangaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vaangu",
+        "vaangoo"
+      ],
+      "impNot": [
+        "vaangalle",
+        "vaangalle"
+      ]
+    }
+  },
+  "say": {
+    "kn": {
+      "imp": [
+        "helu",
+        "heli"
+      ],
+      "impNot": [
+        "helbeda",
+        "helbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "kaho",
+        "kahiye"
+      ],
+      "impNot": [
+        "mat kaho",
+        "mat kahiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "sollu",
+        "sollunga"
+      ],
+      "impNot": [
+        "sollaadhe",
+        "sollaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "para",
+        "parayoo"
+      ],
+      "impNot": [
+        "parayalle",
+        "parayalle"
+      ]
+    }
+  },
+  "wait": {
+    "kn": {
+      "imp": [
+        "kaayi",
+        "kaayiri"
+      ],
+      "impNot": [
+        "kaaybeda",
+        "kaaybedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "wait karo",
+        "wait kijiye"
+      ],
+      "impNot": [
+        "wait mat karo",
+        "wait mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "wait pannu",
+        "wait pannunga"
+      ],
+      "impNot": [
+        "wait pannaadhe",
+        "wait pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kaathirikk",
+        "kaathirikkoo"
+      ],
+      "impNot": [
+        "kaathirikkalle",
+        "kaathirikkalle"
+      ]
+    }
+  },
+  "sit": {
+    "kn": {
+      "imp": [
+        "kootko",
+        "kootkolli"
+      ],
+      "impNot": [
+        "kootkobeda",
+        "kootkobedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "baitho",
+        "baithiye"
+      ],
+      "impNot": [
+        "mat baitho",
+        "mat baithiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "ukkaaru",
+        "ukkaarunga"
+      ],
+      "impNot": [
+        "ukkaaraadhe",
+        "ukkaaraadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "iri",
+        "irikkoo"
+      ],
+      "impNot": [
+        "irikkalle",
+        "irikkalle"
+      ]
+    }
+  },
+  "walk": {
+    "kn": {
+      "imp": [
+        "nadi",
+        "nadiri"
+      ],
+      "impNot": [
+        "nadibeda",
+        "nadibedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "chalo",
+        "chaliye"
+      ],
+      "impNot": [
+        "mat chalo",
+        "mat chaliye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "nada",
+        "nadanga"
+      ],
+      "impNot": [
+        "nadakkaadhe",
+        "nadakkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "nadakk",
+        "nadakkoo"
+      ],
+      "impNot": [
+        "nadakkalle",
+        "nadakkalle"
+      ]
+    }
+  },
+  "cook": {
+    "kn": {
+      "imp": [
+        "adige maadu",
+        "adige maadi"
+      ],
+      "impNot": [
+        "adige maadbeda",
+        "adige maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "khaana banaao",
+        "khaana banaaiye"
+      ],
+      "impNot": [
+        "khaana mat banaao",
+        "khaana mat banaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "samai",
+        "samainga"
+      ],
+      "impNot": [
+        "samaikkaadhe",
+        "samaikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "pachakam cheyy",
+        "pachakam cheyyoo"
+      ],
+      "impNot": [
+        "pachakam cheyyalle",
+        "pachakam cheyyalle"
+      ]
+    }
+  },
+  "help": {
+    "kn": {
+      "imp": [
+        "help maadu",
+        "help maadi"
+      ],
+      "impNot": [
+        "help maadbeda",
+        "help maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "help karo",
+        "help kijiye"
+      ],
+      "impNot": [
+        "help mat karo",
+        "help mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "help pannu",
+        "help pannunga"
+      ],
+      "impNot": [
+        "help pannaadhe",
+        "help pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "sahaayikk",
+        "sahaayikkoo"
+      ],
+      "impNot": [
+        "sahaayikkalle",
+        "sahaayikkalle"
+      ]
+    }
+  },
+  "call": {
+    "kn": {
+      "imp": [
+        "call maadu",
+        "call maadi"
+      ],
+      "impNot": [
+        "call maadbeda",
+        "call maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "call karo",
+        "call kijiye"
+      ],
+      "impNot": [
+        "call mat karo",
+        "call mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "call pannu",
+        "call pannunga"
+      ],
+      "impNot": [
+        "call pannaadhe",
+        "call pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vilikk",
+        "vilikkoo"
+      ],
+      "impNot": [
+        "vilikkalle",
+        "vilikkalle"
+      ]
+    }
+  },
+  "tune": {
+    "kn": {
+      "imp": [
+        "tune maadu",
+        "tune maadi"
+      ],
+      "impNot": [
+        "tune maadbeda",
+        "tune maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "tune karo",
+        "tune kijiye"
+      ],
+      "impNot": [
+        "tune mat karo",
+        "tune mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "tune pannu",
+        "tune pannunga"
+      ],
+      "impNot": [
+        "tune pannaadhe",
+        "tune pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "tune cheyy",
+        "tune cheyyoo"
+      ],
+      "impNot": [
+        "tune cheyyalle",
+        "tune cheyyalle"
+      ]
+    }
+  },
+  "record": {
+    "kn": {
+      "imp": [
+        "record maadu",
+        "record maadi"
+      ],
+      "impNot": [
+        "record maadbeda",
+        "record maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "record karo",
+        "record kijiye"
+      ],
+      "impNot": [
+        "record mat karo",
+        "record mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "record pannu",
+        "record pannunga"
+      ],
+      "impNot": [
+        "record pannaadhe",
+        "record pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "record cheyy",
+        "record cheyyoo"
+      ],
+      "impNot": [
+        "record cheyyalle",
+        "record cheyyalle"
+      ]
+    }
+  },
+  "count": {
+    "kn": {
+      "imp": [
+        "enisu",
+        "enisi"
+      ],
+      "impNot": [
+        "enisbeda",
+        "enisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "gino",
+        "giniye"
+      ],
+      "impNot": [
+        "mat gino",
+        "mat giniye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "ennu",
+        "ennunga"
+      ],
+      "impNot": [
+        "ennaadhe",
+        "ennaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "ennu",
+        "ennoo"
+      ],
+      "impNot": [
+        "ennalle",
+        "ennalle"
+      ]
+    }
+  },
+  "clap": {
+    "kn": {
+      "imp": [
+        "chappale tattu",
+        "chappale tatti"
+      ],
+      "impNot": [
+        "chappale tattbeda",
+        "chappale tattbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "taali bajaao",
+        "taali bajaaiye"
+      ],
+      "impNot": [
+        "taali mat bajaao",
+        "taali mat bajaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kai thattu",
+        "kai thattunga"
+      ],
+      "impNot": [
+        "kai thattaadhe",
+        "kai thattaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kai kottu",
+        "kai kottoo"
+      ],
+      "impNot": [
+        "kai kottalle",
+        "kai kottalle"
+      ]
+    }
+  },
+  "explain": {
+    "kn": {
+      "imp": [
+        "explain maadu",
+        "explain maadi"
+      ],
+      "impNot": [
+        "explain maadbeda",
+        "explain maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "samjhaao",
+        "samjhaaiye"
+      ],
+      "impNot": [
+        "mat samjhaao",
+        "mat samjhaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "explain pannu",
+        "explain pannunga"
+      ],
+      "impNot": [
+        "explain pannaadhe",
+        "explain pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "explain cheyy",
+        "explain cheyyoo"
+      ],
+      "impNot": [
+        "explain cheyyalle",
+        "explain cheyyalle"
+      ]
+    }
+  },
+  "repeat": {
+    "kn": {
+      "imp": [
+        "repeat maadu",
+        "repeat maadi"
+      ],
+      "impNot": [
+        "repeat maadbeda",
+        "repeat maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "repeat karo",
+        "repeat kijiye"
+      ],
+      "impNot": [
+        "repeat mat karo",
+        "repeat mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "repeat pannu",
+        "repeat pannunga"
+      ],
+      "impNot": [
+        "repeat pannaadhe",
+        "repeat pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "repeat cheyy",
+        "repeat cheyyoo"
+      ],
+      "impNot": [
+        "repeat cheyyalle",
+        "repeat cheyyalle"
+      ]
+    }
+  },
+  "open": {
+    "kn": {
+      "imp": [
+        "tegi",
+        "tegiri"
+      ],
+      "impNot": [
+        "tegibeda",
+        "tegibedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "kholo",
+        "kholiye"
+      ],
+      "impNot": [
+        "mat kholo",
+        "mat kholiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "thora",
+        "thoranga"
+      ],
+      "impNot": [
+        "thorakkaadhe",
+        "thorakkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "thurakk",
+        "thurakkoo"
+      ],
+      "impNot": [
+        "thurakkalle",
+        "thurakkalle"
+      ]
+    }
+  },
+  "close": {
+    "kn": {
+      "imp": [
+        "muchchu",
+        "muchchi"
+      ],
+      "impNot": [
+        "muchbeda",
+        "muchbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "band karo",
+        "band kijiye"
+      ],
+      "impNot": [
+        "band mat karo",
+        "band mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "moodu",
+        "moodunga"
+      ],
+      "impNot": [
+        "moodaadhe",
+        "moodaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "adakk",
+        "adakkoo"
+      ],
+      "impNot": [
+        "adakkalle",
+        "adakkalle"
+      ]
+    }
+  },
+  "bring": {
+    "kn": {
+      "imp": [
+        "taa",
+        "tanni"
+      ],
+      "impNot": [
+        "tarbeda",
+        "tarbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "laao",
+        "laaiye"
+      ],
+      "impNot": [
+        "mat laao",
+        "mat laaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kondu vaa",
+        "kondu vaanga"
+      ],
+      "impNot": [
+        "kondu varaadhe",
+        "kondu varaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kondu vaa",
+        "kondu varoo"
+      ],
+      "impNot": [
+        "kondu varalle",
+        "kondu varalle"
+      ]
+    }
+  },
+  "send": {
+    "kn": {
+      "imp": [
+        "kalisu",
+        "kalisi"
+      ],
+      "impNot": [
+        "kalisbeda",
+        "kalisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "bhejo",
+        "bhejiye"
+      ],
+      "impNot": [
+        "mat bhejo",
+        "mat bhejiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "anuppu",
+        "anuppunga"
+      ],
+      "impNot": [
+        "anuppaadhe",
+        "anuppaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "ayakk",
+        "ayakkoo"
+      ],
+      "impNot": [
+        "ayakkalle",
+        "ayakkalle"
+      ]
+    }
+  },
+  "show": {
+    "kn": {
+      "imp": [
+        "torisu",
+        "torisi"
+      ],
+      "impNot": [
+        "torisbeda",
+        "torisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "dikhaao",
+        "dikhaaiye"
+      ],
+      "impNot": [
+        "mat dikhaao",
+        "mat dikhaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kaattu",
+        "kaattunga"
+      ],
+      "impNot": [
+        "kaattaadhe",
+        "kaattaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kaanikk",
+        "kaanikkoo"
+      ],
+      "impNot": [
+        "kaanikkalle",
+        "kaanikkalle"
+      ]
+    }
+  },
+  "put": {
+    "kn": {
+      "imp": [
+        "idu",
+        "idi"
+      ],
+      "impNot": [
+        "idbeda",
+        "idbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "rakho",
+        "rakhiye"
+      ],
+      "impNot": [
+        "mat rakho",
+        "mat rakhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vai",
+        "vainga"
+      ],
+      "impNot": [
+        "vaikkaadhe",
+        "vaikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vaykk",
+        "vaykkoo"
+      ],
+      "impNot": [
+        "vaykkalle",
+        "vaykkalle"
+      ]
+    }
+  },
+  "wash": {
+    "kn": {
+      "imp": [
+        "tolisu",
+        "tolisi"
+      ],
+      "impNot": [
+        "tolisbeda",
+        "tolisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "dho",
+        "dhoiye"
+      ],
+      "impNot": [
+        "mat dho",
+        "mat dhoiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kazhuvu",
+        "kazhuvunga"
+      ],
+      "impNot": [
+        "kazhuvaadhe",
+        "kazhuvaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kazhuku",
+        "kazhukoo"
+      ],
+      "impNot": [
+        "kazhukalle",
+        "kazhukalle"
+      ]
+    }
+  },
+  "cut": {
+    "kn": {
+      "imp": [
+        "cut maadu",
+        "cut maadi"
+      ],
+      "impNot": [
+        "cut maadbeda",
+        "cut maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "kaato",
+        "kaatiye"
+      ],
+      "impNot": [
+        "mat kaato",
+        "mat kaatiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vettu",
+        "vettunga"
+      ],
+      "impNot": [
+        "vettaadhe",
+        "vettaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "murikk",
+        "murikkoo"
+      ],
+      "impNot": [
+        "murikkalle",
+        "murikkalle"
+      ]
+    }
+  },
+  "ask": {
+    "kn": {
+      "imp": [
+        "kelu",
+        "keli"
+      ],
+      "impNot": [
+        "kelbeda",
+        "kelbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "poocho",
+        "poochiye"
+      ],
+      "impNot": [
+        "mat poocho",
+        "mat poochiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kelu",
+        "kelunga"
+      ],
+      "impNot": [
+        "kekkaadhe",
+        "kekkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "chodikk",
+        "chodikkoo"
+      ],
+      "impNot": [
+        "chodikkalle",
+        "chodikkalle"
+      ]
+    }
+  },
+  "answer": {
+    "kn": {
+      "imp": [
+        "uttara kodu",
+        "uttara kodi"
+      ],
+      "impNot": [
+        "uttara kodbeda",
+        "uttara kodbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "jawaab do",
+        "jawaab dijiye"
+      ],
+      "impNot": [
+        "jawaab mat do",
+        "jawaab mat dijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "badhil sollu",
+        "badhil sollunga"
+      ],
+      "impNot": [
+        "badhil sollaadhe",
+        "badhil sollaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "marupadi para",
+        "marupadi parayoo"
+      ],
+      "impNot": [
+        "marupadi parayalle",
+        "marupadi parayalle"
+      ]
+    }
+  },
+  "run": {
+    "kn": {
+      "imp": [
+        "oodu",
+        "oodi"
+      ],
+      "impNot": [
+        "oodbeda",
+        "oodbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "daudo",
+        "daudiye"
+      ],
+      "impNot": [
+        "mat daudo",
+        "mat daudiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "odu",
+        "odunga"
+      ],
+      "impNot": [
+        "odaadhe",
+        "odaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "odu",
+        "odoo"
+      ],
+      "impNot": [
+        "odalle",
+        "odalle"
+      ]
+    }
+  },
+  "laugh": {
+    "kn": {
+      "imp": [
+        "nagu",
+        "nagi"
+      ],
+      "impNot": [
+        "nagbeda",
+        "nagbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "haso",
+        "hasiye"
+      ],
+      "impNot": [
+        "mat haso",
+        "mat hasiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "siri",
+        "siringa"
+      ],
+      "impNot": [
+        "sirikkaadhe",
+        "sirikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "chirikk",
+        "chirikkoo"
+      ],
+      "impNot": [
+        "chirikkalle",
+        "chirikkalle"
+      ]
+    }
+  },
+  "cry": {
+    "kn": {
+      "imp": [
+        "alu",
+        "ali"
+      ],
+      "impNot": [
+        "albeda",
+        "albedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "ro",
+        "roiye"
+      ],
+      "impNot": [
+        "mat ro",
+        "mat roiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "azhu",
+        "azhunga"
+      ],
+      "impNot": [
+        "azhaadhe",
+        "azhaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kara",
+        "karayoo"
+      ],
+      "impNot": [
+        "karayalle",
+        "karayalle"
+      ]
+    }
+  },
+  "bathe": {
+    "kn": {
+      "imp": [
+        "snaana maadu",
+        "snaana maadi"
+      ],
+      "impNot": [
+        "snaana maadbeda",
+        "snaana maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "nahaao",
+        "nahaaiye"
+      ],
+      "impNot": [
+        "mat nahaao",
+        "mat nahaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "kuli",
+        "kulinga"
+      ],
+      "impNot": [
+        "kulikkaadhe",
+        "kulikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "kulikk",
+        "kulikkoo"
+      ],
+      "impNot": [
+        "kulikkalle",
+        "kulikkalle"
+      ]
+    }
+  },
+  "rest": {
+    "kn": {
+      "imp": [
+        "rest maadu",
+        "rest maadi"
+      ],
+      "impNot": [
+        "rest maadbeda",
+        "rest maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "aaraam karo",
+        "aaraam kijiye"
+      ],
+      "impNot": [
+        "aaraam mat karo",
+        "aaraam mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "rest pannu",
+        "rest pannunga"
+      ],
+      "impNot": [
+        "rest pannaadhe",
+        "rest pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "rest cheyy",
+        "rest cheyyoo"
+      ],
+      "impNot": [
+        "rest cheyyalle",
+        "rest cheyyalle"
+      ]
+    }
+  },
+  "swim": {
+    "kn": {
+      "imp": [
+        "eeju",
+        "eeji"
+      ],
+      "impNot": [
+        "eejbeda",
+        "eejbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "tairo",
+        "tairiye"
+      ],
+      "impNot": [
+        "mat tairo",
+        "mat tairiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "neendhu",
+        "neendhunga"
+      ],
+      "impNot": [
+        "neendhaadhe",
+        "neendhaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "neenthu",
+        "neenthoo"
+      ],
+      "impNot": [
+        "neenthalle",
+        "neenthalle"
+      ]
+    }
+  },
+  "start": {
+    "kn": {
+      "imp": [
+        "shuru maadu",
+        "shuru maadi"
+      ],
+      "impNot": [
+        "shuru maadbeda",
+        "shuru maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "shuru karo",
+        "shuru kijiye"
+      ],
+      "impNot": [
+        "shuru mat karo",
+        "shuru mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "start pannu",
+        "start pannunga"
+      ],
+      "impNot": [
+        "start pannaadhe",
+        "start pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "thudangu",
+        "thudangoo"
+      ],
+      "impNot": [
+        "thudangalle",
+        "thudangalle"
+      ]
+    }
+  },
+  "stop": {
+    "kn": {
+      "imp": [
+        "nillisu",
+        "nillisi"
+      ],
+      "impNot": [
+        "nillisbeda",
+        "nillisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "roko",
+        "rokiye"
+      ],
+      "impNot": [
+        "mat roko",
+        "mat rokiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "nirutthu",
+        "nirutthunga"
+      ],
+      "impNot": [
+        "nirutthaadhe",
+        "nirutthaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "nirthu",
+        "nirthoo"
+      ],
+      "impNot": [
+        "nirthalle",
+        "nirthalle"
+      ]
+    }
+  },
+  "finish": {
+    "kn": {
+      "imp": [
+        "mugisu",
+        "mugisi"
+      ],
+      "impNot": [
+        "mugisbeda",
+        "mugisbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "khatam karo",
+        "khatam kijiye"
+      ],
+      "impNot": [
+        "khatam mat karo",
+        "khatam mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "mudi",
+        "mudinga"
+      ],
+      "impNot": [
+        "mudikkaadhe",
+        "mudikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "theerkk",
+        "theerkkoo"
+      ],
+      "impNot": [
+        "theerkkalle",
+        "theerkkalle"
+      ]
+    }
+  },
+  "try": {
+    "kn": {
+      "imp": [
+        "try maadu",
+        "try maadi"
+      ],
+      "impNot": [
+        "try maadbeda",
+        "try maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "try karo",
+        "try kijiye"
+      ],
+      "impNot": [
+        "try mat karo",
+        "try mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "try pannu",
+        "try pannunga"
+      ],
+      "impNot": [
+        "try pannaadhe",
+        "try pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "try cheyy",
+        "try cheyyoo"
+      ],
+      "impNot": [
+        "try cheyyalle",
+        "try cheyyalle"
+      ]
+    }
+  },
+  "search": {
+    "kn": {
+      "imp": [
+        "huduku",
+        "huduki"
+      ],
+      "impNot": [
+        "hudukbeda",
+        "hudukbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "dhoondho",
+        "dhoondhiye"
+      ],
+      "impNot": [
+        "mat dhoondho",
+        "mat dhoondhiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "thedu",
+        "thedunga"
+      ],
+      "impNot": [
+        "thedaadhe",
+        "thedaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "thedu",
+        "thedoo"
+      ],
+      "impNot": [
+        "thedalle",
+        "thedalle"
+      ]
+    }
+  },
+  "change": {
+    "kn": {
+      "imp": [
+        "change maadu",
+        "change maadi"
+      ],
+      "impNot": [
+        "change maadbeda",
+        "change maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "badlo",
+        "badliye"
+      ],
+      "impNot": [
+        "mat badlo",
+        "mat badliye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "change pannu",
+        "change pannunga"
+      ],
+      "impNot": [
+        "change pannaadhe",
+        "change pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "change cheyy",
+        "change cheyyoo"
+      ],
+      "impNot": [
+        "change cheyyalle",
+        "change cheyyalle"
+      ]
+    }
+  },
+  "repair": {
+    "kn": {
+      "imp": [
+        "repair maadu",
+        "repair maadi"
+      ],
+      "impNot": [
+        "repair maadbeda",
+        "repair maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "theek karo",
+        "theek kijiye"
+      ],
+      "impNot": [
+        "theek mat karo",
+        "theek mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "repair pannu",
+        "repair pannunga"
+      ],
+      "impNot": [
+        "repair pannaadhe",
+        "repair pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "repair cheyy",
+        "repair cheyyoo"
+      ],
+      "impNot": [
+        "repair cheyyalle",
+        "repair cheyyalle"
+      ]
+    }
+  },
+  "clean": {
+    "kn": {
+      "imp": [
+        "clean maadu",
+        "clean maadi"
+      ],
+      "impNot": [
+        "clean maadbeda",
+        "clean maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "saaf karo",
+        "saaf kijiye"
+      ],
+      "impNot": [
+        "saaf mat karo",
+        "saaf mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "clean pannu",
+        "clean pannunga"
+      ],
+      "impNot": [
+        "clean pannaadhe",
+        "clean pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "clean cheyy",
+        "clean cheyyoo"
+      ],
+      "impNot": [
+        "clean cheyyalle",
+        "clean cheyyalle"
+      ]
+    }
+  },
+  "pay": {
+    "kn": {
+      "imp": [
+        "pay maadu",
+        "pay maadi"
+      ],
+      "impNot": [
+        "pay maadbeda",
+        "pay maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "pay karo",
+        "pay kijiye"
+      ],
+      "impNot": [
+        "pay mat karo",
+        "pay mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "pay pannu",
+        "pay pannunga"
+      ],
+      "impNot": [
+        "pay pannaadhe",
+        "pay pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "pay cheyy",
+        "pay cheyyoo"
+      ],
+      "impNot": [
+        "pay cheyyalle",
+        "pay cheyyalle"
+      ]
+    }
+  },
+  "sell": {
+    "kn": {
+      "imp": [
+        "maaru",
+        "maari"
+      ],
+      "impNot": [
+        "maarbeda",
+        "maarbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "becho",
+        "bechiye"
+      ],
+      "impNot": [
+        "mat becho",
+        "mat bechiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "vithudu",
+        "vithudunga"
+      ],
+      "impNot": [
+        "vikkaadhe",
+        "vikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "vikk",
+        "vikkoo"
+      ],
+      "impNot": [
+        "vikkalle",
+        "vikkalle"
+      ]
+    }
+  },
+  "order": {
+    "kn": {
+      "imp": [
+        "order maadu",
+        "order maadi"
+      ],
+      "impNot": [
+        "order maadbeda",
+        "order maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "order karo",
+        "order kijiye"
+      ],
+      "impNot": [
+        "order mat karo",
+        "order mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "order pannu",
+        "order pannunga"
+      ],
+      "impNot": [
+        "order pannaadhe",
+        "order pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "order cheyy",
+        "order cheyyoo"
+      ],
+      "impNot": [
+        "order cheyyalle",
+        "order cheyyalle"
+      ]
+    }
+  },
+  "book": {
+    "kn": {
+      "imp": [
+        "book maadu",
+        "book maadi"
+      ],
+      "impNot": [
+        "book maadbeda",
+        "book maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "book karo",
+        "book kijiye"
+      ],
+      "impNot": [
+        "book mat karo",
+        "book mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "book pannu",
+        "book pannunga"
+      ],
+      "impNot": [
+        "book pannaadhe",
+        "book pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "book cheyy",
+        "book cheyyoo"
+      ],
+      "impNot": [
+        "book cheyyalle",
+        "book cheyyalle"
+      ]
+    }
+  },
+  "cancel": {
+    "kn": {
+      "imp": [
+        "cancel maadu",
+        "cancel maadi"
+      ],
+      "impNot": [
+        "cancel maadbeda",
+        "cancel maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "cancel karo",
+        "cancel kijiye"
+      ],
+      "impNot": [
+        "cancel mat karo",
+        "cancel mat kijiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "cancel pannu",
+        "cancel pannunga"
+      ],
+      "impNot": [
+        "cancel pannaadhe",
+        "cancel pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "cancel cheyy",
+        "cancel cheyyoo"
+      ],
+      "impNot": [
+        "cancel cheyyalle",
+        "cancel cheyyalle"
+      ]
+    }
+  },
+  "drive": {
+    "kn": {
+      "imp": [
+        "drive maadu",
+        "drive maadi"
+      ],
+      "impNot": [
+        "drive maadbeda",
+        "drive maadbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "chalaao",
+        "chalaaiye"
+      ],
+      "impNot": [
+        "mat chalaao",
+        "mat chalaaiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "drive pannu",
+        "drive pannunga"
+      ],
+      "impNot": [
+        "drive pannaadhe",
+        "drive pannaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "drive cheyy",
+        "drive cheyyoo"
+      ],
+      "impNot": [
+        "drive cheyyalle",
+        "drive cheyyalle"
+      ]
+    }
+  },
+  "wear": {
+    "kn": {
+      "imp": [
+        "haaku",
+        "haaki"
+      ],
+      "impNot": [
+        "haakbeda",
+        "haakbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "pehno",
+        "pehniye"
+      ],
+      "impNot": [
+        "mat pehno",
+        "mat pehniye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "podu",
+        "podunga"
+      ],
+      "impNot": [
+        "podaadhe",
+        "podaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "idu",
+        "idoo"
+      ],
+      "impNot": [
+        "idalle",
+        "idalle"
+      ]
+    }
+  },
+  "stand": {
+    "kn": {
+      "imp": [
+        "nillu",
+        "nilli"
+      ],
+      "impNot": [
+        "nillbeda",
+        "nillbedi"
+      ]
+    },
+    "hi": {
+      "imp": [
+        "utho",
+        "uthiye"
+      ],
+      "impNot": [
+        "mat utho",
+        "mat uthiye"
+      ]
+    },
+    "ta": {
+      "imp": [
+        "nillu",
+        "nillunga"
+      ],
+      "impNot": [
+        "nikkaadhe",
+        "nikkaadheenga"
+      ]
+    },
+    "ml": {
+      "imp": [
+        "nilkk",
+        "nilkkoo"
+      ],
+      "impNot": [
+        "nilkkalle",
+        "nilkkalle"
+      ]
+    }
+  }
+}

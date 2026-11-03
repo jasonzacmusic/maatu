@@ -1,0 +1,162 @@
+[
+  {
+    "id": "here",
+    "en": "here",
+    "kn": "illi",
+    "hi": "yahaan",
+    "ta": "inga",
+    "ml": "ivide"
+  },
+  {
+    "id": "there",
+    "en": "there",
+    "kn": "alli",
+    "hi": "wahaan",
+    "ta": "anga",
+    "ml": "avide"
+  },
+  {
+    "id": "straight",
+    "en": "straight",
+    "kn": "straight",
+    "hi": "seedha",
+    "ta": "straight-aa",
+    "ml": "nere"
+  },
+  {
+    "id": "left",
+    "en": "left",
+    "kn": "left-ge",
+    "hi": "left",
+    "ta": "left-la",
+    "ml": "idathottu"
+  },
+  {
+    "id": "right",
+    "en": "right",
+    "kn": "right-ge",
+    "hi": "right",
+    "ta": "right-la",
+    "ml": "valathottu"
+  },
+  {
+    "id": "ahead",
+    "en": "ahead",
+    "kn": "munde",
+    "hi": "aage",
+    "ta": "munnaadi",
+    "ml": "munnottu"
+  },
+  {
+    "id": "back",
+    "en": "back",
+    "kn": "hinde",
+    "hi": "peechhe",
+    "ta": "pinnaadi",
+    "ml": "purakottu"
+  },
+  {
+    "id": "near",
+    "en": "nearby",
+    "kn": "hattira",
+    "hi": "paas mein",
+    "ta": "pakkathula",
+    "ml": "aduthu"
+  },
+  {
+    "id": "slowly",
+    "en": "slowly",
+    "kn": "nidhaanavaagi",
+    "hi": "dheere",
+    "ta": "medhuva",
+    "ml": "pathukke"
+  },
+  {
+    "id": "quickly",
+    "en": "quickly",
+    "kn": "bega",
+    "hi": "jaldi",
+    "ta": "seekkiram",
+    "ml": "vegam"
+  },
+  {
+    "id": "carefully",
+    "en": "carefully",
+    "kn": "husharaagi",
+    "hi": "dhyaan se",
+    "ta": "jaakkiradhaiyaa",
+    "ml": "sookshichu"
+  },
+  {
+    "id": "now",
+    "en": "now",
+    "kn": "eega",
+    "hi": "abhi",
+    "ta": "ippo",
+    "ml": "ippo"
+  },
+  {
+    "id": "later",
+    "en": "later",
+    "kn": "aamele",
+    "hi": "baad mein",
+    "ta": "apram",
+    "ml": "pinne"
+  },
+  {
+    "id": "today",
+    "en": "today",
+    "kn": "ivattu",
+    "hi": "aaj",
+    "ta": "innikki",
+    "ml": "innu"
+  },
+  {
+    "id": "tomorrow",
+    "en": "tomorrow",
+    "kn": "naale",
+    "hi": "kal",
+    "ta": "naalaikku",
+    "ml": "naale"
+  },
+  {
+    "id": "again",
+    "en": "again",
+    "kn": "innomme",
+    "hi": "phir se",
+    "ta": "thirumba",
+    "ml": "onnu koodi"
+  },
+  {
+    "id": "inside",
+    "en": "inside",
+    "kn": "olage",
+    "hi": "andar",
+    "ta": "ulla",
+    "ml": "akathu"
+  },
+  {
+    "id": "outside",
+    "en": "outside",
+    "kn": "horage",
+    "hi": "baahar",
+    "ta": "veliya",
+    "ml": "purathu"
+  },
+  {
+    "id": "upstairs",
+    "en": "upstairs",
+    "kn": "mele",
+    "hi": "upar",
+    "ta": "mela",
+    "ml": "mukalil"
+  },
+  {
+    "id": "downstairs",
+    "en": "downstairs",
+    "kn": "kelage",
+    "hi": "neeche",
+    "ta": "keezha",
+    "ml": "thaazhe"
+  }
+]

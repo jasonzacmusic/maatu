@@ -1,6 +1,7 @@
 import {
   build,
   adjById,
+  DIRECTIONS,
   objectById,
   person as personOf,
   QUANTITIES,
@@ -10,11 +11,12 @@ import {
   verbById,
   type Adjective,
   type Gender,
+  type Imp,
   type ObjectWord,
   type PersonId,
 } from "./grammar";
 import type { Lang } from "./maatu-design";
-import type { Part, PathChoice, PathLang, PathResult, Role } from "./sentence-path";
+import { frenchTell, type Part, type PathChoice, type PathLang, type PathResult, type Role } from "./sentence-path";
 
 // Sentence shapes. The builder used to make one shape only, "someone does
 // something", and just swapped the words inside it. A beginner needs the other
@@ -27,11 +29,12 @@ import type { Part, PathChoice, PathLang, PathResult, Role } from "./sentence-pa
 
 export type ShapeId =
   | "does" | "isAdj" | "isNoun" | "have" | "want" | "like"
-  | "thereIs" | "whereIs" | "howMuch" | "request" | "goingTo" | "lets" | "whQuestion";
+  | "thereIs" | "whereIs" | "howMuch" | "request" | "goingTo" | "lets" | "whQuestion"
+  | "tell" | "feel";
 
 export type Slot =
   | "who" | "subject" | "verb" | "verb2" | "object" | "adj" | "quant"
-  | "place" | "placeAt" | "time" | "qword";
+  | "place" | "placeAt" | "time" | "qword" | "direction";
 
 export type Toggle = "negative" | "question" | "tense" | "register" | "timeWord";
 
@@ -50,6 +53,11 @@ export const SHAPES: Shape[] = [
     id: "does", label: "Someone does something", emoji: "🎬",
     example: "I play the piano every day", blurb: "The everyday sentence. Any person, any action, any time.",
     slots: ["who", "verb", "object", "adj", "time"], toggles: ["negative", "question", "tense", "timeWord"],
+  },
+  {
+    id: "tell", label: "Ask someone to do it", emoji: "📣",
+    example: "Please stop here", blurb: "Tell a driver, an officer, a shopkeeper or a friend what to do. Politely, or the friendly way.",
+    slots: ["verb", "object", "direction"], toggles: ["negative", "register"],
   },
   {
     id: "whQuestion", label: "Ask where, what, why", emoji: "❓",
@@ -75,6 +83,11 @@ export const SHAPES: Shape[] = [
     id: "want", label: "I want ___", emoji: "🙏",
     example: "I want a little hot water", blurb: "Wanting a thing, not an action.",
     slots: ["who", "quant", "adj", "object"], toggles: ["negative", "question"],
+  },
+  {
+    id: "feel", label: "I have a fever, a pain", emoji: "🤒",
+    example: "I have a headache", blurb: "For the doctor and the medical shop. A fever or a pain sits with the person, like a wish does.",
+    slots: ["who", "object"], toggles: ["negative", "question"],
   },
   {
     id: "like", label: "I like ___", emoji: "❤️",
@@ -127,6 +140,12 @@ export type ShapeChoice = PathChoice & {
   verb2: string;
   qword: string;
   polite: boolean;
+  // A command can say where or how: stop HERE, drive SLOWLY.
+  direction?: string | null;
+  // Where is THE bus stand, not where is my bus stand.
+  the?: boolean;
+  // The same line as want, said as a need: do you need the Aadhaar card?
+  need?: boolean;
 };
 
 // ............................................................ negation
@@ -183,7 +202,7 @@ function nounPhrase(lang: Lang, c: ShapeChoice, obj: ObjectWord | null, useQuant
   const out: Part[] = [];
   if (useQuant && c.quant) {
     const q = QUANTITIES.find((x) => x.id === c.quant);
-    if (q) out.push(part(q[lang], "when"));
+    if (q) out.push(part(lang === "hi" && obj?.hiG === "f" && q[lang] === "thoda" ? "thodi" : q[lang], "when"));
   }
   if (useAdj && c.adj) {
     const a = adjById(c.adj);
@@ -191,6 +210,25 @@ function nounPhrase(lang: Lang, c: ShapeChoice, obj: ObjectWord | null, useQuant
   }
   if (obj) out.push(part(obj[lang], "what"));
   return out;
+}
+
+// Place words are stored as destinations (manege, veetukku). Asking where one
+// is needs the plain word: mane elli ide, veedu enga irukku.
+const PLACE_PLAIN_ML: Record<string, string> = { home: "veedu", temple: "ambalam", church: "palli", village: "naadu" };
+const PLACE_PLAIN_TA: Record<string, string> = { home: "veedu" };
+function placePlain(lang: Lang, o: ObjectWord): string {
+  const w = o[lang];
+  if (lang === "kn") return w.replace(/-?ge$/, "");
+  if (lang === "ta") return PLACE_PLAIN_TA[o.id] ?? w.replace(/-?k?ku$/, "");
+  if (lang === "hi") return w.replace(/ (pe|mein|tak|ko)$/, "");
+  if (lang === "ml") return PLACE_PLAIN_ML[o.id] ?? w.replace(/-?y?ilekku$/, "");
+  return w;
+}
+
+// Mujhe chot lagi hai, mujhe ulti ho rahi hai: some Hindi illnesses need a verb, not hai.
+function illTail(L: Lang, obj: ObjectWord | null, neg: boolean, is: { exist: string; notExist: string }): string {
+  if (L === "hi" && obj?.hiTail) return neg ? `nahin ${obj.hiTail}` : obj.hiTail;
+  return neg ? is.notExist : is.exist;
 }
 
 function subjectWord(lang: Lang, c: ShapeChoice): { word: string; obj: ObjectWord | null } {
@@ -218,6 +256,16 @@ const LIKE: Record<Lang, [string, string]> = {
   ta: ["pudikkum", "pudikkaadhu"], ml: ["ishtamaanu", "ishtamalla"],
 };
 const WHERE: Record<Lang, string> = { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku", ml: "evideyaanu" };
+// A person is never "where is it": Kannada and Tamil use the respectful they-form.
+const WHERE_PERSON: Record<Lang, string> = { kn: "elli iddaare", hi: "kahaan hain", ta: "enga irukkaanga", ml: "evideyaanu" };
+const HI_RESPECT = new Set(["doctor", "officer", "landlord", "father", "mother", "husband", "manager"]);
+// Your own son, daughter, wife or child takes the plain he, she or it form.
+const WHERE_FAMILY: Record<string, Partial<Record<Lang, string>>> = {
+  son: { kn: "elli iddaane", hi: "kahaan hai", ta: "enga irukkaan" },
+  daughter: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa" },
+  wife: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa" },
+  child: { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku" },
+};
 const HOWMUCH: Record<Lang, string> = { kn: "eshtu", hi: "kitne ka hai", ta: "evlo", ml: "ethrayaanu" };
 // Please give me, polite then to a friend.
 const GIVE: Record<Lang, [string, string]> = {
@@ -257,6 +305,7 @@ function askIt(lang: Lang, parts: Part[]): Part[] {
 
 // ............................................................ compose
 export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
+  if (lang === "fr" && c.shape === "tell") return frenchTell(c, c.direction ?? null);
   if (lang === "fr") {
     return {
       english: "", enParts: [], sentence: "", parts: [], say: "",
@@ -298,6 +347,11 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       break;
     }
     case "have": {
+      // A fever or a pain is to-me there is, never at-me.
+      if (obj?.ill) {
+        parts = [part(pr.dat, "who"), ...nounPhrase(L, c, obj, false, false), part(illTail(L, obj, neg, is), "action")];
+        break;
+      }
       parts = [part(c.who === "name" ? `${who} hatra` : pr.at, "who"), ...nounPhrase(L, c, obj, true, true), part(neg ? is.notExist : is.exist, "action")];
       note = "Having something is not I-have: it is at-me. That is why the person changes shape.";
       break;
@@ -305,6 +359,31 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
     case "want": {
       parts = [part(c.who === "name" ? who : pr.dat, "who"), ...nounPhrase(L, c, obj, true, true), part(WANT[L][neg ? 1 : 0], "action")];
       note = "A wish sits with the person in the to-form, never as a plain subject.";
+      break;
+    }
+    case "feel": {
+      // Mujhe bukhaar hai, nanage jvara ide: the person in the to-form, then
+      // the fever, then the word for there is.
+      parts = [part(pr.dat, "who"), ...nounPhrase(L, c, obj, false, false), part(illTail(L, obj, neg, is), "action")];
+      note = "A fever or a pain is never I-have: it is to-me there is. Mujhe, nanage, enakku, enikku.";
+      break;
+    }
+    case "tell": {
+      const v = verbById(c.verb);
+      if (!v) return null;
+      const forms = v[L] as Imp;
+      const pair = neg ? forms.impNot : forms.imp;
+      if (!pair) {
+        return { english: "", enParts: [], sentence: "", parts: [], say: "", unsupported: "This action has no command form yet. Pick another action." };
+      }
+      const d = c.direction ? DIRECTIONS.find((x) => x.id === c.direction) : null;
+      // A person you act on takes the object ending: magunna, kozhandhaiya.
+      const acc = obj?.acc?.[L] ?? (L === "hi" && obj?.cat === "people" ? `${obj.hi} ko` : null);
+      const thingParts = acc && !c.adj && !c.quant ? [part(acc, "what")] : nounPhrase(L, c, obj, true, true);
+      parts = [...thingParts, ...(d ? [part(d[L], "when")] : []), part(pair[c.polite ? 1 : 0], "action")];
+      note = c.polite
+        ? "The polite form is for a driver, an officer, a shopkeeper, anyone older or new to you."
+        : "The friendly form is for a friend, a younger sibling or a child.";
       break;
     }
     case "like": {
@@ -318,13 +397,23 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       break;
     }
     case "whereIs": {
+      // Hindi elders and professionals take the respectful plural: mere papa kahaan hain.
+      const hiRespect = L === "hi" && obj?.cat === "people" && HI_RESPECT.has(obj.id);
       const head: Part[] = [];
-      if (c.who !== "name") head.push(part(possOf(L, c.who, obj), "who"));
-      parts = [...head, ...nounPhrase(L, c, obj, false, true), part(WHERE[L], "action")];
+      if (c.who !== "name" && !c.the) {
+        const pr2 = personOf(L, c.who);
+        head.push(part(hiRespect && obj?.hiG !== "f" ? pr2.possPl ?? possOf(L, c.who, obj) : possOf(L, c.who, obj), "who"));
+      }
+      const noun = obj?.kind === "place" ? [part(placePlain(L, obj), "what")] : nounPhrase(L, c, obj, false, true);
+      const whereWord = L === "hi" && obj?.cat === "people" ? (hiRespect ? "kahaan hain" : "kahaan hai") : WHERE_FAMILY[obj?.id ?? ""]?.[L] ?? (obj?.cat === "people" ? WHERE_PERSON : WHERE)[L];
+      parts = [...head, ...noun, part(whereWord, "action")];
       break;
     }
     case "howMuch": {
-      parts = [...nounPhrase(L, c, obj, true, true), part(HOWMUCH[L], "action")];
+      // Hindi: money itself is kitna or kitni hai; goods are kitne ka or kitne ki hai.
+      const money = obj?.cat === "money" || ["fare", "rent", "fees", "fine", "bill", "advance"].includes(obj?.id ?? "");
+      const hiHow = money ? (obj?.hiG === "f" ? "kitni hai" : "kitna hai") : obj?.hiG === "f" && !c.quant ? "kitne ki hai" : "kitne ka hai";
+      parts = [...nounPhrase(L, c, obj, true, true), part(L === "hi" ? hiHow : HOWMUCH[L], "action")];
       break;
     }
     case "request": {
@@ -366,7 +455,8 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       // Where are you going? The question word sits between the person and
       // the verb in all four languages, and the verb keeps its plain form.
       const q = QUESTION_WORDS.find((x) => x.id === c.qword) ?? QUESTION_WORDS[0];
-      const built = build(L, { person: c.who === "name" ? (c.nameG === "f" ? "she" : "he") : c.who, verb: c.verb, tense: c.when, object: null, gender: c.gender });
+      // Malayalam cannot put a question word on -unnund: evide pokunnu, not evide pokunnund.
+      const built = build(L, { person: c.who === "name" ? (c.nameG === "f" ? "she" : "he") : c.who, verb: c.verb, tense: L === "ml" && c.when === "cont" ? "present" : c.when, object: null, gender: c.gender });
       const verbPiece = built?.pieces.find((x) => x.role === "verb");
       if (!verbPiece) return null;
       parts = [part(who, "who"), part(q[L], "when"), part(verbPiece.word, "action")];
@@ -379,7 +469,7 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
 
   if (c.question && shapeById(c.shape).toggles.includes("question")) parts = askIt(L, parts);
   // where-is and how-much are questions by their nature, with no toggle.
-  const alwaysAsking: boolean = c.shape === "whereIs" || c.shape === "howMuch";
+  const alwaysAsking: boolean = c.shape === "whereIs" || c.shape === "howMuch" || c.shape === "whQuestion";
   const sentence = parts.map((p) => p.word).join(" ") + (c.question || alwaysAsking ? "?" : "");
   return { english: "", enParts: [], sentence, parts, say: "", note };
 }
@@ -421,8 +511,17 @@ export function shapeEnglish(c: ShapeChoice, lang: PathLang): string {
     if (!o) return "something";
     // Keep "a mango", drop "the" from "the change": you have change, not the change.
     if (!qn && !a) return /^an? /.test(o.en) ? o.en : bare(o);
-    return [qn?.en, a?.en, bare(o)].filter(Boolean).join(" ");
+    // "a little" turns into "a few" in front of things you count: a few chillies.
+    const q = qn?.id === "alittle" && /s$/.test(bare(o)) ? "a few" : qn?.en;
+    return [q, a?.en, bare(o)].filter(Boolean).join(" ");
   };
+  // Asking about or handing over one particular thing keeps its "the": the fare, the form.
+  const kept = (o: ObjectWord | null): string => (o && !qn && !a ? o.en.replace(/^an? /, "the ") : thing(o));
+  // Asking for something keeps the article it was written with: the menu, a tablet.
+  const asWritten = (o: ObjectWord | null): string => (o && !qn && !a ? o.en : thing(o));
+  // Papers are always someone's own: do you have your Aadhaar card?
+  const owned = (o: ObjectWord | null): string =>
+    o?.cat === "documents" && !qn && !a && c.who !== "name" ? `${poss[c.who as PersonId]} ${bare(o)}` : o?.cat === "health" && !o.ill ? asWritten(o) : thing(o);
   const subject = subjExtra ? subjExtra.en : subjObj ? `the ${bare(subjObj)}` : "this";
   // Place words are written as destinations ("to the market", "home"); here
   // they describe where something sits, so they become "at the market".
@@ -437,22 +536,34 @@ export function shapeEnglish(c: ShapeChoice, lang: PathLang): string {
     case "isNoun":
       return cap(q ? `is ${subject} ${not ? "not " : ""}${thing(obj)}?` : `${subject} is ${not ? "not " : ""}${thing(obj)}.`);
     case "have":
-      return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}have ${thing(obj)}?` : `${who} ${not ? doDoes + " not have" : third ? "has" : "have"} ${thing(obj)}.`);
-    case "want":
-      return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}want ${thing(obj)}?` : `${who} ${not ? doDoes + " not want" : third ? "wants" : "want"} ${thing(obj)}.`);
+      return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}have ${owned(obj)}?` : `${who} ${not ? doDoes + " not have" : third ? "has" : "have"} ${owned(obj)}.`);
+    case "want": {
+      const w = c.need ? "need" : "want";
+      return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}${w} ${thing(obj)}?` : `${who} ${not ? doDoes + " not " + w : third ? w + "s" : w} ${thing(obj)}.`);
+    }
+    case "feel":
+      return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}have ${owned(obj)}?` : `${who} ${not ? doDoes + " not have" : third ? "has" : "have"} ${owned(obj)}.`);
+    case "tell": {
+      const v = verbById(c.verb)?.en.base ?? "wait";
+      const d = c.direction ? DIRECTIONS.find((x) => x.id === c.direction)?.en : "";
+      const thingEn = obj?.cat === "documents" && !qn && !a ? `your ${bare(obj)}` : kept(obj);
+      const line = [not ? "do not" : "", v, obj ? thingEn : "", d].filter(Boolean).join(" ");
+      return cap(`${c.polite ? "please " : ""}${line}.`);
+    }
     case "like":
       return cap(q ? `${doDoes} ${who} ${not ? "not " : ""}like ${thing(obj)}?` : `${who} ${not ? doDoes + " not like" : third ? "likes" : "like"} ${thing(obj)}.`);
     case "thereIs":
-      return cap(q ? `is there ${thing(obj)}${at ? " " + at : ""}?` : `there is ${not ? "no " : ""}${thing(obj)}${at ? " " + at : ""}.`);
+      return cap(q ? `is there ${thing(obj)}${at ? " " + at : ""}?` : `there is ${not ? "no " + thing(obj).replace(/^an? /, "") : thing(obj)}${at ? " " + at : ""}.`);
     case "whereIs":
-      return cap(`where is ${c.who === "name" ? who + "'s" : poss[c.who as PersonId]} ${[a?.en, bare(obj)].filter(Boolean).join(" ")}?`);
+      if (obj?.kind === "place" && c.the) return cap(`where is ${obj.en.replace(/^to /, "")}?`);
+      return cap(`where ${!a && obj && /s$/.test(bare(obj)) && !/ss$/.test(bare(obj)) ? "are" : "is"} ${c.the ? "the" : c.who === "name" ? who + "'s" : poss[c.who as PersonId]} ${[a?.en, bare(obj)].filter(Boolean).join(" ")}?`);
     case "howMuch":
       // A measure makes the phrase singular: one kilo of tomatoes IS.
-      return cap(`how much ${!qn && obj && /s$/.test(bare(obj)) ? "are" : "is"} ${thing(obj)}?`);
+      return cap(`how much ${!qn && obj && /s$/.test(bare(obj)) ? "are" : "is"} ${kept(obj)}?`);
     case "request":
-      return cap(`please give me ${thing(obj)}.`);
+      return cap(`please give me ${asWritten(obj)}.`);
     case "lets":
-      return cap(`let's ${verbById(c.verb)?.en.base ?? "go"}${obj ? " " + thing(obj) : ""}.`);
+      return cap(`let's ${verbById(c.verb)?.en.base ?? "go"}${obj ? " " + (obj.kind === "place" ? obj.en : asWritten(obj)) : ""}.`);
     case "whQuestion": {
       const qw = QUESTION_WORDS.find((x) => x.id === c.qword)?.en ?? "where";
       const v = verbById(c.verb)?.en;

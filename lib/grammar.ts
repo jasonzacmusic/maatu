@@ -17,17 +17,20 @@ export type Person = {
   at: string; poss?: string; possM?: string; possF?: string; possPl?: string;
 };
 export type VerbEn = { base: string; past: string; ing: string; s: string };
-export type VerbKn = { dict: string; pres: string; past: string; cont: string; neg: string; pastNeg: string; inf: string; want: string };
-export type VerbHi = { dict: string; stem: string; contStem?: string; fut?: { m: string[]; f: string[] }; perf: { m: string; f: string; pl: string }; ne: boolean };
-export type VerbTa = { dict: string; pres: string; past: string; fut: string; cont: string; inf: string };
+// Commands, to a friend and politely: kodu / kodi. impNot is the do-not pair.
+export type Imp = { imp?: [string, string]; impNot?: [string, string] };
+export type VerbKn = Imp & { dict: string; pres: string; past: string; cont: string; neg: string; pastNeg: string; inf: string; want: string };
+export type VerbHi = Imp & { dict: string; stem: string; contStem?: string; fut?: { m: string[]; f: string[] }; perf: { m: string; f: string; pl: string }; perfNeg?: { m: string; f: string; pl: string }; ne: boolean };
+export type VerbTa = Imp & { dict: string; pres: string; past: string; fut: string; cont: string; inf: string };
 // Malayalam carries no person endings at all: one form fits every subject.
-export type VerbMl = { dict: string; pres: string; past: string; fut: string; cont: string; inf: string; pastNeg?: string };
+export type VerbMl = Imp & { dict: string; pres: string; past: string; fut: string; cont: string; inf: string; pastNeg?: string };
 export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa; ml: VerbMl };
 export type ObjectCat =
   | "instrument" | "music" | "language" | "study" | "food" | "drink" | "place"
-  | "thing" | "clothes" | "transport" | "tech" | "media" | "money" | "sport" | "chore";
+  | "thing" | "clothes" | "transport" | "tech" | "media" | "money" | "sport" | "chore"
+  | "health" | "people" | "documents" | "home";
 export type PlaceAt = Record<Lang, string>;
-export type ObjectWord = { id: string; at?: PlaceAt; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; enByLang?: Record<Lang, string> };
+export type ObjectWord = { id: string; at?: PlaceAt; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; ill?: boolean; acc?: Partial<Record<Lang, string>>; hiTail?: string; enByLang?: Record<Lang, string> };
 export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; tense?: Tense };
 export type DeckEntry = { en: string; kn: string; hi: string; ta: string; ml: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
@@ -62,6 +65,7 @@ type Data = {
   quantities: SmallWord[];
   questionWords: SmallWord[];
   subjectExtras: SmallWord[];
+  directions?: SmallWord[];
 };
 
 const DATA = grammar as unknown as Data;
@@ -80,6 +84,8 @@ export const ADJ_CATS = DATA.adjCats;
 export const QUANTITIES: SmallWord[] = DATA.quantities;
 export const QUESTION_WORDS: SmallWord[] = DATA.questionWords;
 export const SUBJECT_EXTRAS: SmallWord[] = DATA.subjectExtras;
+// Here, straight, left, slowly: the words that sit right before a command.
+export const DIRECTIONS: SmallWord[] = DATA.directions ?? [];
 export function adjById(id: string): Adjective | undefined {
   return ADJECTIVES.find((a) => a.id === id);
 }
@@ -210,11 +216,13 @@ function hiForm(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
     return { word: `${not}${v.stem}${f}`, parts: `${v.stem} + ${f}`, stem: `${not}${v.stem}` };
   }
   if (t === "past") {
+    // Bhool gaya, pahunch gaya for yes; plain bhoola, pahuncha after nahin.
+    const pf = not && v.perfNeg ? v.perfNeg : v.perf;
     if (v.ne) {
-      const perf = objG === "pl" ? v.perf.pl : objG === "f" ? v.perf.f : v.perf.m;
+      const perf = objG === "pl" ? pf.pl : objG === "f" ? pf.f : pf.m;
       return { word: `${not}${perf}`, parts: `ne + ${perf} (matches the thing)` };
     }
-    const perf = fem ? v.perf.f : plural ? v.perf.pl : v.perf.m;
+    const perf = fem ? pf.f : plural ? pf.pl : pf.m;
     return { word: `${not}${perf}`, parts: `${perf} (matches the person)` };
   }
   if (t === "want") {
@@ -357,7 +365,8 @@ export function build(lang: Lang, c: Choice): Built | null {
   const g: Gender = c.gender ?? "m";
   const pr = person(lang, c.person);
   const pieces: Piece[] = [];
-  const objWord = obj ? obj[lang] : "";
+  // Malayalam reaches a place with the at-form: office-il ethi.
+  const objWord = obj ? (lang === "ml" && c.verb === "reach" && obj.at?.ml ? obj.at.ml : obj[lang]) : "";
   const objEn = obj ? objectLabel(obj, lang) : "";
   const english = englishFor(c, verb, obj, time, lang);
   let note = verb.note;

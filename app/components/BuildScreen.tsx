@@ -357,7 +357,7 @@ export function BuildScreen({ lang, onLanguageChange, seed, rm = false, onTalk }
           From an idea to a spoken line.
         </h1>
         <p className="mt-2 max-w-[560px] text-[13.5px] leading-relaxed" style={{ color: C.muted }}>
-          Your sentence sits at the top and never leaves. Change who, the action, the word, the time, or flip it to a no or a question, and watch the line move.<span className="hidden sm:inline"> {VERB_TILES.length} actions and {OBJECTS.length} words, so you can build anything.</span>
+          Pick where you are and get the whole conversation, or tap any coloured word to change it.<span className="hidden sm:inline"> {VERB_TILES.length} actions and {OBJECTS.length} words, so you can build anything.</span>
         </p>
 
         <div className="mt-5">
