@@ -1,0 +1,429 @@
+<title>Maatu Acid Test</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column; a sticky language and score bar; each test is a row with its pass mark on the right (stacked on phones). */
+:root {
+  --paper: #fbf9f4; --ink: #1f1b2e; --muted: #625d73; --line: #e6e1d6; --card: #ffffff;
+  --purple: #6350c6; --purple-soft: #ece8fb; --voice: #c86a2e; --voice-soft: #fbe9dc;
+  --pass: #2f7d57; --pass-soft: #dcf0e5; --fail: #b8402f; --fail-soft: #f8e0db; --skip: #7a7590; --skip-soft: #ecebf1;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f1220; --ink: #f2ede2; --muted: #a7a3b8; --line: #262b40; --card: #161a2b;
+  --purple: #a898ff; --purple-soft: #262046; --voice: #f0a36d; --voice-soft: #3a2618;
+  --pass: #6fd3a0; --pass-soft: #163327; --fail: #ff9a87; --fail-soft: #3d1c17; --skip: #b3aec9; --skip-soft: #23263a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0f1220; --ink: #f2ede2; --muted: #a7a3b8; --line: #262b40; --card: #161a2b;
+  --purple: #a898ff; --purple-soft: #262046; --voice: #f0a36d; --voice-soft: #3a2618;
+  --pass: #6fd3a0; --pass-soft: #163327; --fail: #ff9a87; --fail-soft: #3d1c17; --skip: #b3aec9; --skip-soft: #23263a; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 80px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 6vw, 52px); line-height: 1.05; letter-spacing: -0.01em; }
+h1 em { font-style: italic; color: var(--purple); font-weight: 500; }
+h2 { font-size: 26px; line-height: 1.2; }
+.lede { color: var(--muted); max-width: 62ch; margin: 12px 0 0; font-size: 17px; }
+.eyebrow { display: block; margin-bottom: 10px; font: 600 12px/1.4 var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--voice); }
+.how { margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.how div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.how b { display: block; font-size: 14px; margin-bottom: 4px; }
+.how p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); margin: 26px calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 0; padding: 12px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.langs { display: flex; flex-wrap: wrap; gap: 6px; }
+.langs button { font: 600 14px var(--body); border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 7px 13px; cursor: pointer; min-height: 36px; }
+.langs button[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: var(--paper); }
+.score { display: flex; gap: 12px; font: 500 13px var(--mono); font-variant-numeric: tabular-nums; color: var(--muted); align-items: center; flex-wrap: wrap; }
+.score .p { color: var(--pass); } .score .f { color: var(--fail); }
+.meter { flex: 1 1 160px; height: 8px; border-radius: 99px; background: var(--skip-soft); overflow: hidden; display: flex; min-width: 120px; }
+.meter i { display: block; height: 100%; }
+.meter .mp { background: var(--pass); } .meter .mf { background: var(--fail); } .meter .ms { background: var(--skip); }
+.copy { margin-left: auto; font: 600 14px var(--body); background: var(--ink); color: var(--paper); border: 0; border-radius: 10px; padding: 9px 14px; cursor: pointer; min-height: 38px; }
+.status { font-size: 13px; color: var(--muted); width: 100%; }
+.status:empty { display: none; }
+
+section { margin-top: 40px; }
+section > header { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+section > header .eyebrow { margin-bottom: 0; }
+.t, section { scroll-margin-top: 140px; }
+section > header p { margin: 0; color: var(--muted); max-width: 64ch; }
+ol.tests { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.t { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 10px 16px; align-items: start; }
+.t[data-state="pass"] { border-color: color-mix(in srgb, var(--pass) 45%, var(--line)); }
+.t[data-state="fail"] { border-color: var(--fail); background: var(--fail-soft); }
+.t[data-state="skip"] { opacity: 0.72; }
+.tx { min-width: 0; }
+.tx .id { font: 500 12px var(--mono); color: var(--muted); margin-right: 6px; }
+.tx b { font-weight: 700; }
+.must { font: 700 11px var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--voice); background: var(--voice-soft); border-radius: 6px; padding: 2px 6px; margin-left: 6px; white-space: nowrap; }
+.say { display: block; margin: 8px 0 0; font: 500 15px/1.45 var(--mono); color: var(--purple); background: var(--purple-soft); border-radius: 8px; padding: 7px 10px; overflow-wrap: anywhere; }
+.say::before { content: "Say: "; font-family: var(--body); font-weight: 600; color: var(--muted); }
+.ok { display: block; margin-top: 8px; color: var(--muted); font-size: 15px; }
+.ok::before { content: "Pass when: "; font-weight: 700; color: var(--pass); }
+.marks { display: flex; gap: 6px; }
+.marks button { font: 600 13px var(--body); border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 8px; padding: 6px 10px; cursor: pointer; min-height: 36px; min-width: 52px; }
+.marks button[aria-pressed="true"][data-v="pass"] { background: var(--pass); border-color: var(--pass); color: var(--paper); }
+.marks button[aria-pressed="true"][data-v="fail"] { background: var(--fail); border-color: var(--fail); color: var(--paper); }
+.marks button[aria-pressed="true"][data-v="skip"] { background: var(--skip); border-color: var(--skip); color: var(--paper); }
+.note { grid-column: 1 / -1; }
+.note textarea { width: 100%; min-height: 64px; font: 15px/1.45 var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; resize: vertical; }
+.who { grid-column: 1 / -1; font-size: 12px; color: var(--muted); margin-top: -4px; }
+.who:empty { display: none; }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+.t.hide { display: none; }
+footer { margin-top: 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 560px) {
+  .t { grid-template-columns: 1fr; }
+  .marks button { flex: 1; }
+  .bar { gap: 8px 10px; padding-block: 8px; }
+  .langs { flex-wrap: nowrap; overflow-x: auto; width: 100%; scrollbar-width: none; }
+  .langs button { flex: none; min-height: 34px; padding: 6px 12px; }
+  .meter { display: none; }
+  .score { gap: 8px; font-size: 12px; }
+  .copy { padding: 7px 11px; min-height: 34px; font-size: 13px; }
+  .t, section { scroll-margin-top: 110px; }
+}
+@media (prefers-reduced-motion: no-preference) { .t { transition: border-color .2s, background .2s; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Nathaniel School of Music · maatu.nathanielschool.com</div>
+  <h1>Maatu Acid Test: <em>break it, then tell us how.</em></h1>
+  <p class="lede">Your job is to find every place where Maatu falls short of being the best spoken-language teacher there is. Pick a language, work through each test, and mark it Pass, Fail or Skip. A fail is a gift: write down exactly what you said, what you heard, and what you expected.</p>
+
+  <div class="how">
+    <div><b>Time</b><p>About 2 to 3 hours per language. Do one language fully before starting the next.</p></div>
+    <div><b>Devices</b><p>A phone with earphones for most tests. Repeat the starred tests on a laptop and, if you can, a tablet.</p></div>
+    <div><b>Record</b><p>Screen-record every call. In each fail note, write the time in the recording.</p></div>
+    <div><b>Native ear</b><p>If you are not a native speaker of the language, ask one to sit with you for sections 3, 4 and 8.</p></div>
+  </div>
+
+  <div class="bar" id="bar">
+    <div class="langs" role="group" aria-label="Language being tested">
+      <button type="button" data-lang="kn" aria-pressed="true">Kannada</button>
+      <button type="button" data-lang="hi" aria-pressed="false">Hindi</button>
+      <button type="button" data-lang="ta" aria-pressed="false">Tamil</button>
+      <button type="button" data-lang="ml" aria-pressed="false">Malayalam</button>
+      <button type="button" data-lang="fr" aria-pressed="false">French</button>
+    </div>
+    <div class="score" aria-live="polite"><span class="p" id="nP">0 pass</span><span class="f" id="nF">0 fail</span><span id="nS">0 skip</span><span id="nL">0 to go</span></div>
+    <div class="meter" aria-hidden="true"><i class="mp" id="mP"></i><i class="mf" id="mF"></i><i class="ms" id="mS"></i></div>
+    <button type="button" class="copy" id="copy" aria-label="Copy report for WhatsApp">Copy report</button>
+    <div class="status" id="status"></div>
+  </div>
+
+  <section>
+    <header><span class="eyebrow">Section 1</span><h2>First open, on every device</h2><p>Before any talking. A learner judges the app in the first ten seconds.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="A1" data-must><div class="tx"><span class="id">A1</span><b>Open the link on a phone over mobile data, not Wi-Fi.</b><span class="must">Must</span><span class="ok">the welcome screen is usable within 3 seconds and nothing jumps around while it loads.</span></div></li>
+      <li class="t" data-id="A2"><div class="tx"><span class="id">A2</span><b>Send the link to yourself on WhatsApp.</b><span class="ok">the preview shows the Maatu card (purple speech bubble logo, "A little conversation. A whole new language.") and the right title.</span></div></li>
+      <li class="t" data-id="A3"><div class="tx"><span class="id">A3</span><b>Look at the browser tab and add the app to the phone's home screen.</b><span class="ok">the tab icon and home-screen icon are the purple bubble logo, and the app opens full screen from the home screen.</span></div></li>
+      <li class="t" data-id="A4" data-must><div class="tx"><span class="id">A4</span><b>On each screen, try to scroll sideways, rotate the phone, and pinch to zoom.</b><span class="must">Must</span><span class="ok">nothing ever scrolls sideways, nothing is cut off, and pinch zoom works.</span></div></li>
+      <li class="t" data-id="A5"><div class="tx"><span class="id">A5</span><b>Tap into any text box (Build, search, a name).</b><span class="ok">the page does not zoom in on its own and the keyboard does not hide the box.</span></div></li>
+      <li class="t" data-id="A6"><div class="tx"><span class="id">A6</span><b>Choose <span data-k="name">Kannada</span> on the welcome screen, close the app, open it again.</b><span class="ok">it remembers your language and opens on Talk.</span></div></li>
+      <li class="t" data-id="A7"><div class="tx"><span class="id">A7</span><b>Turn on airplane mode and open the app from the home screen.</b><span class="ok">it opens a page that says you are offline, never a blank or broken screen.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 2</span><h2>Finding your way on Talk</h2><p>Talk offers three ways to learn: Chat, Build, and Act it out. A beginner must never feel lost.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="B1" data-must><div class="tx"><span class="id">B1</span><b>Show the Talk screen to someone who has never seen Maatu. Ask them what each of the three choices does.</b><span class="must">Must</span><span class="ok">they can explain Chat, Build and Act it out correctly without help.</span></div></li>
+      <li class="t" data-id="B2"><div class="tx"><span class="id">B2</span><b>Tap each of the three choices in turn.</b><span class="ok">the details change below with no long scroll, and each has one obvious button.</span></div></li>
+      <li class="t" data-id="B3"><div class="tx"><span class="id">B3</span><b>Open a scene, then use Back.</b><span class="ok">you land back on Act it out, not at the top of the app.</span></div></li>
+      <li class="t" data-id="B4"><div class="tx"><span class="id">B4</span><b>Use the phone's own Back gesture on every screen.</b><span class="ok">it never closes the app by surprise or leaves you on a dead screen.</span></div></li>
+      <li class="t" data-id="B5"><div class="tx"><span class="id">B5</span><b>Find the French chat and the beginner course from Talk.</b><span class="ok">both are easy to find under "More ways to practise" and open the right thing.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 3</span><h2>Chat with <span data-k="teacher">Meera</span>: the heart of Maatu</h2><p>Use earphones. Hold one call of at least 10 minutes. This section decides whether Maatu is a teacher or a toy.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="C1" data-must><div class="tx"><span class="id">C1</span><b>Tap Call <span data-k="teacher">Meera</span> and time it.</b><span class="must">Must</span><span class="ok">she greets you within 5 seconds, in <span data-k="name">Kannada</span> with simple English support.</span></div></li>
+      <li class="t" data-id="C2" data-must><div class="tx"><span class="id">C2</span><b>Listen to her accent for the whole 10 minutes.</b><span class="must">Must</span><span class="ok">it is the same local <span data-k="city">Bengaluru</span> voice from start to end. It never drifts into an American or British accent, and never changes into a different person's voice.</span></div></li>
+      <li class="t" data-id="C3" data-must><div class="tx"><span class="id">C3</span><b>Greet her.</b><span class="say" data-k="greet">Namaskara, hegiddira?</span><span class="must">Must</span><span class="ok">she answers naturally and asks you something back.</span></div></li>
+      <li class="t" data-id="C4" data-must><div class="tx"><span class="id">C4</span><b>Tell her a thought in English.</b><span class="say">I want to go for a walk at half past five with my friend. How do I invite her?</span><span class="must">Must</span><span class="ok">she answers what you meant, gives you the whole sentence in <span data-k="name">Kannada</span>, and asks you to say it.</span></div></li>
+      <li class="t" data-id="C5" data-must><div class="tx"><span class="id">C5</span><b>Make a real mistake on purpose: a past time with a present verb.</b><span class="say" data-k="mistake">Naanu nenne piano nudistini.</span><span class="must">Must</span><span class="ok">she folds the right form into her reply (<span data-k="fix">the past form, nudiside</span>) without a lecture, and keeps the conversation going with a question that lets you reuse it.</span></div></li>
+      <li class="t" data-id="C6" data-must><div class="tx"><span class="id">C6</span><b>Say a phrase almost right: drop one long vowel or one doubled letter.</b><span class="must">Must</span><span class="ok">she accepts it as correct and moves on. A close attempt is never drilled again.</span></div></li>
+      <li class="t" data-id="C7" data-must><div class="tx"><span class="id">C7</span><b>Ask what a word means.</b><span class="say" data-k="mean">What does chennaagide mean?</span><span class="must">Must</span><span class="ok">the English meaning comes first, then one short example. No pronunciation drill.</span></div></li>
+      <li class="t" data-id="C8" data-must><div class="tx"><span class="id">C8</span><b>Try each control phrase, one at a time: "wait", "stop", "slow down", "say that again", "what does that mean", "go back".</b><span class="must">Must</span><span class="ok">each one works the first time and she stays on the same point.</span></div></li>
+      <li class="t" data-id="C9"><div class="tx"><span class="id">C9</span><b>Tap "Ask to slow down".</b><span class="ok">the button confirms it, and from then on she speaks clearly slower, for the rest of the call.</span></div></li>
+      <li class="t" data-id="C10" data-must><div class="tx"><span class="id">C10</span><b>Interrupt her in the middle of a long sentence.</b><span class="must">Must</span><span class="ok">she stops within about a second and answers what you said.</span></div></li>
+      <li class="t" data-id="C11"><div class="tx"><span class="id">C11</span><b>Pause to think for one or two seconds in the middle of a sentence, then finish it.</b><span class="ok">she waits for you to finish instead of jumping in after the first half.</span></div></li>
+      <li class="t" data-id="C12"><div class="tx"><span class="id">C12</span><b>Mix languages in one sentence, the way people really talk.</b><span class="say" data-k="mix">Naanu today office ge late aagi hogtini.</span><span class="ok">she understands the whole sentence, English words included.</span></div></li>
+      <li class="t" data-id="C13"><div class="tx"><span class="id">C13</span><b>Speak a different Indian language by mistake.</b><span class="say" data-k="other">Mujhe chai chahiye.</span><span class="ok">she stays in <span data-k="name">Kannada</span>, kindly gives you the <span data-k="name">Kannada</span> way to say it, and never scolds you.</span></div></li>
+      <li class="t" data-id="C14"><div class="tx"><span class="id">C14</span><b>Ask her to teach a topic: "Teach me numbers one to ten" or "Teach me the past tense".</b><span class="ok">she teaches it in short steps and makes you say each one.</span></div></li>
+      <li class="t" data-id="C15"><div class="tx"><span class="id">C15</span><b>Ask her to act out a scene inside the chat: "Be a shopkeeper, I want to buy bananas".</b><span class="ok">she plays the shopkeeper until you stop.</span></div></li>
+      <li class="t" data-id="C16" data-must><div class="tx"><span class="id">C16</span><b>Read every caption during the call.</b><span class="must">Must</span><span class="ok">captions are only ever in English letters (like "namaskara"), never in native script, and they match what she said.</span></div></li>
+      <li class="t" data-id="C17" data-must><div class="tx"><span class="id">C17</span><b>Keep the call going for 10 minutes while tapping around the screen.</b><span class="must">Must</span><span class="ok">the page never freezes and never shows "Page Unresponsive".</span></div></li>
+      <li class="t" data-id="C18"><div class="tx"><span class="id">C18</span><b>Count how long she takes to answer, over ten turns.</b><span class="ok">most answers start within about 2 seconds. Write the slowest one in the note.</span></div></li>
+      <li class="t" data-id="C19"><div class="tx"><span class="id">C19</span><b>Talk with a fan or TV on in the room, then talk very fast, then mumble.</b><span class="ok">she copes with the noise and speed. When she cannot hear you, she asks you to repeat rather than guessing.</span></div></li>
+      <li class="t" data-id="C20"><div class="tx"><span class="id">C20</span><b>Mute, wait, unmute. Then hang up.</b><span class="ok">mute works at once, the screen says the mic is off, and hanging up ends the call cleanly and shows how you spoke.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 4</span><h2>The quiet coach: grammar and pronunciation</h2><p>While you talk, the coach on the side checks each line you say. The person you talk to never stops to correct you.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="D1" data-must><div class="tx"><span class="id">D1</span><b>Say a perfectly correct line.</b><span class="say" data-k="greet">Namaskara, hegiddira?</span><span class="must">Must</span><span class="ok">the coach scores it high and does not invent a problem.</span></div></li>
+      <li class="t" data-id="D2" data-must><div class="tx"><span class="id">D2</span><b>Say the tense mistake from C5 again.</b><span class="say" data-k="mistake">Naanu nenne piano nudistini.</span><span class="must">Must</span><span class="ok">the coach shows the corrected line, one rule you can reuse, and a lower grammar score.</span></div></li>
+      <li class="t" data-id="D3" data-must><div class="tx"><span class="id">D3</span><b>Ask a native speaker: is every correction the coach gave actually right?</b><span class="must">Must</span><span class="ok">every corrected line is how a local really says it. Copy any wrong one into the note, word for word.</span></div></li>
+      <li class="t" data-id="D4"><div class="tx"><span class="id">D4</span><b>Mumble a line or say it with the fan on.</b><span class="ok">the coach does not give a confident pronunciation warning for audio it could not hear clearly.</span></div></li>
+      <li class="t" data-id="D5"><div class="tx"><span class="id">D5</span><b>Watch the person you are talking to while the coach works.</b><span class="ok">they never mention the coach or the scores, and never stop the conversation to teach.</span></div></li>
+      <li class="t" data-id="D6"><div class="tx"><span class="id">D6</span><b>Hang up and read "How you spoke".</b><span class="ok">the average scores match what the coach showed during the call, and the takeaways are useful.</span></div></li>
+    </ol>
+  </section>
+
+  <section data-not="fr">
+    <header><span class="eyebrow">Section 5</span><h2>Act it out: real-life scenes</h2><p>Do at least three scenes: Auto ride, Vegetable market and Clinic. Then one Intermediate scene.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="E1" data-must><div class="tx"><span class="id">E1</span><b>In Auto ride, give the driver your destination.</b><span class="say" data-k="auto">Dayavittu Jayanagar hogi. Meter haaki.</span><span class="must">Must</span><span class="ok">the driver answers like a real <span data-k="city">Bengaluru</span> auto driver: local words, a fare, maybe a bit of haggling.</span></div></li>
+      <li class="t" data-id="E2"><div class="tx"><span class="id">E2</span><b>Haggle over the price, using numbers.</b><span class="ok">the numbers are right in <span data-k="name">Kannada</span> and the character reacts to your offer sensibly.</span></div></li>
+      <li class="t" data-id="E3" data-must><div class="tx"><span class="id">E3</span><b>Mid-scene, ask "What does that mean?"</b><span class="must">Must</span><span class="ok">the character steps half out, gives one short English help sentence, and goes straight back into the scene.</span></div></li>
+      <li class="t" data-id="E4"><div class="tx"><span class="id">E4</span><b>Try to pull the character out of the scene: talk about cricket, ask if they are a robot.</b><span class="ok">they stay in role, politely, and steer back to the situation.</span></div></li>
+      <li class="t" data-id="E5"><div class="tx"><span class="id">E5</span><b>Play one scene at Beginner and the same scene at Intermediate.</b><span class="ok">Beginner is clearly slower and simpler; Intermediate is closer to real speed.</span></div></li>
+      <li class="t" data-id="E6"><div class="tx"><span class="id">E6</span><b>Check that men and women in the scenes sound like men and women.</b><span class="ok">every character's voice suits who they are.</span></div></li>
+      <li class="t" data-id="E7"><div class="tx"><span class="id">E7</span><b>Open Music school and teach the curious kid something.</b><span class="ok">the kid behaves like a student and asks real questions.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 6</span><h2>Build: making sentences</h2><p>Build lets a learner make any sentence and hear it. For French, only the basic "someone does something" shape is expected to work.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="F1" data-must><div class="tx"><span class="id">F1</span><b>Build one sentence in every sentence shape (describing, having, wanting, liking, where it is, how much it costs, asking politely, and the rest).</b><span class="must">Must</span><span class="ok">every sentence is correct, everyday <span data-k="name">Kannada</span>. Write any wrong one in the note, word for word.</span></div></li>
+      <li class="t" data-id="F2" data-must><div class="tx"><span class="id">F2</span><b>Flip the switches: yes and no, telling and asking, then slide from past to future.</b><span class="must">Must</span><span class="ok">the sentence changes correctly each time, verb endings included.</span></div></li>
+      <li class="t" data-id="F3"><div class="tx"><span class="id">F3</span><b>Change who is doing it: I, you, he, she, we, they, a name.</b><span class="ok">gender and person agreement are right every time.</span></div></li>
+      <li class="t" data-id="F4" data-must><div class="tx"><span class="id">F4</span><b>Press Hear it, then the slower version.</b><span class="must">Must</span><span class="ok">it sounds like the same local voice as <span data-k="teacher">Meera</span> on a call, says exactly the words on screen, and the slow version is clearly slower.</span></div></li>
+      <li class="t" data-id="F5"><div class="tx"><span class="id">F5</span><b>Compare the same sentence across all languages.</b><span class="ok">each language's version means the same thing.</span></div></li>
+      <li class="t" data-id="F6"><div class="tx"><span class="id">F6</span><b>Press "Say it out loud" on a sentence you built.</b><span class="ok">a call opens, the teacher says your sentence, and drills it with you.</span></div></li>
+      <li class="t" data-id="F7"><div class="tx"><span class="id">F7</span><b>In Check, type a broken sentence, then speak one.</b><span class="ok">you get the corrected line with each fix labelled (tense, gender, word order and so on).</span></div></li>
+      <li class="t" data-id="F8"><div class="tx"><span class="id">F8</span><b>Save two lines to Review, come back later.</b><span class="ok">they are waiting in Review and marking them moves them on.</span></div></li>
+      <li class="t" data-id="F9"><div class="tx"><span class="id">F9</span><b>Tap quickly through many words and switches.</b><span class="ok">Build never lags or freezes, even on an older phone.</span></div></li>
+    </ol>
+  </section>
+
+  <section data-not="fr">
+    <header><span class="eyebrow">Section 7</span><h2>The beginner course</h2><p>Sixteen lessons, each led by the teacher, each ending with a speaking check.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="G1" data-must><div class="tx"><span class="id">G1</span><b>Start Lesson 1 and follow the teacher.</b><span class="must">Must</span><span class="ok">the teacher leads, teaches one thing at a time, and makes you speak more than she does.</span></div></li>
+      <li class="t" data-id="G2" data-must><div class="tx"><span class="id">G2</span><b>Hang up halfway through a lesson.</b><span class="must">Must</span><span class="ok">the lesson is not marked done. Opening a call never counts as finishing.</span></div></li>
+      <li class="t" data-id="G3"><div class="tx"><span class="id">G3</span><b>Finish a lesson properly, including the final speaking check, then reload the app.</b><span class="ok">the lesson shows as done and the next one is suggested.</span></div></li>
+      <li class="t" data-id="G4"><div class="tx"><span class="id">G4</span><b>In a lesson, answer three times in English on purpose.</b><span class="ok">the teacher gently brings you back to <span data-k="name">Kannada</span> and the lesson is not passed on English answers.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 8</span><h2>Is it real <span data-k="name">Kannada</span>?</h2><p>Sit with a native speaker from <span data-k="city">Bengaluru</span> for 20 minutes of calls and Build.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="H1" data-must><div class="tx"><span class="id">H1</span><b>Ask: does it sound like how people in <span data-k="city">Bengaluru</span> actually talk?</b><span class="must">Must</span><span class="ok">it is everyday spoken language, not a textbook or a formal written form.</span></div></li>
+      <li class="t" data-id="H2" data-must><div class="tx"><span class="id">H2</span><b>Ask: is the pronunciation local?</b><span class="must">Must</span><span class="ok">no word sounds like an outsider reading it. Write any word that sounds wrong.</span></div></li>
+      <li class="t" data-id="H3"><div class="tx"><span class="id">H3</span><b>Check politeness: does she use the respectful form with you, and the right form for a driver, a shopkeeper, a child?</b><span class="ok">the level of respect fits each person.</span></div></li>
+      <li class="t" data-id="H4"><div class="tx"><span class="id">H4</span><b>Check the English she uses.</b><span class="ok">natural Indian English, short and kind, never a long lecture.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 9</span><h2>When things go wrong</h2><p>Real learners have bad networks, old phones and the wrong microphone.</p></header>
+    <ol class="tests">
+      <li class="t" data-id="I1" data-must><div class="tx"><span class="id">I1</span><b>Say no when the browser asks for the microphone.</b><span class="must">Must</span><span class="ok">the app explains in plain words how to allow it, and nothing breaks.</span></div></li>
+      <li class="t" data-id="I2"><div class="tx"><span class="id">I2</span><b>On a laptop, pick a microphone that hears nothing (a virtual or unplugged input).</b><span class="ok">within about 12 seconds the app warns that no sound is coming and lets you switch mic.</span></div></li>
+      <li class="t" data-id="I3" data-must><div class="tx"><span class="id">I3</span><b>Turn Wi-Fi off for 10 seconds in the middle of a call, then on.</b><span class="must">Must</span><span class="ok">it shows a reconnecting message and the call carries on, or ends with a clear message.</span></div></li>
+      <li class="t" data-id="I4"><div class="tx"><span class="id">I4</span><b>Lock the phone during a call, then unlock it.</b><span class="ok">the call is still there, or ends cleanly with a clear message.</span></div></li>
+      <li class="t" data-id="I5"><div class="tx"><span class="id">I5</span><b>Switch to Bluetooth earphones in the middle of a call.</b><span class="ok">you can still hear her and she can still hear you.</span></div></li>
+      <li class="t" data-id="I6"><div class="tx"><span class="id">I6</span><b>Reload the page during a call, and open Maatu in two tabs at once.</b><span class="ok">nothing gets stuck; you can start a new call.</span></div></li>
+      <li class="t" data-id="I7"><div class="tx"><span class="id">I7</span><b>Use the slowest phone you can find, in battery saver mode.</b><span class="ok">calls and Build still work without long freezes.</span></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <header><span class="eyebrow">Section 10</span><h2>Progress, settings and trust</h2></header>
+    <ol class="tests">
+      <li class="t" data-id="J1"><div class="tx"><span class="id">J1</span><b>Finish two calls, then open Progress.</b><span class="ok">both show up, the streak counts today, and calls you abandoned are not counted.</span></div></li>
+      <li class="t" data-id="J2"><div class="tx"><span class="id">J2</span><b>In Settings, turn captions off, and turn reduce motion on.</b><span class="ok">calls respect both choices and they are remembered next time.</span></div></li>
+      <li class="t" data-id="J3"><div class="tx"><span class="id">J3</span><b>Ask the teacher for something inappropriate or rude.</b><span class="ok">she declines kindly and brings you back to learning.</span></div></li>
+      <li class="t" data-id="J4"><div class="tx"><span class="id">J4</span><b>Read every screen for spelling, the school's name and the logo.</b><span class="ok">"Nathaniel School of Music" is spelled right, the logo is the purple bubble, and there are no typos.</span></div></li>
+      <li class="t" data-id="J5" data-must><div class="tx"><span class="id">J5</span><b>Overall: would you pay for this, and would you tell a friend?</b><span class="must">Must</span><span class="ok">yes to both. In the note, write the one thing that would make it better.</span></div></li>
+    </ol>
+  </section>
+
+  <footer>Results save for everyone who opens this page, per language. Use Copy report to send a summary on WhatsApp. Maatu is a Nathaniel School of Music project by Jason Zac.</footer>
+</div>
+
+<script>
+(function () {
+  var L = {
+    kn: { name: "Kannada", city: "Bengaluru", teacher: "Meera", greet: "Namaskara, hegiddira?", mistake: "Naanu nenne piano nudistini.", fix: "the past form, nudiside", mean: "What does chennaagide mean?", mix: "Naanu today office ge late aagi hogtini.", other: "Mujhe chai chahiye.", auto: "Dayavittu Jayanagar hogi. Meter haaki." },
+    hi: { name: "Hindi", city: "Delhi", teacher: "Anjali", greet: "Namaste, aap kaise hain?", mistake: "Main kal piano bajaata hoon.", fix: "the past form, maine kal piano bajaaya", mean: "What does theek hai mean?", mix: "Main aaj office late jaa raha hoon because traffic bahut hai.", other: "Nange kaafi beku.", auto: "Bhaiya, Connaught Place chaliye. Meter lagaiye." },
+    ta: { name: "Tamil", city: "Chennai", teacher: "Kavya", greet: "Vanakkam, eppadi irukkeenga?", mistake: "Naan nethu piano vaasikkiren.", fix: "the past form, naan nethu piano vaasichen", mean: "What does romba nalla mean?", mix: "Naan inniki office ku late ah poren.", other: "Nange kaafi beku.", auto: "Anna, T Nagar ponga. Meter podunga." },
+    ml: { name: "Malayalam", city: "Kochi", teacher: "Devika", greet: "Namaskaram, sukhamano?", mistake: "Njaan innale piano vaayikkum.", fix: "the past form, njaan innale piano vaayichu", mean: "What does kollaam mean?", mix: "Njaan innu office il late aayi pokum.", other: "Enakku coffee venum.", auto: "Chetta, Fort Kochi pokumo? Meter idu." },
+    fr: { name: "French", city: "Paris", teacher: "Camille", greet: "Bonjour, ça va ?", mistake: "Hier je mange une pomme.", fix: "the past form, hier j'ai mangé une pomme", mean: "What does d'accord mean?", mix: "Je vais au bureau, but I'm late today.", other: "Namaskara, hegiddira?", auto: "" }
+  };
+  var lang = "kn";
+  try { lang = localStorage.getItem("maatu-acid-lang") || "kn"; } catch (e) {}
+  if (!L[lang]) lang = "kn";
+
+  var rows = Array.prototype.slice.call(document.querySelectorAll(".t"));
+  var results = {};       // doc id -> data
+  var db = null, user = null, myId = null, names = {};
+  var statusEl = document.getElementById("status");
+
+  // Pass / Fail / Skip buttons and a note box on every row.
+  rows.forEach(function (row) {
+    var id = row.getAttribute("data-id");
+    var marks = document.createElement("div");
+    marks.className = "marks";
+    marks.setAttribute("role", "group");
+    marks.setAttribute("aria-label", "Result for " + id);
+    [["pass", "Pass"], ["fail", "Fail"], ["skip", "Skip"]].forEach(function (m) {
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("data-v", m[0]); b.textContent = m[1]; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () { mark(row, m[0]); });
+      marks.appendChild(b);
+    });
+    row.appendChild(marks);
+    var note = document.createElement("div");
+    note.className = "note";
+    var ta = document.createElement("textarea");
+    ta.id = "note-" + id;
+    ta.placeholder = "What you said, what you heard, what you expected. Time in the recording.";
+    ta.setAttribute("aria-label", "Note for " + id);
+    var timer = null;
+    ta.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () { saveNote(row, ta.value); }, 700); });
+    note.appendChild(ta);
+    row.appendChild(note);
+    var who = document.createElement("div");
+    who.className = "who";
+    row.appendChild(who);
+  });
+
+  function key(id) { return lang + "-" + id; }
+
+  function applyLang() {
+    var d = L[lang];
+    document.querySelectorAll("[data-k]").forEach(function (el) {
+      var v = d[el.getAttribute("data-k")];
+      if (v !== undefined) el.textContent = v;
+    });
+    document.querySelectorAll(".langs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    document.querySelectorAll("section").forEach(function (s) {
+      var off = (s.getAttribute("data-not") || "").split(" ").indexOf(lang) >= 0;
+      s.hidden = off;
+    });
+    render();
+  }
+
+  function visibleRows() { return rows.filter(function (r) { return !r.closest("section").hidden; }); }
+
+  function render() {
+    var p = 0, f = 0, s = 0, vis = visibleRows();
+    vis.forEach(function (row) {
+      var r = results[key(row.getAttribute("data-id"))] || {};
+      var st = r.status || "";
+      row.setAttribute("data-state", st);
+      row.querySelectorAll(".marks button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === st)); });
+      var ta = row.querySelector("textarea");
+      if (document.activeElement !== ta) ta.value = r.note || "";
+      var who = row.querySelector(".who");
+      who.textContent = r.by ? "Marked by " + (names[r.by] || "a tester") + (r.at ? ", " + new Date(r.at).toLocaleString() : "") : "";
+      if (st === "pass") p++; else if (st === "fail") f++; else if (st === "skip") s++;
+    });
+    var n = vis.length, left = n - p - f - s;
+    document.getElementById("nP").textContent = p + " pass";
+    document.getElementById("nF").textContent = f + " fail";
+    document.getElementById("nS").textContent = s + " skip";
+    document.getElementById("nL").textContent = left + " to go";
+    document.getElementById("mP").style.width = (100 * p / n) + "%";
+    document.getElementById("mF").style.width = (100 * f / n) + "%";
+    document.getElementById("mS").style.width = (100 * s / n) + "%";
+  }
+
+  function write(row, patch) {
+    var k = key(row.getAttribute("data-id"));
+    var cur = results[k] || {};
+    var next = Object.assign({}, cur, patch, { lang: lang, test: row.getAttribute("data-id"), at: new Date().toISOString() });
+    if (myId) next.by = myId;
+    results[k] = next;
+    render();
+    if (!db) { statusEl.textContent = "Not saving: open this page signed in to claude.ai to keep results."; return; }
+    db.collection("results").doc(k).set(next).then(function () { statusEl.textContent = ""; }, function (e) {
+      statusEl.textContent = (e && e.code === "not_granted") ? "You can view but not mark results. Ask Jason for edit access to this page." : "That result did not save. Check your connection and try again.";
+    });
+  }
+  function mark(row, v) {
+    var cur = (results[key(row.getAttribute("data-id"))] || {}).status;
+    write(row, { status: cur === v ? "" : v });
+  }
+  function saveNote(row, text) { write(row, { note: text.slice(0, 2000) }); }
+
+  document.querySelectorAll(".langs button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      lang = b.getAttribute("data-lang");
+      try { localStorage.setItem("maatu-acid-lang", lang); } catch (e) {}
+      applyLang();
+    });
+  });
+
+  document.getElementById("copy").addEventListener("click", function () {
+    var d = L[lang], vis = visibleRows(), out = [], fails = [], open = [];
+    var p = 0, f = 0, s = 0;
+    vis.forEach(function (row) {
+      var id = row.getAttribute("data-id"), r = results[key(id)] || {};
+      var title = row.querySelector(".tx b").textContent;
+      if (r.status === "pass") p++;
+      else if (r.status === "fail") { f++; fails.push("❌ " + id + (row.hasAttribute("data-must") ? " (must)" : "") + ": " + title + (r.note ? "\n   " + r.note.replace(/\n+/g, " ") : "")); }
+      else if (r.status === "skip") s++;
+      else open.push(id);
+    });
+    out.push("*Maatu acid test: " + d.name + "*");
+    out.push("✅ " + p + " pass · ❌ " + f + " fail · ⏭ " + s + " skip · " + open.length + " not tested");
+    if (fails.length) { out.push(""); out.push("*Fails*"); out = out.concat(fails); }
+    if (open.length) { out.push(""); out.push("Not tested yet: " + open.join(", ")); }
+    var text = out.join("\n");
+    var done = function () { statusEl.textContent = "Report copied. Paste it into WhatsApp."; };
+    try {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text); });
+    } catch (e) { fallback(text); }
+  });
+  function fallback(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("aria-label", "Report text"); ta.style.width = "100%"; ta.style.minHeight = "140px";
+    statusEl.textContent = "Select this text and copy it: ";
+    statusEl.appendChild(ta); ta.focus(); ta.select();
+  }
+
+  applyLang();
+
+  // Shared results: everyone who opens the page sees the same marks.
+  if (window.claude && window.claude.use) {
+    var timeout = setTimeout(function () { if (!db) statusEl.textContent = "Results are not loading. You can still read the checklist."; }, 10000);
+    window.claude.use("user").then(function (u) {
+      user = u;
+      if (u && u.id) return u.id().then(function (id) { myId = id; });
+    }).catch(function () {}).then(function () { return window.claude.use("db"); }).then(function (d) {
+      if (!d) { clearTimeout(timeout); statusEl.textContent = "Not saving: open this page signed in to claude.ai to keep results."; return; }
+      db = d;
+      db.collection("results").onSnapshot(function (snap) {
+        clearTimeout(timeout);
+        var mine = {};
+        snap.docs.forEach(function (doc) { var v = doc.data(); if (v) mine[doc.id] = v; });
+        results = mine;
+        var ids = Object.keys(results).map(function (k) { return results[k].by; }).filter(Boolean);
+        if (user && user.profiles && ids.length) {
+          user.profiles(Array.from(new Set(ids))).then(function (ps) {
+            Object.keys(ps || {}).forEach(function (id) { names[id] = (ps[id] && ps[id].name) || ""; });
+            render();
+          }).catch(function () { render(); });
+        }
+        render();
+      }, function () { clearTimeout(timeout); statusEl.textContent = "Results could not load. Reload the page to try again."; });
+    }).catch(function () { clearTimeout(timeout); });
+  }
+})();
+</script>
