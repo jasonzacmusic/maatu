@@ -1,7 +1,8 @@
+import { INDIC, languageCode } from "@/lib/languages";
 import { NextResponse } from "next/server";
 import { romanizeText } from "@/lib/romanize";
 
-const LANGUAGES = new Set(["kn-IN", "hi-IN", "ta-IN", "ml-IN"]);
+const LANGUAGES = new Set(INDIC.map(languageCode));
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));

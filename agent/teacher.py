@@ -20,17 +20,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CURRICULUM = ROOT / "curriculum.json"
 
-LANG_CODE = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "ml": "ml-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "ml": "Malayalam"}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "ml": "Kochi"}
+# Codes, names, cities and teacher voices come from languages.json, the one
+# place every language is configured. Only Indian languages have classroom
+# teachers here; French runs its own Camille call in worker.py.
+from languages import LANGUAGES
 
-# Warm female teacher voices (valid bulbul:v3), distinct per language.
-TEACHER = {
-    "kn": {"name": "Meera", "voice": "shreya"},
-    "hi": {"name": "Anjali", "voice": "pooja"},
-    "ta": {"name": "Kavya", "voice": "ishita"},
-    "ml": {"name": "Devika", "voice": "kavya"},
-}
+_INDIC = [k for k, v in LANGUAGES.items() if v["code"].endswith("-IN")]
+LANG_CODE = {k: LANGUAGES[k]["code"] for k in _INDIC}
+LANG_NAME = {k: LANGUAGES[k]["name"] for k in _INDIC}
+CITY = {k: LANGUAGES[k]["city"] for k in _INDIC}
+TEACHER = {k: {"name": LANGUAGES[k]["teacher"]["name"], "voice": LANGUAGES[k]["teacher"]["voice"]} for k in _INDIC}
 
 _CORE_RULES = (
     "HARD RULES, every single turn:\n"

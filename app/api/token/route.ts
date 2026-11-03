@@ -1,4 +1,4 @@
-import { AccessToken } from "livekit-server-sdk";
+import { AccessToken, RoomAgentDispatch, RoomConfiguration } from "livekit-server-sdk";
 import { NextResponse } from "next/server";
 import { PERSONAS } from "@/lib/personas.generated";
 import { ALL_LESSONS } from "@/lib/curriculum";
@@ -10,6 +10,9 @@ import { ALL_LESSONS } from "@/lib/curriculum";
 const LIVEKIT_URL = process.env.LIVEKIT_URL ?? process.env.NEXT_PUBLIC_LIVEKIT_URL;
 const API_KEY = process.env.LIVEKIT_API_KEY;
 const API_SECRET = process.env.LIVEKIT_API_SECRET;
+// Every call asks for the LiveKit Cloud voice worker by name, so a stray copy
+// of the agent on someone's Mac can never answer a learner (3-Nov-2026).
+const AGENT_NAME = process.env.MAATU_AGENT_NAME || "maatu-studio";
 
 function randomSuffix() {
   return Math.random().toString(36).slice(2, 10);
@@ -53,6 +56,7 @@ async function mint(personaId: string, learner: string, practice?: { target: str
     ttl: "30m",
     metadata: line && line.practice ? JSON.stringify(line) : undefined,
   });
+  at.roomConfig = new RoomConfiguration({ agents: [new RoomAgentDispatch({ agentName: AGENT_NAME })] });
   at.addGrant({
     room,
     roomJoin: true,

@@ -1,0 +1,61 @@
+{
+  "_about": [
+    "One place for every language Maatu speaks. The voice agent (agent/languages.py) and the web app (lib/languages.ts) both read this file, so a voice or recognition fix made here applies to every call, every Hear it button and every coach check at once.",
+    "engine: 'sarvam' = Sarvam recognition locked to the language, the Gemini teaching brain, and a fixed Sarvam voice that reads native script (sounds local and never drifts). 'gemini-live' = one Google model that hears and speaks (French only: Sarvam has no French voice).",
+    "voiceModel + speakers: the Sarvam voice used on live calls. When speakers is empty, each character keeps its own Bulbul v3 voice from its persona file.",
+    "teacher.voice: the Bulbul v3 voice for the teacher, the Hear it button and spoken coach notes.",
+    "To add a language: add one block here, then add its persona files and curriculum entries. No em dashes anywhere."
+  ],
+  "languages": {
+    "kn": {
+      "name": "Kannada",
+      "code": "kn-IN",
+      "city": "Bengaluru",
+      "teacher": { "name": "Meera", "gender": "female", "voice": "shreya" },
+      "engine": "sarvam",
+      "voiceModel": "bulbul:v4-flash",
+      "speakers": { "female": "chaitra_kn_conversation", "male": "chetan_kn_conversation" },
+      "hearingHints": "namaskara, hegiddira, chennaagide, illi, alli, beku, beda, gottilla, swalpa, Meera"
+    },
+    "hi": {
+      "name": "Hindi",
+      "code": "hi-IN",
+      "city": "Delhi",
+      "teacher": { "name": "Anjali", "gender": "female", "voice": "pooja" },
+      "engine": "sarvam",
+      "voiceModel": "bulbul:v3",
+      "speakers": {},
+      "hearingHints": "namaste, kaise ho, theek hai, achha, haan, nahin, kitna, bhaiya, Anjali"
+    },
+    "ta": {
+      "name": "Tamil",
+      "code": "ta-IN",
+      "city": "Chennai",
+      "teacher": { "name": "Kavya", "gender": "female", "voice": "ishita" },
+      "engine": "sarvam",
+      "voiceModel": "bulbul:v3",
+      "speakers": {},
+      "hearingHints": "vanakkam, eppadi irukkeenga, seri, romba, illa, venum, evlo, anna, Kavya"
+    },
+    "ml": {
+      "name": "Malayalam",
+      "code": "ml-IN",
+      "city": "Kochi",
+      "teacher": { "name": "Devika", "gender": "female", "voice": "kavya" },
+      "engine": "sarvam",
+      "voiceModel": "bulbul:v3",
+      "speakers": {},
+      "hearingHints": "namaskaram, sukhamano, sheri, venam, venda, ethra, chetta, chechi, Devika"
+    },
+    "fr": {
+      "name": "French",
+      "code": "fr-FR",
+      "city": "Paris",
+      "teacher": { "name": "Camille", "gender": "female", "voice": "Aoede" },
+      "engine": "gemini-live",
+      "voiceModel": "gemini-3.8-live",
+      "speakers": {},
+      "hearingHints": ""
+    }
+  }
+}

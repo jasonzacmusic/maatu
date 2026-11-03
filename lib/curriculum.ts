@@ -1,4 +1,5 @@
 import curriculum from "@/curriculum.json";
+import { LANGUAGES } from "./languages";
 import { PERSONAS, type PersonaMeta } from "./personas.generated";
 import type { Lang } from "./maatu-design";
 
@@ -20,9 +21,11 @@ export type Unit = { unit: string; lessons: Lesson[] };
 export const UNITS: Unit[] = curriculum.units as Unit[];
 export const ALL_LESSONS: Lesson[] = UNITS.flatMap((u) => u.lessons);
 
-export const LANG_NAME: Record<Lang, string> = { kn: "Kannada", hi: "Hindi", ta: "Tamil", ml: "Malayalam" };
-export const LANG_CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", ml: "ml-IN" };
-const TEACHER_NAME: Record<Lang, string> = { kn: "Meera", hi: "Anjali", ta: "Kavya", ml: "Devika" };
+// Names, codes and teachers come from languages.json, shared with the agent.
+const INDIAN = ["kn", "hi", "ta", "ml"] as const satisfies readonly Lang[];
+export const LANG_NAME = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].name])) as Record<Lang, string>;
+export const LANG_CODE = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].code])) as Record<Lang, string>;
+const TEACHER_NAME = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].teacher.name])) as Record<Lang, string>;
 
 // A synthetic PersonaMeta so the Call screen can render a class or tutor session.
 // The French companion: Chat only (no course or scenes), voiced by Gemini Live.

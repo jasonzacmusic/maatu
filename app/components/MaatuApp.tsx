@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
-import { useMaatuCall, type Speaker, type Line, type PracticeLine } from "./useMaatuCall";
+import { METER_STEPS, useMaatuCall, type Speaker, type Line, type PracticeLine } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import { ALL_LESSONS, FRENCH_META, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
 import { ClassroomScreen } from "./ClassroomScreen";
@@ -830,7 +830,7 @@ function CallScreen({
             <div className="flex items-center gap-2.5 rounded-full px-3 py-2" style={{ background: "rgba(242,237,226,0.05)", border: `1px solid ${call.micSilent ? "rgba(232,80,58,0.5)" : LINE}` }}>
               <span className="text-[14px]" aria-hidden="true">🎙</span>
               <span className="flex h-3 flex-none items-end gap-[2px]" aria-label={call.micLevel > 0.04 ? `${meta.name} can hear you` : "No sound from your microphone"}>
-                {[0.05, 0.15, 0.3, 0.5, 0.7].map((t) => (
+                {METER_STEPS.map((t) => (
                   <span key={t} style={{ width: 3, height: `${40 + t * 60}%`, borderRadius: 2, background: call.micLevel >= t ? C.tube : "rgba(242,237,226,0.15)", transition: "background 80ms linear" }} />
                 ))}
               </span>

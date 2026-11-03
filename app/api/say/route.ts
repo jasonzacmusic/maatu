@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { INDIC, teacherVoice } from "@/lib/languages";
 import { hasNativeScript } from "@/lib/romanize";
 
 // Sarvam runs in India, so these calls run from Mumbai rather than the US.
@@ -9,17 +10,12 @@ export const preferredRegion = "bom1";
 // Returns base64 audio (wav). No em dashes anywhere.
 
 const SARVAM_KEY = process.env.SARVAM_API_KEY;
-const VOICE: Record<string, { code: string; speaker: string }> = {
-  kn: { code: "kn-IN", speaker: "shreya" },
-  hi: { code: "hi-IN", speaker: "pooja" },
-  ta: { code: "ta-IN", speaker: "ishita" },
-  ml: { code: "ml-IN", speaker: "kavya" },
-};
+// Teacher voices come from languages.json.
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => ({}));
   const text = typeof body.text === "string" ? body.text.replace(/\u2014/gu, ",").trim().slice(0, 500) : "";
-  const voice = VOICE[typeof body.lang === "string" ? body.lang : "kn"] ?? VOICE.kn;
+  const voice = teacherVoice(INDIC.includes(body.lang) ? body.lang : "kn");
   const pace = typeof body.pace === "number" ? Math.min(1.2, Math.max(0.6, body.pace)) : 0.9;
   if (!text) return NextResponse.json({ error: "Nothing to say." }, { status: 400 });
   if (hasNativeScript(text)) return NextResponse.json({ error: "Romanized text only." }, { status: 400 });

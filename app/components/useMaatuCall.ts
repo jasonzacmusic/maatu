@@ -1,14 +1,17 @@
 "use client";
 
-import {
-  Room,
-  RoomEvent,
-  Track,
-  type RemoteTrack,
-  type TranscriptionSegment,
-  type Participant,
-} from "livekit-client";
+import type { Participant, RemoteTrack, Room, TranscriptionSegment } from "livekit-client";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+// The call library is about a third of the app's code. It loads when a call
+// screen opens, not on first paint, so the app opens fast on a phone.
+type LiveKit = typeof import("livekit-client");
+let livekit: Promise<LiveKit> | null = null;
+let LK: LiveKit | null = null;
+function loadLiveKit(): Promise<LiveKit> {
+  livekit ??= import("livekit-client").then((mod) => (LK = mod));
+  return livekit;
+}
 
 // Drives one live Maatu call: mints a token, joins the LiveKit room, publishes
 // the mic, plays the character's audio, reports who is speaking, and surfaces
@@ -17,6 +20,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export type CallPhase = "idle" | "connecting" | "live" | "ended" | "error";
 export type Speaker = "character" | "learner" | null;
 export type Line = { who: "character" | "learner"; text: string };
+
+// The mic meter's bar thresholds, shared with the call screen.
+export const METER_STEPS = [0.05, 0.15, 0.3, 0.5, 0.7];
 
 const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff\u0d00-\u0d7f]/u;
 
@@ -93,6 +99,10 @@ export function useMaatuCall(
   const [endedUnexpectedly, setEndedUnexpectedly] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
+  // Start fetching the call library as soon as the call screen opens.
+  useEffect(() => {
+    void loadLiveKit();
+  }, []);
   // Held in a ref so a changing callback never tears down a live call.
   const learnerLineRef = useRef(onLearnerLine);
   learnerLineRef.current = onLearnerLine;
@@ -182,7 +192,8 @@ export function useMaatuCall(
   const startMeter = useCallback(
     (room: Room) => {
       stopMeter();
-      const pub = room.localParticipant.getTrackPublication(Track.Source.Microphone);
+      if (!LK) return;
+      const pub = room.localParticipant.getTrackPublication(LK.Track.Source.Microphone);
       const media = pub?.track?.mediaStreamTrack;
       if (!media || typeof AudioContext === "undefined") return;
       try {
@@ -199,7 +210,10 @@ export function useMaatuCall(
           let sum = 0;
           for (let i = 0; i < buf.length; i += 1) sum += buf[i] * buf[i];
           const level = Math.min(1, Math.sqrt(sum / buf.length) * 8);
-          setMicLevel(level);
+          // Publish only the meter step the bars can show, so the call screen
+          // redraws when a bar changes instead of eight times a second.
+          const step = METER_STEPS.filter((t) => level >= t).pop() ?? 0;
+          setMicLevel(step);
           if (level > 0.04) lastSoundRef.current = Date.now();
           // Twelve seconds of dead silence from the mic means the wrong input
           // (an interface channel, a virtual device) or a muted mic.
@@ -215,6 +229,7 @@ export function useMaatuCall(
 
   const refreshMics = useCallback(async (room: Room) => {
     try {
+      const { Room } = await loadLiveKit();
       const list = (await Room.getLocalDevices("audioinput")).filter((d) => d.deviceId);
       const mapped = list.map((d, i) => ({ id: d.deviceId, label: d.label || `Microphone ${i + 1}` }));
       setMics(mapped);
@@ -301,6 +316,7 @@ export function useMaatuCall(
       } catch {
         storedMic = null;
       }
+      const { Room, RoomEvent, Track } = await loadLiveKit();
       const room = new Room({ adaptiveStream: true, dynacast: true, audioCaptureDefaults: storedMic ? { deviceId: storedMic } : undefined });
       roomRef.current = room;
 

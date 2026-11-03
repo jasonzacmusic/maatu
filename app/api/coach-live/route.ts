@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { LANG_NAME } from "@/lib/curriculum";
+import { LANG_CODE, LANG_NAME } from "@/lib/curriculum";
 import { referenceCompact } from "@/lib/grammar";
 import { HOST, type Lang } from "@/lib/maatu-design";
 import { hasNativeScript, romanizeText } from "@/lib/romanize";
@@ -21,7 +21,7 @@ import { hasNativeScript, romanizeText } from "@/lib/romanize";
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MODEL = process.env.COACH_MODEL || "gemini-flash-lite-latest";
 const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
-const CODE: Record<Lang, string> = { kn: "kn-IN", hi: "hi-IN", ta: "ta-IN", ml: "ml-IN" };
+const CODE: Record<Lang, string> = LANG_CODE;
 const TYPES = new Set(["tense", "gender", "verb", "word-order", "missing-word", "ending", "word-choice", "politeness", "sound"]);
 
 export type LiveSlip = { type: string; was: string; now: string };

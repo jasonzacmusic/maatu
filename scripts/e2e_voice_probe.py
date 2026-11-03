@@ -35,6 +35,8 @@ PHRASES = {
     "tutor-kn": "What does hegiddira mean?",
     "tutor-hi": "What does aap kaise hain mean?",
     "tutor-ta": "What does eppadi irukkeenga mean?",
+    "tutor-ml": "What does sukhamano mean?",
+    "ml-auto": "Chetta, Fort Kochi pokumo? Meter idu.",
     "tutor-fr": "Hello. What does bonjour mean?",
 }
 
@@ -45,6 +47,7 @@ LANGUAGE = {
     "kn": "kn-IN",
     "hi": "hi-IN",
     "ta": "ta-IN",
+    "ml": "ml-IN",
 }
 
 
@@ -115,6 +118,8 @@ async def run_probe(
     barge_in: bool = False,
     turns: int = 1,
     metadata: str | None = None,
+    agent: str = "maatu-studio",
+    save_audio: str | None = None,
 ) -> dict[str, object]:
     env = load_env(ROOT / "agent" / ".env")
     parts = persona.split("-")
@@ -133,6 +138,8 @@ async def run_probe(
             .with_name("Maatu E2E Probe")
             .with_grants(api.VideoGrants(room_join=True, room=room_name))
             .with_metadata(metadata or "")
+            # Calls are dispatched by name, like /api/token does.
+            .with_room_config(api.RoomConfiguration(agents=[api.RoomAgentDispatch(agent_name=agent)]))
             .to_jwt()
         )
 
@@ -146,10 +153,14 @@ async def run_probe(
         timing: dict[str, float] = {}
         ready_for_reply = False
         stream_tasks: set[asyncio.Task[None]] = set()
+        heard: list[bytes] = []
 
         async def consume_audio(track: rtc.RemoteAudioTrack) -> None:
             stream = rtc.AudioStream(track)
             async for event in stream:
+                if save_audio:
+                    heard.append(bytes(event.frame.data))
+                    timing.setdefault("audio_rate", event.frame.sample_rate)
                 level = rms(event.frame)
                 if level > 5 and not opening_done.is_set():
                     opening_audio_started.set()
@@ -245,6 +256,12 @@ async def run_probe(
                 "barge_in": barge_in,
             }
         finally:
+            if save_audio and heard:
+                with wave.open(save_audio, "wb") as out:
+                    out.setnchannels(1)
+                    out.setsampwidth(2)
+                    out.setframerate(int(timing.get("audio_rate", 48000)))
+                    out.writeframes(b"".join(heard))
             await room.disconnect()
             for task in stream_tasks:
                 task.cancel()
@@ -259,6 +276,8 @@ def main() -> None:
     parser.add_argument("--turns", type=int, default=1)
     parser.add_argument("--practice", help="tutor rooms: Build tab romanized practice line")
     parser.add_argument("--practice-en", default="", help="English meaning of --practice")
+    parser.add_argument("--agent", default="maatu-studio", help="dispatch name of the worker to call")
+    parser.add_argument("--save-audio", help="write everything the agent said to this WAV")
     args = parser.parse_args()
     if args.turns < 1:
         parser.error("--turns must be at least 1")
@@ -272,6 +291,8 @@ def main() -> None:
             json.dumps({"practice": args.practice, "practiceEn": args.practice_en})
             if args.practice
             else None,
+            args.agent,
+            args.save_audio,
         )
     )
     print(json.dumps(result, ensure_ascii=False))

@@ -1,9 +1,11 @@
 """Maatu voice agent worker.
 
-Per turn: LiveKit room audio -> Sarvam Saarika STT (auto-detect) -> Gemini
-Flash brain holding the persona -> Sarvam Bulbul V3 TTS -> room audio. The
-persona is chosen from the room name (see persona.py). Per-turn latency from
-user-speech-end to agent-audio-start is logged.
+Per turn for Kannada, Hindi, Tamil and Malayalam: LiveKit room audio -> Sarvam
+Saaras v4 STT locked to the call language -> Gemini brain holding the persona ->
+fixed Sarvam Bulbul voice reading native script -> room audio. French runs on
+Gemini Live. Every language setting comes from languages.json (see
+languages.py). The persona is chosen from the room name (see persona.py).
+Per-turn latency from user-speech-end to agent-audio-start is logged.
 
 Run: .venv/bin/python worker.py dev
 No em dashes anywhere, per brand rule.
@@ -25,6 +27,7 @@ from livekit import agents
 from livekit.agents import Agent, AgentSession
 from livekit.plugins import anthropic, google, sarvam, silero
 
+import languages
 from persona import apply_practice_metadata, apply_secret_agenda, persona_from_room_name
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
@@ -33,9 +36,12 @@ SARVAM_API_KEY = os.environ.get("SARVAM_API_KEY")
 # Our env names the brain key GEMINI_API_KEY; the Google plugin wants it passed
 # explicitly (it only auto-reads GOOGLE_API_KEY).
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-# Flash-lite answers in about 1s (vs 5s+ for full flash), which keeps the
-# conversation real time. 2.x flash is retired.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-lite-latest")
+# The spoken teaching brain. Gemini 3.5 Flash with minimal thinking replaced
+# Flash-Lite on 9-Oct-2026 because the lighter models gave weaker grammar, and
+# grammar is what the quiet coach and the teacher are for. Teaching quality
+# outranks latency (CLAUDE.md).
+GEMINI_MODEL = os.environ.get("MAATU_SPOKEN_BRAIN_MODEL", "gemini-3.5-flash")
+GEMINI_THINKING = os.environ.get("MAATU_SPOKEN_THINKING_LEVEL", "minimal")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 # The Brain is provider flexible per the spec. Anthropic is preferred when its
@@ -43,24 +49,28 @@ ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 # Gemini. Force one with BRAIN=anthropic or BRAIN=gemini.
 BRAIN = os.environ.get("BRAIN", "anthropic" if ANTHROPIC_API_KEY else "gemini")
 MAATU_APP_URL = os.environ.get("MAATU_APP_URL", "https://maatu.vercel.app")
-# Empty (the default) means automatic dispatch: this worker answers every
-# production room. A test worker sets a name so it only joins rooms that are
-# explicitly dispatched to it and never steals a real learner's call.
-# 'production' also means automatic dispatch (a cloud secret cannot be empty).
-AGENT_NAME = os.environ.get("MAATU_AGENT_NAME", "")
+# Calls are dispatched by name: /api/token asks for "maatu-studio" by name, so
+# only the LiveKit Cloud worker answers a learner. A stray copy on a Mac under
+# another name can never take a real call (on 3-Nov-2026 a forgotten MacBook
+# copy was answering every call with a Google voice). A test worker sets its
+# own name and only joins rooms dispatched to it.
+AGENT_NAME = os.environ.get("MAATU_AGENT_NAME", "maatu-studio")
 if AGENT_NAME == "production":
-    AGENT_NAME = ""
+    AGENT_NAME = "maatu-studio"
 
 
 def build_brain():
     if BRAIN == "anthropic" and ANTHROPIC_API_KEY:
         return anthropic.LLM(model=ANTHROPIC_MODEL, api_key=ANTHROPIC_API_KEY)
 
-    # No thinking_config here, on purpose. Google repointed gemini-flash-lite-latest
-    # to a model that rejects thinking_budget 0 with a 400 INVALID_ARGUMENT, which
-    # silenced every reply in production (2026-07-22). The current lite model spends
-    # zero thought tokens on these short spoken turns anyway (~1s replies).
-    return google.LLM(model=GEMINI_MODEL, temperature=0.8, api_key=GEMINI_API_KEY)
+    # thinking_level, never thinking_budget 0: a budget of 0 is rejected with a
+    # 400 by newer models and silenced every reply in production (2026-07-22).
+    return google.LLM(
+        model=GEMINI_MODEL,
+        temperature=0.8,
+        thinking_config={"thinking_level": GEMINI_THINKING},
+        api_key=GEMINI_API_KEY,
+    )
 
 
 def fetch_active_agenda(persona_id: str) -> tuple[list[str] | None, str | None]:
@@ -80,7 +90,7 @@ logging.basicConfig(level=logging.INFO)
 
 # French has no Sarvam voice, so the French companion runs on Gemini Live, one
 # model that hears and speaks (tested 2026-09-28: replies in 1.0 to 1.5 s).
-FRENCH_LIVE_MODEL = os.environ.get("MAATU_FRENCH_MODEL", "gemini-3.8-live")
+FRENCH_LIVE_MODEL = os.environ.get("MAATU_FRENCH_MODEL", languages.lang("fr")["voiceModel"])
 FRENCH_PROMPT = (
     "You are Camille, a warm, playful friend from Paris who helps an Indian adult "
     "learn to SPEAK everyday French. This is a live voice call. The learner is a "
@@ -108,18 +118,12 @@ FRENCH_OPENING = (
 )
 
 
-# Every Kannada, Hindi, Tamil and Malayalam call (Chat, lessons, situations) runs on Gemini
-# Live: one model that hears and speaks the language natively, so the accent is
-# a local one and replies land in one to two seconds. Sarvam's text voice read
-# romanized spellings with an outsider's accent (Jason, 2026-09-28). Set
-# MAATU_LIVE_LANGS="" to put every call back on the Sarvam pipeline below.
-LIVE_LANGS = {x.strip() for x in os.environ.get("MAATU_LIVE_LANGS", "kn,hi,ta,ml").split(",") if x.strip()}
+# Which engine each language uses lives in languages.json. Every Indian
+# language is on the fixed Sarvam voice: Gemini Live's voices are built for
+# English and drifted from a Bengaluru accent to an American one mid-call, and
+# its hearing wrote Kannada as Spanish (Jason, 3-Nov-2026). The run_live path
+# stays for any language an operator switches to "gemini-live".
 LIVE_VOICES = {"female": ["Kore", "Aoede", "Leda", "Zephyr"], "male": ["Puck", "Charon", "Orus", "Fenrir"]}
-# The teacher and companion keep one steady voice per language. All eight
-# Gemini voices were checked against Sarvam Malayalam STT on 2026-10-15 and
-# every one came back transcribed word for word, so this is a character choice.
-TEACHER_VOICE = {"kn": "Kore", "hi": "Aoede", "ta": "Leda", "ml": "Zephyr"}
-CITY = {"kn": "Bengaluru", "hi": "Delhi", "ta": "Chennai", "ml": "Kochi"}
 
 
 def persona_lang(persona) -> str:
@@ -130,12 +134,12 @@ async def run_live(ctx: agents.JobContext, persona) -> None:
     lang = persona_lang(persona)
     gender = "male" if str(getattr(persona, "gender", "female")).lower().startswith("m") else "female"
     voices = LIVE_VOICES[gender]
-    voice = voices[sum(map(ord, persona.id)) % len(voices)] if not persona.id.startswith(("tutor-", "teacher-")) else TEACHER_VOICE.get(lang, "Kore")
+    voice = voices[sum(map(ord, persona.id)) % len(voices)]
     logger.info("room=%s persona=%s engine=gemini-live model=%s voice=%s", ctx.room.name, persona.id, FRENCH_LIVE_MODEL, voice)
     # The script rule in the prompts exists for a text voice; a speaking model
     # just speaks, so tell it how to sound.
     instructions = persona.system_prompt + (
-        f"\n\nYou are speaking out loud yourself. Pronounce every word the way a local from {CITY.get(lang, 'India')} "
+        f"\n\nYou are speaking out loud yourself. Pronounce every word the way a local from {languages.lang(lang)['city']} "
         "says it, in the everyday spoken register, with natural Indian English for any English parts. "
         "Speak at a relaxed, clear pace for a learner."
     )
@@ -294,7 +298,7 @@ async def entrypoint(ctx: agents.JobContext):
     )
     if agenda:
         persona = apply_secret_agenda(persona, agenda)
-    if persona_lang(persona) in LIVE_LANGS:
+    if languages.engine(persona_lang(persona)) == "gemini-live":
         await run_live(ctx, persona)
         return
     logger.info(
@@ -308,10 +312,15 @@ async def entrypoint(ctx: agents.JobContext):
         agenda_updated_at or "default",
     )
 
+    # One fixed Sarvam voice for the whole call, from languages.json. It reads
+    # native script, so it sounds like a local and cannot drift to another
+    # accent. There is no silent fallback to a different voice.
+    tts_model, tts_speaker = languages.call_voice(persona.language, persona.gender, persona.voice)
+    logger.info("room=%s voice model=%s speaker=%s", ctx.room.name, tts_model, tts_speaker)
     tts_engine = sarvam.TTS(
         target_language_code=persona.language,
-        model="bulbul:v3",
-        speaker=persona.voice,
+        model=tts_model,
+        speaker=tts_speaker,
         pace=persona.pace,
         # The installed Sarvam plugin enforces 30 as the minimum. Lower values
         # crash the call before the teacher can speak.
@@ -322,27 +331,18 @@ async def entrypoint(ctx: agents.JobContext):
     )
     session = AgentSession(
         stt=sarvam.STT(
-            # Auto-detect, NOT locked to the target language. A beginner speaks
-            # mostly English plus a few target words, and a locked transcriber
-            # turned every English question into phonetic native-script gibberish
-            # ("what does namaskara mean" -> Kannada letters), which the brain
-            # could not answer. Verified against the live API: auto-detect
-            # transcribes pure kn/hi/ta identically to the locked mode AND
-            # returns clean romanized text for mixed speech.
-            # saarika:v2.5 is sunset. Tested 2026-09-28: saaras:v4 in translit
-            # mode, locked to the call's language, wrote Kannada as clean
-            # romanized Latin ("naanu dina piano nudistini") and English
-            # questions as plain English, 0.15 to 0.3 s after speech ended.
-            # saaras:v4 on auto-detect heard Kannada and Tamil as Malayalam on
-            # short clips, so it stays locked.
+            # Locked to the call's language in codemix mode (9-Oct-2026):
+            # auto-detect heard Tamil as Telugu and Kannada as Malayalam on
+            # short clips, while codemix still keeps English questions in
+            # English. The hints help it hear the teacher's name and greetings.
             language=persona.language,
             model="saaras:v4",
-            mode="translit",
-            # Sarvam's own end-of-speech detection was the single biggest slice
-            # of the turn: measured transcription_delay of 785 to 875 ms before
-            # the final transcript arrived, which the brain must wait for. High
-            # sensitivity finalizes sooner. The endpointing grace window below
-            # still keeps a beginner's short thinking pause inside one turn.
+            mode="codemix",
+            prompt=(
+                f"Conversation in {languages.lang(persona.language)['name']} and Indian English. "
+                "Keep English questions in English. Expected words: "
+                f"{persona.name}, Maatu, {languages.lang(persona.language)['hearingHints']}."
+            ),
             high_vad_sensitivity=True,
             api_key=SARVAM_API_KEY,
         ),
@@ -353,7 +353,9 @@ async def entrypoint(ctx: agents.JobContext):
         # teacher speaks. Do not lower this while the turn detector is in use.
         vad=silero.VAD.load(min_silence_duration=0.25),
         turn_handling={
-            "endpointing": {"min_delay": 0.4, "max_delay": 0.7},
+            # A beginner pauses to think mid-sentence. 0.8 to 2.0 s keeps that
+            # pause inside one turn (Jason's pause allowance, 9-Oct-2026).
+            "endpointing": {"min_delay": 0.8, "max_delay": 2.0},
             "interruption": {
                 "enabled": True,
                 "mode": "vad",
@@ -390,7 +392,7 @@ async def entrypoint(ctx: agents.JobContext):
             reply = session.generate_reply(
                 instructions=(
                     "The learner tapped the slow down control. Acknowledge it in one short "
-                    "romanized target-language phrase, then repeat your most recent teaching "
+                    "target-language phrase, then repeat your most recent teaching "
                     "point, question, or scene prompt more slowly. Use very short chunks and "
                     "full-stop pauses. Stay at the same point in the lesson or scene."
                 )
