@@ -2,6 +2,11 @@
 
 ## Milestone tracker (24h plan, docs/plan/00_ORCHESTRA.md)
 
+- [x] **M21: 2026-11-03 Meera keeps her accent, the call screen stops freezing, a clearer Talk tab, and the brand is back.**
+  Calls in Kannada, Hindi, Tamil and Malayalam run on the fixed Sarvam voice again (recognition locked to the language, Gemini 3.5 Flash brain, native-script voice); every call asks for the cloud worker maatu-studio by name, and the MacBook Pro LaunchAgent that had been answering every call with Gemini Live is removed. `languages.json` is the one language registry for the agent and the site. The caption loop that froze the page after the first line is fixed. Talk is now a three-way choice (Chat, Build, Act it out) with French and the course below. New logo, favicon, share cards, robots, sitemap, llms.txt and the /learn and /about pages are on the live line. The first-load script halved (call library loads with the call screen) and returning phones fetch new icons.
+  Verified: live cloud probes answered in Kannada and Tamil with no worker on any Mac; local probes on kn, hi, ta, ml teacher rooms and kn and ml auto scenes; phone, tablet and desktop screenshots; no console errors; no long tasks clicking through Build.
+  Not done: Hear it in Build still reads romanized text with the Bulbul v3 voice (not the call voice); a real-phone thumb test.
+
 - [x] **M20: 2026-10-15 The builder learned twelve sentence shapes.**
   Until now Build could make one shape, "someone does something", and only swapped the words inside it. It now makes twelve: describing a thing, naming a thing, having, wanting, liking, whether a thing exists, where it is, how much it costs, asking politely for it, suggesting it, going somewhere to do something, and asking a real where-what-why question. Each is a vetted template per language, read back by eye in all four before shipping.
   New word classes to fill them: 43 adjectives in both the shape before a noun and the shape at the end of a sentence, 12 quantities, 12 more time words, 7 question words, 20 market nouns that were previously flashcards only, the have-form and possessive on every person, and the at-form on every place.
