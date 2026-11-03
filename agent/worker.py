@@ -49,12 +49,12 @@ ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 # Gemini. Force one with BRAIN=anthropic or BRAIN=gemini.
 BRAIN = os.environ.get("BRAIN", "anthropic" if ANTHROPIC_API_KEY else "gemini")
 MAATU_APP_URL = os.environ.get("MAATU_APP_URL", "https://maatu.vercel.app")
-# Calls are dispatched by name: /api/token asks for "maatu-studio" by name, so
-# only the LiveKit Cloud worker answers a learner. A stray copy on a Mac under
-# another name can never take a real call (on 3-Nov-2026 a forgotten MacBook
-# copy was answering every call with a Google voice). A test worker sets its
-# own name and only joins rooms dispatched to it.
-AGENT_NAME = os.environ.get("MAATU_AGENT_NAME", "maatu-studio")
+# Calls are dispatched by name: /api/token asks for "maatu-studio", and only
+# the LiveKit Cloud worker (deployed with MAATU_AGENT_NAME=production) takes
+# that name. A copy started on a Mac defaults to "maatu-local" and can never
+# take a learner's call (on 3-Nov-2026 a forgotten MacBook copy was answering
+# every call with a Google voice). Probes dispatch to a worker by name.
+AGENT_NAME = os.environ.get("MAATU_AGENT_NAME", "maatu-local")
 if AGENT_NAME == "production":
     AGENT_NAME = "maatu-studio"
 

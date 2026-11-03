@@ -4,10 +4,9 @@
 # Authenticates with the project API key and secret in agent/.env, so no
 # browser login is needed. Created 2026-09-28 as agent CA_qEYzC3PqfR2e.
 #
-# The cloud copy runs with MAATU_AGENT_NAME=maatu-cloud, so it ONLY answers
-# rooms explicitly dispatched to it (room names 'maatu-cloud.<persona>__<id>')
-# and never takes a real learner's call. To make it answer production calls,
-# run this with PRODUCTION=1 (drops the name, so it joins every room).
+# Without PRODUCTION=1 the cloud copy registers as maatu-cloud and only answers
+# probes dispatched to that name. PRODUCTION=1 registers it as maatu-studio,
+# the name every learner's call asks for (app/api/token/route.ts).
 # No em dashes anywhere.
 set -e
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -17,7 +16,7 @@ mkdir -p "$BUILD/agent" "$BUILD/personas"
 cp "$REPO/agent/"*.py "$BUILD/agent/"
 cp "$REPO/agent/requirements.txt" "$BUILD/requirements.txt"
 cp "$REPO/personas/"*.json "$BUILD/personas/"
-cp "$REPO/curriculum.json" "$REPO/grammar.json" "$REPO/playbooks.json" "$BUILD/"
+cp "$REPO/curriculum.json" "$REPO/grammar.json" "$REPO/playbooks.json" "$REPO/languages.json" "$BUILD/"
 cat > "$BUILD/Dockerfile" << 'DF'
 FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1

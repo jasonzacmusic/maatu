@@ -1,4 +1,4 @@
-const CACHE = "maatu-shell-v5";
+const CACHE = "maatu-shell-v6";
 const SHELL = [
   "/",
   "/manifest.webmanifest",
@@ -43,17 +43,23 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Build files carry a content hash in their name, so a cached copy is always
+  // the right one. Everything else (icons, the manifest, share images, voices)
+  // keeps its name when it changes, so fetch it fresh and use the cache only
+  // offline. Cache-first here kept the old favicon on returning phones.
+  const hashed = url.pathname.startsWith("/_next/static/");
+  const save = (response) => {
+    if (response.ok) {
+      const copy = response.clone();
+      caches.open(CACHE).then((cache) => cache.put(request, copy));
+    }
+    return response;
+  };
   event.respondWith(
-    caches.match(request).then(
-      (cached) =>
-        cached ||
-        fetch(request).then((response) => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        }),
-    ),
+    hashed
+      ? caches.match(request).then((cached) => cached || fetch(request).then(save))
+      : fetch(request)
+          .then(save)
+          .catch(() => caches.match(request)),
   );
 });
