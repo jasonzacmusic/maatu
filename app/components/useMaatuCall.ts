@@ -105,7 +105,10 @@ export function useMaatuCall(
 
   const flushDisplay = useCallback(() => {
     let changed = false;
-    while (pendingRef.current[0]?.text !== null) {
+    // Stop at an empty queue as well as at a line still being romanized. An
+    // empty queue reads as undefined, which is not null, so the old test spun
+    // forever and froze the page after the first finished caption.
+    while (pendingRef.current.length > 0 && pendingRef.current[0].text !== null) {
       const ready = pendingRef.current.shift();
       if (!ready?.text) continue;
       displayRef.current.push({ who: ready.who, text: ready.text });
