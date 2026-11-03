@@ -2,17 +2,20 @@
   "name": "Maatu",
   "short_name": "Maatu",
   "id": "/",
-  "description": "Private voice lessons and real speaking practice for beginner Kannada, Hindi, and Tamil.",
+  "description": "Speak everyday Kannada, Hindi, Tamil and Malayalam out loud with a friendly AI teacher. Chat, build sentences and act out real-life scenes.",
+  "lang": "en",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0C101D",
-  "theme_color": "#0C101D",
+  "background_color": "#0A0D16",
+  "theme_color": "#0A0D16",
   "orientation": "portrait",
+  "categories": ["education", "languages"],
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

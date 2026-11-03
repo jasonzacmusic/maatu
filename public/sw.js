@@ -1,4 +1,4 @@
-const CACHE = "maatu-shell-v4";
+const CACHE = "maatu-shell-v5";
 const SHELL = [
   "/",
   "/manifest.webmanifest",
@@ -32,7 +32,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (response.ok) {
+          if (response.ok && url.pathname === "/") {
             const copy = response.clone();
             caches.open(CACHE).then((cache) => cache.put("/", copy));
           }

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import CallBackdrop from "./CallBackdrop";
+import { BrandMark } from "./BrandMark";
 import { useMaatuCall, type Speaker, type Line, type PracticeLine } from "./useMaatuCall";
 import { PERSONAS, personaId, type PersonaMeta } from "@/lib/personas.generated";
 import { ALL_LESSONS, FRENCH_META, teacherMeta, getDone, markDone, lessonWasMastered, LANG_NAME, type Lesson } from "@/lib/curriculum";
@@ -224,12 +225,7 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
       <div className="relative mx-auto flex min-h-full max-w-[460px] flex-col px-7 pb-10">
         <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: 320, background: "radial-gradient(200px 160px at 50% 0, rgba(255,179,92,0.30), transparent 68%)" }} />
         <div className="relative pt-16 text-center">
-          <div
-            className="inline-flex items-center justify-center rounded-[17px]"
-            style={{ width: 56, height: 56, background: "linear-gradient(150deg,#FFB35C,#E8503A)", boxShadow: "0 10px 34px rgba(255,179,92,0.34)" }}
-          >
-            <span style={{ fontFamily: DISPLAY, fontWeight: 600, fontSize: 28, color: C.ink }}>M</span>
-          </div>
+          <BrandMark size={64} className="inline-block" />
           <h1 className="mx-auto mt-6" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 31, lineHeight: 1.12, color: C.milk, maxWidth: 340 }}>
             Your private speaking teacher, from the very first word.
           </h1>
@@ -1393,9 +1389,7 @@ function SideRail({ active, go, lang }: { active: Tab; go: (t: Tab) => void; lan
     <aside className="hidden lg:flex" style={{ width: 236, flex: "none", background: C.base, borderRight: `1px solid ${LINE_SOFT}` }}>
       <div className="flex w-full flex-col px-5 py-7">
         <div className="mb-9 flex items-center gap-3">
-          <div className="flex items-center justify-center rounded-[12px]" style={{ width: 38, height: 38, background: "linear-gradient(150deg,#FFB35C,#E8503A)" }}>
-            <span style={{ fontFamily: DISPLAY, fontWeight: 600, fontSize: 20, color: C.ink }}>M</span>
-          </div>
+          <BrandMark size={38} />
           <span style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 20, color: C.milk }}>Maatu</span>
         </div>
         {TABS.map(({ tab, label }) => {
