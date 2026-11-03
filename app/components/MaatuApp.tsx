@@ -296,65 +296,115 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
 }
 
 // ....................................................... HUB
+// Plain names for the scene picker, the same in every language.
+const SCENE_NAME: Record<ShopId, string> = {
+  auto: "Auto ride",
+  chai: "Chai stall",
+  market: "Vegetable market",
+  gate: "Delivery gate",
+  kirana: "Provision store",
+  restaurant: "Restaurant",
+  neighbour: "Next door",
+  clinic: "Clinic",
+  pharmacy: "Medical store",
+  salon: "Salon",
+  landlord: "Landlord",
+  phone: "Customer care",
+  airport: "Airport check-in",
+  music: "Music school",
+};
+
+// A scene in the "Act it out" picker. Compact on purpose: fourteen of them have
+// to sit in the panel without a long scroll.
 function ScenarioCard({
   shop,
   lang,
-  difficultyStage,
   onOpen,
+  rm,
 }: {
   shop: ShopId;
   lang: Lang;
-  difficultyStage: DifficultyStage;
   onOpen: (shop: ShopId) => void;
+  rm: boolean;
 }) {
   const id = personaFor(shop, lang);
   const p = id ? PERSONAS[id] : null;
   const live = !!p;
-  const tagline = SCENARIO_TAGLINE[shop];
   const diff = DIFFICULTY[shop];
-  const tint = shop === "chai" ? "rgba(191,239,219,0.22)" : "rgba(255,179,92,0.28)";
+  const title = p ? SCENE_NAME[shop] : "Coming soon";
   return (
     <button
       onClick={() => live && onOpen(shop)}
       disabled={!live}
-      className="group overflow-hidden rounded-[16px] text-left focus-visible:outline focus-visible:outline-2 disabled:cursor-default"
+      className={"flex min-h-[64px] items-center rounded-[14px] px-3.5 py-2.5 text-left focus-visible:outline focus-visible:outline-2 disabled:cursor-default" + (rm ? "" : " transition-transform active:scale-[0.98]")}
       style={{
         background: C.tar,
-        border: live ? "1px solid rgba(255,179,92,0.22)" : `1px solid ${LINE_SOFT}`,
+        border: live ? `1px solid ${ACT.edge}` : `1px solid ${LINE_SOFT}`,
         opacity: live ? 1 : 0.55,
-        outlineColor: C.sodium,
+        outlineColor: ACT.color,
       }}
     >
-      <div
-        className="relative"
-        style={{
-          height: 84,
-          background: live
-            ? `radial-gradient(110px 70px at 78% 12%, ${tint}, transparent), repeating-linear-gradient(135deg, rgba(255,179,92,0.07) 0 11px, transparent 11px 22px)`
-            : "repeating-linear-gradient(135deg, rgba(242,237,226,0.04) 0 11px, transparent 11px 22px)",
-        }}
-      >
-        <div
-          className="absolute flex items-center justify-center rounded-full"
-          style={{ left: 12, bottom: 12, width: 34, height: 34, background: "radial-gradient(circle at 32% 30%, #FFC888, #B85E24)", color: "rgba(10,13,22,0.85)", fontFamily: DISPLAY, fontSize: 16, fontWeight: 600 }}
-          aria-hidden="true"
-        >
-          {p ? initial(p.name) : ""}
-        </div>
-        {!live && <span className="absolute right-3 top-2.5 text-[13px]" aria-hidden="true">🔒</span>}
-      </div>
-      <div className="p-4">
-        <div className="text-[15px] font-semibold leading-tight" style={{ color: live ? C.milk : C.muted }}>
-          {p ? p.name : "Coming soon"}
-        </div>
-        <div className="mt-0.5 text-[12.5px]" style={{ color: live ? C.muted : C.faint }}>
-          {live ? tagline : "Opening soon"}
-          {live && (
-            <span style={{ color: difficultyColor(diff) }}> · {diff} · {progressionLabel(difficultyStage)}</span>
-          )}
-        </div>
-      </div>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-semibold leading-tight" style={{ color: live ? C.milk : C.muted }}>
+          {title}
+        </span>
+        <span className="mt-0.5 block text-[12.5px] leading-snug" style={{ color: live ? C.muted : C.faint }}>
+          {live ? SCENARIO_TAGLINE[shop] : "Opening soon"}
+        </span>
+        {live && (
+          <span className="mt-0.5 block text-[11.5px] font-semibold" style={{ color: difficultyColor(diff) }}>
+            {diff}
+          </span>
+        )}
+      </span>
     </button>
+  );
+}
+
+// The three ways to practise, each with its own colour and icon. The mint of
+// Chat, the marigold of Build and the lilac of Act it out are used only for
+// their own mode, so the colour alone tells the learner where they are.
+type TalkMode = "chat" | "build" | "act";
+const CHAT = { color: "#BFEFDB", soft: "rgba(191,239,219,0.14)", edge: "rgba(191,239,219,0.34)", wash: "rgba(191,239,219,0.10)" };
+const BUILD = { color: "#FFB35C", soft: "rgba(255,179,92,0.14)", edge: "rgba(255,179,92,0.38)", wash: "rgba(255,179,92,0.10)" };
+const ACT = { color: "#F5C2FF", soft: "rgba(245,194,255,0.14)", edge: "rgba(245,194,255,0.32)", wash: "rgba(245,194,255,0.09)" };
+const MODE_HUE: Record<TalkMode, typeof CHAT> = { chat: CHAT, build: BUILD, act: ACT };
+const MODE_ORDER: TalkMode[] = ["chat", "build", "act"];
+// Kept for the session, so coming back from a scene lands on the scene picker.
+let lastTalkMode: TalkMode = "chat";
+
+function ModeIcon({ mode, color }: { mode: TalkMode; color: string }) {
+  const p = { stroke: color, strokeWidth: 1.7, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (mode === "chat")
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4.5 6.5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H11l-4.5 4v-4h0a3 3 0 0 1-2-2.8v-6.2Z" {...p} />
+        <path d="M9 9.5h6M9 12.2h3.5" {...p} />
+      </svg>
+    );
+  if (mode === "build")
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="4.5" width="8" height="6.5" rx="1.8" {...p} />
+        <rect x="13" y="4.5" width="8" height="6.5" rx="1.8" {...p} />
+        <rect x="8" y="13.5" width="8" height="6.5" rx="1.8" {...p} />
+      </svg>
+    );
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="8.5" cy="8" r="3" {...p} />
+      <path d="M3 19c0-3 2.4-5 5.5-5s5.5 2 5.5 5" {...p} />
+      <circle cx="16.5" cy="9" r="2.4" {...p} />
+      <path d="M15.5 14.2c3.2-.4 5.5 1.3 5.5 4.3" {...p} />
+    </svg>
+  );
+}
+
+function Chevron({ color }: { color: string }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="flex-none">
+      <path d="m6 3 5 5-5 5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
@@ -363,7 +413,6 @@ function Hub({
   stats,
   nextLesson,
   completedLessons,
-  difficultyStage,
   onScenario,
   onSchool,
   onTutor,
@@ -383,125 +432,167 @@ function Hub({
   onBuild: () => void;
   rm: boolean;
 }) {
-  const [showScenes, setShowScenes] = useState(false);
+  const [mode, setModeState] = useState<TalkMode>(lastTalkMode);
+  const setMode = (m: TalkMode) => {
+    lastTalkMode = m;
+    setModeState(m);
+  };
   const host = HOST[lang];
+  const hue = MODE_HUE[mode];
+  const lw = LANG_NAME[lang];
+  const copy: Record<TalkMode, { name: string; hint: string }> = {
+    chat: { name: "Chat", hint: `Talk freely with ${host.name} on a live call` },
+    build: { name: "Build", hint: "Make a sentence piece by piece" },
+    act: { name: "Act it out", hint: "Role-play a real-life scene" },
+  };
+  const onTabKey = (e: React.KeyboardEvent, i: number) => {
+    const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = MODE_ORDER[(i + step + MODE_ORDER.length) % MODE_ORDER.length];
+    setMode(next);
+    document.getElementById(`talk-tab-${next}`)?.focus();
+  };
+  const cta = "flex min-h-[52px] w-full items-center justify-center gap-2.5 rounded-[16px] px-6 text-[16px] font-bold focus-visible:outline focus-visible:outline-2 sm:w-auto sm:min-w-[260px]" + (rm ? "" : " transition-transform active:scale-[0.99]");
   return (
     <div className="absolute inset-0 overflow-y-auto" style={{ background: C.night }}>
       <Lamp rm={rm} />
-      <div className="relative mx-auto max-w-[760px] px-6 pb-28 pt-14 lg:pt-14">
-        <div className="flex items-start justify-between">
+      <div className="relative mx-auto max-w-[860px] px-6 pb-28 pt-14">
+        <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.3 }}>
-              THREE WAYS TO LEARN
-            </div>
-            <div className="mt-1" style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>{greeting()}</div>
-            <div className="mt-2 text-[13.5px]" style={{ color: C.muted, maxWidth: 380 }}>
-              Chat about anything, build any sentence, or act out a situation. All in spoken {LANG_NAME[lang]}.
-            </div>
+            <h1 style={{ fontFamily: DISPLAY, fontWeight: 500, fontSize: 34, lineHeight: 1.02, color: C.milk }}>{greeting()}</h1>
+            <p className="mt-2 text-[14px]" style={{ color: C.muted, maxWidth: 400 }}>
+              How do you want to practise spoken {lw} today?
+            </p>
           </div>
           <StreakChip streak={stats.nights} />
         </div>
 
-        {/* Three ways to learn. Chat and Build lead; situations are optional. */}
-        <button
-          onClick={onTutor}
-          className="mt-7 flex w-full items-center gap-4 rounded-[20px] p-5 text-left focus-visible:outline focus-visible:outline-2 sm:p-6"
-          style={{ background: "linear-gradient(135deg,rgba(191,239,219,0.20),rgba(191,239,219,0.05))", border: "1px solid rgba(191,239,219,0.42)", outlineColor: C.tube }}
-        >
-          <span className="flex h-14 w-14 flex-none items-center justify-center rounded-full text-[26px]" style={{ background: "rgba(191,239,219,0.16)" }} aria-hidden="true">
-            💬
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-[11px] font-bold" style={{ color: C.tube, letterSpacing: 1.1 }}>1 · CHAT</span>
-            <span className="mt-0.5 block text-[19px] font-bold" style={{ color: C.milk }}>
-              Talk about anything with {host.name}
-            </span>
-            <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              A live voice call. Say anything in English or {LANG_NAME[lang]}. She answers, tells you how to say what you meant, and teaches whatever you ask.
-            </span>
-          </span>
-          <span className="text-[24px]" style={{ color: C.tube }} aria-hidden="true">›</span>
-        </button>
+        {/* The three choices. One is always selected; its details sit right below. */}
+        <div role="tablist" aria-label="How to practise" className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
+          {MODE_ORDER.map((m, i) => {
+            const on = mode === m;
+            const h = MODE_HUE[m];
+            return (
+              <button
+                key={m}
+                id={`talk-tab-${m}`}
+                role="tab"
+                aria-selected={on}
+                aria-controls="talk-panel"
+                tabIndex={on ? 0 : -1}
+                onClick={() => setMode(m)}
+                onKeyDown={(e) => onTabKey(e, i)}
+                className={"flex min-h-[84px] flex-col items-center justify-center gap-1.5 rounded-[18px] px-2 py-3 text-center focus-visible:outline focus-visible:outline-2 sm:min-h-[132px] sm:items-start sm:justify-start sm:gap-2 sm:p-4 sm:text-left" + (rm ? "" : " transition-colors")}
+                style={{
+                  background: on ? h.soft : C.tar,
+                  border: `1.5px solid ${on ? h.color : LINE}`,
+                  outlineColor: h.color,
+                }}
+              >
+                <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full" style={{ background: on ? h.soft : "rgba(242,237,226,0.05)" }}>
+                  <ModeIcon mode={m} color={h.color} />
+                </span>
+                <span className="text-[15px] font-bold leading-tight sm:text-[17px]" style={{ color: on ? C.milk : C.muted }}>
+                  {copy[m].name}
+                </span>
+                <span className="hidden text-[13px] leading-snug sm:block" style={{ color: on ? C.milk : C.muted, opacity: on ? 0.82 : 1 }}>
+                  {copy[m].hint}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-        <button
-          onClick={onFrench}
-          className="mt-2 flex w-full items-center gap-3 rounded-[16px] px-4 py-3 text-left focus-visible:outline focus-visible:outline-2"
-          style={{ background: "rgba(191,239,219,0.05)", border: "1px solid rgba(191,239,219,0.22)", outlineColor: C.tube }}
+        <div
+          key={mode}
+          id="talk-panel"
+          role="tabpanel"
+          aria-labelledby={`talk-tab-${mode}`}
+          className="mt-3 rounded-[20px] p-5 sm:p-6"
+          style={{ background: `linear-gradient(160deg, ${hue.wash}, rgba(22,27,43,0.6))`, border: `1px solid ${hue.edge}`, animation: rm ? undefined : "mtFade 220ms ease both" }}
         >
-          <span className="text-[20px]" aria-hidden="true">🥐</span>
-          <span className="min-w-0 flex-1 text-[14px] font-semibold" style={{ color: C.milk }}>
-            Or chat in French with Camille
-            <span className="block text-[11.5px] font-normal" style={{ color: C.muted }}>Same idea, everyday Paris French</span>
-          </span>
-          <span className="text-[18px]" style={{ color: C.tube }} aria-hidden="true">›</span>
-        </button>
+          {mode === "chat" && (
+            <>
+              <div className="flex items-center gap-3">
+                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full" style={{ background: CHAT.soft, color: CHAT.color, fontFamily: DISPLAY, fontSize: 21, fontWeight: 600 }} aria-hidden="true">
+                  {initial(host.name)}
+                </span>
+                <h2 className="text-[20px] font-bold leading-tight" style={{ color: C.milk }}>Chat with {host.name}</h2>
+              </div>
+              <p className="mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 560 }}>
+                A live voice call. Talk about anything, in English or {lw}. {host.name} answers, shows you how to say what you meant, and teaches whatever you ask.
+              </p>
+              <button onClick={onTutor} className={cta + " mt-5"} style={{ background: CHAT.color, color: C.ink, outlineColor: C.milk }}>
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M6 3.5 8 3l1.6 3.4-1.6 1.3a9 9 0 0 0 4.3 4.3l1.3-1.6L17 12l-.5 2c-.2.8-1 1.3-1.8 1.1A13 13 0 0 1 4.9 5.3C4.7 4.5 5.2 3.7 6 3.5Z" fill={C.ink} />
+                </svg>
+                Call {host.name}
+              </button>
+            </>
+          )}
 
-        <button
-          onClick={onBuild}
-          className="mt-3 flex w-full items-center gap-4 rounded-[20px] p-5 text-left focus-visible:outline focus-visible:outline-2 sm:p-6"
-          style={{ background: "linear-gradient(135deg,rgba(255,179,92,0.18),rgba(232,80,58,0.06))", border: "1px solid rgba(255,179,92,0.38)", outlineColor: C.sodium }}
-        >
-          <span className="flex h-14 w-14 flex-none items-center justify-center rounded-full text-[26px]" style={{ background: "rgba(255,179,92,0.14)" }} aria-hidden="true">
-            🧩
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-[11px] font-bold" style={{ color: C.sodium, letterSpacing: 1.1 }}>2 · BUILD</span>
-            <span className="mt-0.5 block text-[19px] font-bold" style={{ color: C.milk }}>
-              Build any sentence yourself
-            </span>
-            <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              One sentence on screen, every part changeable. {VERB_TILES.length} actions, {OBJECTS.length} words, four times, yes or no, telling or asking. Kannada, Hindi, Tamil, Malayalam, French.
-            </span>
-          </span>
-          <span className="text-[24px]" style={{ color: C.sodium }} aria-hidden="true">›</span>
-        </button>
+          {mode === "build" && (
+            <>
+              <h2 className="text-[20px] font-bold leading-tight" style={{ color: C.milk }}>Build a sentence</h2>
+              <p className="mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 560 }}>
+                One sentence sits on screen and you change any part of it: the action, the word, the time, yes or no, telling or asking.
+              </p>
+              <p className="mt-2 text-[13px]" style={{ color: C.mono }}>
+                {VERB_TILES.length} actions and {OBJECTS.length} words, in Kannada, Hindi, Tamil, Malayalam and French.
+              </p>
+              <button onClick={onBuild} className={cta + " mt-5"} style={{ background: BUILD.color, color: C.ink, outlineColor: C.milk }}>
+                Start building
+                <Chevron color={C.ink} />
+              </button>
+            </>
+          )}
 
-        <button
-          onClick={() => setShowScenes(!showScenes)}
-          aria-expanded={showScenes}
-          className="mt-3 flex w-full items-center gap-4 rounded-[20px] p-5 text-left focus-visible:outline focus-visible:outline-2"
-          style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: C.sodium }}
-        >
-          <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full text-[22px]" style={{ background: "rgba(245,194,255,0.10)" }} aria-hidden="true">
-            🎭
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-[11px] font-bold" style={{ color: "#F5C2FF", letterSpacing: 1.1 }}>3 · ACT IT OUT (OPTIONAL)</span>
-            <span className="mt-0.5 block text-[17px] font-bold" style={{ color: C.milk }}>
-              Play a real situation
-            </span>
-            <span className="mt-1 block text-[12.5px] leading-snug" style={{ color: C.muted }}>
-              An auto driver, a chai stall, a clinic. {SCENARIO_ORDER.length} characters who stay in role.
-            </span>
-          </span>
-          <span className="text-[20px]" style={{ color: C.faint }} aria-hidden="true">{showScenes ? "–" : "+"}</span>
-        </button>
-        {showScenes && (
-          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {SCENARIO_ORDER.map((shop) => (
-              <ScenarioCard key={shop} shop={shop} lang={lang} difficultyStage={difficultyStage} onOpen={onScenario} />
-            ))}
-          </div>
-        )}
+          {mode === "act" && (
+            <>
+              <h2 className="text-[20px] font-bold leading-tight" style={{ color: C.milk }}>Act out a situation</h2>
+              <p className="mt-2 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 560 }}>
+                Pick a scene. The character stays in role, so you practise what you would really say.
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+                {SCENARIO_ORDER.map((shop) => (
+                  <ScenarioCard key={shop} shop={shop} lang={lang} onOpen={onScenario} rm={rm} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
 
-        <button
-          onClick={onSchool}
-          className="mt-6 flex w-full items-center gap-3.5 rounded-[16px] px-4 py-3.5 text-left focus-visible:outline focus-visible:outline-2"
-          style={{ background: C.base, border: `1px solid ${LINE_SOFT}`, outlineColor: C.sodium }}
-        >
-          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-[13px] font-bold" style={{ background: "rgba(255,179,92,0.14)", color: C.sodium }}>
-            {nextLesson.index}
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-[14px] font-semibold" style={{ color: C.milk }}>
-              Want a guided start? Beginner course, lesson {nextLesson.index}: {nextLesson.title}
+        {/* Smaller ways in. Deliberately quieter than the three above. */}
+        <div className="mt-8 text-[12px] font-semibold" style={{ color: C.mono, letterSpacing: 0.4 }}>More ways to practise</div>
+        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <button
+            onClick={onFrench}
+            className="flex min-h-[56px] items-center gap-3 rounded-[14px] px-3.5 py-2.5 text-left focus-visible:outline focus-visible:outline-2"
+            style={{ background: C.base, border: `1px solid ${LINE_SOFT}`, outlineColor: CHAT.color }}
+          >
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-[12px] font-bold" style={{ background: CHAT.soft, color: CHAT.color }} aria-hidden="true">FR</span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[14px] font-semibold leading-tight" style={{ color: C.milk }}>Chat in French with Camille</span>
+              <span className="block text-[12px]" style={{ color: C.mono }}>Everyday Paris French</span>
             </span>
-            <span className="block text-[11.5px]" style={{ color: C.faint }}>
-              {completedLessons}/{ALL_LESSONS.length} lessons done
+            <Chevron color={C.faint} />
+          </button>
+          <button
+            onClick={onSchool}
+            className="flex min-h-[56px] items-center gap-3 rounded-[14px] px-3.5 py-2.5 text-left focus-visible:outline focus-visible:outline-2"
+            style={{ background: C.base, border: `1px solid ${LINE_SOFT}`, outlineColor: C.sodium }}
+          >
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full text-[13px] font-bold" style={{ background: "rgba(255,179,92,0.14)", color: C.sodium }} aria-hidden="true">
+              {nextLesson.index}
             </span>
-          </span>
-          <span className="text-[18px]" style={{ color: C.faint }} aria-hidden="true">›</span>
-        </button>
+            <span className="min-w-0 flex-1">
+              <span className="block text-[14px] font-semibold leading-tight" style={{ color: C.milk }}>Beginner course: {nextLesson.title}</span>
+              <span className="block text-[12px]" style={{ color: C.mono }}>Lesson {nextLesson.index}, {completedLessons}/{ALL_LESSONS.length} done</span>
+            </span>
+            <Chevron color={C.faint} />
+          </button>
+        </div>
       </div>
     </div>
   );
