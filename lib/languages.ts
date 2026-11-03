@@ -29,3 +29,13 @@ export function teacherVoice(lang: string): { code: string; speaker: string } {
   const cfg = LANGUAGES[lang] ?? LANGUAGES.kn;
   return { code: cfg.code, speaker: cfg.teacher.voice };
 }
+
+// The voice a learner hears on a live call, for Hear it buttons too, so a
+// line sounds the same in Build as it does when the teacher says it.
+export function callVoice(lang: string): { code: string; model: string; speaker: string } {
+  const cfg = LANGUAGES[lang] ?? LANGUAGES.kn;
+  const listed = cfg.speakers?.[cfg.teacher.gender];
+  return listed
+    ? { code: cfg.code, model: cfg.voiceModel, speaker: listed }
+    : { code: cfg.code, model: "bulbul:v3", speaker: cfg.teacher.voice };
+}
