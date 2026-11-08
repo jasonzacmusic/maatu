@@ -464,7 +464,7 @@ function Panel({ tone, label, title, children, right, at, glow }: { tone: Role; 
   return (
     <section
       ref={at}
-      className="scroll-mt-[220px] rounded-[18px] p-3.5"
+      className="min-w-0 scroll-mt-[220px] rounded-[18px] p-3.5"
       style={{ background: C.tar, border: `1px solid ${glow ? r.color : LINE}`, boxShadow: glow ? `0 0 0 3px ${r.color}33` : undefined, transition: "border-color 300ms ease, box-shadow 300ms ease" }}
     >
       <div className="mb-2 flex items-center justify-between gap-2">

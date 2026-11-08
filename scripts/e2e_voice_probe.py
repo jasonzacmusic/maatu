@@ -37,6 +37,9 @@ PHRASES = {
     "tutor-ta": "What does eppadi irukkeenga mean?",
     "tutor-ml": "What does sukhamano mean?",
     "ml-auto": "Chetta, Fort Kochi pokumo? Meter idu.",
+    "te-auto": "Anna, Koti ki vastaaraa? Meter veyyandi.",
+    "teacher-te-l1": "Namaskaaram. Ela unnaaru?",
+    "tutor-te": "What does ela unnaaru mean?",
     "tutor-fr": "Hello. What does bonjour mean?",
 }
 
@@ -48,6 +51,7 @@ LANGUAGE = {
     "hi": "hi-IN",
     "ta": "ta-IN",
     "ml": "ml-IN",
+    "te": "te-IN",
 }
 
 
