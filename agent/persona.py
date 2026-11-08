@@ -19,6 +19,7 @@ LANG_NAMES = {
     "hi-IN": "Hindi",
     "ta-IN": "Tamil",
     "ml-IN": "Malayalam",
+    "te-IN": "Telugu",
     "en-IN": "Indian English",
 }
 

@@ -1,5 +1,5 @@
 {
-  "note": "Teaching plan for Classroom mode. Each lesson carries a vetted romanized lexicon per language (kn/hi/ta); the teacher LLM must use exactly these forms and never native script. Forms are colloquial spoken (Bangalore Kannada, Delhi Hindi, Chennai Tamil). Lexicon entries are 'english = romanized form'; lines starting with 'note:' are teaching notes. No em dashes anywhere.",
+  "note": "Teaching plan for Classroom mode. Each lesson carries a vetted romanized lexicon per language (kn/hi/ta/ml/te); the teacher LLM must use exactly these forms and never native script. Forms are colloquial spoken (Bangalore Kannada, Delhi Hindi, Chennai Tamil, Kochi Malayalam, Hyderabad Telugu). Lexicon entries are 'english = romanized form'; lines starting with 'note:' are teaching notes. No em dashes anywhere.",
   "units": [
     {
       "unit": "First Words",
@@ -77,6 +77,19 @@
               "note: for sorry too, most people simply say the English word sorry",
               "yes = athe",
               "no = alla (there is none = illa)"
+            ],
+            "te": [
+              "hello = namaskaaram (the reply is also namaskaaram)",
+              "how are you = ela unnaaru (to a friend: ela unnaav)",
+              "I am fine = baagunnaanu",
+              "thank you = dhanyavaadaalu",
+              "note: in daily life most people simply say the English word thanks; teach dhanyavaadaalu but mention this",
+              "please = dayachesi",
+              "note: dayachesi sounds formal in speech; people soften a request with konchem plus the polite andi ending (konchem ivvandi), or just say please in English",
+              "sorry = kshaminchandi",
+              "note: for sorry too, most people simply say the English word sorry",
+              "yes = avunu (casual: haa)",
+              "no = kaadu (there is none = ledu, I do not want it = vaddu)"
             ]
           }
         },
@@ -127,6 +140,13 @@
               "I am from ___ (my place is ___) = njaan ___ il ninnu aanu",
               "nice to meet you = kandathil santhosham",
               "note: in daily life most people simply say nice to meet you in English; teach the Malayalam form but mention this"
+            ],
+            "te": [
+              "my name is ___ = naa peru ___",
+              "what is your name = mee peru enti",
+              "I am from ___ (my home town is ___) = maadi ___ (maadi Hyderabad = I am from Hyderabad)",
+              "nice to meet you = mimmalni kalisinanduku santosham",
+              "note: in daily life most people simply say nice to meet you in English; teach the Telugu form but mention this"
             ]
           }
         },
@@ -179,6 +199,13 @@
               "eleven to fifteen = pathinonnu, pathiranda, pathimoonu, pathinaalu, pathinanchu",
               "sixteen to twenty = pathinaaru, pathinezhu, pathinettu, pathonpathu, irupathu",
               "how many = ethra"
+            ],
+            "te": [
+              "one to five = okati, rendu, moodu, naalugu, aidu",
+              "six to ten = aaru, edu, enimidi, tommidi, padi",
+              "eleven to fifteen = padakondu, pannendu, padamoodu, padhnaalugu, padihenu",
+              "sixteen to twenty = padahaaru, padihedu, paddenimidi, pandommidi, iravai",
+              "how many = enni"
             ]
           }
         }
@@ -240,6 +267,14 @@
               "orange = orange (Malayalis use the English word)",
               "grapes = munthiri",
               "this is ___ = ithu ___ aanu (ithu maampazham aanu = this is a mango)"
+            ],
+            "te": [
+              "banana = arati pandu",
+              "mango = maamidi pandu",
+              "apple = apple (Telugu speakers use the English word)",
+              "orange = orange (also kamala pandu)",
+              "grapes = draaksha pandlu (most people just say grapes)",
+              "this is ___ = idi ___ (idi maamidi pandu = this is a mango)"
             ]
           }
         },
@@ -301,6 +336,15 @@
               "onion = savaala (also ulli)",
               "tomato = thakkaali",
               "I want ___ = enikku ___ venam (enikku chaaya venam = I want tea)"
+            ],
+            "te": [
+              "rice (cooked) = annam",
+              "water = neellu",
+              "milk = paalu",
+              "tea = chai",
+              "onion = ullipaaya (in Hyderabad also ulligadda)",
+              "tomato = tamaata (or just tomato)",
+              "I want ___ = naaku ___ kaavaali (naaku chai kaavaali = I want tea)"
             ]
           }
         },
@@ -356,6 +400,15 @@
               "younger sister = aniyathi (younger brother = aniyan)",
               "child = kutti",
               "my mother = ente amma"
+            ],
+            "te": [
+              "mother = amma",
+              "father = naanna",
+              "elder brother = anna (elder sister = akka)",
+              "younger sister = chelli (younger brother = tammudu)",
+              "child = pillaadu for a boy, pilla for a girl (children = pillalu)",
+              "my mother = maa amma",
+              "note: for family Telugu says maa (our), not naa (my): maa amma, maa naanna"
             ]
           }
         },
@@ -417,6 +470,15 @@
               "chair = kasera",
               "book = pusthakam",
               "where is ___ = ___ evideyaanu (phone evideyaanu = where is the phone)"
+            ],
+            "te": [
+              "house = illu",
+              "door = talupu",
+              "phone = phone (everyone says the English word)",
+              "money = dabbulu",
+              "chair = kurchi",
+              "book = pustakam",
+              "where is ___ = ___ ekkada undi (phone ekkada undi = where is the phone)"
             ]
           }
         }
@@ -473,6 +535,13 @@
               "this is ___ = ithu ___ aanu (ithu vellam aanu = this is water)",
               "that is ___ = athu ___ aanu (athu maampazham aanu = that is a mango)",
               "is this ___? = ithu ___ aano? (ithu paal aano? = is this milk? just add aano)"
+            ],
+            "te": [
+              "this = idi",
+              "that = adi",
+              "this is ___ = idi ___ (idi neellu = this is water)",
+              "that is ___ = adi ___ (adi maamidi pandu = that is a mango)",
+              "is this ___? = idi ___ aa? (idi chai-aa? = is this tea? just add aa)"
             ]
           }
         },
@@ -521,6 +590,12 @@
               "I do not want ___ = enikku ___ venda",
               "I have ___ = ente kayyil ___ und (ente kayyil panam und = I have money)",
               "I need ___ = enikku ___ venam (same word as want; Malayalam does not separate them)"
+            ],
+            "te": [
+              "I want ___ = naaku ___ kaavaali",
+              "I do not want ___ = naaku ___ vaddu",
+              "I have ___ = naa daggara ___ undi (naa daggara phone undi = I have a phone)",
+              "I need ___ = naaku ___ kaavaali (same word as want; Telugu does not separate them)"
             ]
           }
         },
@@ -573,6 +648,13 @@
               "how much = ethra (ithu ethrayaanu? = how much is this?)",
               "how many = ethra (the same word as how much)",
               "who = aaru"
+            ],
+            "te": [
+              "what is this = idi enti",
+              "where is ___ = ___ ekkada undi",
+              "how much = entha (idi entha? = how much is this?)",
+              "how many = enni (a different word from how much: enni pandlu? = how many fruits?)",
+              "who = evaru"
             ]
           }
         }
@@ -631,6 +713,15 @@
               "I speak = njaan samsaarikkunnu (njaan kurachu Malayalam samsaarikkunnu = I speak a little Malayalam)",
               "I come = njaan varunnu",
               "note: the big gift of Malayalam. The verb does not change for the person: njaan kazhikkunnu, nee kazhikkunnu, avar kazhikkunnu"
+            ],
+            "te": [
+              "I eat = nenu tintaanu (nenu annam tintaanu = I eat rice)",
+              "I drink = nenu taagutaanu",
+              "I go = nenu veltaanu (nenu intiki veltaanu = I go home)",
+              "I speak = nenu maatlaadataanu (nenu konchem Telugu maatlaadataanu = I speak a little Telugu)",
+              "I come = nenu vastaanu",
+              "note: the ending aanu means I. Telugu changes the ending for the person: nenu tintaanu, meeru tintaaru, athanu tintaadu, aame tintundi",
+              "note: for right now, use unnaanu: nenu tintunnaanu = I am eating"
             ]
           }
         },
@@ -685,6 +776,14 @@
               "I saw = njaan kandu",
               "today = innu, yesterday = innale (innale njaan veettilekku poyi = yesterday I went home)",
               "note: contrast pair to teach the ending: kazhikkunnu (I eat) vs kazhichu (I ate)"
+            ],
+            "te": [
+              "I ate = nenu tinnaanu (nenu annam tinnaanu = I ate rice)",
+              "I went = nenu vellaanu (nenu intiki vellaanu = I went home)",
+              "I came = nenu vachaanu",
+              "I saw = nenu choosaanu",
+              "today = eeroju, yesterday = ninna (ninna nenu intiki vellaanu = yesterday I went home)",
+              "note: contrast pair to teach the ending: tintaanu (I eat) vs tinnaanu (I ate)"
             ]
           }
         },
@@ -739,6 +838,14 @@
               "I will come = njaan varum",
               "I will speak = njaan samsaarikkum",
               "note: Malayalam has a real future, and it is one easy ending: um. Same word for every person"
+            ],
+            "te": [
+              "tomorrow = repu",
+              "I will eat = nenu tintaanu (repu tintaanu = I will eat tomorrow)",
+              "I will go = nenu veltaanu (repu veltaanu = I will go tomorrow)",
+              "I will come = nenu vastaanu",
+              "I will speak = nenu maatlaadataanu",
+              "note: the gift of Telugu. I eat and I will eat are the same word, tintaanu; the time word repu (tomorrow) makes it future. The student already knows this form"
             ]
           }
         }
@@ -793,6 +900,13 @@
               "but = pakshe",
               "because = enthukondennaal (shorter in speech: karanam)",
               "note: word order is subject, object, verb: njaan choru kazhikkunnu = I rice eat"
+            ],
+            "te": [
+              "and = inka (chai inka biscuit = tea and biscuit)",
+              "note: mariyu is the textbook word for and and sounds bookish; in spoken Hyderabad people say inka, or just the English word and; teach inka but mention this",
+              "but = kaani",
+              "because = endukante",
+              "note: word order is subject, object, verb: nenu annam tintaanu = I rice eat"
             ]
           }
         },
@@ -845,6 +959,14 @@
               "can you say it again = onnu koodi parayoo",
               "there is no ___ = ___ illa (paal illa = there is no milk)",
               "I do not want = enikku venda"
+            ],
+            "te": [
+              "a little = konchem",
+              "please give = ivvandi (konchem neellu ivvandi = please give a little water)",
+              "can you say it again = malli cheppandi (or inkosaari cheppandi)",
+              "there is no ___ = ___ ledu (chai ledu = there is no tea)",
+              "note: plural things take levu instead: neellu levu = there is no water, paalu levu = there is no milk",
+              "I do not want = naaku vaddu"
             ]
           }
         },
@@ -924,6 +1046,19 @@
               "stop here = ivide nirthoo",
               "I did not understand = enikku manassilaayilla",
               "speak slowly = kurachu pathukke parayoo"
+            ],
+            "te": [
+              "thirty = muppai, forty = nalabhai, fifty = yaabhai",
+              "sixty = aravai, seventy = debbhai, eighty = enabhai, ninety = tombhai",
+              "rupees = roopaayalu (yaabhai roopaayalu = fifty rupees)",
+              "too much = ekkuva (idi chaala ekkuva = this is too much)",
+              "reduce a little = konchem tagginchandi",
+              "left = edama vaipu, right = kudi vaipu (edama vaipu tirugandi = turn left)",
+              "straight = sootiga (sootiga vellandi = go straight)",
+              "note: auto drivers understand the English words left, right and straight perfectly well; teach the Telugu but say this",
+              "stop here = ikkada aapandi",
+              "I did not understand = naaku ardham kaaledu",
+              "speak slowly = konchem nemmadiga cheppandi"
             ]
           }
         }

@@ -1,4 +1,4 @@
-"""Generate the full launch persona set: 6 scenarios x 3 languages = 18 personas,
+"""Generate the full launch persona set: 14 scenarios x 5 languages = 70 personas,
 plus a TypeScript manifest the frontend uses to route shopfronts and label the
 Call and Debrief screens. Run: python build_personas.py
 
@@ -15,9 +15,9 @@ ROOT = Path(__file__).resolve().parent.parent
 PERSONA_DIR = ROOT / "personas"
 TS_OUT = ROOT / "lib" / "personas.generated.ts"
 
-LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "ml": "ml-IN"}
-LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "ml": "Malayalam"}
-CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai", "ml": "Kochi"}
+LANGS = {"kn": "kn-IN", "hi": "hi-IN", "ta": "ta-IN", "ml": "ml-IN", "te": "te-IN"}
+LANG_NAME = {"kn": "Kannada", "hi": "Hindi", "ta": "Tamil", "ml": "Malayalam", "te": "Telugu"}
+CITY = {"kn": "Bengaluru", "hi": "Dilli", "ta": "Chennai", "ml": "Kochi", "te": "Hyderabad"}
 
 # Malayalam was added after the first three languages, so its per-scenario
 # dressing lives in one table here and is merged into SCENARIOS below. Spoken
@@ -51,6 +51,40 @@ ML = {
               "style": "Chatty barber Malayalam, friendly and opinionated, English mixing (trim, style, machine, massage, mirror)."},
     "pharmacy": {"scene_label": "Medical store, Kochi", "voice": "aayan", "name": "Noushad",
                  "style": "Efficient pharmacy Malayalam, clear and quick, medical English mixing (tablet, syrup, strip, generic, prescription)."},
+}
+
+# Telugu was added after Malayalam, the same way: one dressing table, merged
+# into SCENARIOS below. Spoken Hyderabad Telugu throughout, with the English
+# loanwords people really use. Never bookish (grandhika) Telugu.
+TE = {
+    "auto": {"scene_label": "Auto rickshaw, Hyderabad", "voice": "rohan", "name": "Yadagiri",
+             "style": "Hyderabad spoken Telugu with natural English code-mixing (meter, signal, left-right, adjust cheyyandi). Hyderabadi auto driver: knows every short cut from Ameerpet to Kukatpally, grumbles about Punjagutta traffic. Short sentences. Never bookish Telugu."},
+    "delivery": {"scene_label": "Delivery gate, Hyderabad", "voice": "dev", "name": "Naresh",
+                 "style": "Spoken Hyderabad Telugu with delivery-app English mixing (order, gate, block, OTP, location). Short, quick sentences."},
+    "care": {"scene_label": "Customer care, Hyderabad", "voice": "kavya", "name": "Swathi",
+             "style": "Professional spoken Telugu with standard English mixing (plan, connection, installation, document, appointment). Polite meeru and andi throughout. Courteous, measured."},
+    "airport": {"scene_label": "Airport counter, HYD", "voice": "ishita", "name": "Sravani",
+                "style": "Brisk professional Telugu with airport English mixing (check-in, boarding pass, gate, baggage, security). Clear and quick."},
+    "chai": {"scene_label": "Irani cafe, Hyderabad", "voice": "kabir", "name": "Srinu",
+             "style": "Warm casual Hyderabad Telugu with everyday English mixing, over Irani chai and Osmania biscuits at an old cafe near Charminar. Relaxed, friendly, unhurried; switches to friendly nuvvu once it feels familiar."},
+    "teach": {"scene_label": "Music school, Hyderabad", "voice": "aayan", "name": "Charan",
+              "style": "Natural Hyderabad school-kid Telugu with English mixing (beat, clap, song, YouTube). Eager, informal."},
+    "market": {"scene_label": "Rythu Bazaar, Hyderabad", "voice": "ritu", "name": "Yadamma",
+               "style": "Fast market Telugu, warm and loud, everyday English mixing (kilo, rate, fresh, half). Short bursts."},
+    "kirana": {"scene_label": "Kirana shop, Hyderabad", "voice": "varun", "name": "Venkatesh",
+               "style": "Everyday shopkeeper Telugu, brisk and familiar, English mixing (packet, brand, total, UPI, home delivery)."},
+    "doctor": {"scene_label": "Clinic, Hyderabad", "voice": "tanya", "name": "Dr Padmaja",
+               "style": "Calm clinical Telugu, simple and clear, medical English mixing (fever, tablet, food, test, rest)."},
+    "restaurant": {"scene_label": "Tiffin centre, Hyderabad", "voice": "amit", "name": "Raju",
+                   "style": "Quick eatery Telugu, friendly and rushed, food English mixing (plate, full, half, parcel, bill). Rattles off idli, dosa, pesarattu, upma."},
+    "neighbour": {"scene_label": "Your colony, Hyderabad", "voice": "kavitha", "name": "Saraswathi",
+                  "style": "Warm neighbourly Telugu, chatty, everyday English mixing (flat, water, parking, parcel, coffee)."},
+    "landlord": {"scene_label": "Your flat, Hyderabad", "voice": "manan", "name": "Rao garu",
+                 "style": "Practical landlord Telugu, direct, English mixing (rent, maintenance, advance, plumber, geyser)."},
+    "salon": {"scene_label": "Salon, Hyderabad", "voice": "ashutosh", "name": "Nagaraju",
+              "style": "Chatty barber Telugu, friendly and opinionated about Tollywood films and cricket, English mixing (trim, style, machine, massage, mirror)."},
+    "pharmacy": {"scene_label": "Medical shop, Hyderabad", "voice": "sumit", "name": "Srikanth",
+                 "style": "Efficient pharmacy Telugu, clear and quick, medical English mixing (tablet, syrup, strip, generic, prescription)."},
 }
 
 # Per scenario: shop id (frontend), gender, level, English rubric, and per
@@ -328,21 +362,22 @@ SCENARIOS = {
 }
 
 
-def merge_malayalam():
-    """Fold the ML table into SCENARIOS so every language is handled identically."""
-    for skey, extra in ML.items():
-        s = SCENARIOS[skey]
-        s["scene_label"]["ml"] = extra["scene_label"]
-        s["voice"]["ml"] = extra["voice"]
-        s["name"]["ml"] = extra["name"]
-        s["style"]["ml"] = extra["style"]
-    missing = sorted(set(SCENARIOS) - set(ML))
-    if missing:
-        raise SystemExit(f"no Malayalam dressing for: {missing}")
+def merge_extra_languages():
+    """Fold the later language tables (ML, TE) into SCENARIOS so every language is handled identically."""
+    for lang, table, label in (("ml", ML, "Malayalam"), ("te", TE, "Telugu")):
+        for skey, extra in table.items():
+            s = SCENARIOS[skey]
+            s["scene_label"][lang] = extra["scene_label"]
+            s["voice"][lang] = extra["voice"]
+            s["name"][lang] = extra["name"]
+            s["style"][lang] = extra["style"]
+        missing = sorted(set(SCENARIOS) - set(table))
+        if missing:
+            raise SystemExit(f"no {label} dressing for: {missing}")
 
 
 def build():
-    merge_malayalam()
+    merge_extra_languages()
     PERSONA_DIR.mkdir(exist_ok=True)
     manifest = {}
     for skey, s in SCENARIOS.items():
@@ -410,7 +445,7 @@ def write_ts(manifest: dict):
         "",
         "export type PersonaMeta = {",
         "  id: string;",
-        "  language: \"kn\" | \"hi\" | \"ta\" | \"ml\";",
+        "  language: \"kn\" | \"hi\" | \"ta\" | \"ml\" | \"te\";",
         "  languageCode: string;",
         "  languageName: string;",
         "  scenario: string;",

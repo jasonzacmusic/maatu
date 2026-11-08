@@ -1,0 +1,3468 @@
+{
+ "persons": [
+  {
+   "id": "i",
+   "en": "I",
+   "sub": "nenu",
+   "dat": "naaku",
+   "at": "naa daggara",
+   "poss": "naa"
+  },
+  {
+   "id": "you",
+   "en": "you",
+   "sub": "nuvvu",
+   "dat": "neeku",
+   "hint": "a friend",
+   "at": "nee daggara",
+   "poss": "nee"
+  },
+  {
+   "id": "youp",
+   "en": "you",
+   "sub": "meeru",
+   "dat": "meeku",
+   "hint": "polite",
+   "at": "mee daggara",
+   "poss": "mee"
+  },
+  {
+   "id": "he",
+   "en": "he",
+   "sub": "athanu",
+   "dat": "athaniki",
+   "at": "athani daggara",
+   "poss": "athani"
+  },
+  {
+   "id": "she",
+   "en": "she",
+   "sub": "aame",
+   "dat": "aameki",
+   "at": "aame daggara",
+   "poss": "aame"
+  },
+  {
+   "id": "we",
+   "en": "we",
+   "sub": "memu",
+   "dat": "maaku",
+   "at": "maa daggara",
+   "poss": "maa"
+  },
+  {
+   "id": "they",
+   "en": "they",
+   "sub": "vaallu",
+   "dat": "vaallaki",
+   "at": "vaalla daggara",
+   "poss": "vaalla"
+  }
+ ],
+ "verbs": {
+  "play": {
+   "dict": "vaayinchu",
+   "pres": "vaayist",
+   "past": "vaayinch",
+   "neg": "vaayincha",
+   "noun": "vaayinchadam",
+   "purp": "vaayinchadaaniki",
+   "want": "vaayinchaalani",
+   "contNeg": "vaayinchatledu",
+   "hort": "vaayiddaam",
+   "imp": [
+    "vaayinchu",
+    "vaayinchandi"
+   ],
+   "impNot": [
+    "vaayinchaku",
+    "vaayinchakandi"
+   ]
+  },
+  "sing": {
+   "dict": "paadu",
+   "pres": "paadut",
+   "past": "paad",
+   "neg": "paada",
+   "noun": "paadadam",
+   "purp": "paadadaaniki",
+   "want": "paadaalani",
+   "contNeg": "paadatledu",
+   "hort": "paadudaam",
+   "imp": [
+    "paadu",
+    "paadandi"
+   ],
+   "impNot": [
+    "paadaku",
+    "paadakandi"
+   ]
+  },
+  "practise": {
+   "dict": "practice cheyyu",
+   "pres": "practice chest",
+   "past": "practice ches",
+   "neg": "practice cheyya",
+   "noun": "practice cheyyadam",
+   "purp": "practice cheyyadaaniki",
+   "want": "practice cheyyaalani",
+   "contNeg": "practice cheyyatledu",
+   "hort": "practice cheddaam",
+   "imp": [
+    "practice cheyyi",
+    "practice cheyyandi"
+   ],
+   "impNot": [
+    "practice cheyyaku",
+    "practice cheyyakandi"
+   ]
+  },
+  "listen": {
+   "dict": "vinu",
+   "pres": "vint",
+   "past": "vinn",
+   "neg": "vina",
+   "noun": "vinadam",
+   "purp": "vinadaaniki",
+   "want": "vinaalani",
+   "contNeg": "vinatledu",
+   "hort": "vindaam",
+   "imp": [
+    "vinu",
+    "vinandi"
+   ],
+   "impNot": [
+    "vinaku",
+    "vinakandi"
+   ],
+   "pastShe": "vinnadi"
+  },
+  "learn": {
+   "dict": "nerchuko",
+   "pres": "nerchukunt",
+   "past": "nerchukunn",
+   "neg": "nerchuko",
+   "noun": "nerchukovadam",
+   "purp": "nerchukovadaaniki",
+   "want": "nerchukovaalani",
+   "contNeg": "nerchukovatledu",
+   "hort": "nerchukundaam",
+   "imp": [
+    "nerchuko",
+    "nerchukondi"
+   ],
+   "impNot": [
+    "nerchukoku",
+    "nerchukokandi"
+   ],
+   "pastShe": "nerchukundi"
+  },
+  "teach": {
+   "dict": "nerpinchu",
+   "pres": "nerpist",
+   "past": "nerpinch",
+   "neg": "nerpincha",
+   "noun": "nerpinchadam",
+   "purp": "nerpinchadaaniki",
+   "want": "nerpinchaalani",
+   "contNeg": "nerpinchatledu",
+   "hort": "nerpiddaam",
+   "imp": [
+    "nerpinchu",
+    "nerpinchandi"
+   ],
+   "impNot": [
+    "nerpinchaku",
+    "nerpinchakandi"
+   ]
+  },
+  "dance": {
+   "dict": "dance cheyyu",
+   "pres": "dance chest",
+   "past": "dance ches",
+   "neg": "dance cheyya",
+   "noun": "dance cheyyadam",
+   "purp": "dance cheyyadaaniki",
+   "want": "dance cheyyaalani",
+   "contNeg": "dance cheyyatledu",
+   "hort": "dance cheddaam",
+   "imp": [
+    "dance cheyyi",
+    "dance cheyyandi"
+   ],
+   "impNot": [
+    "dance cheyyaku",
+    "dance cheyyakandi"
+   ]
+  },
+  "do": {
+   "dict": "cheyyu",
+   "pres": "chest",
+   "past": "ches",
+   "neg": "cheyya",
+   "noun": "cheyyadam",
+   "purp": "cheyyadaaniki",
+   "want": "cheyyaalani",
+   "contNeg": "cheyyatledu",
+   "hort": "cheddaam",
+   "imp": [
+    "cheyyi",
+    "cheyyandi"
+   ],
+   "impNot": [
+    "cheyyaku",
+    "cheyyakandi"
+   ]
+  },
+  "go": {
+   "dict": "vellu",
+   "pres": "velt",
+   "past": "vell",
+   "neg": "vella",
+   "noun": "velladam",
+   "purp": "velladaaniki",
+   "want": "vellaalani",
+   "contNeg": "vellatledu",
+   "hort": "veldaam",
+   "imp": [
+    "vellu",
+    "vellandi"
+   ],
+   "impNot": [
+    "vellaku",
+    "vellakandi"
+   ]
+  },
+  "come": {
+   "dict": "raa",
+   "pres": "vast",
+   "past": "vachch",
+   "neg": "raa",
+   "noun": "raavadam",
+   "purp": "raavadaaniki",
+   "want": "raavaalani",
+   "contNeg": "raavatledu",
+   "hort": "vaddaam",
+   "imp": [
+    "raa",
+    "raandi"
+   ],
+   "impNot": [
+    "raaku",
+    "raakandi"
+   ]
+  },
+  "think": {
+   "dict": "aalochinchu",
+   "pres": "aalochist",
+   "past": "aalochinch",
+   "neg": "aalochincha",
+   "noun": "aalochinchadam",
+   "purp": "aalochinchadaaniki",
+   "want": "aalochinchaalani",
+   "contNeg": "aalochinchatledu",
+   "hort": "aalochiddaam",
+   "imp": [
+    "aalochinchu",
+    "aalochinchandi"
+   ],
+   "impNot": [
+    "aalochinchaku",
+    "aalochinchakandi"
+   ]
+  },
+  "travel": {
+   "dict": "travel cheyyu",
+   "pres": "travel chest",
+   "past": "travel ches",
+   "neg": "travel cheyya",
+   "noun": "travel cheyyadam",
+   "purp": "travel cheyyadaaniki",
+   "want": "travel cheyyaalani",
+   "contNeg": "travel cheyyatledu",
+   "hort": "travel cheddaam",
+   "imp": [
+    "travel cheyyi",
+    "travel cheyyandi"
+   ],
+   "impNot": [
+    "travel cheyyaku",
+    "travel cheyyakandi"
+   ]
+  },
+  "speak": {
+   "dict": "maatlaadu",
+   "pres": "maatlaadt",
+   "past": "maatlaad",
+   "neg": "maatlaada",
+   "noun": "maatlaadadam",
+   "purp": "maatlaadadaaniki",
+   "want": "maatlaadaalani",
+   "contNeg": "maatlaadatledu",
+   "hort": "maatlaadudaam",
+   "imp": [
+    "maatlaadu",
+    "maatlaadandi"
+   ],
+   "impNot": [
+    "maatlaadaku",
+    "maatlaadakandi"
+   ]
+  },
+  "eat": {
+   "dict": "tinu",
+   "pres": "tint",
+   "past": "tinn",
+   "neg": "tina",
+   "noun": "tinadam",
+   "purp": "tinadaaniki",
+   "want": "tinaalani",
+   "contNeg": "tinatledu",
+   "hort": "tindaam",
+   "imp": [
+    "tinu",
+    "tinandi"
+   ],
+   "impNot": [
+    "tinaku",
+    "tinakandi"
+   ],
+   "pastShe": "tinnadi"
+  },
+  "drink": {
+   "dict": "thaagu",
+   "pres": "thaagut",
+   "past": "thaag",
+   "neg": "thaaga",
+   "noun": "thaagadam",
+   "purp": "thaagadaaniki",
+   "want": "thaagaalani",
+   "contNeg": "thaagatledu",
+   "hort": "thaagudaam",
+   "imp": [
+    "thaagu",
+    "thaagandi"
+   ],
+   "impNot": [
+    "thaagaku",
+    "thaagakandi"
+   ]
+  },
+  "see": {
+   "dict": "choodu",
+   "pres": "choost",
+   "past": "choos",
+   "neg": "chooda",
+   "noun": "choodadam",
+   "purp": "choodadaaniki",
+   "want": "choodaalani",
+   "contNeg": "choodatledu",
+   "hort": "chooddaam",
+   "imp": [
+    "choodu",
+    "choodandi"
+   ],
+   "impNot": [
+    "choodaku",
+    "choodakandi"
+   ]
+  },
+  "read": {
+   "dict": "chaduvu",
+   "pres": "chaduvut",
+   "past": "chadiv",
+   "neg": "chadava",
+   "noun": "chadavadam",
+   "purp": "chadavadaaniki",
+   "want": "chadavaalani",
+   "contNeg": "chadavatledu",
+   "hort": "chaduvudaam",
+   "imp": [
+    "chaduvu",
+    "chadavandi"
+   ],
+   "impNot": [
+    "chadavaku",
+    "chadavakandi"
+   ]
+  },
+  "write": {
+   "dict": "raayu",
+   "pres": "raast",
+   "past": "raas",
+   "neg": "raaya",
+   "noun": "raayadam",
+   "purp": "raayadaaniki",
+   "want": "raayaalani",
+   "contNeg": "raayatledu",
+   "hort": "raaddaam",
+   "imp": [
+    "raayi",
+    "raayandi"
+   ],
+   "impNot": [
+    "raayaku",
+    "raayakandi"
+   ]
+  },
+  "work": {
+   "dict": "pani cheyyu",
+   "pres": "pani chest",
+   "past": "pani ches",
+   "neg": "pani cheyya",
+   "noun": "pani cheyyadam",
+   "purp": "pani cheyyadaaniki",
+   "want": "pani cheyyaalani",
+   "contNeg": "pani cheyyatledu",
+   "hort": "pani cheddaam",
+   "imp": [
+    "pani cheyyi",
+    "pani cheyyandi"
+   ],
+   "impNot": [
+    "pani cheyyaku",
+    "pani cheyyakandi"
+   ]
+  },
+  "sleep": {
+   "dict": "paduko",
+   "pres": "padukunt",
+   "past": "padukunn",
+   "neg": "paduko",
+   "noun": "padukovadam",
+   "purp": "padukovadaaniki",
+   "want": "padukovaalani",
+   "contNeg": "padukovatledu",
+   "hort": "padukundaam",
+   "imp": [
+    "paduko",
+    "padukondi"
+   ],
+   "impNot": [
+    "padukoku",
+    "padukokandi"
+   ],
+   "pastShe": "padukundi"
+  },
+  "playgame": {
+   "dict": "aadu",
+   "pres": "aadut",
+   "past": "aad",
+   "neg": "aada",
+   "noun": "aadadam",
+   "purp": "aadadaaniki",
+   "want": "aadaalani",
+   "contNeg": "aadatledu",
+   "hort": "aadudaam",
+   "imp": [
+    "aadu",
+    "aadandi"
+   ],
+   "impNot": [
+    "aadaku",
+    "aadakandi"
+   ]
+  },
+  "give": {
+   "dict": "ivvu",
+   "pres": "ist",
+   "past": "ichch",
+   "neg": "ivva",
+   "noun": "ivvadam",
+   "purp": "ivvadaaniki",
+   "want": "ivvaalani",
+   "contNeg": "ivvatledu",
+   "hort": "iddaam",
+   "imp": [
+    "ivvu",
+    "ivvandi"
+   ],
+   "impNot": [
+    "ivvaku",
+    "ivvakandi"
+   ]
+  },
+  "take": {
+   "dict": "theesuko",
+   "pres": "theesukunt",
+   "past": "theesukunn",
+   "neg": "theesuko",
+   "noun": "theesukovadam",
+   "purp": "theesukovadaaniki",
+   "want": "theesukovaalani",
+   "contNeg": "theesukovatledu",
+   "hort": "theesukundaam",
+   "imp": [
+    "theesuko",
+    "theesukondi"
+   ],
+   "impNot": [
+    "theesukoku",
+    "theesukokandi"
+   ],
+   "pastShe": "theesukundi"
+  },
+  "buy": {
+   "dict": "konu",
+   "pres": "kont",
+   "past": "konn",
+   "neg": "kona",
+   "noun": "konadam",
+   "purp": "konadaaniki",
+   "want": "konaalani",
+   "contNeg": "konatledu",
+   "hort": "kondaam",
+   "imp": [
+    "konu",
+    "konandi"
+   ],
+   "impNot": [
+    "konaku",
+    "konakandi"
+   ],
+   "pastShe": "konnadi"
+  },
+  "say": {
+   "dict": "cheppu",
+   "pres": "chept",
+   "past": "chepp",
+   "neg": "cheppa",
+   "noun": "cheppadam",
+   "purp": "cheppadaaniki",
+   "want": "cheppaalani",
+   "contNeg": "cheppatledu",
+   "hort": "cheppudaam",
+   "imp": [
+    "cheppu",
+    "cheppandi"
+   ],
+   "impNot": [
+    "cheppaku",
+    "cheppakandi"
+   ]
+  },
+  "wait": {
+   "dict": "wait cheyyu",
+   "pres": "wait chest",
+   "past": "wait ches",
+   "neg": "wait cheyya",
+   "noun": "wait cheyyadam",
+   "purp": "wait cheyyadaaniki",
+   "want": "wait cheyyaalani",
+   "contNeg": "wait cheyyatledu",
+   "hort": "wait cheddaam",
+   "imp": [
+    "wait cheyyi",
+    "wait cheyyandi"
+   ],
+   "impNot": [
+    "wait cheyyaku",
+    "wait cheyyakandi"
+   ]
+  },
+  "sit": {
+   "dict": "koorcho",
+   "pres": "koorchunt",
+   "past": "koorchunn",
+   "neg": "koorcho",
+   "noun": "koorchovadam",
+   "purp": "koorchovadaaniki",
+   "want": "koorchovaalani",
+   "contNeg": "koorchovatledu",
+   "hort": "koorchundaam",
+   "imp": [
+    "koorcho",
+    "koorchondi"
+   ],
+   "impNot": [
+    "koorchoku",
+    "koorchokandi"
+   ],
+   "pastShe": "koorchundi"
+  },
+  "walk": {
+   "dict": "nadu",
+   "pres": "nadust",
+   "past": "nadich",
+   "neg": "nadava",
+   "noun": "nadavadam",
+   "purp": "nadavadaaniki",
+   "want": "nadavaalani",
+   "contNeg": "nadavatledu",
+   "hort": "naduddaam",
+   "imp": [
+    "nadu",
+    "nadavandi"
+   ],
+   "impNot": [
+    "nadavaku",
+    "nadavakandi"
+   ]
+  },
+  "cook": {
+   "dict": "vandu",
+   "pres": "vandut",
+   "past": "vand",
+   "neg": "vanda",
+   "noun": "vandadam",
+   "purp": "vandadaaniki",
+   "want": "vandaalani",
+   "contNeg": "vandatledu",
+   "hort": "vandudaam",
+   "imp": [
+    "vandu",
+    "vandandi"
+   ],
+   "impNot": [
+    "vandaku",
+    "vandakandi"
+   ]
+  },
+  "help": {
+   "dict": "help cheyyu",
+   "pres": "help chest",
+   "past": "help ches",
+   "neg": "help cheyya",
+   "noun": "help cheyyadam",
+   "purp": "help cheyyadaaniki",
+   "want": "help cheyyaalani",
+   "contNeg": "help cheyyatledu",
+   "hort": "help cheddaam",
+   "imp": [
+    "help cheyyi",
+    "help cheyyandi"
+   ],
+   "impNot": [
+    "help cheyyaku",
+    "help cheyyakandi"
+   ]
+  },
+  "call": {
+   "dict": "call cheyyu",
+   "pres": "call chest",
+   "past": "call ches",
+   "neg": "call cheyya",
+   "noun": "call cheyyadam",
+   "purp": "call cheyyadaaniki",
+   "want": "call cheyyaalani",
+   "contNeg": "call cheyyatledu",
+   "hort": "call cheddaam",
+   "imp": [
+    "call cheyyi",
+    "call cheyyandi"
+   ],
+   "impNot": [
+    "call cheyyaku",
+    "call cheyyakandi"
+   ]
+  },
+  "tune": {
+   "dict": "tune cheyyu",
+   "pres": "tune chest",
+   "past": "tune ches",
+   "neg": "tune cheyya",
+   "noun": "tune cheyyadam",
+   "purp": "tune cheyyadaaniki",
+   "want": "tune cheyyaalani",
+   "contNeg": "tune cheyyatledu",
+   "hort": "tune cheddaam",
+   "imp": [
+    "tune cheyyi",
+    "tune cheyyandi"
+   ],
+   "impNot": [
+    "tune cheyyaku",
+    "tune cheyyakandi"
+   ]
+  },
+  "record": {
+   "dict": "record cheyyu",
+   "pres": "record chest",
+   "past": "record ches",
+   "neg": "record cheyya",
+   "noun": "record cheyyadam",
+   "purp": "record cheyyadaaniki",
+   "want": "record cheyyaalani",
+   "contNeg": "record cheyyatledu",
+   "hort": "record cheddaam",
+   "imp": [
+    "record cheyyi",
+    "record cheyyandi"
+   ],
+   "impNot": [
+    "record cheyyaku",
+    "record cheyyakandi"
+   ]
+  },
+  "count": {
+   "dict": "lekka pettu",
+   "pres": "lekka pedt",
+   "past": "lekka pett",
+   "neg": "lekka petta",
+   "noun": "lekka pettadam",
+   "purp": "lekka pettadaaniki",
+   "want": "lekka pettaalani",
+   "contNeg": "lekka pettatledu",
+   "hort": "lekka pedadaam",
+   "imp": [
+    "lekka pettu",
+    "lekka pettandi"
+   ],
+   "impNot": [
+    "lekka pettaku",
+    "lekka pettakandi"
+   ]
+  },
+  "clap": {
+   "dict": "chappatlu kottu",
+   "pres": "chappatlu kodt",
+   "past": "chappatlu kott",
+   "neg": "chappatlu kotta",
+   "noun": "chappatlu kottadam",
+   "purp": "chappatlu kottadaaniki",
+   "want": "chappatlu kottaalani",
+   "contNeg": "chappatlu kottatledu",
+   "hort": "chappatlu kodadaam",
+   "imp": [
+    "chappatlu kottu",
+    "chappatlu kottandi"
+   ],
+   "impNot": [
+    "chappatlu kottaku",
+    "chappatlu kottakandi"
+   ]
+  },
+  "explain": {
+   "dict": "explain cheyyu",
+   "pres": "explain chest",
+   "past": "explain ches",
+   "neg": "explain cheyya",
+   "noun": "explain cheyyadam",
+   "purp": "explain cheyyadaaniki",
+   "want": "explain cheyyaalani",
+   "contNeg": "explain cheyyatledu",
+   "hort": "explain cheddaam",
+   "imp": [
+    "explain cheyyi",
+    "explain cheyyandi"
+   ],
+   "impNot": [
+    "explain cheyyaku",
+    "explain cheyyakandi"
+   ]
+  },
+  "repeat": {
+   "dict": "repeat cheyyu",
+   "pres": "repeat chest",
+   "past": "repeat ches",
+   "neg": "repeat cheyya",
+   "noun": "repeat cheyyadam",
+   "purp": "repeat cheyyadaaniki",
+   "want": "repeat cheyyaalani",
+   "contNeg": "repeat cheyyatledu",
+   "hort": "repeat cheddaam",
+   "imp": [
+    "repeat cheyyi",
+    "repeat cheyyandi"
+   ],
+   "impNot": [
+    "repeat cheyyaku",
+    "repeat cheyyakandi"
+   ]
+  },
+  "open": {
+   "dict": "theeyu",
+   "pres": "theest",
+   "past": "thees",
+   "neg": "theeya",
+   "noun": "theeyadam",
+   "purp": "theeyadaaniki",
+   "want": "theeyaalani",
+   "contNeg": "theeyatledu",
+   "hort": "theeddaam",
+   "imp": [
+    "theeyi",
+    "theeyandi"
+   ],
+   "impNot": [
+    "theeyaku",
+    "theeyakandi"
+   ]
+  },
+  "close": {
+   "dict": "mooyu",
+   "pres": "moost",
+   "past": "moos",
+   "neg": "mooya",
+   "noun": "mooyadam",
+   "purp": "mooyadaaniki",
+   "want": "mooyaalani",
+   "contNeg": "mooyatledu",
+   "hort": "mooddaam",
+   "imp": [
+    "mooyi",
+    "mooyandi"
+   ],
+   "impNot": [
+    "mooyaku",
+    "mooyakandi"
+   ]
+  },
+  "bring": {
+   "dict": "theesukuraa",
+   "pres": "theesukost",
+   "past": "theesukochch",
+   "neg": "theesukuraa",
+   "noun": "theesukuraavadam",
+   "purp": "theesukuraavadaaniki",
+   "want": "theesukuraavaalani",
+   "contNeg": "theesukuraavatledu",
+   "hort": "theesukoddaam",
+   "imp": [
+    "theesukuraa",
+    "theesukuraandi"
+   ],
+   "impNot": [
+    "theesukuraaku",
+    "theesukuraakandi"
+   ]
+  },
+  "send": {
+   "dict": "pampu",
+   "pres": "pamput",
+   "past": "pamp",
+   "neg": "pampa",
+   "noun": "pampadam",
+   "purp": "pampadaaniki",
+   "want": "pampaalani",
+   "contNeg": "pampatledu",
+   "hort": "pampudaam",
+   "imp": [
+    "pampu",
+    "pampandi"
+   ],
+   "impNot": [
+    "pampaku",
+    "pampakandi"
+   ]
+  },
+  "show": {
+   "dict": "choopinchu",
+   "pres": "choopist",
+   "past": "choopinch",
+   "neg": "choopincha",
+   "noun": "choopinchadam",
+   "purp": "choopinchadaaniki",
+   "want": "choopinchaalani",
+   "contNeg": "choopinchatledu",
+   "hort": "choopiddaam",
+   "imp": [
+    "choopinchu",
+    "choopinchandi"
+   ],
+   "impNot": [
+    "choopinchaku",
+    "choopinchakandi"
+   ]
+  },
+  "put": {
+   "dict": "pettu",
+   "pres": "pedt",
+   "past": "pett",
+   "neg": "petta",
+   "noun": "pettadam",
+   "purp": "pettadaaniki",
+   "want": "pettaalani",
+   "contNeg": "pettatledu",
+   "hort": "pedadaam",
+   "imp": [
+    "pettu",
+    "pettandi"
+   ],
+   "impNot": [
+    "pettaku",
+    "pettakandi"
+   ]
+  },
+  "wash": {
+   "dict": "kadugu",
+   "pres": "kadugut",
+   "past": "kadig",
+   "neg": "kadaga",
+   "noun": "kadagadam",
+   "purp": "kadagadaaniki",
+   "want": "kadagaalani",
+   "contNeg": "kadagatledu",
+   "hort": "kadugudaam",
+   "imp": [
+    "kadugu",
+    "kadagandi"
+   ],
+   "impNot": [
+    "kadagaku",
+    "kadagakandi"
+   ]
+  },
+  "cut": {
+   "dict": "koyyu",
+   "pres": "kost",
+   "past": "kos",
+   "neg": "koya",
+   "noun": "koyadam",
+   "purp": "koyadaaniki",
+   "want": "koyaalani",
+   "contNeg": "koyatledu",
+   "hort": "koddaam",
+   "imp": [
+    "koyyi",
+    "koyandi"
+   ],
+   "impNot": [
+    "koyaku",
+    "koyakandi"
+   ]
+  },
+  "ask": {
+   "dict": "adugu",
+   "pres": "adugut",
+   "past": "adig",
+   "neg": "adaga",
+   "noun": "adagadam",
+   "purp": "adagadaaniki",
+   "want": "adagaalani",
+   "contNeg": "adagatledu",
+   "hort": "adugudaam",
+   "imp": [
+    "adugu",
+    "adagandi"
+   ],
+   "impNot": [
+    "adagaku",
+    "adagakandi"
+   ]
+  },
+  "answer": {
+   "dict": "javaabu cheppu",
+   "pres": "javaabu chept",
+   "past": "javaabu chepp",
+   "neg": "javaabu cheppa",
+   "noun": "javaabu cheppadam",
+   "purp": "javaabu cheppadaaniki",
+   "want": "javaabu cheppaalani",
+   "contNeg": "javaabu cheppatledu",
+   "hort": "javaabu cheppudaam",
+   "imp": [
+    "javaabu cheppu",
+    "javaabu cheppandi"
+   ],
+   "impNot": [
+    "javaabu cheppaku",
+    "javaabu cheppakandi"
+   ]
+  },
+  "run": {
+   "dict": "parigettu",
+   "pres": "parigedt",
+   "past": "parigett",
+   "neg": "parigetta",
+   "noun": "parigettadam",
+   "purp": "parigettadaaniki",
+   "want": "parigettaalani",
+   "contNeg": "parigettatledu",
+   "hort": "parigedadaam",
+   "imp": [
+    "parigettu",
+    "parigettandi"
+   ],
+   "impNot": [
+    "parigettaku",
+    "parigettakandi"
+   ]
+  },
+  "laugh": {
+   "dict": "navvu",
+   "pres": "navvut",
+   "past": "navv",
+   "neg": "navva",
+   "noun": "navvadam",
+   "purp": "navvadaaniki",
+   "want": "navvaalani",
+   "contNeg": "navvatledu",
+   "hort": "navvudaam",
+   "imp": [
+    "navvu",
+    "navvandi"
+   ],
+   "impNot": [
+    "navvaku",
+    "navvakandi"
+   ]
+  },
+  "cry": {
+   "dict": "edchu",
+   "pres": "edust",
+   "past": "edch",
+   "neg": "edava",
+   "noun": "edavadam",
+   "purp": "edavadaaniki",
+   "want": "edavaalani",
+   "contNeg": "edavatledu",
+   "hort": "edudaam",
+   "imp": [
+    "edu",
+    "edavandi"
+   ],
+   "impNot": [
+    "edavaku",
+    "edavakandi"
+   ]
+  },
+  "bathe": {
+   "dict": "snaanam cheyyu",
+   "pres": "snaanam chest",
+   "past": "snaanam ches",
+   "neg": "snaanam cheyya",
+   "noun": "snaanam cheyyadam",
+   "purp": "snaanam cheyyadaaniki",
+   "want": "snaanam cheyyaalani",
+   "contNeg": "snaanam cheyyatledu",
+   "hort": "snaanam cheddaam",
+   "imp": [
+    "snaanam cheyyi",
+    "snaanam cheyyandi"
+   ],
+   "impNot": [
+    "snaanam cheyyaku",
+    "snaanam cheyyakandi"
+   ]
+  },
+  "rest": {
+   "dict": "rest theesuko",
+   "pres": "rest theesukunt",
+   "past": "rest theesukunn",
+   "neg": "rest theesuko",
+   "noun": "rest theesukovadam",
+   "purp": "rest theesukovadaaniki",
+   "want": "rest theesukovaalani",
+   "contNeg": "rest theesukovatledu",
+   "hort": "rest theesukundaam",
+   "imp": [
+    "rest theesuko",
+    "rest theesukondi"
+   ],
+   "impNot": [
+    "rest theesukoku",
+    "rest theesukokandi"
+   ],
+   "pastShe": "rest theesukundi"
+  },
+  "swim": {
+   "dict": "eedu",
+   "pres": "eedut",
+   "past": "eed",
+   "neg": "eeda",
+   "noun": "eedadam",
+   "purp": "eedadaaniki",
+   "want": "eedaalani",
+   "contNeg": "eedatledu",
+   "hort": "eedudaam",
+   "imp": [
+    "eedu",
+    "eedandi"
+   ],
+   "impNot": [
+    "eedaku",
+    "eedakandi"
+   ]
+  },
+  "start": {
+   "dict": "start cheyyu",
+   "pres": "start chest",
+   "past": "start ches",
+   "neg": "start cheyya",
+   "noun": "start cheyyadam",
+   "purp": "start cheyyadaaniki",
+   "want": "start cheyyaalani",
+   "contNeg": "start cheyyatledu",
+   "hort": "start cheddaam",
+   "imp": [
+    "start cheyyi",
+    "start cheyyandi"
+   ],
+   "impNot": [
+    "start cheyyaku",
+    "start cheyyakandi"
+   ]
+  },
+  "stop": {
+   "dict": "aapu",
+   "pres": "aaput",
+   "past": "aap",
+   "neg": "aapa",
+   "noun": "aapadam",
+   "purp": "aapadaaniki",
+   "want": "aapaalani",
+   "contNeg": "aapatledu",
+   "hort": "aapudaam",
+   "imp": [
+    "aapu",
+    "aapandi"
+   ],
+   "impNot": [
+    "aapaku",
+    "aapakandi"
+   ]
+  },
+  "finish": {
+   "dict": "poorthi cheyyu",
+   "pres": "poorthi chest",
+   "past": "poorthi ches",
+   "neg": "poorthi cheyya",
+   "noun": "poorthi cheyyadam",
+   "purp": "poorthi cheyyadaaniki",
+   "want": "poorthi cheyyaalani",
+   "contNeg": "poorthi cheyyatledu",
+   "hort": "poorthi cheddaam",
+   "imp": [
+    "poorthi cheyyi",
+    "poorthi cheyyandi"
+   ],
+   "impNot": [
+    "poorthi cheyyaku",
+    "poorthi cheyyakandi"
+   ]
+  },
+  "try": {
+   "dict": "try cheyyu",
+   "pres": "try chest",
+   "past": "try ches",
+   "neg": "try cheyya",
+   "noun": "try cheyyadam",
+   "purp": "try cheyyadaaniki",
+   "want": "try cheyyaalani",
+   "contNeg": "try cheyyatledu",
+   "hort": "try cheddaam",
+   "imp": [
+    "try cheyyi",
+    "try cheyyandi"
+   ],
+   "impNot": [
+    "try cheyyaku",
+    "try cheyyakandi"
+   ]
+  },
+  "search": {
+   "dict": "vethuku",
+   "pres": "vethukut",
+   "past": "vethik",
+   "neg": "vethaka",
+   "noun": "vethakadam",
+   "purp": "vethakadaaniki",
+   "want": "vethakaalani",
+   "contNeg": "vethakatledu",
+   "hort": "vethukudaam",
+   "imp": [
+    "vethuku",
+    "vethakandi"
+   ],
+   "impNot": [
+    "vethakaku",
+    "vethakakandi"
+   ]
+  },
+  "change": {
+   "dict": "change cheyyu",
+   "pres": "change chest",
+   "past": "change ches",
+   "neg": "change cheyya",
+   "noun": "change cheyyadam",
+   "purp": "change cheyyadaaniki",
+   "want": "change cheyyaalani",
+   "contNeg": "change cheyyatledu",
+   "hort": "change cheddaam",
+   "imp": [
+    "change cheyyi",
+    "change cheyyandi"
+   ],
+   "impNot": [
+    "change cheyyaku",
+    "change cheyyakandi"
+   ]
+  },
+  "repair": {
+   "dict": "repair cheyyu",
+   "pres": "repair chest",
+   "past": "repair ches",
+   "neg": "repair cheyya",
+   "noun": "repair cheyyadam",
+   "purp": "repair cheyyadaaniki",
+   "want": "repair cheyyaalani",
+   "contNeg": "repair cheyyatledu",
+   "hort": "repair cheddaam",
+   "imp": [
+    "repair cheyyi",
+    "repair cheyyandi"
+   ],
+   "impNot": [
+    "repair cheyyaku",
+    "repair cheyyakandi"
+   ]
+  },
+  "clean": {
+   "dict": "clean cheyyu",
+   "pres": "clean chest",
+   "past": "clean ches",
+   "neg": "clean cheyya",
+   "noun": "clean cheyyadam",
+   "purp": "clean cheyyadaaniki",
+   "want": "clean cheyyaalani",
+   "contNeg": "clean cheyyatledu",
+   "hort": "clean cheddaam",
+   "imp": [
+    "clean cheyyi",
+    "clean cheyyandi"
+   ],
+   "impNot": [
+    "clean cheyyaku",
+    "clean cheyyakandi"
+   ]
+  },
+  "pay": {
+   "dict": "pay cheyyu",
+   "pres": "pay chest",
+   "past": "pay ches",
+   "neg": "pay cheyya",
+   "noun": "pay cheyyadam",
+   "purp": "pay cheyyadaaniki",
+   "want": "pay cheyyaalani",
+   "contNeg": "pay cheyyatledu",
+   "hort": "pay cheddaam",
+   "imp": [
+    "pay cheyyi",
+    "pay cheyyandi"
+   ],
+   "impNot": [
+    "pay cheyyaku",
+    "pay cheyyakandi"
+   ]
+  },
+  "sell": {
+   "dict": "ammu",
+   "pres": "ammut",
+   "past": "amm",
+   "neg": "amma",
+   "noun": "ammadam",
+   "purp": "ammadaaniki",
+   "want": "ammaalani",
+   "contNeg": "ammatledu",
+   "hort": "ammudaam",
+   "imp": [
+    "ammu",
+    "ammandi"
+   ],
+   "impNot": [
+    "ammaku",
+    "ammakandi"
+   ]
+  },
+  "order": {
+   "dict": "order cheyyu",
+   "pres": "order chest",
+   "past": "order ches",
+   "neg": "order cheyya",
+   "noun": "order cheyyadam",
+   "purp": "order cheyyadaaniki",
+   "want": "order cheyyaalani",
+   "contNeg": "order cheyyatledu",
+   "hort": "order cheddaam",
+   "imp": [
+    "order cheyyi",
+    "order cheyyandi"
+   ],
+   "impNot": [
+    "order cheyyaku",
+    "order cheyyakandi"
+   ]
+  },
+  "book": {
+   "dict": "book cheyyu",
+   "pres": "book chest",
+   "past": "book ches",
+   "neg": "book cheyya",
+   "noun": "book cheyyadam",
+   "purp": "book cheyyadaaniki",
+   "want": "book cheyyaalani",
+   "contNeg": "book cheyyatledu",
+   "hort": "book cheddaam",
+   "imp": [
+    "book cheyyi",
+    "book cheyyandi"
+   ],
+   "impNot": [
+    "book cheyyaku",
+    "book cheyyakandi"
+   ]
+  },
+  "cancel": {
+   "dict": "cancel cheyyu",
+   "pres": "cancel chest",
+   "past": "cancel ches",
+   "neg": "cancel cheyya",
+   "noun": "cancel cheyyadam",
+   "purp": "cancel cheyyadaaniki",
+   "want": "cancel cheyyaalani",
+   "contNeg": "cancel cheyyatledu",
+   "hort": "cancel cheddaam",
+   "imp": [
+    "cancel cheyyi",
+    "cancel cheyyandi"
+   ],
+   "impNot": [
+    "cancel cheyyaku",
+    "cancel cheyyakandi"
+   ]
+  },
+  "drive": {
+   "dict": "drive cheyyu",
+   "pres": "drive chest",
+   "past": "drive ches",
+   "neg": "drive cheyya",
+   "noun": "drive cheyyadam",
+   "purp": "drive cheyyadaaniki",
+   "want": "drive cheyyaalani",
+   "contNeg": "drive cheyyatledu",
+   "hort": "drive cheddaam",
+   "imp": [
+    "drive cheyyi",
+    "drive cheyyandi"
+   ],
+   "impNot": [
+    "drive cheyyaku",
+    "drive cheyyakandi"
+   ]
+  },
+  "wear": {
+   "dict": "vesuko",
+   "pres": "vesukunt",
+   "past": "vesukunn",
+   "neg": "vesuko",
+   "noun": "vesukovadam",
+   "purp": "vesukovadaaniki",
+   "want": "vesukovaalani",
+   "contNeg": "vesukovatledu",
+   "hort": "vesukundaam",
+   "imp": [
+    "vesuko",
+    "vesukondi"
+   ],
+   "impNot": [
+    "vesukoku",
+    "vesukokandi"
+   ],
+   "pastShe": "vesukundi"
+  },
+  "stand": {
+   "dict": "nilabadu",
+   "pres": "nilabadt",
+   "past": "nilabadd",
+   "neg": "nilabada",
+   "noun": "nilabadadam",
+   "purp": "nilabadadaaniki",
+   "want": "nilabadaalani",
+   "contNeg": "nilabadatledu",
+   "hort": "nilabadudaam",
+   "imp": [
+    "nilabadu",
+    "nilabadandi"
+   ],
+   "impNot": [
+    "nilabadaku",
+    "nilabadakandi"
+   ],
+   "pastShe": "nilabadindi"
+  },
+  "fill": {
+   "dict": "fill cheyyu",
+   "pres": "fill chest",
+   "past": "fill ches",
+   "neg": "fill cheyya",
+   "noun": "fill cheyyadam",
+   "purp": "fill cheyyadaaniki",
+   "want": "fill cheyyaalani",
+   "contNeg": "fill cheyyatledu",
+   "hort": "fill cheddaam",
+   "imp": [
+    "fill cheyyi",
+    "fill cheyyandi"
+   ],
+   "impNot": [
+    "fill cheyyaku",
+    "fill cheyyakandi"
+   ]
+  },
+  "sign": {
+   "dict": "sign cheyyu",
+   "pres": "sign chest",
+   "past": "sign ches",
+   "neg": "sign cheyya",
+   "noun": "sign cheyyadam",
+   "purp": "sign cheyyadaaniki",
+   "want": "sign cheyyaalani",
+   "contNeg": "sign cheyyatledu",
+   "hort": "sign cheddaam",
+   "imp": [
+    "sign cheyyi",
+    "sign cheyyandi"
+   ],
+   "impNot": [
+    "sign cheyyaku",
+    "sign cheyyakandi"
+   ]
+  },
+  "submit": {
+   "dict": "submit cheyyu",
+   "pres": "submit chest",
+   "past": "submit ches",
+   "neg": "submit cheyya",
+   "noun": "submit cheyyadam",
+   "purp": "submit cheyyadaaniki",
+   "want": "submit cheyyaalani",
+   "contNeg": "submit cheyyatledu",
+   "hort": "submit cheddaam",
+   "imp": [
+    "submit cheyyi",
+    "submit cheyyandi"
+   ],
+   "impNot": [
+    "submit cheyyaku",
+    "submit cheyyakandi"
+   ]
+  },
+  "apply": {
+   "dict": "apply cheyyu",
+   "pres": "apply chest",
+   "past": "apply ches",
+   "neg": "apply cheyya",
+   "noun": "apply cheyyadam",
+   "purp": "apply cheyyadaaniki",
+   "want": "apply cheyyaalani",
+   "contNeg": "apply cheyyatledu",
+   "hort": "apply cheddaam",
+   "imp": [
+    "apply cheyyi",
+    "apply cheyyandi"
+   ],
+   "impNot": [
+    "apply cheyyaku",
+    "apply cheyyakandi"
+   ]
+  },
+  "renew": {
+   "dict": "renew cheyyu",
+   "pres": "renew chest",
+   "past": "renew ches",
+   "neg": "renew cheyya",
+   "noun": "renew cheyyadam",
+   "purp": "renew cheyyadaaniki",
+   "want": "renew cheyyaalani",
+   "contNeg": "renew cheyyatledu",
+   "hort": "renew cheddaam",
+   "imp": [
+    "renew cheyyi",
+    "renew cheyyandi"
+   ],
+   "impNot": [
+    "renew cheyyaku",
+    "renew cheyyakandi"
+   ]
+  },
+  "check": {
+   "dict": "check cheyyu",
+   "pres": "check chest",
+   "past": "check ches",
+   "neg": "check cheyya",
+   "noun": "check cheyyadam",
+   "purp": "check cheyyadaaniki",
+   "want": "check cheyyaalani",
+   "contNeg": "check cheyyatledu",
+   "hort": "check cheddaam",
+   "imp": [
+    "check cheyyi",
+    "check cheyyandi"
+   ],
+   "impNot": [
+    "check cheyyaku",
+    "check cheyyakandi"
+   ]
+  },
+  "collect": {
+   "dict": "collect cheyyu",
+   "pres": "collect chest",
+   "past": "collect ches",
+   "neg": "collect cheyya",
+   "noun": "collect cheyyadam",
+   "purp": "collect cheyyadaaniki",
+   "want": "collect cheyyaalani",
+   "contNeg": "collect cheyyatledu",
+   "hort": "collect cheddaam",
+   "imp": [
+    "collect cheyyi",
+    "collect cheyyandi"
+   ],
+   "impNot": [
+    "collect cheyyaku",
+    "collect cheyyakandi"
+   ]
+  },
+  "xerox": {
+   "dict": "xerox theeyu",
+   "pres": "xerox theest",
+   "past": "xerox thees",
+   "neg": "xerox theeya",
+   "noun": "xerox theeyadam",
+   "purp": "xerox theeyadaaniki",
+   "want": "xerox theeyaalani",
+   "contNeg": "xerox theeyatledu",
+   "hort": "xerox theeddaam",
+   "imp": [
+    "xerox theeyi",
+    "xerox theeyandi"
+   ],
+   "impNot": [
+    "xerox theeyaku",
+    "xerox theeyakandi"
+   ]
+  },
+  "register": {
+   "dict": "register cheyyu",
+   "pres": "register chest",
+   "past": "register ches",
+   "neg": "register cheyya",
+   "noun": "register cheyyadam",
+   "purp": "register cheyyadaaniki",
+   "want": "register cheyyaalani",
+   "contNeg": "register cheyyatledu",
+   "hort": "register cheddaam",
+   "imp": [
+    "register cheyyi",
+    "register cheyyandi"
+   ],
+   "impNot": [
+    "register cheyyaku",
+    "register cheyyakandi"
+   ]
+  },
+  "complain": {
+   "dict": "complaint ivvu",
+   "pres": "complaint ist",
+   "past": "complaint ichch",
+   "neg": "complaint ivva",
+   "noun": "complaint ivvadam",
+   "purp": "complaint ivvadaaniki",
+   "want": "complaint ivvaalani",
+   "contNeg": "complaint ivvatledu",
+   "hort": "complaint iddaam",
+   "imp": [
+    "complaint ivvu",
+    "complaint ivvandi"
+   ],
+   "impNot": [
+    "complaint ivvaku",
+    "complaint ivvakandi"
+   ]
+  },
+  "turn": {
+   "dict": "thirugu",
+   "pres": "thirugut",
+   "past": "thirig",
+   "neg": "thiraga",
+   "noun": "thiragadam",
+   "purp": "thiragadaaniki",
+   "want": "thiragaalani",
+   "contNeg": "thiragatledu",
+   "hort": "thirugudaam",
+   "imp": [
+    "thirugu",
+    "thiragandi"
+   ],
+   "impNot": [
+    "thiragaku",
+    "thiragakandi"
+   ]
+  },
+  "park": {
+   "dict": "park cheyyu",
+   "pres": "park chest",
+   "past": "park ches",
+   "neg": "park cheyya",
+   "noun": "park cheyyadam",
+   "purp": "park cheyyadaaniki",
+   "want": "park cheyyaalani",
+   "contNeg": "park cheyyatledu",
+   "hort": "park cheddaam",
+   "imp": [
+    "park cheyyi",
+    "park cheyyandi"
+   ],
+   "impNot": [
+    "park cheyyaku",
+    "park cheyyakandi"
+   ]
+  },
+  "drop": {
+   "dict": "drop cheyyu",
+   "pres": "drop chest",
+   "past": "drop ches",
+   "neg": "drop cheyya",
+   "noun": "drop cheyyadam",
+   "purp": "drop cheyyadaaniki",
+   "want": "drop cheyyaalani",
+   "contNeg": "drop cheyyatledu",
+   "hort": "drop cheddaam",
+   "imp": [
+    "drop cheyyi",
+    "drop cheyyandi"
+   ],
+   "impNot": [
+    "drop cheyyaku",
+    "drop cheyyakandi"
+   ]
+  },
+  "pickup": {
+   "dict": "pick up cheyyu",
+   "pres": "pick up chest",
+   "past": "pick up ches",
+   "neg": "pick up cheyya",
+   "noun": "pick up cheyyadam",
+   "purp": "pick up cheyyadaaniki",
+   "want": "pick up cheyyaalani",
+   "contNeg": "pick up cheyyatledu",
+   "hort": "pick up cheddaam",
+   "imp": [
+    "pick up cheyyi",
+    "pick up cheyyandi"
+   ],
+   "impNot": [
+    "pick up cheyyaku",
+    "pick up cheyyakandi"
+   ]
+  },
+  "reach": {
+   "dict": "reach avvu",
+   "pres": "reach avut",
+   "past": "reach ayy",
+   "neg": "reach avva",
+   "noun": "reach avvadam",
+   "purp": "reach avvadaaniki",
+   "want": "reach avvaalani",
+   "contNeg": "reach avvatledu",
+   "hort": "reach avudaam",
+   "imp": [
+    "reach avvu",
+    "reach avvandi"
+   ],
+   "impNot": [
+    "reach avvaku",
+    "reach avvakandi"
+   ]
+  },
+  "getdown": {
+   "dict": "digu",
+   "pres": "digut",
+   "past": "dig",
+   "neg": "diga",
+   "noun": "digadam",
+   "purp": "digadaaniki",
+   "want": "digaalani",
+   "contNeg": "digatledu",
+   "hort": "digudaam",
+   "imp": [
+    "digu",
+    "digandi"
+   ],
+   "impNot": [
+    "digaku",
+    "digakandi"
+   ]
+  },
+  "getin": {
+   "dict": "ekku",
+   "pres": "ekkut",
+   "past": "ekk",
+   "neg": "ekka",
+   "noun": "ekkadam",
+   "purp": "ekkadaaniki",
+   "want": "ekkaalani",
+   "contNeg": "ekkatledu",
+   "hort": "ekkudaam",
+   "imp": [
+    "ekku",
+    "ekkandi"
+   ],
+   "impNot": [
+    "ekkaku",
+    "ekkakandi"
+   ]
+  },
+  "charge": {
+   "dict": "charge pettu",
+   "pres": "charge pedt",
+   "past": "charge pett",
+   "neg": "charge petta",
+   "noun": "charge pettadam",
+   "purp": "charge pettadaaniki",
+   "want": "charge pettaalani",
+   "contNeg": "charge pettatledu",
+   "hort": "charge pedadaam",
+   "imp": [
+    "charge pettu",
+    "charge pettandi"
+   ],
+   "impNot": [
+    "charge pettaku",
+    "charge pettakandi"
+   ]
+  },
+  "recharge": {
+   "dict": "recharge cheyyu",
+   "pres": "recharge chest",
+   "past": "recharge ches",
+   "neg": "recharge cheyya",
+   "noun": "recharge cheyyadam",
+   "purp": "recharge cheyyadaaniki",
+   "want": "recharge cheyyaalani",
+   "contNeg": "recharge cheyyatledu",
+   "hort": "recharge cheddaam",
+   "imp": [
+    "recharge cheyyi",
+    "recharge cheyyandi"
+   ],
+   "impNot": [
+    "recharge cheyyaku",
+    "recharge cheyyakandi"
+   ]
+  },
+  "transfer": {
+   "dict": "transfer cheyyu",
+   "pres": "transfer chest",
+   "past": "transfer ches",
+   "neg": "transfer cheyya",
+   "noun": "transfer cheyyadam",
+   "purp": "transfer cheyyadaaniki",
+   "want": "transfer cheyyaalani",
+   "contNeg": "transfer cheyyatledu",
+   "hort": "transfer cheddaam",
+   "imp": [
+    "transfer cheyyi",
+    "transfer cheyyandi"
+   ],
+   "impNot": [
+    "transfer cheyyaku",
+    "transfer cheyyakandi"
+   ]
+  },
+  "withdraw": {
+   "dict": "withdraw cheyyu",
+   "pres": "withdraw chest",
+   "past": "withdraw ches",
+   "neg": "withdraw cheyya",
+   "noun": "withdraw cheyyadam",
+   "purp": "withdraw cheyyadaaniki",
+   "want": "withdraw cheyyaalani",
+   "contNeg": "withdraw cheyyatledu",
+   "hort": "withdraw cheddaam",
+   "imp": [
+    "withdraw cheyyi",
+    "withdraw cheyyandi"
+   ],
+   "impNot": [
+    "withdraw cheyyaku",
+    "withdraw cheyyakandi"
+   ]
+  },
+  "deposit": {
+   "dict": "deposit cheyyu",
+   "pres": "deposit chest",
+   "past": "deposit ches",
+   "neg": "deposit cheyya",
+   "noun": "deposit cheyyadam",
+   "purp": "deposit cheyyadaaniki",
+   "want": "deposit cheyyaalani",
+   "contNeg": "deposit cheyyatledu",
+   "hort": "deposit cheddaam",
+   "imp": [
+    "deposit cheyyi",
+    "deposit cheyyandi"
+   ],
+   "impNot": [
+    "deposit cheyyaku",
+    "deposit cheyyakandi"
+   ]
+  },
+  "return": {
+   "dict": "thirigi ivvu",
+   "pres": "thirigi ist",
+   "past": "thirigi ichch",
+   "neg": "thirigi ivva",
+   "noun": "thirigi ivvadam",
+   "purp": "thirigi ivvadaaniki",
+   "want": "thirigi ivvaalani",
+   "contNeg": "thirigi ivvatledu",
+   "hort": "thirigi iddaam",
+   "imp": [
+    "thirigi ivvu",
+    "thirigi ivvandi"
+   ],
+   "impNot": [
+    "thirigi ivvaku",
+    "thirigi ivvakandi"
+   ]
+  },
+  "borrow": {
+   "dict": "appu theesuko",
+   "pres": "appu theesukunt",
+   "past": "appu theesukunn",
+   "neg": "appu theesuko",
+   "noun": "appu theesukovadam",
+   "purp": "appu theesukovadaaniki",
+   "want": "appu theesukovaalani",
+   "contNeg": "appu theesukovatledu",
+   "hort": "appu theesukundaam",
+   "imp": [
+    "appu theesuko",
+    "appu theesukondi"
+   ],
+   "impNot": [
+    "appu theesukoku",
+    "appu theesukokandi"
+   ],
+   "pastShe": "appu theesukundi"
+  },
+  "lend": {
+   "dict": "appu ivvu",
+   "pres": "appu ist",
+   "past": "appu ichch",
+   "neg": "appu ivva",
+   "noun": "appu ivvadam",
+   "purp": "appu ivvadaaniki",
+   "want": "appu ivvaalani",
+   "contNeg": "appu ivvatledu",
+   "hort": "appu iddaam",
+   "imp": [
+    "appu ivvu",
+    "appu ivvandi"
+   ],
+   "impNot": [
+    "appu ivvaku",
+    "appu ivvakandi"
+   ]
+  },
+  "spend": {
+   "dict": "kharchu pettu",
+   "pres": "kharchu pedt",
+   "past": "kharchu pett",
+   "neg": "kharchu petta",
+   "noun": "kharchu pettadam",
+   "purp": "kharchu pettadaaniki",
+   "want": "kharchu pettaalani",
+   "contNeg": "kharchu pettatledu",
+   "hort": "kharchu pedadaam",
+   "imp": [
+    "kharchu pettu",
+    "kharchu pettandi"
+   ],
+   "impNot": [
+    "kharchu pettaku",
+    "kharchu pettakandi"
+   ]
+  },
+  "save": {
+   "dict": "save cheyyu",
+   "pres": "save chest",
+   "past": "save ches",
+   "neg": "save cheyya",
+   "noun": "save cheyyadam",
+   "purp": "save cheyyadaaniki",
+   "want": "save cheyyaalani",
+   "contNeg": "save cheyyatledu",
+   "hort": "save cheddaam",
+   "imp": [
+    "save cheyyi",
+    "save cheyyandi"
+   ],
+   "impNot": [
+    "save cheyyaku",
+    "save cheyyakandi"
+   ]
+  },
+  "switchon": {
+   "dict": "on cheyyu",
+   "pres": "on chest",
+   "past": "on ches",
+   "neg": "on cheyya",
+   "noun": "on cheyyadam",
+   "purp": "on cheyyadaaniki",
+   "want": "on cheyyaalani",
+   "contNeg": "on cheyyatledu",
+   "hort": "on cheddaam",
+   "imp": [
+    "on cheyyi",
+    "on cheyyandi"
+   ],
+   "impNot": [
+    "on cheyyaku",
+    "on cheyyakandi"
+   ]
+  },
+  "switchoff": {
+   "dict": "off cheyyu",
+   "pres": "off chest",
+   "past": "off ches",
+   "neg": "off cheyya",
+   "noun": "off cheyyadam",
+   "purp": "off cheyyadaaniki",
+   "want": "off cheyyaalani",
+   "contNeg": "off cheyyatledu",
+   "hort": "off cheddaam",
+   "imp": [
+    "off cheyyi",
+    "off cheyyandi"
+   ],
+   "impNot": [
+    "off cheyyaku",
+    "off cheyyakandi"
+   ]
+  },
+  "iron": {
+   "dict": "iron cheyyu",
+   "pres": "iron chest",
+   "past": "iron ches",
+   "neg": "iron cheyya",
+   "noun": "iron cheyyadam",
+   "purp": "iron cheyyadaaniki",
+   "want": "iron cheyyaalani",
+   "contNeg": "iron cheyyatledu",
+   "hort": "iron cheddaam",
+   "imp": [
+    "iron cheyyi",
+    "iron cheyyandi"
+   ],
+   "impNot": [
+    "iron cheyyaku",
+    "iron cheyyakandi"
+   ]
+  },
+  "shift": {
+   "dict": "shift cheyyu",
+   "pres": "shift chest",
+   "past": "shift ches",
+   "neg": "shift cheyya",
+   "noun": "shift cheyyadam",
+   "purp": "shift cheyyadaaniki",
+   "want": "shift cheyyaalani",
+   "contNeg": "shift cheyyatledu",
+   "hort": "shift cheddaam",
+   "imp": [
+    "shift cheyyi",
+    "shift cheyyandi"
+   ],
+   "impNot": [
+    "shift cheyyaku",
+    "shift cheyyakandi"
+   ]
+  },
+  "lock": {
+   "dict": "lock cheyyu",
+   "pres": "lock chest",
+   "past": "lock ches",
+   "neg": "lock cheyya",
+   "noun": "lock cheyyadam",
+   "purp": "lock cheyyadaaniki",
+   "want": "lock cheyyaalani",
+   "contNeg": "lock cheyyatledu",
+   "hort": "lock cheddaam",
+   "imp": [
+    "lock cheyyi",
+    "lock cheyyandi"
+   ],
+   "impNot": [
+    "lock cheyyaku",
+    "lock cheyyakandi"
+   ]
+  },
+  "meet": {
+   "dict": "kalavu",
+   "pres": "kalust",
+   "past": "kalis",
+   "neg": "kalava",
+   "noun": "kalavadam",
+   "purp": "kalavadaaniki",
+   "want": "kalavaalani",
+   "contNeg": "kalavatledu",
+   "hort": "kaluddaam",
+   "imp": [
+    "kalavu",
+    "kalavandi"
+   ],
+   "impNot": [
+    "kalavaku",
+    "kalavakandi"
+   ]
+  },
+  "invite": {
+   "dict": "piluvu",
+   "pres": "pilust",
+   "past": "pilich",
+   "neg": "pilava",
+   "noun": "pilavadam",
+   "purp": "pilavadaaniki",
+   "want": "pilavaalani",
+   "contNeg": "pilavatledu",
+   "hort": "piluddaam",
+   "imp": [
+    "piluvu",
+    "pilavandi"
+   ],
+   "impNot": [
+    "pilavaku",
+    "pilavakandi"
+   ]
+  },
+  "understand": {
+   "dict": "ardham chesuko",
+   "pres": "ardham chesukunt",
+   "past": "ardham chesukunn",
+   "neg": "ardham chesuko",
+   "noun": "ardham chesukovadam",
+   "purp": "ardham chesukovadaaniki",
+   "want": "ardham chesukovaalani",
+   "contNeg": "ardham chesukovatledu",
+   "hort": "ardham chesukundaam",
+   "imp": [
+    "ardham chesuko",
+    "ardham chesukondi"
+   ],
+   "impNot": [
+    "ardham chesukoku",
+    "ardham chesukokandi"
+   ],
+   "pastShe": "ardham chesukundi"
+  },
+  "forget": {
+   "dict": "marchipo",
+   "pres": "marchipot",
+   "past": "marchipoy",
+   "neg": "marchipo",
+   "noun": "marchipovadam",
+   "purp": "marchipovadaaniki",
+   "want": "marchipovaalani",
+   "contNeg": "marchipovatledu",
+   "hort": "marchipodaam",
+   "imp": [
+    "marchipo",
+    "marchipondi"
+   ],
+   "impNot": [
+    "marchipoku",
+    "marchipokandi"
+   ]
+  },
+  "lose": {
+   "dict": "pogottuko",
+   "pres": "pogottukunt",
+   "past": "pogottukunn",
+   "neg": "pogottuko",
+   "noun": "pogottukovadam",
+   "purp": "pogottukovadaaniki",
+   "want": "pogottukovaalani",
+   "contNeg": "pogottukovatledu",
+   "hort": "pogottukundaam",
+   "imp": [
+    "pogottuko",
+    "pogottukondi"
+   ],
+   "impNot": [
+    "pogottukoku",
+    "pogottukokandi"
+   ],
+   "pastShe": "pogottukundi"
+  },
+  "use": {
+   "dict": "use cheyyu",
+   "pres": "use chest",
+   "past": "use ches",
+   "neg": "use cheyya",
+   "noun": "use cheyyadam",
+   "purp": "use cheyyadaaniki",
+   "want": "use cheyyaalani",
+   "contNeg": "use cheyyatledu",
+   "hort": "use cheddaam",
+   "imp": [
+    "use cheyyi",
+    "use cheyyandi"
+   ],
+   "impNot": [
+    "use cheyyaku",
+    "use cheyyakandi"
+   ]
+  },
+  "join": {
+   "dict": "join avvu",
+   "pres": "join avut",
+   "past": "join ayy",
+   "neg": "join avva",
+   "noun": "join avvadam",
+   "purp": "join avvadaaniki",
+   "want": "join avvaalani",
+   "contNeg": "join avvatledu",
+   "hort": "join avudaam",
+   "imp": [
+    "join avvu",
+    "join avvandi"
+   ],
+   "impNot": [
+    "join avvaku",
+    "join avvakandi"
+   ]
+  },
+  "attend": {
+   "dict": "attend cheyyu",
+   "pres": "attend chest",
+   "past": "attend ches",
+   "neg": "attend cheyya",
+   "noun": "attend cheyyadam",
+   "purp": "attend cheyyadaaniki",
+   "want": "attend cheyyaalani",
+   "contNeg": "attend cheyyatledu",
+   "hort": "attend cheddaam",
+   "imp": [
+    "attend cheyyi",
+    "attend cheyyandi"
+   ],
+   "impNot": [
+    "attend cheyyaku",
+    "attend cheyyakandi"
+   ]
+  },
+  "study": {
+   "dict": "chaduvu",
+   "pres": "chaduvut",
+   "past": "chadiv",
+   "neg": "chadava",
+   "noun": "chadavadam",
+   "purp": "chadavadaaniki",
+   "want": "chadavaalani",
+   "contNeg": "chadavatledu",
+   "hort": "chaduvudaam",
+   "imp": [
+    "chaduvu",
+    "chadavandi"
+   ],
+   "impNot": [
+    "chadavaku",
+    "chadavakandi"
+   ]
+  },
+  "reply": {
+   "dict": "reply cheyyu",
+   "pres": "reply chest",
+   "past": "reply ches",
+   "neg": "reply cheyya",
+   "noun": "reply cheyyadam",
+   "purp": "reply cheyyadaaniki",
+   "want": "reply cheyyaalani",
+   "contNeg": "reply cheyyatledu",
+   "hort": "reply cheddaam",
+   "imp": [
+    "reply cheyyi",
+    "reply cheyyandi"
+   ],
+   "impNot": [
+    "reply cheyyaku",
+    "reply cheyyakandi"
+   ]
+  },
+  "share": {
+   "dict": "share cheyyu",
+   "pres": "share chest",
+   "past": "share ches",
+   "neg": "share cheyya",
+   "noun": "share cheyyadam",
+   "purp": "share cheyyadaaniki",
+   "want": "share cheyyaalani",
+   "contNeg": "share cheyyatledu",
+   "hort": "share cheddaam",
+   "imp": [
+    "share cheyyi",
+    "share cheyyandi"
+   ],
+   "impNot": [
+    "share cheyyaku",
+    "share cheyyakandi"
+   ]
+  },
+  "pack": {
+   "dict": "pack cheyyu",
+   "pres": "pack chest",
+   "past": "pack ches",
+   "neg": "pack cheyya",
+   "noun": "pack cheyyadam",
+   "purp": "pack cheyyadaaniki",
+   "want": "pack cheyyaalani",
+   "contNeg": "pack cheyyatledu",
+   "hort": "pack cheddaam",
+   "imp": [
+    "pack cheyyi",
+    "pack cheyyandi"
+   ],
+   "impNot": [
+    "pack cheyyaku",
+    "pack cheyyakandi"
+   ]
+  },
+  "exchange": {
+   "dict": "exchange cheyyu",
+   "pres": "exchange chest",
+   "past": "exchange ches",
+   "neg": "exchange cheyya",
+   "noun": "exchange cheyyadam",
+   "purp": "exchange cheyyadaaniki",
+   "want": "exchange cheyyaalani",
+   "contNeg": "exchange cheyyatledu",
+   "hort": "exchange cheddaam",
+   "imp": [
+    "exchange cheyyi",
+    "exchange cheyyandi"
+   ],
+   "impNot": [
+    "exchange cheyyaku",
+    "exchange cheyyakandi"
+   ]
+  },
+  "pray": {
+   "dict": "praarthana cheyyu",
+   "pres": "praarthana chest",
+   "past": "praarthana ches",
+   "neg": "praarthana cheyya",
+   "noun": "praarthana cheyyadam",
+   "purp": "praarthana cheyyadaaniki",
+   "want": "praarthana cheyyaalani",
+   "contNeg": "praarthana cheyyatledu",
+   "hort": "praarthana cheddaam",
+   "imp": [
+    "praarthana cheyyi",
+    "praarthana cheyyandi"
+   ],
+   "impNot": [
+    "praarthana cheyyaku",
+    "praarthana cheyyakandi"
+   ]
+  },
+  "celebrate": {
+   "dict": "jarupuko",
+   "pres": "jarupukunt",
+   "past": "jarupukunn",
+   "neg": "jarupuko",
+   "noun": "jarupukovadam",
+   "purp": "jarupukovadaaniki",
+   "want": "jarupukovaalani",
+   "contNeg": "jarupukovatledu",
+   "hort": "jarupukundaam",
+   "imp": [
+    "jarupuko",
+    "jarupukondi"
+   ],
+   "impNot": [
+    "jarupukoku",
+    "jarupukokandi"
+   ],
+   "pastShe": "jarupukundi"
+  },
+  "perform": {
+   "dict": "perform cheyyu",
+   "pres": "perform chest",
+   "past": "perform ches",
+   "neg": "perform cheyya",
+   "noun": "perform cheyyadam",
+   "purp": "perform cheyyadaaniki",
+   "want": "perform cheyyaalani",
+   "contNeg": "perform cheyyatledu",
+   "hort": "perform cheddaam",
+   "imp": [
+    "perform cheyyi",
+    "perform cheyyandi"
+   ],
+   "impNot": [
+    "perform cheyyaku",
+    "perform cheyyakandi"
+   ]
+  },
+  "boil": {
+   "dict": "kaachu",
+   "pres": "kaast",
+   "past": "kaach",
+   "neg": "kaacha",
+   "noun": "kaachadam",
+   "purp": "kaachadaaniki",
+   "want": "kaachaalani",
+   "contNeg": "kaachatledu",
+   "hort": "kaaddaam",
+   "imp": [
+    "kaachu",
+    "kaachandi"
+   ],
+   "impNot": [
+    "kaachaku",
+    "kaachakandi"
+   ]
+  },
+  "wakeup": {
+   "dict": "lechu",
+   "pres": "lest",
+   "past": "lech",
+   "neg": "leva",
+   "noun": "levadam",
+   "purp": "levadaaniki",
+   "want": "levaalani",
+   "contNeg": "levatledu",
+   "hort": "leddaam",
+   "imp": [
+    "lechu",
+    "levandi"
+   ],
+   "impNot": [
+    "levaku",
+    "levakandi"
+   ]
+  },
+  "getready": {
+   "dict": "ready avvu",
+   "pres": "ready avut",
+   "past": "ready ayy",
+   "neg": "ready avva",
+   "noun": "ready avvadam",
+   "purp": "ready avvadaaniki",
+   "want": "ready avvaalani",
+   "contNeg": "ready avvatledu",
+   "hort": "ready avudaam",
+   "imp": [
+    "ready avvu",
+    "ready avvandi"
+   ],
+   "impNot": [
+    "ready avvaku",
+    "ready avvakandi"
+   ]
+  },
+  "comeback": {
+   "dict": "thirigi raa",
+   "pres": "thirigi vast",
+   "past": "thirigi vachch",
+   "neg": "thirigi raa",
+   "noun": "thirigi raavadam",
+   "purp": "thirigi raavadaaniki",
+   "want": "thirigi raavaalani",
+   "contNeg": "thirigi raavatledu",
+   "hort": "thirigi vaddaam",
+   "imp": [
+    "thirigi raa",
+    "thirigi raandi"
+   ],
+   "impNot": [
+    "thirigi raaku",
+    "thirigi raakandi"
+   ]
+  }
+ },
+ "objects": {
+  "piano": "piano",
+  "guitar": "guitar",
+  "violin": "violin",
+  "drums": "drums",
+  "song": "oka paata",
+  "thissong": "ee paata",
+  "music": "music",
+  "language": "Telugu",
+  "english": "English",
+  "rice": "annam",
+  "tea": "chai",
+  "water": "neellu",
+  "movie": "oka cinema",
+  "book": "oka pustakam",
+  "home": "intiki",
+  "class": "class ki",
+  "concert": "concert ki",
+  "city": "Bangalore ki",
+  "money": "dabbulu",
+  "coffee": "coffee",
+  "food": "tindi",
+  "phone": "phone",
+  "chair": "kurchi",
+  "key": "key",
+  "time": "time",
+  "shop": "shop ki",
+  "school": "school ki",
+  "football": "football",
+  "cricket": "cricket",
+  "shopping": "shopping",
+  "exercise": "exercise",
+  "cleaning": "cleaning",
+  "homework": "homework",
+  "order": "order",
+  "download": "download",
+  "ticket": "ticket",
+  "keyboard": "keyboard",
+  "flute": "flute",
+  "tabla": "tabla",
+  "mridangam": "mridangam",
+  "veena": "veena",
+  "harmonium": "harmonium",
+  "mic": "mic",
+  "scale": "scale",
+  "raga": "raagam",
+  "taala": "thaalam",
+  "swara": "swaram",
+  "chord": "chord",
+  "newsong": "kotha paata",
+  "lesson": "lesson",
+  "exam": "exam",
+  "notebook": "notebook",
+  "maths": "maths",
+  "newspaper": "paper",
+  "letter": "oka letter",
+  "story": "oka katha",
+  "poem": "oka kavitha",
+  "name": "peru",
+  "address": "address",
+  "number": "number",
+  "dosa": "dosa",
+  "idli": "idli",
+  "chapati": "chapati",
+  "sambar": "saambaaru",
+  "curdrice": "perugannam",
+  "vada": "vada",
+  "biryani": "biryani",
+  "egg": "guddu",
+  "chicken": "chicken",
+  "fish": "chepa",
+  "vegetables": "kooragaayalu",
+  "fruit": "pandu",
+  "banana": "arati pandu",
+  "mango": "maamidi pandu",
+  "sweet": "sweet",
+  "snack": "snacks",
+  "lunch": "lunch",
+  "salt": "uppu",
+  "sugar": "panchadaara",
+  "milk": "paalu",
+  "juice": "juice",
+  "buttermilk": "majjiga",
+  "lemonsoda": "lemon soda",
+  "hotwater": "vedi neellu",
+  "office": "office ki",
+  "market": "market ki",
+  "temple": "gudiki",
+  "church": "church ki",
+  "hospital": "hospital ki",
+  "station": "station ki",
+  "airport": "airport ki",
+  "bank": "bank ki",
+  "hotel": "hotel ki",
+  "park": "park ki",
+  "beach": "beach ki",
+  "cinema": "theatre ki",
+  "gym": "gym ki",
+  "village": "ooriki",
+  "bag": "bag",
+  "door": "thalupu",
+  "window": "kitiki",
+  "light": "light",
+  "fan": "fan",
+  "room": "room",
+  "house": "illu",
+  "cup": "cup",
+  "plate": "plate",
+  "box": "box",
+  "paper": "paper",
+  "pen": "pen",
+  "medicine": "mandu",
+  "gift": "gift",
+  "flower": "puvvu",
+  "clothes": "battalu",
+  "shirt": "shirt",
+  "saree": "cheera",
+  "shoes": "shoes",
+  "watch": "watch",
+  "car": "car",
+  "bike": "bike",
+  "bus": "bus",
+  "auto": "auto",
+  "train": "train",
+  "cab": "cab",
+  "flight": "flight",
+  "laptop": "laptop",
+  "tv": "TV",
+  "photo": "photo",
+  "video": "video",
+  "message": "message",
+  "email": "email",
+  "password": "password",
+  "app": "app",
+  "charger": "charger",
+  "film": "oka cinema",
+  "series": "series",
+  "news": "news",
+  "podcast": "podcast",
+  "work": "pani",
+  "rent": "adde",
+  "bill": "bill",
+  "salary": "salary",
+  "fees": "fees",
+  "change": "chillara",
+  "chess": "chess",
+  "badminton": "badminton",
+  "carrom": "carrom",
+  "game": "oka game",
+  "recording": "recording",
+  "meeting": "meeting",
+  "payment": "payment",
+  "booking": "booking",
+  "upload": "upload",
+  "laundry": "laundry",
+  "packing": "packing",
+  "tomato": "tomato",
+  "onion": "ullipaaya",
+  "potato": "aaloo",
+  "carrot": "carrot",
+  "chilli": "mirchi",
+  "ginger": "allam",
+  "garlic": "vellulli",
+  "coriander": "kothimeera",
+  "brinjal": "vankaaya",
+  "okra": "bendakaaya",
+  "cabbage": "cabbage",
+  "greens": "aakukoora",
+  "lemon": "nimmakaaya",
+  "apple": "apple",
+  "orange": "orange",
+  "grapes": "draaksha",
+  "watermelon": "puchchakaaya",
+  "coconut": "kobbarikaaya",
+  "curd": "perugu",
+  "oil": "noone",
+  "fever": "jvaram",
+  "cough": "daggu",
+  "cold": "jalubu",
+  "headache": "thalanoppi",
+  "stomachache": "kadupu noppi",
+  "toothache": "pannu noppi",
+  "backpain": "nadumu noppi",
+  "legpain": "kaalu noppi",
+  "chestpain": "chest pain",
+  "vomiting": "vaanthulu",
+  "loosemotion": "loose motions",
+  "dizziness": "kallu thirugudu",
+  "injury": "debba",
+  "allergy": "allergy",
+  "bp": "BP",
+  "diabetes": "sugar",
+  "tablet": "tablet",
+  "injection": "injection",
+  "syrup": "syrup",
+  "prescription": "prescription",
+  "report": "report",
+  "bloodtest": "blood test",
+  "xray": "X-ray",
+  "scan": "scan",
+  "doctor": "doctor",
+  "nurse": "nurse",
+  "driver": "driver",
+  "officer": "officer",
+  "police": "police",
+  "landlord": "owner",
+  "neighbour": "pakkinti vaallu",
+  "friend": "friend",
+  "mother": "amma",
+  "father": "naanna",
+  "brother": "anna",
+  "sister": "akka",
+  "son": "koduku",
+  "daughter": "koothuru",
+  "husband": "bharta",
+  "wife": "bharya",
+  "child": "pilla",
+  "plumber": "plumber",
+  "electrician": "electrician",
+  "watchman": "watchman",
+  "manager": "manager",
+  "passport": "passport",
+  "aadhaar": "Aadhaar card",
+  "pancard": "PAN card",
+  "licence": "licence",
+  "idproof": "ID proof",
+  "addressproof": "address proof",
+  "form": "form",
+  "application": "application",
+  "signature": "sign",
+  "appointment": "appointment",
+  "token": "token",
+  "receipt": "receipt",
+  "certificate": "certificate",
+  "document": "document",
+  "visa": "visa",
+  "cheque": "cheque",
+  "account": "account",
+  "otp": "OTP",
+  "fine": "fine",
+  "complaint": "complaint",
+  "cash": "cash",
+  "upi": "UPI",
+  "loan": "loan",
+  "balance": "balance",
+  "advance": "advance",
+  "emi": "EMI",
+  "fare": "charge",
+  "meter": "meter",
+  "metro": "metro",
+  "scooter": "scooty",
+  "cycle": "cycle",
+  "petrol": "petrol",
+  "helmet": "helmet",
+  "tyre": "tyre",
+  "puncture": "puncture",
+  "luggage": "luggage",
+  "seat": "seat",
+  "traffic": "traffic",
+  "passportoffice": "passport office ki",
+  "policestation": "police station ki",
+  "postoffice": "post office ki",
+  "pharmacy": "medical shop ki",
+  "clinic": "clinic ki",
+  "busstand": "bus stand ki",
+  "metrostation": "metro station ki",
+  "petrolbunk": "petrol bunk ki",
+  "atm": "ATM ki",
+  "rto": "RTO ki",
+  "college": "college ki",
+  "salon": "saloon ki",
+  "restaurant": "restaurant ki",
+  "bakery": "bakery ki",
+  "apartment": "apartment ki",
+  "counter": "counter ki",
+  "signal": "signal ki",
+  "mainroad": "main road ki",
+  "current": "current",
+  "powercut": "power cut",
+  "cylinder": "cylinder",
+  "wifi": "WiFi",
+  "internet": "internet",
+  "tap": "nalla",
+  "bulb": "bulb",
+  "ac": "AC",
+  "fridge": "fridge",
+  "lift": "lift",
+  "parking": "parking",
+  "bathroom": "bathroom",
+  "kitchen": "vantagadi",
+  "bed": "manchum",
+  "maintenance": "maintenance",
+  "sim": "SIM",
+  "battery": "battery",
+  "network": "network",
+  "earphones": "earphones",
+  "menu": "menu",
+  "parcel": "parcel",
+  "spoon": "spoon",
+  "meals": "meals",
+  "paneer": "paneer",
+  "dal": "pappu",
+  "pickle": "pachchadi",
+  "bread": "bread",
+  "biscuit": "biscuit",
+  "icecream": "ice cream",
+  "pants": "pant",
+  "kurta": "kurta",
+  "chappal": "cheppulu",
+  "uniform": "uniform"
+ },
+ "objectsAt": {
+  "home": "intlo",
+  "class": "class lo",
+  "concert": "concert lo",
+  "city": "Bangalore lo",
+  "shop": "shop lo",
+  "school": "school lo",
+  "office": "office lo",
+  "market": "market lo",
+  "temple": "gudilo",
+  "church": "church lo",
+  "hospital": "hospital lo",
+  "station": "station lo",
+  "airport": "airport lo",
+  "bank": "bank lo",
+  "hotel": "hotel lo",
+  "park": "park lo",
+  "beach": "beach lo",
+  "cinema": "theatre lo",
+  "gym": "gym lo",
+  "village": "oorlo",
+  "passportoffice": "passport office lo",
+  "policestation": "police station lo",
+  "postoffice": "post office lo",
+  "pharmacy": "medical shop lo",
+  "clinic": "clinic lo",
+  "busstand": "bus stand lo",
+  "metrostation": "metro station lo",
+  "petrolbunk": "petrol bunk lo",
+  "atm": "ATM lo",
+  "rto": "RTO lo",
+  "college": "college lo",
+  "salon": "saloon lo",
+  "restaurant": "restaurant lo",
+  "bakery": "bakery lo",
+  "apartment": "apartment lo",
+  "counter": "counter daggara",
+  "signal": "signal daggara",
+  "mainroad": "main road meeda"
+ },
+ "objectsPlain": {
+  "home": "illu",
+  "village": "ooru"
+ },
+ "objectsAcc": {
+  "child": "pillani"
+ },
+ "enByLang": {
+  "language": "Telugu"
+ },
+ "times": {
+  "yesterday": "ninna",
+  "today": "ivaala",
+  "tomorrow": "repu",
+  "everyday": "roju",
+  "now": "ippudu",
+  "evening": "saayantram",
+  "morning": "podduna",
+  "night": "raathri",
+  "afternoon": "madhyaahnam",
+  "dayafter": "ellundi",
+  "thisweek": "ee vaaram",
+  "lastweek": "poyina vaaram",
+  "nextweek": "vachche vaaram",
+  "sunday": "Sunday",
+  "atfive": "aidu gantalaki",
+  "always": "eppudoo",
+  "sometimes": "appudappudu",
+  "later": "tarvaatha",
+  "soon": "tvaragaa"
+ },
+ "decks": {
+  "music": [
+   "paata",
+   "paadu",
+   "vaayinchu (or play cheyyi)",
+   "music (sangeetham)",
+   "swaram",
+   "thaalam",
+   "raagam",
+   "tune (raagam)",
+   "gonthu",
+   "fast gaa (tvaragaa)",
+   "slow gaa (nemmadigaa)",
+   "gattigaa",
+   "mellagaa",
+   "malli",
+   "modati nunchi",
+   "practice (saadhana)",
+   "vinu",
+   "shraddhagaa vinandi",
+   "high (paina)",
+   "low (kinda)",
+   "teacher (sir, madam)",
+   "student (vidyaarthi)",
+   "class",
+   "concert (kachcheri)",
+   "pillanagrovi (flute)",
+   "same words",
+   "baagaa chesaaru",
+   "baagundi",
+   "inkosaari, konchem slow gaa",
+   "aapandi",
+   "okka nimisham aagandi",
+   "lekka pettandi (count cheyyandi)",
+   "okati rendu moodu naalugu"
+  ],
+  "numbers": [
+   "okati",
+   "rendu",
+   "moodu",
+   "naalugu",
+   "aidu",
+   "aaru",
+   "edu",
+   "enimidi",
+   "tommidi",
+   "padi",
+   "iravai",
+   "muppai",
+   "yaabhai",
+   "vanda",
+   "enni"
+  ],
+  "fruits": [
+   "pandu",
+   "arati pandu",
+   "maamidi pandu",
+   "apple",
+   "kamala pandu (orange)",
+   "draaksha",
+   "boppaayi",
+   "puchchakaaya",
+   "kobbarikaaya",
+   "nimmakaaya",
+   "daanimma",
+   "jaama pandu",
+   "panasa pandu"
+  ],
+  "vegetables": [
+   "kooragaayalu",
+   "ullipaaya",
+   "tomato",
+   "aaloo (bangaala dumpa)",
+   "carrot",
+   "beans",
+   "vankaaya",
+   "mirapakaaya (mirchi)",
+   "allam",
+   "vellulli",
+   "aakukoora",
+   "kothimeera",
+   "cabbage",
+   "cauliflower",
+   "bataani",
+   "bendakaaya",
+   "munagakaaya"
+  ],
+  "countries": [
+   "desham",
+   "e desham",
+   "India (Bhaaratadesham)",
+   "nenu India nunchi",
+   "same words",
+   "foreign (videsham)",
+   "foreigner (videshi)",
+   "city (nagaram)",
+   "ooru (palle)",
+   "bhaasha"
+  ],
+  "questions": [
+   "enti",
+   "ekkada",
+   "eppudu",
+   "evaru",
+   "enduku",
+   "ela",
+   "entha",
+   "enni",
+   "edi",
+   "time entha",
+   "emaindi",
+   "___ ante enti",
+   "___ ni Telugu lo ela antaaru",
+   "avunaa?"
+  ],
+  "little": [
+   "naa",
+   "mee",
+   "nee",
+   "athani",
+   "aame",
+   "maa (mana)",
+   "vaalla",
+   "-ki, -ku",
+   "-lo",
+   "-nunchi",
+   "-tho",
+   "-kosam",
+   "-oo -oo (or just and)",
+   "kaani",
+   "endukante",
+   "kooda",
+   "maatrame",
+   "chaala",
+   "konchem",
+   "ippudu",
+   "tarvaatha",
+   "eppudoo",
+   "eppudoo ledu"
+  ],
+  "describe": [
+   "pedda (it is big: peddadi)",
+   "chinna (chinnadi)",
+   "manchi (it is good: baagundi)",
+   "baaledu",
+   "vedi",
+   "challa",
+   "kotha",
+   "paatha",
+   "andamaina (andamgaa undi)",
+   "ekkuva, costly",
+   "takkuva",
+   "easy (sulabham)",
+   "kashtam",
+   "sari",
+   "thappu",
+   "fast gaa (tvaragaa)",
+   "nemmadigaa",
+   "chaalu"
+  ],
+  "time": [
+   "podduna",
+   "madhyaahnam",
+   "saayantram",
+   "raathri",
+   "ivaala",
+   "ninna",
+   "repu",
+   "ellundi",
+   "vaaram",
+   "nela",
+   "samvatsaram",
+   "somavaaram",
+   "mangalavaaram",
+   "budhavaaram",
+   "guruvaaram",
+   "shukravaaram",
+   "shanivaaram",
+   "aadivaaram",
+   "time entha",
+   "aidu gantalaki",
+   "oka ganta",
+   "oka nimisham",
+   "appudappudu",
+   "roju"
+  ]
+ },
+ "deckTricks": {
+  "music": {
+   "0": "paata is the song, paadu is to sing: same pair as Tamil paattu and paadu.",
+   "27": "baagundi is the word you will hear most in Hyderabad: food, music, a shirt, all baagundi."
+  },
+  "numbers": {
+   "0": "okati: OK, a tea. One OK cup of tea.",
+   "14": "enni (how many) and entha (how much): enni for things you count, entha for money and size."
+  },
+  "questions": {
+   "0": "Almost every Telugu question word starts with e: enti, ekkada, eppudu, enduku, entha, enni, evaru."
+  },
+  "describe": {
+   "0": "Add di to the describing word and it becomes the whole sentence: pedda, peddadi (it is a big one)."
+  }
+ },
+ "rules": [
+  {
+   "title": "The verb goes last",
+   "body": "Who, then what, then the action. The action word closes the sentence, exactly like Kannada and Tamil.",
+   "example": "nenu roju piano vaayistaanu = I play the piano every day."
+  },
+  {
+   "title": "The ending tells you who",
+   "body": "Telugu sticks the person onto the end of the verb: aanu for I, aavu for you (a friend), aaru for polite you and for they, aadu for he, undi for she, aamu for we. You can even drop nenu or nuvvu, the ending already says it.",
+   "example": "vaayistaanu (I play), vaayistaavu (you play), vaayistaadu (he plays), vaayistaamu (we play)."
+  },
+  {
+   "title": "She and it share an ending",
+   "body": "In the singular, Telugu grammar puts women in the same group as things, so she and it take the same ending: undi now, indi in the past. It is only grammar and nobody hears it as rude. To show respect to an older woman, use the polite aaru ending instead.",
+   "example": "aame vaayistundi (she plays), athanu vaayistaadu (he plays). aame vaayinchindi (she played). Respectful: aavida vaayistaaru."
+  },
+  {
+   "title": "A wish and a skill sit with the person",
+   "body": "For want, need and know how to, the person takes ki or ku (naaku, meeku) instead of being the plain subject.",
+   "example": "naaku chai kaavaali (I want tea), naaku vaayinchadam vachchu (I know how to play), naaku vaayinchaalani undi (I want to play)."
+  },
+  {
+   "title": "No word for is",
+   "body": "To say what something is, put this and the thing side by side. For is not, add kaadu at the end.",
+   "example": "idi maamidi pandu = this is a mango. idi maamidi pandu kaadu = this is not a mango."
+  },
+  {
+   "title": "Polite meeru and andi",
+   "body": "With elders, strangers and shopkeepers use meeru, and end a request with andi. andi also softens yes and no: avunandi, ledandi.",
+   "example": "meeru vastaaraa? (are you coming?) raandi, koorchondi (please come, please sit)."
+  },
+  {
+   "title": "Questions end in aa",
+   "body": "Stretch the last sound into aa and the statement becomes a yes or no question. Nothing else moves.",
+   "example": "nuvvu piano vaayistaavu (you play the piano). nuvvu piano vaayistaavaa? (do you play the piano?) tinnaavaa? (did you eat?)"
+  },
+  {
+   "title": "ki for to, lo for in",
+   "body": "ki or ku means to, lo means in or at, nunchi means from. They stick on the end of the place, and English words take them too.",
+   "example": "intiki (to home), office ki (to the office), Hyderabad lo (in Hyderabad), Hyderabad nunchi (from Hyderabad)."
+  }
+ ],
+ "frames": {
+  "like": "naaku ___ ishtam",
+  "dislike": "naaku ___ ishtam ledu",
+  "want": "naaku ___ kaavaali",
+  "dontwant": "naaku ___ vaddu",
+  "have": "naa daggara ___ undi",
+  "donthave": "naa daggara ___ ledu",
+  "isthere": "___ undaa?",
+  "nothere": "___ ledu",
+  "where": "___ ekkada undi?",
+  "howmuch": "___ entha?",
+  "giveme": "konchem ___ ivvandi",
+  "thisis": "idi ___",
+  "isthis": "idi ___ aa?",
+  "good": "___ chaala baagundi",
+  "toomuch": "___ chaala ekkuva",
+  "going": "nenu ___ veltunnaanu",
+  "know": "naaku ___ telusu",
+  "dontknow": "naaku ___ teliyadu",
+  "doyouknow": "meeku ___ telusaa?",
+  "lets": "___ cheddaam"
+ },
+ "commands": [
+  [
+   "vaayinchandi",
+   "vaayinchu"
+  ],
+  [
+   "paadandi",
+   "paadu"
+  ],
+  [
+   "vinandi",
+   "vinu"
+  ],
+  [
+   "malli cheppandi",
+   "malli cheppu"
+  ],
+  [
+   "nemmadigaa maatlaadandi",
+   "nemmadigaa maatlaadu"
+  ],
+  [
+   "start cheyyandi",
+   "start cheyyi"
+  ],
+  [
+   "aapandi",
+   "aapu"
+  ],
+  [
+   "aagandi",
+   "aagu"
+  ],
+  [
+   "lekka pettandi",
+   "lekka pettu"
+  ],
+  [
+   "practice cheyyandi",
+   "practice cheyyi"
+  ],
+  [
+   "try cheyyandi",
+   "try cheyyi"
+  ],
+  [
+   "choodandi",
+   "choodu"
+  ],
+  [
+   "raandi",
+   "raa"
+  ],
+  [
+   "vellandi",
+   "vellu"
+  ],
+  [
+   "koorchondi",
+   "koorcho"
+  ],
+  [
+   "lechi nilabadandi",
+   "lechi nilabadu"
+  ],
+  [
+   "ivvandi",
+   "ivvu"
+  ],
+  [
+   "theesukondi",
+   "theesuko"
+  ],
+  [
+   "tinandi",
+   "tinu"
+  ],
+  [
+   "thaagandi",
+   "thaagu"
+  ],
+  [
+   "theeyandi",
+   "theeyi"
+  ],
+  [
+   "mooyandi",
+   "mooyi"
+  ],
+  [
+   "vaayinchakandi",
+   "vaayinchaku"
+  ]
+ ],
+ "commandNote": "Polite ends in andi (vaayinchandi, raandi, ivvandi); a friend or a child gets the short form (vaayinchu, raa, ivvu). Do not: verb plus aku, or akandi to be polite (vaayinchaku, vaayinchakandi).",
+ "adjectives": {
+  "big": {
+   "attr": "pedda",
+   "pred": "peddadi"
+  },
+  "small": {
+   "attr": "chinna",
+   "pred": "chinnadi"
+  },
+  "long": {
+   "attr": "podavaina",
+   "pred": "podavugaa undi"
+  },
+  "heavy": {
+   "attr": "baruvaina",
+   "pred": "baruvugaa undi"
+  },
+  "full": {
+   "attr": "full",
+   "pred": "full gaa undi"
+  },
+  "empty": {
+   "attr": "khaali",
+   "pred": "khaaligaa undi"
+  },
+  "good": {
+   "attr": "manchi",
+   "pred": "baagaa undi"
+  },
+  "bad": {
+   "attr": "chedda",
+   "pred": "cheddadi"
+  },
+  "beautiful": {
+   "attr": "andamaina",
+   "pred": "andamgaa undi"
+  },
+  "new": {
+   "attr": "kotha",
+   "pred": "kothadi"
+  },
+  "old": {
+   "attr": "paatha",
+   "pred": "paathadi"
+  },
+  "clean": {
+   "attr": "shubhramaina",
+   "pred": "shubhramgaa undi"
+  },
+  "dirty": {
+   "attr": "muriki",
+   "pred": "murikigaa undi"
+  },
+  "correct": {
+   "attr": "saraina",
+   "pred": "sarigaa undi"
+  },
+  "wrong": {
+   "attr": "thappu",
+   "pred": "thappu"
+  },
+  "same": {
+   "attr": "okate",
+   "pred": "okate"
+  },
+  "different": {
+   "attr": "vere",
+   "pred": "vere"
+  },
+  "important": {
+   "attr": "mukhyamaina",
+   "pred": "mukhyam"
+  },
+  "hot": {
+   "attr": "vedi",
+   "pred": "vedigaa undi"
+  },
+  "cold": {
+   "attr": "challani",
+   "pred": "challagaa undi"
+  },
+  "tasty": {
+   "attr": "ruchigaa unna",
+   "pred": "ruchigaa undi"
+  },
+  "spicy": {
+   "attr": "kaaramaina",
+   "pred": "kaaramgaa undi"
+  },
+  "sweet": {
+   "attr": "teeyani",
+   "pred": "teeyagaa undi"
+  },
+  "happy": {
+   "attr": "santhoshamgaa unna",
+   "pred": "santhoshamgaa undi"
+  },
+  "sad": {
+   "attr": "baadhagaa unna",
+   "pred": "baadhagaa undi"
+  },
+  "expensive": {
+   "attr": "costly",
+   "pred": "ekkuva"
+  },
+  "cheap": {
+   "attr": "cheap",
+   "pred": "takkuva"
+  },
+  "free": {
+   "attr": "free",
+   "pred": "free"
+  },
+  "fast": {
+   "attr": "fast",
+   "pred": "fast gaa undi"
+  },
+  "slow": {
+   "attr": "slow",
+   "pred": "nemmadigaa undi"
+  },
+  "loud": {
+   "attr": "gattigaa unna",
+   "pred": "gattigaa undi"
+  },
+  "near": {
+   "attr": "daggarlo unna",
+   "pred": "daggarlo undi"
+  },
+  "far": {
+   "attr": "dooramgaa unna",
+   "pred": "dooram"
+  },
+  "ready": {
+   "attr": "ready gaa unna",
+   "pred": "ready gaa undi"
+  },
+  "busy": {
+   "attr": "busy gaa unna",
+   "pred": "busy gaa undi"
+  },
+  "easy": {
+   "attr": "easy",
+   "pred": "easy gaa undi"
+  },
+  "difficult": {
+   "attr": "kashtamaina",
+   "pred": "kashtamgaa undi"
+  },
+  "red": {
+   "attr": "erra",
+   "pred": "erragaa undi"
+  },
+  "white": {
+   "attr": "thella",
+   "pred": "thellagaa undi"
+  },
+  "black": {
+   "attr": "nalla",
+   "pred": "nallagaa undi"
+  },
+  "green": {
+   "attr": "aakupachcha",
+   "pred": "aakupachchagaa undi"
+  },
+  "blue": {
+   "attr": "neeli",
+   "pred": "neeligaa undi"
+  },
+  "yellow": {
+   "attr": "pasupu",
+   "pred": "pasupugaa undi"
+  },
+  "sick": {
+   "attr": "jabbu chesina",
+   "pred": "jabbugaa undi"
+  },
+  "tired": {
+   "attr": "alisipoyina",
+   "pred": "alasatagaa undi"
+  },
+  "hungry": {
+   "attr": "aakaligaa unna",
+   "pred": "aakaligaa undi"
+  },
+  "thirsty": {
+   "attr": "daahamgaa unna",
+   "pred": "daahamgaa undi"
+  },
+  "sleepy": {
+   "attr": "nidragaa unna",
+   "pred": "nidragaa undi"
+  },
+  "angry": {
+   "attr": "kopamgaa unna",
+   "pred": "kopamgaa undi"
+  },
+  "late": {
+   "attr": "late",
+   "pred": "late"
+  },
+  "early": {
+   "attr": "early",
+   "pred": "early"
+  },
+  "open": {
+   "attr": "theesi unna",
+   "pred": "theesi undi"
+  },
+  "closed": {
+   "attr": "moosi unna",
+   "pred": "moosi undi"
+  },
+  "broken": {
+   "attr": "virigina",
+   "pred": "virigi undi"
+  },
+  "wet": {
+   "attr": "thadi",
+   "pred": "thadigaa undi"
+  },
+  "dry": {
+   "attr": "podi",
+   "pred": "podigaa undi"
+  },
+  "soft": {
+   "attr": "metthani",
+   "pred": "metthagaa undi"
+  },
+  "hard": {
+   "attr": "gatti",
+   "pred": "gattigaa undi"
+  },
+  "fresh": {
+   "attr": "fresh",
+   "pred": "fresh gaa undi"
+  },
+  "crowded": {
+   "attr": "rush gaa unna",
+   "pred": "rush gaa undi"
+  },
+  "quiet": {
+   "attr": "nishabdamgaa unna",
+   "pred": "nishabdamgaa undi"
+  },
+  "safe": {
+   "attr": "safe",
+   "pred": "safe"
+  },
+  "dangerous": {
+   "attr": "pramaadakaramaina",
+   "pred": "pramaadam"
+  },
+  "urgent": {
+   "attr": "urgent",
+   "pred": "urgent"
+  },
+  "short": {
+   "attr": "potti",
+   "pred": "pottigaa undi"
+  },
+  "tall": {
+   "attr": "podavaina",
+   "pred": "podavugaa undi"
+  },
+  "thin": {
+   "attr": "sannani",
+   "pred": "sannagaa undi"
+  },
+  "young": {
+   "attr": "chinna vayasu",
+   "pred": "chinna vayasu"
+  },
+  "light": {
+   "attr": "telikaina",
+   "pred": "telikagaa undi"
+  },
+  "dark": {
+   "attr": "dark",
+   "pred": "dark gaa undi"
+  },
+  "pink": {
+   "attr": "pink",
+   "pred": "pink"
+  },
+  "orange": {
+   "attr": "orange",
+   "pred": "orange"
+  },
+  "brown": {
+   "attr": "brown",
+   "pred": "brown"
+  },
+  "grey": {
+   "attr": "grey",
+   "pred": "grey"
+  }
+ },
+ "quantities": {
+  "alittle": "konchem",
+  "alot": "chaala",
+  "some": "konni",
+  "all": "anni",
+  "more": "inkaa",
+  "less": "takkuva",
+  "only": "maatrame",
+  "one": "oka",
+  "two": "rendu",
+  "three": "moodu",
+  "half": "ara",
+  "onekilo": "oka kilo"
+ },
+ "questionWords": {
+  "where": "ekkada",
+  "what": "enti",
+  "when": "eppudu",
+  "why": "enduku",
+  "how": "ela",
+  "howmuch": "entha",
+  "whatall": "emem"
+ },
+ "subjectExtras": {
+  "this": "idi",
+  "that": "adi"
+ },
+ "directions": {
+  "here": "ikkada",
+  "there": "akkada",
+  "straight": "straight",
+  "left": "left ki",
+  "right": "right ki",
+  "ahead": "mundu",
+  "back": "venaka",
+  "near": "daggarlo",
+  "slowly": "nemmadigaa",
+  "quickly": "tvaragaa",
+  "carefully": "jaagrattagaa",
+  "now": "ippudu",
+  "later": "tarvaatha",
+  "today": "ivaala",
+  "tomorrow": "repu",
+  "again": "malli",
+  "inside": "lopala",
+  "outside": "bayata",
+  "upstairs": "paina",
+  "downstairs": "kinda"
+ }
+}

@@ -2,8 +2,8 @@ import type { ShapeChoice, ShapeId } from "./shapes";
 
 // Real life, one place. Each situation is a short conversation written ONCE as
 // engine choices (a shape plus its words), never as a sentence in one language.
-// The engine then builds every line in Kannada, Hindi, Tamil, Malayalam and
-// French from grammar.json, so adding a situation here adds it everywhere, and
+// The engine then builds every line in Kannada, Hindi, Tamil, Malayalam, Telugu
+// and French from grammar.json, so adding a situation here adds it everywhere, and
 // fixing a word in grammar.json fixes it in every situation that uses it.
 // scripts/check_situations.ts builds every line in every language and fails
 // on any line a language cannot make. No em dashes anywhere.
@@ -286,6 +286,149 @@ export const SITUATIONS: Situation[] = [
       you({ shape: "like", who: "youp", object: "coffee", question: true }),
       them(tell("pickup", { object: "child", direction: "today" })),
       you(tell("come", { direction: "again" })),
+    ],
+  },
+  {
+    id: "kirana", emoji: "🛒", title: "Kirana and groceries", them: "Shopkeeper",
+    blurb: "Is there milk, a kilo of rice, a little sugar, pay by UPI.",
+    words: ["rice", "oil", "sugar", "milk", "bread", "biscuit", "salt", "dal", "curd", "upi", "change"],
+    lines: [
+      you({ shape: "thereIs", object: "milk", question: true }),
+      them({ shape: "thereIs", object: "bread", negative: true }),
+      you({ shape: "request", object: "rice", quant: "onekilo" }),
+      you({ shape: "howMuch", object: "oil" }),
+      you({ shape: "want", who: "i", object: "sugar", quant: "alittle" }),
+      you({ shape: "request", object: "biscuit" }),
+      them({ shape: "have", who: "youp", object: "change", question: true }),
+      you(does("pay", { object: "bill", when: "future" })),
+    ],
+  },
+  {
+    id: "petrol", emoji: "⛽", title: "Petrol bunk", them: "Attendant",
+    blurb: "Fill petrol, check the tyres, a puncture, pay.",
+    words: ["petrol", "tyre", "puncture", "bike", "scooter", "car", "cash", "upi", "petrolbunk"],
+    lines: [
+      you({ shape: "whereIs", object: "petrolbunk", the: true }),
+      you({ shape: "request", object: "petrol" }),
+      them(tell("switchoff", { object: "bike" })),
+      you(tell("check", { object: "tyre" })),
+      you({ shape: "have", who: "i", object: "puncture" }),
+      you({ shape: "howMuch", object: "bill" }),
+      you(does("pay", { object: "cash", when: "future" })),
+    ],
+  },
+  {
+    id: "school", emoji: "🎒", title: "School and college", them: "Teacher",
+    blurb: "Homework, the exam, the fees, the uniform.",
+    words: ["school", "college", "class", "exam", "homework", "notebook", "maths", "fees", "uniform"],
+    lines: [
+      them(does("finish", { who: "youp", object: "homework", when: "past", question: true })),
+      you(does("finish", { object: "homework", when: "past" })),
+      them(tell("submit", { object: "homework" })),
+      you({ shape: "thereIs", object: "exam", question: true }),
+      them(tell("bring", { object: "notebook", direction: "tomorrow" })),
+      them(tell("wear", { object: "uniform" })),
+      you({ shape: "howMuch", object: "fees" }),
+      you(does("study", { object: "maths", when: "cont" })),
+    ],
+  },
+  {
+    id: "temple", emoji: "🛕", title: "Temple and festivals", them: "Neighbour",
+    blurb: "Where is the temple, it is crowded, take the sweet.",
+    words: ["temple", "church", "flower", "sweet", "friend", "neighbour"],
+    lines: [
+      you({ shape: "whereIs", object: "temple", the: true }),
+      them({ shape: "lets", verb: "go", object: "temple" }),
+      you(does("buy", { object: "flower", when: "want" })),
+      them({ shape: "isAdj", subject: "temple", adj: "crowded" }),
+      you(does("pray", { when: "present", timeWord: true })),
+      them(tell("take", { object: "sweet" })),
+      you({ shape: "isAdj", subject: "sweet", adj: "tasty" }),
+    ],
+  },
+  {
+    id: "hotel", emoji: "🏨", title: "Hotel stay", them: "Receptionist",
+    blurb: "The booking, the room, the Wi-Fi, the AC is broken.",
+    words: ["hotel", "room", "key", "wifi", "ac", "hotwater", "bathroom", "idproof", "booking"],
+    lines: [
+      you(does("book", { object: "room", when: "past" })),
+      them(tell("show", { object: "idproof" })),
+      you({ shape: "howMuch", object: "room" }),
+      you({ shape: "thereIs", object: "wifi", question: true }),
+      you({ shape: "request", object: "key" }),
+      you({ shape: "isAdj", subject: "ac", adj: "broken" }),
+      you({ shape: "thereIs", object: "hotwater", negative: true }),
+      you(tell("clean", { object: "room" })),
+    ],
+  },
+  {
+    id: "househelp", emoji: "🧹", title: "House help", them: "House help",
+    blurb: "Wash, iron, clean the kitchen, the salary.",
+    words: ["clothes", "shirt", "kitchen", "bathroom", "vegetables", "milk", "salary", "advance"],
+    lines: [
+      you(tell("wash", { object: "clothes" })),
+      you(tell("iron", { object: "shirt" })),
+      you(tell("clean", { object: "kitchen" })),
+      you(tell("cook", { object: "rice" })),
+      them({ shape: "thereIs", object: "milk", negative: true }),
+      you(tell("buy", { object: "vegetables" })),
+      them({ shape: "want", who: "i", object: "advance" }),
+      you(does("pay", { object: "salary", when: "future" })),
+    ],
+  },
+  {
+    id: "cinema", emoji: "🎬", title: "Cinema and going out", them: "Friend",
+    blurb: "Let's see a movie, book tickets, was it good.",
+    words: ["movie", "cinema", "ticket", "snack", "friend", "film"],
+    lines: [
+      them({ shape: "lets", verb: "see", object: "movie" }),
+      you(does("book", { object: "ticket", when: "past" })),
+      you({ shape: "howMuch", object: "ticket" }),
+      you({ shape: "whereIs", object: "cinema", the: true }),
+      them({ shape: "want", who: "youp", object: "snack", question: true }),
+      them({ shape: "isAdj", subject: "movie", adj: "good", question: true }),
+      you({ shape: "isAdj", subject: "movie", adj: "good" }),
+    ],
+  },
+  {
+    id: "post", emoji: "📮", title: "Post office", them: "Clerk",
+    blurb: "Send a parcel, write the address, the receipt.",
+    words: ["parcel", "letter", "address", "form", "receipt", "postoffice"],
+    lines: [
+      you({ shape: "whereIs", object: "postoffice", the: true }),
+      you(does("send", { object: "parcel", when: "want" })),
+      them(tell("write", { object: "address" })),
+      them(tell("fill", { object: "form" })),
+      you({ shape: "howMuch", object: "fees" }),
+      you(does("collect", { object: "letter", when: "want" })),
+      them(tell("show", { object: "receipt" })),
+    ],
+  },
+  {
+    id: "power", emoji: "💡", title: "Gas and power", them: "Electrician",
+    blurb: "No gas, a power cut, the bulb is gone.",
+    words: ["cylinder", "current", "powercut", "bulb", "light", "fan", "electrician"],
+    lines: [
+      you({ shape: "thereIs", object: "cylinder", negative: true }),
+      you(does("book", { object: "cylinder", when: "want" })),
+      you({ shape: "thereIs", object: "current", negative: true }),
+      you({ shape: "isAdj", subject: "bulb", adj: "broken" }),
+      you(tell("call", { object: "electrician" })),
+      them(tell("switchon", { object: "light" })),
+    ],
+  },
+  {
+    id: "clothes", emoji: "👗", title: "Clothes shop", them: "Shopkeeper",
+    blurb: "Show me that, it is too small, can I exchange it.",
+    words: ["shirt", "saree", "kurta", "pants", "shoes", "chappal", "clothes"],
+    lines: [
+      you(tell("show", { object: "saree" })),
+      you({ shape: "howMuch", object: "kurta" }),
+      you({ shape: "isAdj", subject: "this", adj: "expensive" }),
+      you({ shape: "isAdj", subject: "shirt", adj: "small" }),
+      you({ shape: "want", who: "i", object: "pants" }),
+      you(does("exchange", { object: "shirt", when: "want" })),
+      you(does("pay", { object: "bill", when: "future" })),
     ],
   },
 ];

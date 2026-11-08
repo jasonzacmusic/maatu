@@ -1,10 +1,10 @@
 # Maatu
 
-Learn to speak Kannada, Hindi, and Tamil. Two halves that feed each other:
+Learn to speak Kannada, Hindi, Tamil, Malayalam and Telugu (and everyday French). Two halves that feed each other:
 
 **Talk.** Live voice calls with AI characters in real Indian situations (auto stand, delivery gate, chai stall, kirana, market, clinic, landlord, salon, airport, customer care, music classroom), plus a 16 lesson beginner course and an open companion who will chat, teach any topic on request, or act out any scene you invent. Sarvam Saarika hears you, Sarvam Bulbul V3 answers, over LiveKit.
 
-**Build.** The Sentence Path: tap who, action, what, when with emoji tiles and get the spoken line in Kannada, Hindi, Tamil, or French, in beats you can read aloud, then flip the tense or the person. Below it, one practice tool at a time:
+**Build.** The Sentence Path: tap who, action, what, when with emoji tiles and get the spoken line in Kannada, Hindi, Tamil, Malayalam, Telugu or French, in beats you can read aloud, then flip the tense or the person. Below it, one practice tool at a time:
 
 - **Review** saved lines on a spaced schedule (0, 1, 3, 7, 14 days)
 - **Check** any line you type or speak; every fix is tagged (tense, gender, verb, word order, missing word) with the reusable rule
@@ -17,7 +17,7 @@ Learn to speak Kannada, Hindi, and Tamil. Two halves that feed each other:
 - **Rules** eight per language
 - **Decks** 167 words with memory tricks, music first
 
-Everything is romanized Latin, colloquial spoken register (Bangalore, Delhi, Chennai), never native script and no plural endings for beginners. Every studio form comes from vetted tables in `grammar.json` and `playbooks.json`, which the voice teacher reads too, so the class and the studio can never disagree.
+Everything is romanized Latin, colloquial spoken register (Bangalore, Delhi, Chennai, Kochi, Hyderabad), never native script and no plural endings for beginners. Every studio form comes from vetted tables in `grammar.json` and `playbooks.json`, which the voice teacher reads too, so the class and the studio can never disagree.
 
 ## Where things live
 
@@ -25,7 +25,7 @@ Everything is romanized Latin, colloquial spoken register (Bangalore, Delhi, Che
 - Standing rules: `CLAUDE.md`
 - Status and milestones: `TASKS.md`
 - Every default chosen without asking: `DECISIONS.md`
-- Frontend: Next.js PWA at the repo root, deploys to Vercel from the `redesign/night-bazaar` branch
+- Frontend: Next.js PWA at the repo root, deploys to Vercel from the `main` branch. Deep links: `/?lang=te&mode=build` (modes: build, course, scenes, chat). `npm run check` builds every situation line in every language
 - Voice agent: `agent/` (Python, livekit-agents), hosted on LiveKit Cloud (agent CA_qEYzC3PqfR2e, India region, free Build plan). Redeploy with `PRODUCTION=1 scripts/deploy_cloud_agent.sh`. Calls ask for the worker named `maatu-studio`; a copy run on a Mac registers as `maatu-local` and only answers test probes (`scripts/e2e_voice_probe.py --agent maatu-local`). Language codes, cities, teachers and voices: `languages.json`.
 
 Live at https://maatu.vercel.app

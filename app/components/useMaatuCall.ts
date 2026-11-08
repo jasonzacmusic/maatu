@@ -24,17 +24,18 @@ export type Line = { who: "character" | "learner"; text: string };
 // The mic meter's bar thresholds, shared with the call screen.
 export const METER_STEPS = [0.05, 0.15, 0.3, 0.5, 0.7];
 
-const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff\u0d00-\u0d7f]/u;
+const NATIVE_SCRIPT = /[\u0900-\u097f\u0b80-\u0bff\u0c80-\u0cff\u0d00-\u0d7f\u0c00-\u0c7f]/u;
 
 function safeRomanizedText(text: string) {
   return NATIVE_SCRIPT.test(text) ? "Romanizing speech..." : text.replace(/\u2014/gu, ",");
 }
 
 function languageCode(persona: string) {
-  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta|ml)(?:-|$)/)?.[1];
+  const language = persona.match(/^(?:teacher-|tutor-)?(kn|hi|ta|ml|te)(?:-|$)/)?.[1];
   if (language === "hi") return "hi-IN";
   if (language === "ta") return "ta-IN";
   if (language === "ml") return "ml-IN";
+  if (language === "te") return "te-IN";
   return "kn-IN";
 }
 

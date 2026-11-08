@@ -1,5 +1,6 @@
 import {
   build,
+  teQuestion,
   adjById,
   DIRECTIONS,
   objectById,
@@ -151,10 +152,15 @@ export type ShapeChoice = PathChoice & {
 // ............................................................ negation
 // Each language negates a predicate its own way. These rules were written
 // against the exact predicate forms stored in grammar.json and every one of
-// the 43 adjectives was read back in all four languages before shipping.
+// the 43 adjectives was read back in all five Indian languages before shipping.
 function negPred(lang: Lang, adj: Adjective): string {
   if (lang === "hi") return `${adj.hi.m} nahin`;
-  const { attr, pred } = lang === "kn" ? adj.kn : lang === "ta" ? adj.ta : adj.ml;
+  const { attr, pred } = adjForms(lang, adj);
+  if (lang === "te") {
+    // A state (vedigaa undi) flips undi to ledu; a kind of thing (peddadi) adds kaadu.
+    if (pred.endsWith(" undi")) return pred.slice(0, -5) + " ledu";
+    return `${pred} kaadu`;
+  }
   if (lang === "kn") {
     if (pred.endsWith("ide")) return pred.slice(0, -3) + "illa";
     if (pred.endsWith("du")) return `${attr} alla`;
@@ -170,10 +176,14 @@ function negPred(lang: Lang, adj: Adjective): string {
   return `${pred} alla`;
 }
 
+function adjForms(lang: Lang, adj: Adjective) {
+  return lang === "kn" ? adj.kn : lang === "ta" ? adj.ta : lang === "te" ? adj.te : adj.ml;
+}
+
 function predOf(lang: Lang, adj: Adjective, negative: boolean): string {
   if (negative) return negPred(lang, adj);
   if (lang === "hi") return `${adj.hi.m} hai`;
-  return (lang === "kn" ? adj.kn : lang === "ta" ? adj.ta : adj.ml).pred;
+  return adjForms(lang, adj).pred;
 }
 
 // Hindi adjectives and possessives agree with the thing, so they need to know
@@ -186,7 +196,7 @@ function hiForm(m: string, f: string, pl: string | undefined, obj: ObjectWord | 
 
 function attrOf(lang: Lang, adj: Adjective, obj: ObjectWord | null): string {
   if (lang === "hi") return hiForm(adj.hi.m, adj.hi.f, adj.hi.m === adj.hi.f ? adj.hi.m : adj.hi.m.replace(/a$/, "e"), obj);
-  return (lang === "kn" ? adj.kn : lang === "ta" ? adj.ta : adj.ml).attr;
+  return adjForms(lang, adj).attr;
 }
 
 function possOf(lang: Lang, p: PersonId, obj: ObjectWord | null): string {
@@ -216,12 +226,15 @@ function nounPhrase(lang: Lang, c: ShapeChoice, obj: ObjectWord | null, useQuant
 // is needs the plain word: mane elli ide, veedu enga irukku.
 const PLACE_PLAIN_ML: Record<string, string> = { home: "veedu", temple: "ambalam", church: "palli", village: "naadu" };
 const PLACE_PLAIN_TA: Record<string, string> = { home: "veedu" };
+// Telugu stores the plain word next to the destination when ki does not simply drop off (intiki, illu).
+const PLACE_PLAIN_TE: Record<string, string> = { home: "illu" };
 function placePlain(lang: Lang, o: ObjectWord): string {
   const w = o[lang];
   if (lang === "kn") return w.replace(/-?ge$/, "");
   if (lang === "ta") return PLACE_PLAIN_TA[o.id] ?? w.replace(/-?k?ku$/, "");
   if (lang === "hi") return w.replace(/ (pe|mein|tak|ko)$/, "");
   if (lang === "ml") return PLACE_PLAIN_ML[o.id] ?? w.replace(/-?y?ilekku$/, "");
+  if (lang === "te") return o.tePlain ?? PLACE_PLAIN_TE[o.id] ?? w.replace(/ ?(ki|ku)$/, "");
   return w;
 }
 
@@ -235,7 +248,14 @@ function subjectWord(lang: Lang, c: ShapeChoice): { word: string; obj: ObjectWor
   const extra = SUBJECT_EXTRAS.find((s) => s.id === c.subject);
   if (extra) return { word: extra[lang], obj: null };
   const obj = objectById(c.subject);
-  if (obj) return { word: obj[lang], obj };
+  // A place as the subject is the plain name (the temple is far), never the
+  // going-to form; a crowd is IN the place (gudilo rush gaa undi).
+  if (obj && obj.kind === "place") {
+    const at = (obj as ObjectWord & { at?: Partial<Record<Lang, string>> }).at?.[lang];
+    return { word: c.adj === "crowded" && at ? at : placePlain(lang, obj), obj };
+  }
+  // The thing being described is a particular one: the film is good, not a film is good.
+  if (obj) return { word: obj[lang].replace(/^(ondu|ek|oru|oka) /, ""), obj };
   return { word: SUBJECT_EXTRAS[0][lang], obj: null };
 }
 
@@ -245,33 +265,34 @@ const IS: Record<Lang, { exist: string; notExist: string; identity: string; notI
   hi: { exist: "hai", notExist: "nahin hai", identity: "hai", notIdentity: "nahin hai" },
   ta: { exist: "irukku", notExist: "illa", identity: "", notIdentity: "illa" },
   ml: { exist: "und", notExist: "illa", identity: "aanu", notIdentity: "alla" },
+  te: { exist: "undi", notExist: "ledu", identity: "", notIdentity: "kaadu" },
 };
 
 const WANT: Record<Lang, [string, string]> = {
   kn: ["beku", "beda"], hi: ["chaahiye", "nahin chaahiye"],
-  ta: ["venum", "vendaam"], ml: ["venam", "venda"],
+  ta: ["venum", "vendaam"], ml: ["venam", "venda"], te: ["kaavaali", "vaddu"],
 };
 const LIKE: Record<Lang, [string, string]> = {
   kn: ["ishta", "ishta illa"], hi: ["pasand hai", "pasand nahin"],
-  ta: ["pudikkum", "pudikkaadhu"], ml: ["ishtamaanu", "ishtamalla"],
+  ta: ["pudikkum", "pudikkaadhu"], ml: ["ishtamaanu", "ishtamalla"], te: ["ishtam", "ishtam ledu"],
 };
-const WHERE: Record<Lang, string> = { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku", ml: "evideyaanu" };
+const WHERE: Record<Lang, string> = { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku", ml: "evideyaanu", te: "ekkada undi" };
 // A person is never "where is it": Kannada and Tamil use the respectful they-form.
-const WHERE_PERSON: Record<Lang, string> = { kn: "elli iddaare", hi: "kahaan hain", ta: "enga irukkaanga", ml: "evideyaanu" };
+const WHERE_PERSON: Record<Lang, string> = { kn: "elli iddaare", hi: "kahaan hain", ta: "enga irukkaanga", ml: "evideyaanu", te: "ekkada unnaaru" };
 const HI_RESPECT = new Set(["doctor", "officer", "landlord", "father", "mother", "husband", "manager"]);
 // Your own son, daughter, wife or child takes the plain he, she or it form.
 const WHERE_FAMILY: Record<string, Partial<Record<Lang, string>>> = {
-  son: { kn: "elli iddaane", hi: "kahaan hai", ta: "enga irukkaan" },
-  daughter: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa" },
-  wife: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa" },
-  child: { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku" },
+  son: { kn: "elli iddaane", hi: "kahaan hai", ta: "enga irukkaan", te: "ekkada unnaadu" },
+  daughter: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa", te: "ekkada undi" },
+  wife: { kn: "elli iddaale", hi: "kahaan hai", ta: "enga irukkaa", te: "ekkada undi" },
+  child: { kn: "elli ide", hi: "kahaan hai", ta: "enga irukku", te: "ekkada undi" },
 };
-const HOWMUCH: Record<Lang, string> = { kn: "eshtu", hi: "kitne ka hai", ta: "evlo", ml: "ethrayaanu" };
+const HOWMUCH: Record<Lang, string> = { kn: "eshtu", hi: "kitne ka hai", ta: "evlo", ml: "ethrayaanu", te: "entha" };
 // Please give me, polite then to a friend.
 const GIVE: Record<Lang, [string, string]> = {
-  kn: ["kodi", "kodu"], hi: ["dijiye", "do"], ta: ["kudunga", "kudu"], ml: ["tharoo", "thaa"],
+  kn: ["kodi", "kodu"], hi: ["dijiye", "do"], ta: ["kudunga", "kudu"], ml: ["tharoo", "thaa"], te: ["ivvandi", "ivvu"],
 };
-const QMARK: Record<Lang, string> = { kn: "aa", hi: "kya", ta: "aa", ml: "o" };
+const QMARK: Record<Lang, string> = { kn: "aa", hi: "kya", ta: "aa", ml: "o", te: "aa" };
 
 // Turn a finished statement into a yes or no question, the way each language
 // does it: Hindi puts kya at the front, the other three lean on the last word.
@@ -281,7 +302,9 @@ function askIt(lang: Lang, parts: Part[]): Part[] {
   if (!last) return parts;
   const w = last.word;
   let asked: string;
-  if (lang === "ml") {
+  if (lang === "te") {
+    asked = teQuestion(w);
+  } else if (lang === "ml") {
     asked = w.endsWith("und") || w.endsWith("um") || w.endsWith("aam") ? w + "o"
       : w.endsWith("illa") ? w.slice(0, -1) + "e"
       : w.endsWith("aanu") ? w.slice(0, -1) + "o"
@@ -309,7 +332,7 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
   if (lang === "fr") {
     return {
       english: "", enParts: [], sentence: "", parts: [], say: "",
-      unsupported: "French only has the first shape, someone does something. The other shapes are built from vetted Kannada, Hindi, Tamil and Malayalam tables that French does not have yet.",
+      unsupported: "French only has the first shape, someone does something. The other shapes are built from vetted Kannada, Hindi, Tamil, Malayalam and Telugu tables that French does not have yet.",
     };
   }
   const L = lang as Lang;
@@ -328,7 +351,9 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       const s = subjectWord(L, c);
       const pred = neg ? negPred(L, a) : predOf(L, a, false);
       // Hindi agrees with the thing being described.
-      const hiPred = L === "hi" ? `${hiForm(a.hi.m, a.hi.f, undefined, s.obj)} ${neg ? "nahin hai" : "hai"}` : pred;
+      // A crowd is in a place: mandir mein bheed hai.
+      const hiCrowd = s.obj?.kind === "place" && a.id === "crowded";
+      const hiPred = L === "hi" ? (hiCrowd ? `bheed ${neg ? "nahin hai" : "hai"}` : `${hiForm(a.hi.m, a.hi.f, undefined, s.obj)} ${neg ? "nahin hai" : "hai"}`) : pred;
       parts = [part(s.word, "who"), part(L === "hi" ? hiPred : pred, "action")];
       note = L === "hi"
         ? "The describing word follows the thing: bada aam, badi kitaab."
@@ -430,6 +455,7 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       if (L === "kn") word = v.kn.inf.replace(/akke$/, "") + "ona";
       else if (L === "ta") word = v.ta.inf + "laam";
       else if (L === "ml") word = v.ml.fut.replace(/um$/, "") + "aam";
+      else if (L === "te") word = v.te.hort;
       else word = `${v.hi.stem}te hain`;
       parts = [...(L === "hi" ? [part("chalo", "helper")] : []), ...nounPhrase(L, c, obj, false, true), part(word, "action")];
       break;
@@ -439,7 +465,7 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       const go = verbById("go");
       if (!v2 || !go) return null;
       const place = c.place ? objectById(c.place) : null;
-      const inf = L === "hi" ? `${v2.hi.stem}ne` : L === "kn" ? v2.kn.inf : L === "ta" ? v2.ta.inf : v2.ml.inf;
+      const inf = L === "hi" ? `${v2.hi.stem}ne` : L === "kn" ? v2.kn.inf : L === "ta" ? v2.ta.inf : L === "te" ? v2.te.purp : v2.ml.inf;
       const goForm = goVerb(L, c);
       parts = [
         part(who, "who"),
@@ -453,13 +479,15 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
     }
     case "whQuestion": {
       // Where are you going? The question word sits between the person and
-      // the verb in all four languages, and the verb keeps its plain form.
+      // the verb in all five Indian languages, and the verb keeps its plain form.
       const q = QUESTION_WORDS.find((x) => x.id === c.qword) ?? QUESTION_WORDS[0];
       // Malayalam cannot put a question word on -unnund: evide pokunnu, not evide pokunnund.
       const built = build(L, { person: c.who === "name" ? (c.nameG === "f" ? "she" : "he") : c.who, verb: c.verb, tense: L === "ml" && c.when === "cont" ? "present" : c.when, object: null, gender: c.gender });
       const verbPiece = built?.pieces.find((x) => x.role === "verb");
       if (!verbPiece) return null;
-      parts = [part(who, "who"), part(q[L], "when"), part(verbPiece.word, "action")];
+      // Telugu asks where TO with motion: ekkadiki veltunnaaru, not ekkada.
+      const qWord = L === "te" && q.id === "where" && ["go", "come", "reach", "travel", "run", "walk", "drive"].includes(c.verb) ? "ekkadiki" : q[L];
+      parts = [part(who, "who"), part(qWord, "when"), part(verbPiece.word, "action")];
       note = "A real question needs no change to the verb: just drop the question word in front of it.";
       break;
     }
@@ -467,10 +495,11 @@ export function buildShape(lang: PathLang, c: ShapeChoice): PathResult | null {
       return null;
   }
 
-  if (c.question && shapeById(c.shape).toggles.includes("question")) parts = askIt(L, parts);
+  const asking = c.question && shapeById(c.shape).toggles.includes("question");
+  if (asking) parts = askIt(L, parts);
   // where-is and how-much are questions by their nature, with no toggle.
   const alwaysAsking: boolean = c.shape === "whereIs" || c.shape === "howMuch" || c.shape === "whQuestion";
-  const sentence = parts.map((p) => p.word).join(" ") + (c.question || alwaysAsking ? "?" : "");
+  const sentence = parts.map((p) => p.word).join(" ") + (asking || alwaysAsking ? "?" : "");
   return { english: "", enParts: [], sentence, parts, say: "", note };
 }
 
@@ -481,6 +510,8 @@ function goVerb(lang: Lang, c: ShapeChoice): string {
   if (lang === "kn") return go.kn.pres + ["tini", "tiya", "tira", "tane", "tale", "tivi", "tare"][IDX[p]];
   if (lang === "ta") return go.ta.pres + ["ren", "re", "reenga", "raan", "raa", "rom", "raanga"][IDX[p]];
   if (lang === "ml") return go.ml.pres;
+  // Telugu: going right now, veltunnaanu, veltunnadi.
+  if (lang === "te") return go.te.pres + ["unnaanu", "unnaavu", "unnaaru", "unnaadu", "unnadi", "unnaamu", "unnaaru"][IDX[p]];
   // Going somewhere right now is the continuous in Hindi: jaa raha hoon.
   const fem = p === "she" || (p !== "he" && c.gender === "f");
   const cont = fem ? "rahi" : ["raha", "rahe", "rahe", "raha", "rahi", "rahe", "rahe"][IDX[p]];

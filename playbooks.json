@@ -17,7 +17,8 @@
               "kn": "Jayanagar barteera?",
               "hi": "Jayanagar chaloge?",
               "ta": "Jayanagar vareengalaa?",
-              "ml": "Jayanagar varumo?"
+              "ml": "Jayanagar varumo?",
+              "te": "Jayanagar vastaaraa?"
             },
             {
               "who": "them",
@@ -25,7 +26,8 @@
               "kn": "elli hogbeku?",
               "hi": "kahaan jaana hai?",
               "ta": "enga poganum?",
-              "ml": "evideyaanu pokendathu?"
+              "ml": "evideyaanu pokendathu?",
+              "te": "ekkadiki vellaali?"
             },
             {
               "who": "you",
@@ -33,7 +35,8 @@
               "kn": "meter haaki.",
               "hi": "meter se chaliye.",
               "ta": "meter podunga.",
-              "ml": "meter ittaalum."
+              "ml": "meter ittaalum.",
+              "te": "meter veyyandi."
             },
             {
               "who": "them",
@@ -41,7 +44,8 @@
               "kn": "meter mele ippattu.",
               "hi": "meter se bees zyada.",
               "ta": "meter mela irubadhu.",
-              "ml": "meterinu purame irupathu."
+              "ml": "meterinu purame irupathu.",
+              "te": "meter meeda iravai."
             },
             {
               "who": "you",
@@ -49,7 +53,8 @@
               "kn": "illa, meter maatra.",
               "hi": "nahin, meter se hi.",
               "ta": "illa, meter mattum.",
-              "ml": "venda, meter mathram."
+              "ml": "venda, meter mathram.",
+              "te": "vaddu, meter maatrame."
             },
             {
               "who": "you",
@@ -57,7 +62,8 @@
               "kn": "Indiranagar-ge eshtu?",
               "hi": "Indiranagar ka kitna?",
               "ta": "Indiranagar-ku evlo?",
-              "ml": "Indiranagar-ilekku ethrayaanu?"
+              "ml": "Indiranagar-ilekku ethrayaanu?",
+              "te": "Indiranagar-ki entha?"
             },
             {
               "who": "them",
@@ -65,7 +71,8 @@
               "kn": "nooru aivattu.",
               "hi": "dedh sau.",
               "ta": "nooti ambadhu.",
-              "ml": "nooru anpathu."
+              "ml": "nooru anpathu.",
+              "te": "noota yaabhai."
             },
             {
               "who": "you",
@@ -73,7 +80,8 @@
               "kn": "jaasti. nooru maadi.",
               "hi": "bahut zyada hai. sau kar do.",
               "ta": "romba jaasti. nooru pannunga.",
-              "ml": "kooduthalaanu. nooru aakkam."
+              "ml": "kooduthalaanu. nooru aakkam.",
+              "te": "chaala ekkuva. vanda teeskondi."
             },
             {
               "who": "them",
@@ -81,7 +89,8 @@
               "kn": "sari, banni.",
               "hi": "theek hai, baitho.",
               "ta": "sari, ukkaarunga.",
-              "ml": "shari, kayaroo."
+              "ml": "shari, kayaroo.",
+              "te": "sare, ekkandi."
             }
           ]
         },
@@ -94,7 +103,8 @@
               "kn": "nera hogi.",
               "hi": "seedha chaliye.",
               "ta": "neraa ponga.",
-              "ml": "neere pokoo."
+              "ml": "neere pokoo.",
+              "te": "sootiga vellandi."
             },
             {
               "who": "you",
@@ -102,7 +112,8 @@
               "kn": "edakke tirugi.",
               "hi": "baayein mudiye.",
               "ta": "idadhu pakkam thirumbunga.",
-              "ml": "idathottu thirikkoo."
+              "ml": "idathottu thirikkoo.",
+              "te": "edama vaipu tirugandi."
             },
             {
               "who": "you",
@@ -110,7 +121,8 @@
               "kn": "balakke tirugi.",
               "hi": "daayein mudiye.",
               "ta": "valadhu pakkam thirumbunga.",
-              "ml": "valathottu thirikkoo."
+              "ml": "valathottu thirikkoo.",
+              "te": "kudi vaipu tirugandi."
             },
             {
               "who": "you",
@@ -118,7 +130,8 @@
               "kn": "swalpa nidhaana.",
               "hi": "thoda dheere.",
               "ta": "konjam medhuva.",
-              "ml": "kurachu pathukke."
+              "ml": "kurachu pathukke.",
+              "te": "konchem nemmadiga vellandi."
             },
             {
               "who": "them",
@@ -126,7 +139,8 @@
               "kn": "yaava side?",
               "hi": "kaun si taraf?",
               "ta": "endha pakkam?",
-              "ml": "ethu vashathekku?"
+              "ml": "ethu vashathekku?",
+              "te": "ye vaipu?"
             },
             {
               "who": "you",
@@ -134,7 +148,8 @@
               "kn": "signal hatra.",
               "hi": "signal ke paas.",
               "ta": "signal pakkathula.",
-              "ml": "signal-inu aduthu."
+              "ml": "signal-inu aduthu.",
+              "te": "signal daggara."
             },
             {
               "who": "them",
@@ -142,7 +157,8 @@
               "kn": "illena?",
               "hi": "yahin hai?",
               "ta": "ingayaa?",
-              "ml": "ivide aano?"
+              "ml": "ivide aano?",
+              "te": "ikkadenaa?"
             },
             {
               "who": "you",
@@ -150,7 +166,8 @@
               "kn": "illi nilsi.",
               "hi": "yahaan rok dijiye.",
               "ta": "inga niruthunga.",
-              "ml": "ivide nirthoo."
+              "ml": "ivide nirthoo.",
+              "te": "ikkada aapandi."
             }
           ]
         },
@@ -163,7 +180,8 @@
               "kn": "eshtu?",
               "hi": "kitna hua?",
               "ta": "evlo?",
-              "ml": "ethrayaanu?"
+              "ml": "ethrayaanu?",
+              "te": "entha ayyindi?"
             },
             {
               "who": "them",
@@ -171,7 +189,8 @@
               "kn": "embattu rupaayi.",
               "hi": "assi rupaye.",
               "ta": "embadhu roobaa.",
-              "ml": "enpathu roopa."
+              "ml": "enpathu roopa.",
+              "te": "enabhai roopaayalu."
             },
             {
               "who": "you",
@@ -179,7 +198,8 @@
               "kn": "chillare ideyaa?",
               "hi": "khulla hai?",
               "ta": "change irukkaa?",
-              "ml": "chillare undo?"
+              "ml": "chillare undo?",
+              "te": "chillara undaa?"
             },
             {
               "who": "you",
@@ -187,7 +207,8 @@
               "kn": "Google Pay ideyaa?",
               "hi": "Google Pay hai?",
               "ta": "Google Pay irukkaa?",
-              "ml": "Google Pay undo?"
+              "ml": "Google Pay undo?",
+              "te": "Google Pay undaa?"
             },
             {
               "who": "you",
@@ -195,7 +216,8 @@
               "kn": "chillare itkolli.",
               "hi": "khulla rakh lo.",
               "ta": "change vechukkonga.",
-              "ml": "baaki vechukkoo."
+              "ml": "baaki vechukkoo.",
+              "te": "chillara unchukondi."
             },
             {
               "who": "you",
@@ -203,7 +225,8 @@
               "kn": "thanks anna.",
               "hi": "shukriya bhaiya.",
               "ta": "thanks anna.",
-              "ml": "thanks chetta."
+              "ml": "thanks chetta.",
+              "te": "thanks anna."
             }
           ]
         }
@@ -225,7 +248,8 @@
               "kn": "neevu Jason-aa?",
               "hi": "aap Jason ho?",
               "ta": "neenga Jason-aa?",
-              "ml": "ningal Jason aano?"
+              "ml": "ningal Jason aano?",
+              "te": "meeru Jason-aa?"
             },
             {
               "who": "you",
@@ -233,7 +257,8 @@
               "kn": "howdu, naane.",
               "hi": "haan, main hi hoon.",
               "ta": "aama, naan dhaan.",
-              "ml": "athe, njaan thanne."
+              "ml": "athe, njaan thanne.",
+              "te": "avunu, nene."
             },
             {
               "who": "them",
@@ -241,7 +266,8 @@
               "kn": "OTP heli.",
               "hi": "OTP bataiye.",
               "ta": "OTP sollunga.",
-              "ml": "OTP parayoo."
+              "ml": "OTP parayoo.",
+              "te": "OTP cheppandi."
             },
             {
               "who": "you",
@@ -249,7 +275,8 @@
               "kn": "naalku aidu aaru elu.",
               "hi": "chaar paanch chhe saat.",
               "ta": "naalu anju aaru ezhu.",
-              "ml": "naalu anchu aaru ezhu."
+              "ml": "naalu anchu aaru ezhu.",
+              "te": "naalugu aidu aaru edu."
             },
             {
               "who": "them",
@@ -257,7 +284,8 @@
               "kn": "elli iddira? naanu gate hatra iddini.",
               "hi": "aap kahaan ho? main gate pe hoon.",
               "ta": "enga irukkeenga? naan gate-la irukken.",
-              "ml": "ningal evideyaanu? njaan gate-il und."
+              "ml": "ningal evideyaanu? njaan gate-il und.",
+              "te": "meeru ekkada unnaaru? nenu gate daggara unnaanu."
             },
             {
               "who": "you",
@@ -266,7 +294,8 @@
               "hi": "aa raha hoon, do minute.",
               "ta": "varen, rendu nimisham.",
               "hiF": "aa rahi hoon, do minute.",
-              "ml": "njaan varunnu, randu nimisham."
+              "ml": "njaan varunnu, randu nimisham.",
+              "te": "vastunnaanu, rendu nimishaalu."
             },
             {
               "who": "you",
@@ -274,7 +303,8 @@
               "kn": "dicky tegiri.",
               "hi": "dicky kholiye.",
               "ta": "dicky thorangunga.",
-              "ml": "dicky thurakkoo."
+              "ml": "dicky thurakkoo.",
+              "te": "dicky open cheyyandi."
             }
           ]
         },
@@ -287,7 +317,8 @@
               "kn": "neevu yaava ooru sir?",
               "hi": "aap kahaan se ho sir?",
               "ta": "neenga endha ooru sir?",
-              "ml": "ningal evideyaanu sir?"
+              "ml": "ningal evideyaanu sir?",
+              "te": "meedi ye ooru sir?"
             },
             {
               "who": "you",
@@ -296,7 +327,8 @@
               "hi": "main Bangalore se hoon. main music sikhaata hoon.",
               "ta": "naan Bangalore. naan music teacher.",
               "hiF": "main Bangalore se hoon. main music sikhaati hoon.",
-              "ml": "njaan Bangalore-il ninnu. njaan music padippikkunnu."
+              "ml": "njaan Bangalore-il ninnu. njaan music padippikkunnu.",
+              "te": "maadi Bangalore. nenu music nerpistaanu."
             },
             {
               "who": "them",
@@ -304,7 +336,8 @@
               "kn": "Bangalore-alli eshtu varsha?",
               "hi": "Bangalore mein kitne saal?",
               "ta": "Bangalore-la ethana varusham?",
-              "ml": "Bangalore-il ethra varsham aayi?"
+              "ml": "Bangalore-il ethra varsham aayi?",
+              "te": "Bangalore-lo enni samvatsaraalu?"
             },
             {
               "who": "you",
@@ -312,7 +345,8 @@
               "kn": "hattu varsha.",
               "hi": "das saal.",
               "ta": "patthu varusham.",
-              "ml": "patthu varsham."
+              "ml": "patthu varsham.",
+              "te": "padi samvatsaraalu."
             },
             {
               "who": "them",
@@ -321,7 +355,8 @@
               "hi": "Kannada aati hai?",
               "ta": "Kannada theriyumaa?",
               "note": "Swap the language name; the shape stays.",
-              "ml": "ningalkku Malayalam ariyaamo?"
+              "ml": "ningalkku Malayalam ariyaamo?",
+              "te": "meeku Telugu vachaa?"
             },
             {
               "who": "you",
@@ -330,7 +365,8 @@
               "hi": "thodi. seekh raha hoon.",
               "ta": "konjam. kathukittu irukken.",
               "hiF": "thodi. seekh rahi hoon.",
-              "ml": "kurachu. njaan padikkunnund."
+              "ml": "kurachu. njaan padikkunnund.",
+              "te": "konchem. nerchukuntunnaanu."
             },
             {
               "who": "you",
@@ -338,7 +374,8 @@
               "kn": "AC haaki.",
               "hi": "AC chala dijiye.",
               "ta": "AC podunga.",
-              "ml": "AC ittaalum."
+              "ml": "AC ittaalum.",
+              "te": "AC veyyandi."
             },
             {
               "who": "you",
@@ -346,7 +383,8 @@
               "kn": "music swalpa kammi maadi.",
               "hi": "music thoda kam kijiye.",
               "ta": "music konjam kammi pannunga.",
-              "ml": "music kurachu kurakkoo."
+              "ml": "music kurachu kurakkoo.",
+              "te": "music konchem tagginchandi."
             }
           ]
         },
@@ -359,7 +397,8 @@
               "kn": "flyover mele hogi.",
               "hi": "flyover se chaliye.",
               "ta": "flyover mela ponga.",
-              "ml": "flyover-il kayaroo."
+              "ml": "flyover-il kayaroo.",
+              "te": "flyover meeda vellandi."
             },
             {
               "who": "you",
@@ -367,7 +406,8 @@
               "kn": "traffic ide. bere road-alli hogi.",
               "hi": "traffic hai. doosre raaste se chaliye.",
               "ta": "traffic irukku. vera road-la ponga.",
-              "ml": "traffic und. vere road-il pokoo."
+              "ml": "traffic und. vere road-il pokoo.",
+              "te": "traffic undi. vere road-lo vellandi."
             },
             {
               "who": "you",
@@ -375,7 +415,8 @@
               "kn": "mundina left-alli bidi.",
               "hi": "agle left pe chhod dijiye.",
               "ta": "adutha left-la vidunga.",
-              "ml": "adutha left-il irakkoo."
+              "ml": "adutha left-il irakkoo.",
+              "te": "next left daggara dimpandi."
             },
             {
               "who": "you",
@@ -383,7 +424,8 @@
               "kn": "app-alli pay maadide.",
               "hi": "maine app pe pay kiya.",
               "ta": "app-la pay pannitten.",
-              "ml": "njaan app-il pay cheythu."
+              "ml": "njaan app-il pay cheythu.",
+              "te": "nenu app-lo pay chesaanu."
             },
             {
               "who": "them",
@@ -391,7 +433,8 @@
               "kn": "rating kodi sir.",
               "hi": "rating de dijiye sir.",
               "ta": "rating kudunga sir.",
-              "ml": "oru rating thannaalum sir."
+              "ml": "oru rating thannaalum sir.",
+              "te": "rating ivvandi sir."
             },
             {
               "who": "you",
@@ -399,7 +442,8 @@
               "kn": "khandita. hushaaragi hogi.",
               "hi": "zaroor. dhyaan se chalaana.",
               "ta": "kandippa. paathu ponga.",
-              "ml": "theerchayaayum. sookshichu pokoo."
+              "ml": "theerchayaayum. sookshichu pokoo.",
+              "te": "tappakunda. jaagrattaga vellandi."
             }
           ]
         }
@@ -421,7 +465,8 @@
               "kn": "enu beku?",
               "hi": "kya loge?",
               "ta": "enna venum?",
-              "ml": "enthu venam?"
+              "ml": "enthu venam?",
+              "te": "em kaavaali?"
             },
             {
               "who": "you",
@@ -429,7 +474,8 @@
               "kn": "ondu masala dose, ondu filter coffee.",
               "hi": "ek masala dosa aur ek filter coffee.",
               "ta": "oru masala dosai, oru filter coffee.",
-              "ml": "oru masala dosa, oru filter coffee."
+              "ml": "oru masala dosa, oru filter coffee.",
+              "te": "oka masala dosa, oka filter coffee."
             },
             {
               "who": "you",
@@ -437,7 +483,8 @@
               "kn": "ivattu special enu?",
               "hi": "aaj ka special kya hai?",
               "ta": "innikki special enna?",
-              "ml": "innu special enthaanu?"
+              "ml": "innu special enthaanu?",
+              "te": "eeroju special enti?"
             },
             {
               "who": "them",
@@ -445,7 +492,8 @@
               "kn": "ivattu bisi bele bath chennaagide.",
               "hi": "aaj bisi bele bath achha hai.",
               "ta": "innikki bisi bele bath nalla irukku.",
-              "ml": "innu bisi bele bath nalla und."
+              "ml": "innu bisi bele bath nalla und.",
+              "te": "eeroju bisi bele bath baagundi."
             },
             {
               "who": "you",
@@ -453,7 +501,8 @@
               "kn": "khaara ideyaa?",
               "hi": "teekha hai?",
               "ta": "kaaram-aa?",
-              "ml": "ithinu erivu undo?"
+              "ml": "ithinu erivu undo?",
+              "te": "kaaram untundaa?"
             },
             {
               "who": "you",
@@ -461,7 +510,8 @@
               "kn": "khaara kammi.",
               "hi": "kam teekha.",
               "ta": "kaaram kammi.",
-              "ml": "erivu kuravu mathi."
+              "ml": "erivu kuravu mathi.",
+              "te": "kaaram takkuva veyyandi."
             },
             {
               "who": "you",
@@ -469,7 +519,8 @@
               "kn": "eerulli beda.",
               "hi": "bina pyaaz.",
               "ta": "vengaayam vendaam.",
-              "ml": "savaala venda."
+              "ml": "savaala venda.",
+              "te": "ullipaaya vaddu."
             },
             {
               "who": "you",
@@ -477,7 +528,8 @@
               "kn": "idu veg-aa?",
               "hi": "yeh veg hai?",
               "ta": "idhu veg-aa?",
-              "ml": "ithu veg aano?"
+              "ml": "ithu veg aano?",
+              "te": "idi veg-aa?"
             }
           ]
         },
@@ -490,7 +542,8 @@
               "kn": "innu swalpa sambar kodi.",
               "hi": "thoda aur sambar dijiye.",
               "ta": "innum konjam sambar kudunga.",
-              "ml": "kurachu koodi saambaar thaaroo."
+              "ml": "kurachu koodi saambaar thaaroo.",
+              "te": "inkonchem saambaar veyyandi."
             },
             {
               "who": "you",
@@ -498,7 +551,8 @@
               "kn": "neeru kodi.",
               "hi": "paani dijiye.",
               "ta": "thanni kudunga.",
-              "ml": "vellam thaaroo."
+              "ml": "vellam thaaroo.",
+              "te": "neellu ivvandi."
             },
             {
               "who": "them",
@@ -506,7 +560,8 @@
               "kn": "innu enaadru beka?",
               "hi": "aur kuchh?",
               "ta": "vera edhaavadhu venumaa?",
-              "ml": "vere enthenkilum venam?"
+              "ml": "vere enthenkilum venam?",
+              "te": "inkaa emanna kaavaalaa?"
             },
             {
               "who": "you",
@@ -514,7 +569,8 @@
               "kn": "innondu coffee.",
               "hi": "ek aur coffee.",
               "ta": "innoru coffee.",
-              "ml": "oru coffee koodi."
+              "ml": "oru coffee koodi.",
+              "te": "inko coffee."
             },
             {
               "who": "you",
@@ -522,7 +578,8 @@
               "kn": "tumba ruchi-yaagitthu.",
               "hi": "bahut tasty tha.",
               "ta": "romba tasty-aa irundhuchu.",
-              "ml": "valare ruchiyaayirunnu."
+              "ml": "valare ruchiyaayirunnu.",
+              "te": "chaala ruchiga undi."
             }
           ]
         },
@@ -535,7 +592,8 @@
               "kn": "bill kodi.",
               "hi": "bill dijiye.",
               "ta": "bill kudunga.",
-              "ml": "bill thaaroo."
+              "ml": "bill thaaroo.",
+              "te": "bill ivvandi."
             },
             {
               "who": "them",
@@ -543,7 +601,8 @@
               "kn": "cash-aa card-aa?",
               "hi": "cash ya card?",
               "ta": "cash-aa card-aa?",
-              "ml": "cash aano card aano?"
+              "ml": "cash aano card aano?",
+              "te": "cash-aa, card-aa?"
             },
             {
               "who": "you",
@@ -551,7 +610,8 @@
               "kn": "UPI.",
               "hi": "UPI.",
               "ta": "UPI.",
-              "ml": "UPI."
+              "ml": "UPI.",
+              "te": "UPI."
             },
             {
               "who": "you",
@@ -559,7 +619,8 @@
               "kn": "ondu dose parcel maadi.",
               "hi": "ek dosa parcel kar dijiye.",
               "ta": "oru dosai parcel pannunga.",
-              "ml": "oru dosa parcel cheyyoo."
+              "ml": "oru dosa parcel cheyyoo.",
+              "te": "oka dosa parcel cheyyandi."
             }
           ]
         }
@@ -581,7 +642,8 @@
               "kn": "ondu chicken biryani, ondu mutton biryani.",
               "hi": "ek chicken biryani, ek mutton biryani.",
               "ta": "oru chicken biryani, oru mutton biryani.",
-              "ml": "oru chicken biryani, oru mutton biryani."
+              "ml": "oru chicken biryani, oru mutton biryani.",
+              "te": "oka chicken biryani, oka mutton biryani."
             },
             {
               "who": "them",
@@ -589,7 +651,8 @@
               "kn": "half-aa full-aa?",
               "hi": "half ya full?",
               "ta": "half-aa full-aa?",
-              "ml": "half aano full aano?"
+              "ml": "half aano full aano?",
+              "te": "half-aa, full-aa?"
             },
             {
               "who": "you",
@@ -597,7 +660,8 @@
               "kn": "full, extra raita jote.",
               "hi": "full, extra raita ke saath.",
               "ta": "full, extra raita kooda.",
-              "ml": "full, extra raitha koode."
+              "ml": "full, extra raitha koode.",
+              "te": "full, extra raita kooda."
             },
             {
               "who": "you",
@@ -605,7 +669,8 @@
               "kn": "ondu plate eshtu?",
               "hi": "ek plate kitne ka?",
               "ta": "oru plate evlo?",
-              "ml": "oru plate ethrayaanu?"
+              "ml": "oru plate ethrayaanu?",
+              "te": "oka plate entha?"
             },
             {
               "who": "them",
@@ -613,7 +678,8 @@
               "kn": "innooru ippattu.",
               "hi": "do sau bees.",
               "ta": "irunooru irubadhu.",
-              "ml": "irunooru irupathu."
+              "ml": "irunooru irupathu.",
+              "te": "rendu vandala iravai."
             },
             {
               "who": "you",
@@ -621,7 +687,8 @@
               "kn": "tumba khaara ideyaa?",
               "hi": "bahut teekha hai?",
               "ta": "romba kaaram-aa?",
-              "ml": "nalla erivu undo?"
+              "ml": "nalla erivu undo?",
+              "te": "chaala kaaramgaa untundaa?"
             },
             {
               "who": "them",
@@ -629,7 +696,8 @@
               "kn": "medium khaara.",
               "hi": "medium teekha.",
               "ta": "medium kaaram.",
-              "ml": "medium erivu."
+              "ml": "medium erivu.",
+              "te": "medium kaaram."
             },
             {
               "who": "you",
@@ -637,7 +705,8 @@
               "kn": "boneless kodi.",
               "hi": "boneless dijiye.",
               "ta": "boneless kudunga.",
-              "ml": "boneless thaaroo."
+              "ml": "boneless thaaroo.",
+              "te": "boneless ivvandi."
             },
             {
               "who": "you",
@@ -645,7 +714,8 @@
               "kn": "ondu Coke koodaa haaki.",
               "hi": "ek Coke bhi daal do.",
               "ta": "oru Coke-um podunga.",
-              "ml": "oru Coke koodi edukkoo."
+              "ml": "oru Coke koodi edukkoo.",
+              "te": "oka Coke kooda veyyandi."
             }
           ]
         },
@@ -658,7 +728,8 @@
               "kn": "parcel, eradu jana-ge.",
               "hi": "parcel, do logon ke liye.",
               "ta": "parcel, rendu peruku.",
-              "ml": "parcel, randu perkku."
+              "ml": "parcel, randu perkku.",
+              "te": "parcel, iddariki."
             },
             {
               "who": "you",
@@ -666,7 +737,8 @@
               "kn": "eshtu hottu aagutte?",
               "hi": "kitna time lagega?",
               "ta": "evlo neram aagum?",
-              "ml": "ethra samayam edukkum?"
+              "ml": "ethra samayam edukkum?",
+              "te": "entha sepu padutundi?"
             },
             {
               "who": "them",
@@ -674,7 +746,8 @@
               "kn": "hattu nimisha. kootkolli.",
               "hi": "das minute. baithiye.",
               "ta": "patthu nimisham. ukkaarunga.",
-              "ml": "patthu nimisham. irikkoo."
+              "ml": "patthu nimisham. irikkoo.",
+              "te": "padi nimishaalu. koorchondi."
             },
             {
               "who": "you",
@@ -682,7 +755,8 @@
               "kn": "elli pay maadbeku?",
               "hi": "payment kahaan karna hai?",
               "ta": "enga pay pannanum?",
-              "ml": "njaan evide pay cheyyanam?"
+              "ml": "njaan evide pay cheyyanam?",
+              "te": "ekkada pay cheyyaali?"
             },
             {
               "who": "them",
@@ -690,7 +764,8 @@
               "kn": "counter-alli.",
               "hi": "counter pe.",
               "ta": "counter-la.",
-              "ml": "counter-il."
+              "ml": "counter-il.",
+              "te": "counter daggara."
             },
             {
               "who": "you",
@@ -698,7 +773,8 @@
               "kn": "thanks, vaasane chennaagide.",
               "hi": "shukriya, khushboo bahut achhi hai.",
               "ta": "thanks, vaasanai nalla irukku.",
-              "ml": "thanks, nalla manam und."
+              "ml": "thanks, nalla manam und.",
+              "te": "thanks, vaasana chaala baagundi."
             }
           ]
         }
@@ -720,7 +796,8 @@
               "kn": "haalu ideyaa?",
               "hi": "doodh hai?",
               "ta": "paal irukkaa?",
-              "ml": "paal undo?"
+              "ml": "paal undo?",
+              "te": "paalu unnaayaa?"
             },
             {
               "who": "you",
@@ -728,7 +805,8 @@
               "kn": "ondu kilo akki, ardha kilo sakkare.",
               "hi": "ek kilo chaawal, aadha kilo cheeni.",
               "ta": "oru kilo arisi, arai kilo sakkarai.",
-              "ml": "oru kilo ari, ara kilo panchasaara."
+              "ml": "oru kilo ari, ara kilo panchasaara.",
+              "te": "oka kilo biyyam, ara kilo chakkera."
             },
             {
               "who": "you",
@@ -736,7 +814,8 @@
               "kn": "idu eshtu?",
               "hi": "yeh kitne ka hai?",
               "ta": "idhu evlo?",
-              "ml": "ithu ethrayaanu?"
+              "ml": "ithu ethrayaanu?",
+              "te": "idi entha?"
             },
             {
               "who": "them",
@@ -744,7 +823,8 @@
               "kn": "innu enaadru beka?",
               "hi": "aur kuchh?",
               "ta": "vera edhaavadhu venumaa?",
-              "ml": "vere enthenkilum venam?"
+              "ml": "vere enthenkilum venam?",
+              "te": "inkaa emanna kaavaalaa?"
             },
             {
               "who": "you",
@@ -752,7 +832,8 @@
               "kn": "ashte.",
               "hi": "bas itna hi.",
               "ta": "avlodhaan.",
-              "ml": "athu mathi."
+              "ml": "athu mathi.",
+              "te": "anthe."
             },
             {
               "who": "you",
@@ -760,7 +841,8 @@
               "kn": "cover kodi.",
               "hi": "thaili dijiye.",
               "ta": "cover kudunga.",
-              "ml": "oru cover thaaroo."
+              "ml": "oru cover thaaroo.",
+              "te": "oka cover ivvandi."
             },
             {
               "who": "you",
@@ -769,7 +851,8 @@
               "hi": "UPI se de doonga.",
               "ta": "UPI-la kudukkuren.",
               "hiF": "UPI se de doongi.",
-              "ml": "njaan UPI-il tharaam."
+              "ml": "njaan UPI-il tharaam.",
+              "te": "UPI-lo istaanu."
             }
           ]
         }
@@ -791,7 +874,8 @@
               "kn": "tomato kilo eshtu?",
               "hi": "tamaatar kilo kitna?",
               "ta": "thakkaali kilo evlo?",
-              "ml": "thakkaali kilo ethrayaanu?"
+              "ml": "thakkaali kilo ethrayaanu?",
+              "te": "tamaata kilo entha?"
             },
             {
               "who": "them",
@@ -799,7 +883,8 @@
               "kn": "nalavattu.",
               "hi": "chaalees.",
               "ta": "naapadhu.",
-              "ml": "naalpathu roopa."
+              "ml": "naalpathu roopa.",
+              "te": "nalabhai roopaayalu."
             },
             {
               "who": "you",
@@ -807,7 +892,8 @@
               "kn": "fresh ideyaa?",
               "hi": "taaze hain?",
               "ta": "fresh-aa?",
-              "ml": "ithu fresh aano?"
+              "ml": "ithu fresh aano?",
+              "te": "ivi fresh-aa?"
             },
             {
               "who": "them",
@@ -815,7 +901,8 @@
               "kn": "ivattu belagge bantu.",
               "hi": "aaj subah aaye.",
               "ta": "innikki kaalaila vandhuchu.",
-              "ml": "innu raavile vannathaanu."
+              "ml": "innu raavile vannathaanu.",
+              "te": "eeroju podduna vachaayi."
             },
             {
               "who": "you",
@@ -823,7 +910,8 @@
               "kn": "ardha kilo kodi.",
               "hi": "aadha kilo dijiye.",
               "ta": "arai kilo kudunga.",
-              "ml": "ara kilo thaaroo."
+              "ml": "ara kilo thaaroo.",
+              "te": "ara kilo ivvandi."
             },
             {
               "who": "you",
@@ -831,7 +919,8 @@
               "kn": "swalpa kammi maadi.",
               "hi": "thoda kam kijiye.",
               "ta": "konjam kammi pannunga.",
-              "ml": "kurachu kurakkoo."
+              "ml": "kurachu kurakkoo.",
+              "te": "konchem tagginchandi."
             },
             {
               "who": "them",
@@ -839,7 +928,8 @@
               "kn": "fixed rate sir.",
               "hi": "fixed rate hai sir.",
               "ta": "fixed rate sir.",
-              "ml": "fixed rate aanu sir."
+              "ml": "fixed rate aanu sir.",
+              "te": "fixed rate sir."
             },
             {
               "who": "you",
@@ -847,7 +937,8 @@
               "kn": "sari, ondu kilo kodi.",
               "hi": "theek hai, ek kilo dijiye.",
               "ta": "sari, oru kilo kudunga.",
-              "ml": "shari, ennal oru kilo thaaroo."
+              "ml": "shari, ennal oru kilo thaaroo.",
+              "te": "sare, aithe oka kilo ivvandi."
             }
           ]
         }
@@ -869,7 +960,8 @@
               "kn": "sir, order bandide. mane elli?",
               "hi": "sir, order aaya hai. ghar kahaan hai?",
               "ta": "sir, order vandhuchu. veedu enga?",
-              "ml": "sir, ningalude order vannu. veedu evideyaanu?"
+              "ml": "sir, ningalude order vannu. veedu evideyaanu?",
+              "te": "sir, mee order vachindi. illu ekkada?"
             },
             {
               "who": "you",
@@ -877,7 +969,8 @@
               "kn": "eradane floor. mele banni.",
               "hi": "doosri manzil. upar aa jaaiye.",
               "ta": "rendaavadhu floor. mela vaanga.",
-              "ml": "randaam floor. mukalilekku varoo."
+              "ml": "randaam floor. mukalilekku varoo.",
+              "te": "second floor. paiki raandi."
             },
             {
               "who": "you",
@@ -885,7 +978,8 @@
               "kn": "gate hatra idi.",
               "hi": "gate pe rakh dijiye.",
               "ta": "gate-la vechudunga.",
-              "ml": "gate-il vechittu pokoo."
+              "ml": "gate-il vechittu pokoo.",
+              "te": "gate daggara pettandi."
             },
             {
               "who": "them",
@@ -893,7 +987,8 @@
               "kn": "OTP heli.",
               "hi": "OTP bataiye.",
               "ta": "OTP sollunga.",
-              "ml": "OTP parayoo."
+              "ml": "OTP parayoo.",
+              "te": "OTP cheppandi."
             },
             {
               "who": "you",
@@ -902,7 +997,8 @@
               "hi": "ek minute, neeche aa raha hoon.",
               "ta": "oru nimisham, keezha varen.",
               "hiF": "ek minute, neeche aa rahi hoon.",
-              "ml": "oru nimisham, njaan thaazhottu varunnu."
+              "ml": "oru nimisham, njaan thaazhottu varunnu.",
+              "te": "oka nimisham, kindiki vastunnaanu."
             },
             {
               "who": "you",
@@ -910,7 +1006,8 @@
               "kn": "thanks. hushaaru.",
               "hi": "shukriya. dhyaan se jaana.",
               "ta": "thanks. paathu ponga.",
-              "ml": "thanks. sookshikkoo."
+              "ml": "thanks. sookshikkoo.",
+              "te": "thanks. jaagratta."
             }
           ]
         }
@@ -932,7 +1029,8 @@
               "kn": "nenne-inda tale novu.",
               "hi": "kal se sar dard hai.",
               "ta": "nethula irundhu thala vali.",
-              "ml": "innale muthal thala vedana und."
+              "ml": "innale muthal thala vedana und.",
+              "te": "ninna nunchi tala noppi undi."
             },
             {
               "who": "you",
@@ -940,7 +1038,8 @@
               "kn": "jwara ide.",
               "hi": "bukhaar hai.",
               "ta": "kaaichal irukku.",
-              "ml": "enikku pani und."
+              "ml": "enikku pani und.",
+              "te": "naaku jwaram undi."
             },
             {
               "who": "them",
@@ -948,7 +1047,8 @@
               "kn": "yaavaga-inda?",
               "hi": "kab se?",
               "ta": "eppo irundhu?",
-              "ml": "eppo muthal?"
+              "ml": "eppo muthal?",
+              "te": "eppati nunchi?"
             },
             {
               "who": "them",
@@ -956,7 +1056,8 @@
               "kn": "allergy ideyaa?",
               "hi": "koi allergy hai?",
               "ta": "allergy irukkaa?",
-              "ml": "enthenkilum allergy undo?"
+              "ml": "enthenkilum allergy undo?",
+              "te": "emanna allergy undaa?"
             },
             {
               "who": "you",
@@ -964,7 +1065,8 @@
               "kn": "allergy illa.",
               "hi": "koi allergy nahin.",
               "ta": "allergy illa.",
-              "ml": "allergy illa."
+              "ml": "allergy illa.",
+              "te": "allergy ledu."
             },
             {
               "who": "them",
@@ -972,7 +1074,8 @@
               "kn": "oota aada mele ondu tablet, dina eradu sala.",
               "hi": "khaane ke baad ek goli, din mein do baar.",
               "ta": "saapaadu aprom oru tablet, oru naalaikku rendu thadava.",
-              "ml": "bhakshanam kazhinju oru tablet, divasam randu nerram."
+              "ml": "bhakshanam kazhinju oru tablet, divasam randu nerram.",
+              "te": "tinnaaka oka tablet, rojuki rendu saarlu."
             }
           ]
         },
@@ -985,7 +1088,8 @@
               "kn": "ee medicine kodi.",
               "hi": "yeh dawa dijiye.",
               "ta": "indha maruntha kudunga.",
-              "ml": "ee marunnu thaaroo."
+              "ml": "ee marunnu thaaroo.",
+              "te": "ee mandu ivvandi."
             },
             {
               "who": "you",
@@ -993,7 +1097,8 @@
               "kn": "kemmu syrup ideyaa?",
               "hi": "khaansi ka syrup hai?",
               "ta": "irumal syrup irukkaa?",
-              "ml": "chuma syrup undo?"
+              "ml": "chuma syrup undo?",
+              "te": "daggu syrup undaa?"
             },
             {
               "who": "you",
@@ -1001,7 +1106,8 @@
               "kn": "dina eshtu sala?",
               "hi": "din mein kitni baar?",
               "ta": "oru naalaikku ethana thadava?",
-              "ml": "divasam ethra nerram?"
+              "ml": "divasam ethra nerram?",
+              "te": "rojuki enni saarlu?"
             }
           ]
         }
@@ -1023,7 +1129,8 @@
               "kn": "tap leak aagta ide.",
               "hi": "nal leak ho raha hai.",
               "ta": "tap leak aagudhu.",
-              "ml": "tap leak aakunnund."
+              "ml": "tap leak aakunnund.",
+              "te": "tap leak avutondi."
             },
             {
               "who": "you",
@@ -1031,7 +1138,8 @@
               "kn": "belagge-inda neeru illa.",
               "hi": "subah se paani nahin hai.",
               "ta": "kaalaila irundhu thanni illa.",
-              "ml": "raavile muthal vellam illa."
+              "ml": "raavile muthal vellam illa.",
+              "te": "podduna nunchi neellu levu."
             },
             {
               "who": "you",
@@ -1039,7 +1147,8 @@
               "kn": "yaaradru kalisi repair maadakke.",
               "hi": "koi bhej dijiye theek karne ke liye.",
               "ta": "yaaraavadhu anuppunga repair panna.",
-              "ml": "aarenkilum vittu repair cheyyikkoo."
+              "ml": "aarenkilum vittu repair cheyyikkoo.",
+              "te": "evarinaina pampinchi repair cheyyinchandi."
             },
             {
               "who": "them",
@@ -1047,7 +1156,8 @@
               "kn": "room sari ideyaa?",
               "hi": "room theek hai?",
               "ta": "room sari irukkaa?",
-              "ml": "room vere kuzhappam illalle?"
+              "ml": "room vere kuzhappam illalle?",
+              "te": "room-lo inkem problem ledu kadaa?"
             },
             {
               "who": "you",
@@ -1056,7 +1166,8 @@
               "hi": "kal rent de doonga.",
               "ta": "naalaikku rent kudukkuren.",
               "hiF": "kal rent de doongi.",
-              "ml": "njaan naale vaadaka tharaam."
+              "ml": "njaan naale vaadaka tharaam.",
+              "te": "repu rent istaanu."
             }
           ]
         },
@@ -1069,7 +1180,8 @@
               "kn": "namaskara. mane-alli ellaru hegiddare?",
               "hi": "namaste. ghar mein sab kaise hain?",
               "ta": "vanakkam. veetula ellaarum eppadi irukkaanga?",
-              "ml": "namaskaram. veettil ellaavarkkum sukham aano?"
+              "ml": "namaskaram. veettil ellaavarkkum sukham aano?",
+              "te": "namaskaaram. intlo andaru baagunnaaraa?"
             },
             {
               "who": "you",
@@ -1077,7 +1189,8 @@
               "kn": "ellaru chennaagiddare. neevu hegiddira?",
               "hi": "sab theek hain. aap kaise hain?",
               "ta": "ellaarum nalla irukkaanga. neenga eppadi irukkeenga?",
-              "ml": "ellaavarkkum sukham, thanks. ningalkko?"
+              "ml": "ellaavarkkum sukham, thanks. ningalkko?",
+              "te": "andaru baagunnaaru, thanks. meeru?"
             },
             {
               "who": "you",
@@ -1085,7 +1198,8 @@
               "kn": "sorry, music jaasti aaytaa?",
               "hi": "sorry, music zyada tez tha kya?",
               "ta": "sorry, music romba saththama irundhuchaa?",
-              "ml": "sorry, music kooduthal urakke aayirunno?"
+              "ml": "sorry, music kooduthal urakke aayirunno?",
+              "te": "sorry, music chaala gattigaa vinipinchindaa?"
             },
             {
               "who": "them",
@@ -1093,7 +1207,8 @@
               "kn": "enu problem illa.",
               "hi": "koi baat nahin.",
               "ta": "onnum problem illa.",
-              "ml": "oru kuzhappavum illa."
+              "ml": "oru kuzhappavum illa.",
+              "te": "em problem ledu."
             }
           ]
         }
@@ -1115,7 +1230,8 @@
               "kn": "check-in counter elli?",
               "hi": "check-in counter kahaan hai?",
               "ta": "check-in counter enga?",
-              "ml": "check-in counter evideyaanu?"
+              "ml": "check-in counter evideyaanu?",
+              "te": "check-in counter ekkada undi?"
             },
             {
               "who": "them",
@@ -1123,7 +1239,8 @@
               "kn": "passport, ticket kodi.",
               "hi": "passport aur ticket dijiye.",
               "ta": "passport, ticket kudunga.",
-              "ml": "passport-um ticket-um thaaroo."
+              "ml": "passport-um ticket-um thaaroo.",
+              "te": "passport, ticket ivvandi."
             },
             {
               "who": "you",
@@ -1131,7 +1248,8 @@
               "kn": "window seat kodi.",
               "hi": "window seat dijiye.",
               "ta": "window seat kudunga.",
-              "ml": "window seat thaaroo."
+              "ml": "window seat thaaroo.",
+              "te": "window seat ivvandi."
             },
             {
               "who": "them",
@@ -1139,7 +1257,8 @@
               "kn": "check-in bag ideyaa?",
               "hi": "check-in ka bag hai?",
               "ta": "check-in bag irukkaa?",
-              "ml": "check-in cheyyaan bag undo?"
+              "ml": "check-in cheyyaan bag undo?",
+              "te": "check-in cheyyadaaniki bag undaa?"
             },
             {
               "who": "you",
@@ -1147,7 +1266,8 @@
               "kn": "ondu bag.",
               "hi": "ek bag.",
               "ta": "oru bag.",
-              "ml": "oru bag."
+              "ml": "oru bag.",
+              "te": "oka bag."
             },
             {
               "who": "you",
@@ -1155,7 +1275,8 @@
               "kn": "yaava gate?",
               "hi": "kaun sa gate?",
               "ta": "endha gate?",
-              "ml": "ethu gate?"
+              "ml": "ethu gate?",
+              "te": "ye gate?"
             },
             {
               "who": "you",
@@ -1163,7 +1284,8 @@
               "kn": "flight time-ge ideyaa?",
               "hi": "flight time pe hai?",
               "ta": "flight time-ku irukkaa?",
-              "ml": "flight samayathinu undo?"
+              "ml": "flight samayathinu undo?",
+              "te": "flight on time-aa?"
             }
           ]
         }
@@ -1185,7 +1307,8 @@
               "kn": "enu help beku?",
               "hi": "main kaise madad karoon?",
               "ta": "enna help venum?",
-              "ml": "enthu help venam?"
+              "ml": "enthu help venam?",
+              "te": "cheppandi, em help kaavaali?"
             },
             {
               "who": "you",
@@ -1193,7 +1316,8 @@
               "kn": "internet kelsa maadta illa.",
               "hi": "mera internet kaam nahin kar raha.",
               "ta": "internet velai seiyala.",
-              "ml": "ente internet work cheyyunnilla."
+              "ml": "ente internet work cheyyunnilla.",
+              "te": "naa internet pani cheyyatledu."
             },
             {
               "who": "them",
@@ -1201,7 +1325,8 @@
               "kn": "yaavaga-inda?",
               "hi": "kab se?",
               "ta": "eppo irundhu?",
-              "ml": "eppo muthal?"
+              "ml": "eppo muthal?",
+              "te": "eppati nunchi?"
             },
             {
               "who": "you",
@@ -1209,7 +1334,8 @@
               "kn": "ivattu belagge-inda.",
               "hi": "aaj subah se.",
               "ta": "innikki kaalaila irundhu.",
-              "ml": "innu raavile muthal."
+              "ml": "innu raavile muthal.",
+              "te": "eeroju podduna nunchi."
             },
             {
               "who": "them",
@@ -1217,7 +1343,8 @@
               "kn": "nimma number heli.",
               "hi": "apna number bataiye.",
               "ta": "unga number sollunga.",
-              "ml": "ningalude number parayoo."
+              "ml": "ningalude number parayoo.",
+              "te": "mee number cheppandi."
             },
             {
               "who": "you",
@@ -1225,7 +1352,8 @@
               "kn": "ivatte yaaradru kalisi.",
               "hi": "aaj hi kisi ko bhej dijiye.",
               "ta": "innikke yaaraavadhu anuppunga.",
-              "ml": "innu thanne aarenkilum vidoo."
+              "ml": "innu thanne aarenkilum vidoo.",
+              "te": "eeroje evarinaina pampandi."
             },
             {
               "who": "you",
@@ -1233,7 +1361,8 @@
               "kn": "nidhaanavaagi heli.",
               "hi": "dheere boliye.",
               "ta": "medhuva pesunga.",
-              "ml": "kurachu pathukke parayoo."
+              "ml": "kurachu pathukke parayoo.",
+              "te": "konchem nemmadiga cheppandi."
             }
           ]
         }
@@ -1255,7 +1384,8 @@
               "kn": "haircut. side-alli short.",
               "hi": "haircut. side chhote.",
               "ta": "haircut. side-la short.",
-              "ml": "haircut venam. side pathukke cheriyathaakkoo."
+              "ml": "haircut venam. side pathukke cheriyathaakkoo.",
+              "te": "haircut kaavaali. side-lo short cheyyandi."
             },
             {
               "who": "them",
@@ -1263,7 +1393,8 @@
               "kn": "eshtu cut maadli?",
               "hi": "kitna kaatun?",
               "ta": "evlo cut pannanum?",
-              "ml": "ethra murikkanam?"
+              "ml": "ethra murikkanam?",
+              "te": "entha cut cheyyaali?"
             },
             {
               "who": "you",
@@ -1271,7 +1402,8 @@
               "kn": "swalpa maatra.",
               "hi": "thoda sa.",
               "ta": "konjam mattum.",
-              "ml": "kurachu mathram."
+              "ml": "kurachu mathram.",
+              "te": "konchem maatrame."
             },
             {
               "who": "you",
@@ -1279,7 +1411,8 @@
               "kn": "shave koodaa.",
               "hi": "shave bhi.",
               "ta": "shave-um.",
-              "ml": "shave-um venam."
+              "ml": "shave-um venam.",
+              "te": "shave kooda."
             },
             {
               "who": "them",
@@ -1287,7 +1420,8 @@
               "kn": "aaytu sir. nodi.",
               "hi": "ho gaya sir. dekh lijiye.",
               "ta": "aachu sir. paarunga.",
-              "ml": "kazhinju sir. onnu nokkoo."
+              "ml": "kazhinju sir. onnu nokkoo.",
+              "te": "ayipoyindi sir. okasaari choodandi."
             },
             {
               "who": "you",
@@ -1295,7 +1429,8 @@
               "kn": "tumba chennaagide. eshtu?",
               "hi": "bahut achha. kitna hua?",
               "ta": "romba nalla irukku. evlo?",
-              "ml": "valare nalla und. ethrayaanu?"
+              "ml": "valare nalla und. ethrayaanu?",
+              "te": "chaala baagundi. entha?"
             }
           ]
         }
@@ -1317,7 +1452,8 @@
               "kn": "ivattu major scale kaliyona.",
               "hi": "aaj hum major scale seekhenge.",
               "ta": "innikki naama major scale kathukkalaam.",
-              "ml": "innu namukku major scale padikkaam."
+              "ml": "innu namukku major scale padikkaam.",
+              "te": "eeroju manam major scale nerchukundaam."
             },
             {
               "who": "you",
@@ -1325,7 +1461,8 @@
               "kn": "major scale-alli elu swara ide.",
               "hi": "major scale mein saat sur hote hain.",
               "ta": "major scale-la ezhu swaram irukku.",
-              "ml": "oru major scale-il ezhu swaram und."
+              "ml": "oru major scale-il ezhu swaram und.",
+              "te": "major scale-lo edu swaraalu untaayi."
             },
             {
               "who": "you",
@@ -1333,7 +1470,8 @@
               "kn": "Sa Re Ga Ma Pa Dha Ni, aamele innomme Sa.",
               "hi": "Sa Re Ga Ma Pa Dha Ni, phir se Sa.",
               "ta": "Sa Re Ga Ma Pa Dha Ni, apram thirumba Sa.",
-              "ml": "Sa Re Ga Ma Pa Dha Ni, pinne veendum Sa."
+              "ml": "Sa Re Ga Ma Pa Dha Ni, pinne veendum Sa.",
+              "te": "Sa Re Ga Ma Pa Dha Ni, tarvaata malli Sa."
             },
             {
               "who": "you",
@@ -1342,7 +1480,8 @@
               "hi": "pattern: full, full, half, full, full, full, half.",
               "ta": "pattern: full, full, half, full, full, full, half.",
               "note": "Musicians in all three cities say full step and half step in English.",
-              "ml": "pattern ithaanu: full, full, half, full, full, full, half."
+              "ml": "pattern ithaanu: full, full, half, full, full, full, half.",
+              "te": "pattern idi: full, full, half, full, full, full, half."
             },
             {
               "who": "you",
@@ -1350,7 +1489,8 @@
               "kn": "difference keli.",
               "hi": "fark suno.",
               "ta": "difference kelunga.",
-              "ml": "vyathyaasam kelkkoo."
+              "ml": "vyathyaasam kelkkoo.",
+              "te": "teda vinandi."
             }
           ]
         },
@@ -1363,7 +1503,8 @@
               "kn": "C-inda nudisi.",
               "hi": "C se bajaiye.",
               "ta": "C-la irundhu vaasinga.",
-              "ml": "C-yil ninnu vaayikkoo."
+              "ml": "C-yil ninnu vaayikkoo.",
+              "te": "C nunchi vaayinchandi."
             },
             {
               "who": "you",
@@ -1371,7 +1512,8 @@
               "kn": "eega haadi. Sa.",
               "hi": "ab gaao. Sa.",
               "ta": "ippo paadunga. Sa.",
-              "ml": "ippo athu paadoo. Sa."
+              "ml": "ippo athu paadoo. Sa.",
+              "te": "ippudu paadandi. Sa."
             },
             {
               "who": "you",
@@ -1379,7 +1521,8 @@
               "kn": "swalpa kelage ide. swalpa mele haadi.",
               "hi": "thoda neeche hai. thoda upar gaao.",
               "ta": "konjam keezha irukku. konjam mela paadunga.",
-              "ml": "ningalude pitch kurachu thaazhe aanu. kurachu mukalilekku pokoo."
+              "ml": "ningalude pitch kurachu thaazhe aanu. kurachu mukalilekku pokoo.",
+              "te": "mee pitch konchem kinda undi. konchem paiki vellandi."
             },
             {
               "who": "you",
@@ -1387,7 +1530,8 @@
               "kn": "chennaagide. eega poorti scale.",
               "hi": "achha. ab poora scale.",
               "ta": "nalla irukku. ippo full scale.",
-              "ml": "nalla und. ippo full scale."
+              "ml": "nalla und. ippo full scale.",
+              "te": "baagundi. ippudu motham scale."
             },
             {
               "who": "you",
@@ -1395,7 +1539,8 @@
               "kn": "major khushi-yaagi kelisutte, minor sad-aagi kelisutte.",
               "hi": "major khush lagta hai, minor udaas lagta hai.",
               "ta": "major santhoshama irukku, minor sad-aa irukku.",
-              "ml": "major santhosham pole, minor sangham pole kelkkum."
+              "ml": "major santhosham pole, minor sangham pole kelkkum.",
+              "te": "major santoshamgaa, minor baadhagaa vinipistundi."
             },
             {
               "who": "you",
@@ -1403,7 +1548,8 @@
               "kn": "innomme, swalpa slow aagi.",
               "hi": "ek baar aur, thoda dheere.",
               "ta": "innoru thadava, konjam medhuva.",
-              "ml": "onnu koodi, kurachu pathukke."
+              "ml": "onnu koodi, kurachu pathukke.",
+              "te": "inkosaari, konchem nemmadiga."
             }
           ]
         },
@@ -1416,7 +1562,8 @@
               "kn": "major andre yaake?",
               "hi": "ise major kyun kehte hain?",
               "ta": "major-nu aen solraanga?",
-              "ml": "ithinu major ennu enthinaanu parayunnathu?"
+              "ml": "ithinu major ennu enthinaanu parayunnathu?",
+              "te": "deenni major ani enduku antaaru?"
             },
             {
               "who": "them",
@@ -1424,7 +1571,8 @@
               "kn": "idu yaava swara?",
               "hi": "yeh kaun sa sur hai?",
               "ta": "idhu endha swaram?",
-              "ml": "ithu ethu swaram aanu?"
+              "ml": "ithu ethu swaram aanu?",
+              "te": "idi ye swaram?"
             },
             {
               "who": "them",
@@ -1432,7 +1580,8 @@
               "kn": "guitar-alli nudisbahuda?",
               "hi": "kya main guitar pe baja sakta hoon?",
               "ta": "guitar-la vaasikkalaamaa?",
-              "ml": "ithu guitar-il vaayikkaamo?"
+              "ml": "ithu guitar-il vaayikkaamo?",
+              "te": "deenni guitar meeda vaayinchachaa?"
             },
             {
               "who": "them",
@@ -1440,7 +1589,8 @@
               "kn": "innomme nudistiraa?",
               "hi": "ek baar aur bajaaenge?",
               "ta": "innoru thadava vaasippeengalaa?",
-              "ml": "onnu koodi vaayikkaamo?"
+              "ml": "onnu koodi vaayikkaamo?",
+              "te": "inkosaari vaayistaaraa?"
             },
             {
               "who": "you",
@@ -1448,7 +1598,8 @@
               "kn": "howdu, khandita. keli.",
               "hi": "haan, zaroor. suno.",
               "ta": "aama, kandippa. kelunga.",
-              "ml": "athe, theerchayaayum. kelkkoo."
+              "ml": "athe, theerchayaayum. kelkkoo.",
+              "te": "avunu, tappakunda. vinandi."
             }
           ]
         }
@@ -1470,7 +1621,8 @@
               "kn": "fifth andre aidu swara mele.",
               "hi": "fifth ka matlab paanch sur upar.",
               "ta": "fifth-na anju swaram mela.",
-              "ml": "oru fifth ennathu anchu swaram mukalil aanu."
+              "ml": "oru fifth ennathu anchu swaram mukalil aanu.",
+              "te": "fifth ante aidu swaraalu paiki."
             },
             {
               "who": "you",
@@ -1478,7 +1630,8 @@
               "kn": "C-inda aidu swara mele hogi. adu G.",
               "hi": "C se paanch sur upar jaao. voh G hai.",
               "ta": "C-la irundhu anju swaram mela ponga. adhu G.",
-              "ml": "C-yil ninnu oru fifth mukalilekku pokoo. athu G aanu."
+              "ml": "C-yil ninnu oru fifth mukalilekku pokoo. athu G aanu.",
+              "te": "C nunchi oka fifth paiki vellandi. adi G."
             },
             {
               "who": "you",
@@ -1486,7 +1639,8 @@
               "kn": "pratiyondu step-ge ondu sharp add aagutte.",
               "hi": "har step pe ek sharp add hota hai.",
               "ta": "ovvoru step-kum oru sharp add aagum.",
-              "ml": "oro step-inum oru sharp koodunnu."
+              "ml": "oro step-inum oru sharp koodunnu.",
+              "te": "prati step-ki oka sharp perugutundi."
             },
             {
               "who": "you",
@@ -1494,7 +1648,8 @@
               "kn": "G-alli ondu sharp, D-alli eradu.",
               "hi": "G mein ek sharp, D mein do.",
               "ta": "G-la oru sharp, D-la rendu.",
-              "ml": "G-yil oru sharp, D-yil randu."
+              "ml": "G-yil oru sharp, D-yil randu.",
+              "te": "G-lo oka sharp, D-lo rendu."
             },
             {
               "who": "you",
@@ -1502,7 +1657,8 @@
               "kn": "hanneradu step aada mele, waapas C-ge.",
               "hi": "baarah step ke baad waapas C pe.",
               "ta": "pannendu step aprom, thirumba C-ku.",
-              "ml": "pathirandu step kazhinju veendum C-yil thirichu varum."
+              "ml": "pathirandu step kazhinju veendum C-yil thirichu varum.",
+              "te": "pannendu steps tarvaata malli C-ki tirigi vastaam."
             },
             {
               "who": "you",
@@ -1510,7 +1666,8 @@
               "kn": "adakke idu circle.",
               "hi": "isliye yeh circle hai.",
               "ta": "adhaan idhu circle.",
-              "ml": "athukondaanu ithu oru circle."
+              "ml": "athukondaanu ithu oru circle.",
+              "te": "anduke idi oka circle."
             }
           ]
         },
@@ -1523,7 +1680,8 @@
               "kn": "C nudisi, aamele G, aamele D.",
               "hi": "C bajaao, phir G, phir D.",
               "ta": "C vaasinga, apram G, apram D.",
-              "ml": "C vaayikkoo, pinne G, pinne D."
+              "ml": "C vaayikkoo, pinne G, pinne D.",
+              "te": "C vaayinchandi, tarvaata G, tarvaata D."
             },
             {
               "who": "you",
@@ -1531,7 +1689,8 @@
               "kn": "yaava key-alli mooru sharp ide?",
               "hi": "kaun si key mein teen sharp hain?",
               "ta": "endha key-la moonu sharp irukku?",
-              "ml": "ethu key-il moonu sharp und?"
+              "ml": "ethu key-il moonu sharp und?",
+              "te": "ye key-lo moodu sharps untaayi?"
             },
             {
               "who": "them",
@@ -1539,7 +1698,8 @@
               "kn": "A-aa?",
               "hi": "A?",
               "ta": "A-aa?",
-              "ml": "A aano?"
+              "ml": "A aano?",
+              "te": "A-naa?"
             },
             {
               "who": "you",
@@ -1547,7 +1707,8 @@
               "kn": "sari. chennaagi maadidri.",
               "hi": "sahi. bahut achhe.",
               "ta": "sari. nalla panneenga.",
-              "ml": "shari. nannaayi cheythu."
+              "ml": "shari. nannaayi cheythu.",
+              "te": "correct. baaga chesaaru."
             },
             {
               "who": "them",
@@ -1555,7 +1716,8 @@
               "kn": "flats hege?",
               "hi": "flats ka kya?",
               "ta": "flats eppadi?",
-              "ml": "flats engane?"
+              "ml": "flats engane?",
+              "te": "mari flats sangati enti?"
             },
             {
               "who": "you",
@@ -1563,7 +1725,8 @@
               "kn": "bere kade hogi, pratiyondu step-ge ondu flat.",
               "hi": "doosri taraf jaao, har step pe ek flat.",
               "ta": "vera pakkam ponga, ovvoru step-kum oru flat.",
-              "ml": "mattethu vashathekku pokoo, oro step-inum oru flat."
+              "ml": "mattethu vashathekku pokoo, oro step-inum oru flat.",
+              "te": "vere vaipu vellandi, prati step-ki oka flat."
             }
           ]
         }
@@ -1585,7 +1748,8 @@
               "kn": "nanna jote count maadi. ondu eradu mooru naalku.",
               "hi": "mere saath gino. ek do teen chaar.",
               "ta": "en kooda count pannunga. onnu rendu moonu naalu.",
-              "ml": "ente koode ennoo. onnu randu moonu naalu."
+              "ml": "ente koode ennoo. onnu randu moonu naalu.",
+              "te": "naatho kalisi lekka pettandi. okati rendu moodu naalugu."
             },
             {
               "who": "you",
@@ -1593,7 +1757,8 @@
               "kn": "ondu-ge chappale hodi.",
               "hi": "ek pe taali bajaao.",
               "ta": "onnu-la kai thattunga.",
-              "ml": "onnil kai kottoo."
+              "ml": "onnil kai kottoo.",
+              "te": "okati-ki chappatlu kottandi."
             },
             {
               "who": "you",
@@ -1601,7 +1766,8 @@
               "kn": "taala bidbedi.",
               "hi": "taal mat chhodo.",
               "ta": "thaalam vidaadheenga.",
-              "ml": "beat steady aayi nirthoo. thaalam vidaruthu."
+              "ml": "beat steady aayi nirthoo. thaalam vidaruthu.",
+              "te": "beat steady-gaa unchandi. taalam vadalakandi."
             },
             {
               "who": "you",
@@ -1609,7 +1775,8 @@
               "kn": "modalu slow aagi, aamele fast aagi.",
               "hi": "pehle dheere, phir tez.",
               "ta": "modhalla medhuva, apram vegama.",
-              "ml": "aadyam pathukke, pinne vegam."
+              "ml": "aadyam pathukke, pinne vegam.",
+              "te": "mundu nemmadiga, tarvaata fast-gaa."
             },
             {
               "who": "you",
@@ -1617,7 +1784,8 @@
               "kn": "innomme modalinda.",
               "hi": "phir se shuru se.",
               "ta": "thirumba modhalla irundhu.",
-              "ml": "veendum thudakkam muthal."
+              "ml": "veendum thudakkam muthal.",
+              "te": "malli modati nunchi."
             },
             {
               "who": "them",
@@ -1625,7 +1793,8 @@
               "kn": "idu tumba fast-aa?",
               "hi": "kya yeh bahut tez hai?",
               "ta": "idhu romba fast-aa?",
-              "ml": "ithu kooduthal vegam aano?"
+              "ml": "ithu kooduthal vegam aano?",
+              "te": "idi chaala fast-aa?"
             },
             {
               "who": "you",
@@ -1633,7 +1802,8 @@
               "kn": "illa, adu perfect.",
               "hi": "nahin, yeh perfect hai.",
               "ta": "illa, adhu perfect.",
-              "ml": "alla, athu perfect aanu."
+              "ml": "alla, athu perfect aanu.",
+              "te": "kaadu, adi perfect."
             }
           ]
         }
@@ -1655,7 +1825,8 @@
               "kn": "swara hidkolli.",
               "hi": "sur pakdo.",
               "ta": "swaram pidinga.",
-              "ml": "swaram pidichu nilkkoo."
+              "ml": "swaram pidichu nilkkoo.",
+              "te": "swaram alaage pattukondi."
             },
             {
               "who": "you",
@@ -1663,7 +1834,8 @@
               "kn": "adu swalpa mele ide.",
               "hi": "voh thoda upar hai.",
               "ta": "adhu konjam mela irukku.",
-              "ml": "athu kurachu mukalil aanu."
+              "ml": "athu kurachu mukalil aanu.",
+              "te": "adi konchem paina undi."
             },
             {
               "who": "you",
@@ -1671,7 +1843,8 @@
               "kn": "adu swalpa kelage ide.",
               "hi": "voh thoda neeche hai.",
               "ta": "adhu konjam keezha irukku.",
-              "ml": "athu kurachu thaazhe aanu."
+              "ml": "athu kurachu thaazhe aanu.",
+              "te": "adi konchem kinda undi."
             },
             {
               "who": "you",
@@ -1679,7 +1852,8 @@
               "kn": "eega sari ide.",
               "hi": "ab sur mein hai.",
               "ta": "ippo sari-aa irukku.",
-              "ml": "ippo athu tune-il aanu."
+              "ml": "ippo athu tune-il aanu.",
+              "te": "ippudu tune-lo undi."
             },
             {
               "who": "you",
@@ -1687,7 +1861,8 @@
               "kn": "modalu keli, aamele haadi.",
               "hi": "pehle suno, phir gaao.",
               "ta": "modhalla kelunga, apram paadunga.",
-              "ml": "aadyam kelkkoo, pinne paadoo."
+              "ml": "aadyam kelkkoo, pinne paadoo.",
+              "te": "mundu vinandi, tarvaata paadandi."
             },
             {
               "who": "them",
@@ -1695,7 +1870,8 @@
               "kn": "adu sari-yaa?",
               "hi": "kya voh sahi tha?",
               "ta": "adhu sari-yaa?",
-              "ml": "athu shari aayirunno?"
+              "ml": "athu shari aayirunno?",
+              "te": "adi sarigga undaa?"
             },
             {
               "who": "you",
@@ -1703,7 +1879,8 @@
               "kn": "hattira. innomme.",
               "hi": "lagbhag. ek baar aur.",
               "ta": "kitta. innoru thadava.",
-              "ml": "ethaandu. onnu koodi."
+              "ml": "ethaandu. onnu koodi.",
+              "te": "daadaapu. inkosaari."
             }
           ]
         }
@@ -1959,6 +2136,43 @@
       ],
       "hundred": "nooru",
       "rule": "Malayalam joins the ten to the unit: irupathi onnu is twenty one, muppathi anchu is thirty five. The ten loses its last sound and the unit follows."
+    },
+    "te": {
+      "units": [
+        "okati",
+        "rendu",
+        "moodu",
+        "naalugu",
+        "aidu",
+        "aaru",
+        "edu",
+        "enimidi",
+        "tommidi"
+      ],
+      "teens": [
+        "padi",
+        "padakondu",
+        "pannendu",
+        "padamoodu",
+        "padhnaalugu",
+        "padihenu",
+        "padahaaru",
+        "padihedu",
+        "paddenimidi",
+        "pandommidi"
+      ],
+      "tens": [
+        "iravai",
+        "muppai",
+        "nalabhai",
+        "yaabhai",
+        "aravai",
+        "debbhai",
+        "enabhai",
+        "tombhai"
+      ],
+      "hundred": "vanda",
+      "rule": "Telugu just puts the ten in front of the unit, nothing changes: iravai okati is twenty one, muppai aidu is thirty five. Before another number, vanda becomes noota: noota yaabhai is a hundred and fifty."
     }
   },
   "sounds": {
@@ -2065,12 +2279,39 @@
         "long": "aari",
         "longEn": "saw (the tool)"
       }
+    ],
+    "te": [
+      {
+        "short": "palu",
+        "shortEn": "many, several",
+        "long": "paalu",
+        "longEn": "milk"
+      },
+      {
+        "short": "kallu",
+        "shortEn": "eyes",
+        "long": "kaalu",
+        "longEn": "leg"
+      },
+      {
+        "short": "ela",
+        "shortEn": "how",
+        "long": "eela",
+        "longEn": "a whistle"
+      },
+      {
+        "short": "mata",
+        "shortEn": "religion, faith",
+        "long": "maata",
+        "longEn": "word"
+      }
     ]
   },
   "soundNote": {
     "kn": "A doubled vowel is held about twice as long. Hold aa, ee, oo like a long note; a, i, u are short notes. Stretching the last vowel to aa also turns any sentence into a question.",
     "hi": "A doubled vowel is held longer: kal versus kaal. Hindi also has a soft breath after some consonants (bh, dh, kh): bhaai, not baai.",
     "ta": "A doubled vowel is held longer: pal versus paal. zh (as in Tamizh, vaazhai) is a soft rolled sound between l and r; most learners start with l and are understood.",
-    "ml": "Malayalam hears a long vowel as a different word, and it hears double consonants too: kali and kaali, ari and aari. Hold the long one for two beats and the single consonant light."
+    "ml": "Malayalam hears a long vowel as a different word, and it hears double consonants too: kali and kaali, ari and aari. Hold the long one for two beats and the single consonant light.",
+    "te": "Telugu hears a long vowel as a different word: palu and paalu, ela and eela. Hold aa, ee, oo for two beats. Almost every Telugu word ends in a vowel, so let each word finish open, never clipped: illu, not ill."
   }
 }

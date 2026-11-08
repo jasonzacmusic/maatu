@@ -1653,6 +1653,105 @@
     "ruh-vyan",
     "ruh-vuh-nay"
    ]
+  },
+  "say": {
+   "inf": "dire",
+   "infSay": "deer",
+   "aux": "a",
+   "pres": [
+    "dis",
+    "dis",
+    "dites",
+    "dit",
+    "dit",
+    "dit",
+    "disent"
+   ],
+   "presSay": [
+    "dee",
+    "dee",
+    "deet",
+    "dee",
+    "dee",
+    "dee",
+    "deez"
+   ],
+   "pp": "dit",
+   "ppSay": "dee",
+   "imp": [
+    "dis",
+    "dites"
+   ],
+   "impSay": [
+    "dee",
+    "deet"
+   ]
+  },
+  "attend": {
+   "inf": "assister",
+   "infSay": "a-sees-tay",
+   "aux": "a",
+   "pres": [
+    "assiste",
+    "assistes",
+    "assistez",
+    "assiste",
+    "assiste",
+    "assiste",
+    "assistent"
+   ],
+   "presSay": [
+    "a-seest",
+    "a-seest",
+    "a-sees-tay",
+    "a-seest",
+    "a-seest",
+    "a-seest",
+    "a-seest"
+   ],
+   "pp": "assisté",
+   "ppSay": "a-sees-tay",
+   "imp": [
+    "assiste",
+    "assistez"
+   ],
+   "impSay": [
+    "a-seest",
+    "a-sees-tay"
+   ]
+  },
+  "file": {
+   "inf": "déposer",
+   "infSay": "day-po-zay",
+   "aux": "a",
+   "pres": [
+    "dépose",
+    "déposes",
+    "déposez",
+    "dépose",
+    "dépose",
+    "dépose",
+    "déposent"
+   ],
+   "presSay": [
+    "day-poz",
+    "day-poz",
+    "day-po-zay",
+    "day-poz",
+    "day-poz",
+    "day-poz",
+    "day-poz"
+   ],
+   "pp": "déposé",
+   "ppSay": "day-po-zay",
+   "imp": [
+    "dépose",
+    "déposez"
+   ],
+   "impSay": [
+    "day-poz",
+    "day-po-zay"
+   ]
   }
  },
  "imp": {
@@ -3018,14 +3117,14 @@
   },
   "cash": {
    "part": {
-    "w": "du liquide",
-    "say": "dew lee-keed",
-    "neg": "de liquide",
-    "negSay": "duh lee-keed"
+    "w": "de l'argent liquide",
+    "say": "duh lar-zhahn lee-keed",
+    "neg": "d'argent liquide",
+    "negSay": "dar-zhahn lee-keed"
    },
    "def": {
-    "w": "le liquide",
-    "say": "luh lee-keed"
+    "w": "en espèces",
+    "say": "ahn ess-pess"
    }
   },
   "upi": {
@@ -3516,6 +3615,80 @@
    "def": {
     "w": "l'uniforme",
     "say": "lew-nee-form"
+   }
+  },
+  "sugar": {
+   "part": {
+    "w": "du sucre",
+    "say": "dew sewkr",
+    "neg": "de sucre",
+    "negSay": "duh sewkr"
+   },
+   "def": {
+    "w": "le sucre",
+    "say": "luh sewkr"
+   }
+  },
+  "ticket": {
+   "def": {
+    "w": "le billet",
+    "say": "luh bee-yay"
+   },
+   "indef": {
+    "w": "un billet",
+    "say": "uhn bee-yay",
+    "neg": "de billet",
+    "negSay": "duh bee-yay"
+   }
+  },
+  "biryani": {
+   "def": {
+    "w": "le biryani",
+    "say": "luh beer-ya-nee"
+   },
+   "part": {
+    "w": "du biryani",
+    "say": "dew beer-ya-nee",
+    "neg": "de biryani",
+    "negSay": "duh beer-ya-nee"
+   }
+  },
+  "meeting": {
+   "place": {
+    "w": "à la réunion",
+    "say": "a la ray-ew-nyohn"
+   },
+   "def": {
+    "w": "la réunion",
+    "say": "la ray-ew-nyohn"
+   },
+   "indef": {
+    "w": "une réunion",
+    "say": "ewn ray-ew-nyohn",
+    "neg": "de réunion",
+    "negSay": "duh ray-ew-nyohn"
+   }
+  },
+  "homework": {
+   "def": {
+    "w": "les devoirs",
+    "say": "lay duh-vwar"
+   },
+   "faire": {
+    "w": "les devoirs",
+    "say": "lay duh-vwar"
+   }
+  },
+  "saree": {
+   "def": {
+    "w": "le sari",
+    "say": "luh sa-ree"
+   },
+   "indef": {
+    "w": "un sari",
+    "say": "uhn sa-ree",
+    "neg": "de sari",
+    "negSay": "duh sa-ree"
    }
   }
  },

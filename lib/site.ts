@@ -9,9 +9,9 @@ import { PERSONAS, personaId } from "./personas.generated";
 
 export const SITE_URL = "https://maatu.nathanielschool.com";
 export const SITE_NAME = "Maatu";
-export const SITE_TITLE = "Maatu: speak Kannada, Hindi, Tamil and Malayalam by talking";
+export const SITE_TITLE = "Maatu: speak Kannada, Hindi, Tamil, Malayalam and Telugu by talking";
 export const SITE_DESCRIPTION =
-  "Maatu is a speaking practice app for everyday Kannada, Hindi, Tamil and Malayalam, with a French chat too. Talk out loud with a friendly AI teacher, act out real-life scenes, build your own sentences and follow a beginner course. No account needed.";
+  "Maatu is a speaking practice app for everyday Kannada, Hindi, Tamil, Malayalam and Telugu, with a French chat too. Talk out loud with a friendly AI teacher, act out real-life scenes, build your own sentences and follow a beginner course. No account needed.";
 export const SCHOOL = {
   name: "Nathaniel School of Music",
   url: "https://www.nathanielschool.com",
@@ -19,9 +19,9 @@ export const SCHOOL = {
 };
 
 /** The four languages with a course, scenes and a teacher, in app order. */
-export const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+export const LANGS: Lang[] = ["kn", "hi", "ta", "ml", "te"];
 
-export const SLUGS: Record<Lang, string> = { kn: "kannada", hi: "hindi", ta: "tamil", ml: "malayalam" };
+export const SLUGS: Record<Lang, string> = { kn: "kannada", hi: "hindi", ta: "tamil", ml: "malayalam", te: "telugu" };
 export function langFromSlug(slug: string): Lang | null {
   return LANGS.find((code) => SLUGS[code] === slug) ?? null;
 }
@@ -31,14 +31,15 @@ export function learnPath(lang: Lang) {
 
 export const FRENCH = { name: "French", city: "Paris", teacher: "Camille" } as const;
 
-const CITY: Record<Lang, string> = { kn: "Bengaluru", hi: "Delhi", ta: "Chennai", ml: "Kochi" };
-const COLOR: Record<Lang, string> = { kn: "#6FD0A8", hi: "#FFB35C", ta: "#FF8B6B", ml: "#7FC4EE" };
-const SCRIPT: Record<Lang, string> = { kn: "Kannada script", hi: "Devanagari", ta: "Tamil script", ml: "Malayalam script" };
+const CITY: Record<Lang, string> = { kn: "Bengaluru", hi: "Delhi", ta: "Chennai", ml: "Kochi", te: "Hyderabad" };
+const COLOR: Record<Lang, string> = { kn: "#6FD0A8", hi: "#FFB35C", ta: "#FF8B6B", ml: "#7FC4EE", te: "#F29BD0" };
+const SCRIPT: Record<Lang, string> = { kn: "Kannada script", hi: "Devanagari", ta: "Tamil script", ml: "Malayalam script", te: "Telugu script" };
 const STYLE: Record<Lang, string> = {
   kn: "the Kannada people speak in Bengaluru, in everyday colloquial forms rather than stiff textbook Kannada",
   hi: "the Hindi people speak in Delhi, with the ordinary Hinglish of daily life rather than heavily Sanskritized Hindi",
   ta: "the Tamil people speak in Chennai, in colloquial spoken forms rather than formal literary Tamil",
   ml: "the Malayalam people speak in Kochi, in colloquial spoken forms rather than formal literary Malayalam",
+  te: "the Telugu people speak in Hyderabad, in everyday colloquial forms with the English words people really use, rather than bookish Telugu",
 };
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -166,7 +167,7 @@ export function languagePage(lang: Lang): LanguagePage {
 export const GENERAL_FAQS: Faq[] = [
   {
     q: "What is Maatu?",
-    a: "Maatu is an app for practising spoken Kannada, Hindi, Tamil and Malayalam, with a French chat as well. You talk out loud with a friendly AI teacher, build your own sentences and act out real-life scenes such as an auto ride or a visit to the clinic.",
+    a: "Maatu is an app for practising spoken Kannada, Hindi, Tamil, Malayalam and Telugu, with a French chat as well. You talk out loud with a friendly AI teacher, build your own sentences and act out real-life scenes such as an auto ride or a visit to the clinic.",
   },
   {
     q: "What does the word maatu mean?",
@@ -182,7 +183,7 @@ export const GENERAL_FAQS: Faq[] = [
   },
   {
     q: "Do I need to read the script?",
-    a: "No. Maatu shows every word in plain English letters, so you can speak Kannada, Hindi, Tamil and Malayalam before you learn to read them.",
+    a: "No. Maatu shows every word in plain English letters, so you can speak Kannada, Hindi, Tamil, Malayalam and Telugu before you learn to read them.",
   },
   {
     q: "How is Maatu different from other language apps?",

@@ -16,6 +16,7 @@ const SCRIPT: Record<string, RegExp> = {
   hi: /[ऀ-ॿ]/u,
   ta: /[஀-௿]/u,
   ml: /[ഀ-ൿ]/u,
+  te: /[ఀ-౿]/u,
 };
 
 // Lines repeat a lot (seeded sentences, the same correction), so a warm

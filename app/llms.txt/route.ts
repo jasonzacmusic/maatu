@@ -26,7 +26,7 @@ export function GET() {
     }),
     `- French: a chat with ${FRENCH.teacher}, the AI teacher, in Paris French. French has no course or scenes yet.`,
     "",
-    `## Beginner course (the same ${ALL_LESSONS.length} lessons in each of the four Indian languages)`,
+    `## Beginner course (the same ${ALL_LESSONS.length} lessons in each of the five Indian languages)`,
     ...course().map((u) => `- ${u.unit}: ${u.lessons.map((l) => l.title).join("; ")}`),
     "",
     "## Real-life scenes",

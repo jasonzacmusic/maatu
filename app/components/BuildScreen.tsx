@@ -38,6 +38,7 @@ const CHECK_HINT: Record<Lang, string> = {
   hi: "I played piano yesterday  /  main kal piano bajaata  /  main ___ jaata hoon",
   ta: "I played piano yesterday  /  naan nethu piano vaasikkiren  /  naan ___ poren",
   ml: "I played piano yesterday  /  njaan innale piano vaayichu  /  njaan ___ pokunnu",
+  te: "I played piano yesterday  /  nenu ninna piano vaayinchaanu  /  nenu ___ veltaanu",
 };
 
 type Correction = { type: string; was: string; now: string; why: string };
@@ -77,6 +78,7 @@ const RULE_FOR: Record<Lang, Record<string, number>> = {
   hi: { tense: 3, ending: 2, gender: 1, verb: 7, "word-order": 0, "missing-word": 2, "word-choice": 7, politeness: 2, spelling: 1 },
   ta: { tense: 2, ending: 1, gender: 5, verb: 6, "word-order": 0, "missing-word": 7, "word-choice": 6, politeness: 5, spelling: 1 },
   ml: { tense: 2, ending: 2, gender: 1, verb: 5, "word-order": 0, "missing-word": 6, "word-choice": 5, politeness: 1, spelling: 2 },
+  te: { tense: 1, ending: 1, gender: 2, verb: 3, "word-order": 0, "missing-word": 7, "word-choice": 1, politeness: 5, spelling: 1 },
 };
 
 type Room = "review" | "check" | "shapes" | "frames" | "scenes" | "commands" | "rules" | "decks";

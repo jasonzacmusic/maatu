@@ -1,6 +1,6 @@
 """Maatu voice agent worker.
 
-Per turn for Kannada, Hindi, Tamil and Malayalam: LiveKit room audio -> Sarvam
+Per turn for Kannada, Hindi, Tamil, Malayalam and Telugu: LiveKit room audio -> Sarvam
 Saaras v4 STT locked to the call language -> Gemini brain holding the persona ->
 fixed Sarvam Bulbul voice reading native script -> room audio. French runs on
 Gemini Live. Every language setting comes from languages.json (see

@@ -7,16 +7,16 @@ import { learnIndexGraph } from "@/lib/structured-data";
 import { JsonLd } from "../../components/JsonLd";
 
 const DESCRIPTION =
-  "Pick a language and start speaking: everyday Kannada, Hindi, Tamil or Malayalam, out loud, with a friendly AI teacher. Chat, build sentences, act out real-life scenes and follow a beginner course.";
+  "Pick a language and start speaking: everyday Kannada, Hindi, Tamil, Malayalam or Telugu, out loud, with a friendly AI teacher. Chat, build sentences, act out real-life scenes and follow a beginner course.";
 
 export const metadata: Metadata = {
-  title: "Learn Kannada, Hindi, Tamil or Malayalam by speaking",
+  title: "Learn Kannada, Hindi, Tamil, Malayalam or Telugu by speaking",
   description: DESCRIPTION,
   alternates: { canonical: "/learn" },
-  ...shareTags({ title: "Learn Kannada, Hindi, Tamil or Malayalam by speaking | Maatu", description: DESCRIPTION, path: "/learn" }),
+  ...shareTags({ title: "Learn Kannada, Hindi, Tamil, Malayalam or Telugu by speaking | Maatu", description: DESCRIPTION, path: "/learn" }),
 };
 
-const ACCENT: Record<string, string> = { kn: "#6FD0A8", hi: "#FFB35C", ta: "#FF8B6B", ml: "#7FC4EE" };
+const ACCENT: Record<string, string> = { kn: "#6FD0A8", hi: "#FFB35C", ta: "#FF8B6B", ml: "#7FC4EE", te: "#F29BD0" };
 
 export default function LearnIndex() {
   return (

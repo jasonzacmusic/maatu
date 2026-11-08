@@ -20,7 +20,7 @@ import { hasNativeScript, romanizeText } from "@/lib/romanize";
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MODEL = process.env.COACH_MODEL || "gemini-flash-lite-latest";
-const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml", "te"];
 const CODE: Record<Lang, string> = LANG_CODE;
 const TYPES = new Set(["tense", "gender", "verb", "word-order", "missing-word", "ending", "word-choice", "politeness", "sound"]);
 

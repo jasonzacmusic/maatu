@@ -164,3 +164,13 @@ Defaults chosen without asking, per standing rules. Newest first.
 - Commands are stored per verb as [friend, polite] for yes and for do-not, in all four Indian languages; French imperatives live in data/french-extra.json beside the new French nouns.
 - New words were written by two Opus helpers, then read back line by line by two more Opus reviewers per language pair; their word fixes went into the data and their rule fixes into lib/shapes.ts. The review dumps stay in docs/review for the next pass.
 - The service worker cache moved to v7 so returning phones drop the old Build.
+
+## 2026-11-08 Telugu, Have to, and a pick-first Build
+- Telugu is written Hyderabad style in romanized Latin (nenu, meeru, ekkada undi, chestaanu), never native script on screen; the voice gets native script. Teacher Sravani on Sarvam voice priya; the 14 characters reuse voice names already proven in the other languages.
+- Telugu verbs live in grammar.json beside the others: dict, pres, past, neg, noun, purp, want, contNeg and hort per verb, plus pastShe where she differs. She and it share one ending (chesindi), and want and can sit with the person (naaku kaavaali, naaku vachchu), the same way Kannada and Tamil do.
+- "Have to" is a new time choice in every language: Kannada -beku, Hindi mujhe ... hai, Tamil -num, Malayalam -anam, Telugu -aali, French devoir. Its not form means "no need" (beda, nahin ... hai, vendaam, venda, akkarledu, pas besoin).
+- A place described is its plain name (the temple is far), and a crowd is in the place (gudilo rush gaa undi, mandir mein bheed hai). A described thing drops its "a" (film chennaagide, not ondu film).
+- Build puts choosing first: the kind of sentence as a picture row at the top, quick CHANGE chips under the sentence, actions in eight groups. The sentence card shrinks when it sticks so the pickers stay in view.
+- French: a complaint is filed (deposer une plainte), cash is paid en especes and withdrawn as argent liquide, attend is assister a. French still only builds "someone does something" and "ask someone to do it"; the other 13 shapes stay Indian-language only for now.
+- The service worker cache moved to v8 so returning phones pick up Telugu.
+

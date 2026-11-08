@@ -159,6 +159,23 @@ def grammar_reference(lang: str, verb_limit: int | None = None) -> str:
             m = v[lang]
             lines.append(f"- {v['en']['base']} = {m['dict']}: {m['pres']} / {m['past']} / {m['fut']} / {m['cont']} / {m['inf']}")
         lines.append("Worked examples: she plays the piano every day = aval dinavum piano vaayikkunnu. I played yesterday = njaan innale vaayichu. Do you sing? = ningal paadumo? I want to learn = enikku padikkanam. I know how to play = enikku vaayikkaan ariyaam.")
+    elif lang == "te":
+        lines.append(
+            "Telugu puts person endings on the verb, in the order I, you (friend), you (polite), he, she, we, they. "
+            "Every day and will: present stem + aanu, aavu, aaru, aadu, undi, aamu, aaru (chestaanu, chestundi). "
+            "Doing now: present stem + unnaanu, unnaavu, unnaaru, unnaadu, unnadi, unnaamu, unnaaru. "
+            "Past: past stem + aanu, aavu, aaru, aadu, indi, aamu, aaru (chesaanu, chesindi). She and it share one ending. "
+            "Do not or will not: negative base + nu, vu, ru, du, du, mu, ru (cheyyanu). Did not: negative base + ledu, every person (cheyyaledu). "
+            "Question: aa on the last word (chestaavaa, undaa). Want to: naaku + want form + undi (naaku cheyyaalani undi). "
+            "Know how to: naaku + verbal noun + vachchu (naaku cheyyadam vachchu). Polite commands end in andi (cheyyandi), do not = aku / akandi."
+        )
+        lines.append("Verbs (dictionary: present stem / past stem / negative base / verbal noun / want form):")
+        for v in verbs:
+            t = v.get(lang)
+            if not t:
+                continue
+            lines.append(f"- {v['en']['base']} = {t['dict']}: {t['pres']}- / {t['past']}- / {t['neg']}- / {t['noun']} / {t['want']}")
+        lines.append("Worked examples: she plays the piano every day = aame roju piano vaayistundi. I played yesterday = nenu ninna piano vaayinchaanu. Do you sing? = meeru paadutaaraa? I want to learn = naaku nerchukovaalani undi. I know how to play = naaku vaayinchadam vachchu.")
     else:
         lines.append(
             "Endings in the same person order. Present: -" + " -".join(sfx["pres"]) + " on the present stem. "

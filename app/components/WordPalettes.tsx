@@ -53,14 +53,17 @@ const SKELETON: Record<ShapeId, { w: number; role: keyof typeof ROLE_COLOR }[]> 
 };
 
 export function ShapeRail({ shape, onPick, rm }: { shape: ShapeId; onPick: (s: ShapeId) => void; rm: boolean }) {
+  // One row of picture cards, the first decision: what do you want to say?
+  // A card shows its picture, what it is for, and a real example line.
   return (
     <div>
-      <div className="mb-2 text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>
-        WHAT KIND OF SENTENCE
+      <div className="mb-2 flex items-baseline justify-between gap-2">
+        <span className="text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>WHAT DO YOU WANT TO SAY?</span>
+        <span className="text-[11.5px]" style={{ color: C.faint }}>{SHAPES.length} kinds of sentence</span>
       </div>
       <div
-        className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-1.5 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0 lg:grid-cols-4"
-        style={{ scrollbarWidth: "none" }}
+        className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0"
+        style={{ scrollbarWidth: "thin" }}
         role="tablist"
         aria-label="Sentence shape"
       >
@@ -73,29 +76,25 @@ export function ShapeRail({ shape, onPick, rm }: { shape: ShapeId; onPick: (s: S
               role="tab"
               aria-selected={on}
               onClick={() => onPick(s.id)}
-              className="flex w-[186px] flex-none flex-col gap-2 rounded-[15px] px-3 py-2.5 text-left focus-visible:outline focus-visible:outline-2 sm:w-auto"
+              className="flex w-[148px] flex-none snap-start flex-col gap-1.5 rounded-[16px] px-3 pb-2.5 pt-3 text-left focus-visible:outline focus-visible:outline-2"
               style={{
-                background: on ? "rgba(255,179,92,0.12)" : C.base,
-                border: `1px solid ${on ? "rgba(255,179,92,0.52)" : LINE}`,
+                background: on ? "rgba(255,179,92,0.14)" : C.base,
+                border: `1px solid ${on ? "rgba(255,179,92,0.6)" : LINE}`,
                 outlineColor: C.sodium,
-                transition: rm ? undefined : "background 160ms ease, border-color 160ms ease",
+                transform: on && !rm ? "translateY(-1px)" : undefined,
+                transition: rm ? undefined : "background 160ms ease, border-color 160ms ease, transform 160ms ease",
               }}
             >
-              {/* the shape of the sentence this makes */}
-              <span className="flex items-center gap-[3px]" aria-hidden="true">
-                {SKELETON[s.id].map((b, i) => (
-                  <span
-                    key={i}
-                    style={{
-                      width: b.w, height: 7, borderRadius: 4,
-                      background: ROLE_COLOR[b.role],
-                      opacity: on ? 0.95 : 0.42,
-                      transition: rm ? undefined : "opacity 160ms ease",
-                    }}
-                  />
-                ))}
+              <span className="flex items-center justify-between">
+                <span className="text-[26px] leading-none" aria-hidden="true">{s.emoji}</span>
+                {/* the shape of the sentence this makes */}
+                <span className="flex items-center gap-[2px]" aria-hidden="true">
+                  {SKELETON[s.id].map((b, i) => (
+                    <span key={i} style={{ width: Math.max(5, b.w / 2), height: 5, borderRadius: 3, background: ROLE_COLOR[b.role], opacity: on ? 0.95 : 0.4 }} />
+                  ))}
+                </span>
               </span>
-              <span className="block text-[12.5px] font-semibold leading-tight" style={{ color: on ? C.milk : C.muted }}>
+              <span className="block text-[12.5px] font-bold leading-tight" style={{ color: on ? C.milk : C.muted }}>
                 {s.label}
               </span>
               <span className="block text-[11px] leading-snug" style={{ color: on ? C.sodium : C.faint }}>

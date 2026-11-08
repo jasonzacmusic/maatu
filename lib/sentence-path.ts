@@ -4,8 +4,8 @@ import frenchExtra from "@/data/french-extra.json";
 import { LANGUAGES } from "./languages";
 
 // The Sentence Studio engine: pick who, the action, what and when, and get the
-// English line plus the spoken line in Kannada, Hindi, Tamil, Malayalam or
-// French at once. The four Indian languages come from the vetted tables in
+// English line plus the spoken line in Kannada, Hindi, Tamil, Malayalam, Telugu or
+// French at once. The five Indian languages come from the vetted tables in
 // grammar.json through lib/grammar.ts. French lives here as explicit tables in
 // the spoken register: the ne is dropped, on means we, and the near future is
 // aller plus the verb. Romanized only for the Indian languages, never native
@@ -14,7 +14,7 @@ import { LANGUAGES } from "./languages";
 export type PathLang = Lang | "fr";
 export type Role = "who" | "action" | "what" | "when" | "helper";
 export type Part = { word: string; role: Role; stem?: string; say?: string };
-export type When = "past" | "cont" | "present" | "future" | "want" | "can";
+export type When = "past" | "cont" | "present" | "future" | "want" | "can" | "must";
 export type Who = PersonId | "name";
 
 export type PathChoice = {
@@ -48,6 +48,7 @@ export const PATH_LANGS: { id: PathLang; label: string; flag: string; city: stri
   { id: "hi", label: "Hindi", flag: "🪔", city: "Delhi", accent: accent("hi") },
   { id: "ta", label: "Tamil", flag: "🌺", city: "Chennai", accent: accent("ta") },
   { id: "ml", label: "Malayalam", flag: "🌴", city: "Kochi", accent: accent("ml") },
+  { id: "te", label: "Telugu", flag: "🌶️", city: "Hyderabad", accent: accent("te") },
   { id: "fr", label: "French", flag: "🥐", city: "Paris", accent: accent("fr") },
 ];
 
@@ -70,6 +71,7 @@ export const WHEN_TILES: { id: When; emoji: string; en: string; time?: string; b
   { id: "future", emoji: "⏩", en: "Will do", time: "tomorrow", blurb: "going to happen" },
   { id: "want", emoji: "💫", en: "Want to", blurb: "a wish or a need" },
   { id: "can", emoji: "💪", en: "Know how", blurb: "a skill you have" },
+  { id: "must", emoji: "📌", en: "Have to", blurb: "a need or a duty" },
 ];
 
 type VerbTile = { id: string; emoji: string; en: string; short?: string; objects: string[]; music?: boolean; trick?: boolean };
@@ -301,12 +303,24 @@ export function whenAllowed(verb: string, when: When, object: string | null = nu
   return SKILL_VERBS.has(verb);
 }
 
+// The actions in groups a beginner can scan: what am I doing, roughly?
+export const VERB_GROUPS: { id: string; label: string; emoji: string; ids: string[] }[] = [
+  { id: "music", label: "Music", emoji: "🎵", ids: ["play", "sing", "practise", "listen", "learn", "teach", "tune", "record", "count", "clap", "explain", "repeat", "dance", "perform"] },
+  { id: "food", label: "Food", emoji: "🍽️", ids: ["eat", "drink", "cook", "boil", "order", "pack"] },
+  { id: "move", label: "Going places", emoji: "🛺", ids: ["go", "come", "comeback", "drive", "travel", "walk", "run", "turn", "park", "drop", "pickup", "reach", "getin", "getdown", "wait"] },
+  { id: "money", label: "Shopping and money", emoji: "🛒", ids: ["buy", "sell", "pay", "book", "cancel", "transfer", "withdraw", "deposit", "spend", "save", "borrow", "lend", "return", "exchange", "recharge"] },
+  { id: "talk", label: "Talking", emoji: "🗣️", ids: ["speak", "ask", "answer", "say", "call", "reply", "share", "invite", "meet", "think", "laugh", "cry", "complain"] },
+  { id: "papers", label: "Offices and papers", emoji: "🪪", ids: ["fill", "sign", "submit", "apply", "renew", "check", "collect", "xerox", "register", "give", "take", "bring", "send", "show"] },
+  { id: "home", label: "Home and the day", emoji: "🏠", ids: ["wakeup", "getready", "bathe", "wear", "wash", "clean", "cut", "repair", "change", "open", "close", "put", "lock", "switchon", "switchoff", "charge", "iron", "use", "search", "shift", "sit", "stand", "rest", "sleep"] },
+  { id: "life", label: "Work, study and fun", emoji: "🎒", ids: ["do", "work", "study", "join", "attend", "help", "playgame", "swim", "see", "read", "write", "start", "stop", "finish", "try", "forget", "lose", "pray", "celebrate"] },
+];
+
 export function objectsFor(verb: string): string[] {
   return VERB_TILES.find((v) => v.id === verb)?.objects ?? [];
 }
 
 export function objectEnglish(id: string, lang: PathLang): string {
-  if (id === "language") return lang === "fr" ? "French" : lang === "hi" ? "Hindi" : lang === "ta" ? "Tamil" : lang === "ml" ? "Malayalam" : "Kannada";
+  if (id === "language") return lang === "fr" ? "French" : lang === "hi" ? "Hindi" : lang === "ta" ? "Tamil" : lang === "ml" ? "Malayalam" : lang === "te" ? "Telugu" : "Kannada";
   const o = OBJECTS.find((x) => x.id === id);
   return o ? o.en : id;
 }
@@ -348,12 +362,12 @@ export function englishParts(c: PathChoice, lang: PathLang): Part[] {
 
   if (c.question) {
     const aux =
-      c.when === "present" || c.when === "want" ? (third ? (c.negative ? "Doesn't" : "Does") : c.negative ? "Don't" : "Do")
+      c.when === "present" || c.when === "want" || c.when === "must" ? (third ? (c.negative ? "Doesn't" : "Does") : c.negative ? "Don't" : "Do")
       : c.when === "cont" ? cap(be) + (c.negative ? "n't" : "")
       : c.when === "past" ? (c.negative ? "Didn't" : "Did")
       : c.when === "future" ? (c.negative ? "Won't" : "Will")
       : third ? (c.negative ? "Doesn't" : "Does") : c.negative ? "Don't" : "Do";
-    const main = c.when === "cont" ? en.ing : c.when === "want" ? `want to ${en.base}` : c.when === "can" ? `know how to ${en.base}` : en.base;
+    const main = c.when === "cont" ? en.ing : c.when === "want" ? `want to ${en.base}` : c.when === "can" ? `know how to ${en.base}` : c.when === "must" ? `have to ${en.base}` : en.base;
     push(c.when === "cont" && p === "i" && c.negative ? "Am" : aux, "action");
     push(c.when === "cont" && p === "i" && c.negative ? `${s} not` : s, "who");
     push(main, "action");
@@ -364,6 +378,7 @@ export function englishParts(c: PathChoice, lang: PathLang): Part[] {
     else if (c.when === "past") action = c.negative ? `didn't ${en.base}` : en.past;
     else if (c.when === "future") action = `${c.negative ? "won't" : "will"} ${en.base}`;
     else if (c.when === "want") action = c.negative ? `${third ? "doesn't" : "don't"} want to ${en.base}` : `${third ? "wants" : "want"} to ${en.base}`;
+    else if (c.when === "must") action = c.negative ? `${third ? "doesn't" : "don't"} have to ${en.base}` : `${third ? "has" : "have"} to ${en.base}`;
     else action = c.negative ? `${third ? "doesn't" : "don't"} know how to ${en.base}` : `${third ? "knows" : "know"} how to ${en.base}`;
     push(s, "who");
     push(action, "action");
@@ -394,6 +409,7 @@ function nameForms(lang: Lang, name: string): { sub: string; dat: string; ne: st
   if (lang === "kn") return { sub: name, dat: vowel ? `${name}ge` : `${name}-ge`, ne: name };
   if (lang === "hi") return { sub: name, dat: `${name} ko`, ne: `${name} ne` };
   if (lang === "ml") return { sub: name, dat: vowel ? `${name}kku` : `${name}inu`, ne: name };
+  if (lang === "te") return { sub: name, dat: /[ui]$/i.test(name) ? `${name}ki` : vowel ? `${name}ku` : `${name}ki`, ne: name };
   return { sub: name, dat: vowel ? `${name}kku` : `${name}ukku`, ne: name };
 }
 
@@ -434,7 +450,7 @@ function indian(lang: Lang, c: PathChoice): PathResult | null {
   const verbNote = verbById(c.verb)?.note;
   let note = built.note === verbNote ? PATH_NOTES[c.verb]?.[lang] : built.note;
   if (p !== "i" && note?.startsWith("Gender is yours")) note = undefined;
-  if (c.verb === "do") note = lang === "kn" ? "The Bangalore trick: any English word plus maadu. Shopping maadu, order maadu, homework maadu." : lang === "hi" ? "The Hinglish trick: any English word plus karna. Shopping karna, order karna, download karna." : lang === "ml" ? "The Kochi trick: any English word plus cheyyuka. Shopping cheyyum, order cheyyum, download cheythu." : "The Chennai trick: any English word plus pannu. Shopping pannu, order pannu, download pannu.";
+  if (c.verb === "do") note = lang === "kn" ? "The Bangalore trick: any English word plus maadu. Shopping maadu, order maadu, homework maadu." : lang === "hi" ? "The Hinglish trick: any English word plus karna. Shopping karna, order karna, download karna." : lang === "ml" ? "The Kochi trick: any English word plus cheyyuka. Shopping cheyyum, order cheyyum, download cheythu." : lang === "te" ? "The Hyderabad trick: any English word plus cheyyi. Shopping chestaanu, order chesaanu, download cheyyandi." : "The Chennai trick: any English word plus pannu. Shopping pannu, order pannu, download pannu.";
   return { english: "", enParts: [], sentence, parts, say: parts.map((x) => syllables(x.word)).join("  "), note };
 }
 
@@ -444,16 +460,16 @@ const PATH_NOTES: Record<string, Partial<Record<Lang, string>>> = {
   play: { kn: "Nudisu is for instruments. In Bangalore you also hear piano play maadtini.", hi: "Bajaana is for instruments. Games and sports take khelna.", ta: "Vaasi is for instruments. Games and sports take velaiyaadu.", ml: "Vaayikkuka is for instruments, and it is also the word for read. The rest of the sentence tells you which." },
   playgame: { kn: "Aadu is for games and sports. An instrument takes nudisu.", hi: "Khelna is for games and sports. An instrument takes bajaana.", ta: "Velaiyaadu is for games and sports. An instrument takes vaasi.", ml: "Kalikkuka is for games and sports. An instrument takes vaayikkuka." },
   sing: { kn: "Haadu is both the song and to sing.", hi: "Gaana is both the song and to sing.", ml: "Paattu is the song, paaduka is to sing. One letter apart." },
-  practise: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka") },
+  practise: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka"), te: trick("cheyyi") },
   listen: { kn: "Kelu means listen and also ask. Tamil has the same word: kekku.", ta: "Kekku means listen and also ask. Kannada has the same word: kelu.", ml: "Kelkkuka is listen; asking is chodikkuka, a separate word. Kannada and Tamil reuse one word for both." },
   read: { ml: "Vaayikkuka means both read and play an instrument in Malayalam. Pusthakam vaayikkum is read a book; piano vaayikkum is play the piano." },
   ask: { kn: "Kelu means ask and also listen; the sentence tells you which.", ta: "Kekku means ask and also listen; the sentence tells you which.", ml: "Chodikkuka is ask. Listening is kelkkuka, a different word." },
   travel: { kn: "The formal word is pravaasa; on the street everyone says travel maadu.", hi: "The formal word is safar; everyday Hindi says travel karna.", ta: "The formal word is payanam; everyday Tamil says travel pannu.", ml: "The formal word is yaathra; everyday Malayalam says travel cheyyum." },
   wait: { kn: "Kaayu is the Kannada word; wait maadu is just as common.", ml: "Kaathirikkuka is the Malayalam word; wait cheyyum is just as common." },
-  call: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: "Vilikkuka is both to call out and to phone someone." },
+  call: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), te: "Phone cheyyi is the everyday way; pilavu is to call out to someone.", ml: "Vilikkuka is both to call out and to phone someone." },
   help: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: "Sahaayikkuka is the Malayalam word; help cheyyum is just as common." },
   run: { kn: "Watch the spelling: odu is read, oodu with the long oo is run. Two different words." },
-  pay: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka") },
+  pay: { kn: trick("maadu"), hi: trick("karna"), ta: trick("pannu"), ml: trick("cheyyuka"), te: trick("cheyyi") },
   stand: { ml: "Nilkkuka is to stand and also to stop. Nirthuka is to stop something else." },
 };
 
@@ -461,7 +477,7 @@ const PATH_NOTES: Record<string, Partial<Record<Lang, string>>> = {
 // Split a romanized word into spoken beats so a beginner can read it aloud:
 // nudistini becomes nu·dis·ti·ni. English loanwords are left whole.
 const LOAN = new Set(
-  "piano guitar violin drums music english coffee tea phone time football cricket shopping exercise cooking cleaning homework order download ticket book practice dance travel wait help call class concert school film key bangalore kannada hindi tamil".split(" "),
+  "piano guitar violin drums music english coffee tea phone time football cricket shopping exercise cooking cleaning homework order download ticket book practice dance travel wait help call class concert school film key bangalore kannada hindi tamil telugu malayalam hyderabad".split(" "),
 );
 const VOWELS = ["aa", "ae", "ee", "ii", "oo", "uu", "ai", "au", "a", "e", "i", "o", "u"];
 const DIGRAPHS = ["kh", "gh", "ch", "jh", "th", "dh", "ph", "bh", "sh", "zh"];
@@ -712,6 +728,7 @@ const AVOIR = { w: ["ai", "as", "avez", "a", "a", "a", "ont"], say: ["ay", "ah",
 const ETRE = { w: ["suis", "es", "êtes", "est", "est", "est", "sont"], say: ["swee", "ay", "et", "ay", "ay", "ay", "sohn"] };
 const ALLER = { w: ["vais", "vas", "allez", "va", "va", "va", "vont"], say: ["vay", "vah", "a-lay", "vah", "vah", "vah", "vohn"] };
 const VOULOIR = { w: ["veux", "veux", "voulez", "veut", "veut", "veut", "veulent"], say: ["vuh", "vuh", "voo-lay", "vuh", "vuh", "vuh", "vuhl"] };
+const DEVOIR = { w: ["dois", "dois", "devez", "doit", "doit", "doit", "doivent"], say: ["dwah", "dwah", "duh-vay", "dwah", "dwah", "dwah", "dwahv"] };
 const SAVOIR = { w: ["sais", "sais", "savez", "sait", "sait", "sait", "savent"], say: ["say", "say", "sa-vay", "say", "say", "say", "sahv"] };
 
 type FrObj = { w: string; say: string; neg?: string; negSay?: string };
@@ -867,6 +884,11 @@ const FX = frenchExtra as unknown as FrExtra;
 Object.assign(FR_VERBS, FX.verbs ?? {});
 Object.assign(FR_OBJ, FX.objects ?? {});
 FR_FRAME.reach = "place";
+FR_FRAME.attend = "place";
+FR_FRAME.withdraw = "part"; // retirer de l'argent liquide; payer en espèces // assister à la réunion
+FR_FRAME.file = "indef"; // déposer une plainte
+// A complaint is filed, not registered: je veux déposer une plainte.
+const frVerbId = (c: PathChoice) => ((c.verb === "register" || c.verb === "complain") && c.object === "complaint" ? "file" : c.verb);
 const FR_IMP: Record<string, FrImp> = { ...(FX.imp ?? {}) };
 for (const [id, v] of Object.entries(FX.verbs ?? {})) if (v.imp && v.impSay) FR_IMP[id] = { imp: v.imp, impSay: v.impSay };
 const FR_DIR: Record<string, FrObj> = FX.directions ?? {};
@@ -910,7 +932,7 @@ const startsVowel = (w: string) => /^[aeiouéèêh]/i.test(w);
 
 function frObject(c: PathChoice, idx: number, negForm: boolean): FrObj | null {
   if (!c.object) return null;
-  const frame = FR_FRAME[c.verb];
+  const frame = FR_FRAME[frVerbId(c)];
   const forms = FR_OBJ[c.object] ?? {};
   // The verb's own frame first; otherwise the form the noun naturally takes.
   const obj = (frame ? forms[frame] : undefined) ?? forms.def ?? forms.indef ?? forms.part ?? forms.bare;
@@ -937,7 +959,7 @@ function french(c: PathChoice): PathResult {
   const idx = FR_IDX[p];
   // Going or coming home is rentrer in French: je rentre à la maison.
   const home = (c.verb === "go" || c.verb === "come") && c.object === "home";
-  const v = FR_VERBS[home ? "rentrer" : c.verb];
+  const v = FR_VERBS[home ? "rentrer" : frVerbId(c)];
   const english = "";
   if (!v) return { english, enParts: [], sentence: "", parts: [], say: "", unsupported: "This verb is not in the French set yet." };
   if (c.verb === "do" && c.object && !FR_OBJ[c.object]?.faire) {
@@ -960,7 +982,7 @@ function french(c: PathChoice): PathResult {
   if (c.object && !obj) {
     return {
       english, enParts: [], sentence: "", parts: [], say: "",
-      unsupported: `${objectEnglish(c.object, "fr").replace(/^(the|a|an|to the|to) /, "")} is not in the French word set yet. Pick another word, or switch to Kannada, Hindi, Tamil or Malayalam where every word in the bank works.`,
+      unsupported: `${objectEnglish(c.object, "fr").replace(/^(the|a|an|to the|to) /, "")} is not in the French word set yet. Pick another word, or switch to Kannada, Hindi, Tamil, Malayalam or Telugu where every word in the bank works.`,
     };
   }
   // Reflexive verbs with a thing after them (s'inscrire la plainte) are not French.
@@ -1008,6 +1030,15 @@ function french(c: PathChoice): PathResult {
     parts.push(helperVerb(VOULOIR));
     if (neg) parts.push(pas);
     parts.push(...infinitive());
+  } else if (c.when === "must") {
+    // I have to = je dois; I do not have to = j'ai pas besoin de.
+    if (neg) {
+      parts.push(helperVerb(AVOIR), pas, { word: "besoin", role: "helper", say: "buh-zwan" });
+      const inf = infinitive();
+      parts.push(startsVowel(inf[0].word) ? { word: "d'", role: "helper", say: "d" } : { word: "de", role: "helper", say: "duh" }, ...inf);
+    } else {
+      parts.push(helperVerb(DEVOIR), ...infinitive());
+    }
   } else {
     parts.push(helperVerb(SAVOIR));
     if (neg) parts.push(pas);
@@ -1046,8 +1077,8 @@ function french(c: PathChoice): PathResult {
 // remplissez le formulaire, ne tournez pas à gauche.
 export function frenchTell(c: PathChoice & { polite?: boolean }, direction: string | null): PathResult {
   const empty = { english: "", enParts: [] as Part[], sentence: "", parts: [] as Part[], say: "" };
-  const v = FR_VERBS[c.verb];
-  const imp = FR_IMP[c.verb];
+  const v = FR_VERBS[frVerbId(c)];
+  const imp = FR_IMP[frVerbId(c)];
   if (!v || !imp) return { ...empty, unsupported: "This action has no French command yet. Pick another action." };
   if (c.negative && v.refl) return { ...empty, unsupported: "The do-not form of this one is irregular in French and is not in the set yet." };
   if (v.refl && c.object) return { ...empty, unsupported: "This one needs a different French verb with a thing after it. It is not in the set yet." };
@@ -1128,6 +1159,13 @@ export const HOW_TO_SAY: Record<PathLang, { k: string; v: string }[]> = {
     { k: "nj", v: "one sound, like the ny in canyon: njaan is nyaan" },
     { k: "zh", v: "curl the tongue far back: between an r and an l" },
     { k: "kk, tt, ll, nn", v: "a double letter is held for a beat: vaa·yik·ku·nnu" },
+    { k: "·", v: "a dot is a beat. Say every beat evenly, no stress" },
+  ],
+  te: [
+    { k: "aa, ee, oo", v: "hold it long: father, see, moon" },
+    { k: "a, e, i, o, u", v: "keep it short; Telugu words end on a vowel, say it" },
+    { k: "ch", v: "chestaanu: a clean ch, never a sh" },
+    { k: "nn, tt, ll, chch", v: "a double letter is held for a beat: chest·un·naa·nu" },
     { k: "·", v: "a dot is a beat. Say every beat evenly, no stress" },
   ],
   fr: [

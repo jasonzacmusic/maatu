@@ -26,7 +26,7 @@ export const DISPLAY = "var(--font-newsreader), Georgia, serif";
 export const BODY = "var(--font-hanken), system-ui, sans-serif";
 export const MONO = "var(--font-jetbrains), ui-monospace, monospace";
 
-export type Lang = "kn" | "hi" | "ta" | "ml";
+export type Lang = "kn" | "hi" | "ta" | "ml" | "te";
 export type ShopId =
   | "auto"
   | "chai"
@@ -94,6 +94,7 @@ export const SLOW: Record<Lang, string> = {
   hi: "Dheere dheere",
   ta: "Medhuvaa",
   ml: "Pathukke",
+  te: "Nemmadigaa",
 };
 
 // Language dressing for the street: signage strings, fonts, sky tint, bulb warmth.
@@ -190,6 +191,26 @@ export const STREET_LANG: Record<
       soon: "soon",
     },
   },
+  te: {
+    city: "Koti, Hyderabad",
+    sky1: "#140C17",
+    sky2: "#2A1830",
+    bulb: "#FFC98F",
+    glow: "#FF9DC4",
+    shopFont: BODY,
+    busFont: BODY,
+    s: {
+      auto: "Auto",
+      chai: "Irani Chai",
+      gate: "Gate",
+      phone: "Phone",
+      music: "Sangeetham",
+      airport: "Vimaanaashrayam",
+      salon: "Saloon",
+      market: "Santha",
+      soon: "soon",
+    },
+  },
 };
 
 export const LANG_PERSONA_PREFIX: Record<Lang, string> = {
@@ -197,6 +218,7 @@ export const LANG_PERSONA_PREFIX: Record<Lang, string> = {
   hi: "hi",
   ta: "ta",
   ml: "ml",
+  te: "te",
 };
 
 // Hub / scenario-card dressing. Order is the display order of the grid; each
@@ -277,4 +299,5 @@ export const HOST: Record<Lang, { name: string; place: string }> = {
   hi: { name: "Anjali", place: "Purani Sadak, Delhi" },
   ta: { name: "Kavya", place: "Mylapore, Chennai" },
   ml: { name: "Devika", place: "Fort Kochi, Kochi" },
+  te: { name: "Sravani", place: "Koti, Hyderabad" },
 };

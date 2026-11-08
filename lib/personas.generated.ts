@@ -3,7 +3,7 @@
 
 export type PersonaMeta = {
   id: string;
-  language: "kn" | "hi" | "ta" | "ml";
+  language: "kn" | "hi" | "ta" | "ml" | "te";
   languageCode: string;
   languageName: string;
   scenario: string;
@@ -109,6 +109,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "past continuous tense"
     ]
   },
+  "te-auto": {
+    "id": "te-auto",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "auto",
+    "shop": "auto",
+    "name": "Yadagiri",
+    "level": 3,
+    "sceneLabel": "Auto rickshaw, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "fare negotiation",
+      "number fluency",
+      "politeness register",
+      "response latency"
+    ],
+    "defaultSecretAgenda": [
+      "numbers 40 to 90",
+      "polite imperative forms",
+      "past continuous tense"
+    ]
+  },
   "kn-delivery": {
     "id": "kn-delivery",
     "language": "kn",
@@ -188,6 +211,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Anoop",
     "level": 2,
     "sceneLabel": "Delivery gate, Kochi",
+    "teachMode": false,
+    "rubric": [
+      "giving directions",
+      "number and address fluency",
+      "politeness",
+      "clarity"
+    ],
+    "defaultSecretAgenda": [
+      "directions and locations",
+      "flat and floor numbers",
+      "polite requests"
+    ]
+  },
+  "te-delivery": {
+    "id": "te-delivery",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "delivery",
+    "shop": "gate",
+    "name": "Naresh",
+    "level": 2,
+    "sceneLabel": "Delivery gate, Hyderabad",
     "teachMode": false,
     "rubric": [
       "giving directions",
@@ -293,6 +339,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "spelling out an address"
     ]
   },
+  "te-care": {
+    "id": "te-care",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "care",
+    "shop": "phone",
+    "name": "Swathi",
+    "level": 2,
+    "sceneLabel": "Customer care, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "formal register",
+      "number and date fluency",
+      "address dictation",
+      "comprehension under hold"
+    ],
+    "defaultSecretAgenda": [
+      "numbers and dates",
+      "formal address forms",
+      "spelling out an address"
+    ]
+  },
   "kn-airport": {
     "id": "kn-airport",
     "language": "kn",
@@ -372,6 +441,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Reshma",
     "level": 3,
     "sceneLabel": "Airport counter, COK",
+    "teachMode": false,
+    "rubric": [
+      "request forms",
+      "number comprehension",
+      "following instructions",
+      "courtesy"
+    ],
+    "defaultSecretAgenda": [
+      "numbers (seat, gate, weight, kilos)",
+      "polite requests",
+      "understanding instructions"
+    ]
+  },
+  "te-airport": {
+    "id": "te-airport",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "airport",
+    "shop": "airport",
+    "name": "Sravani",
+    "level": 3,
+    "sceneLabel": "Airport counter, HYD",
     "teachMode": false,
     "rubric": [
       "request forms",
@@ -477,6 +569,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "present and past tense mix"
     ]
   },
+  "te-chai": {
+    "id": "te-chai",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "chai",
+    "shop": "chai",
+    "name": "Srinu",
+    "level": 2,
+    "sceneLabel": "Irani cafe, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "conversational flow",
+      "asking questions back",
+      "everyday vocabulary",
+      "confidence"
+    ],
+    "defaultSecretAgenda": [
+      "everyday small talk",
+      "opinions and preferences",
+      "present and past tense mix"
+    ]
+  },
   "kn-teach": {
     "id": "kn-teach",
     "language": "kn",
@@ -556,6 +671,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Adithyan",
     "level": 3,
     "sceneLabel": "Music school, Kochi",
+    "teachMode": true,
+    "rubric": [
+      "concept clarity",
+      "target-language music vocabulary (flag every English fallback)",
+      "pacing",
+      "whether questions were truly answered"
+    ],
+    "defaultSecretAgenda": [
+      "music vocabulary in the target language",
+      "explaining and simplifying",
+      "answering why questions"
+    ]
+  },
+  "te-teach": {
+    "id": "te-teach",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "teach",
+    "shop": "music",
+    "name": "Charan",
+    "level": 3,
+    "sceneLabel": "Music school, Hyderabad",
     "teachMode": true,
     "rubric": [
       "concept clarity",
@@ -661,6 +799,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "bargaining phrases"
     ]
   },
+  "te-market": {
+    "id": "te-market",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "market",
+    "shop": "market",
+    "name": "Yadamma",
+    "level": 2,
+    "sceneLabel": "Rythu Bazaar, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "vegetable vocabulary",
+      "numbers and quantities",
+      "bargaining confidence",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "vegetable names",
+      "numbers, weights and prices",
+      "bargaining phrases"
+    ]
+  },
   "kn-kirana": {
     "id": "kn-kirana",
     "language": "kn",
@@ -740,6 +901,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Devassy",
     "level": 2,
     "sceneLabel": "Provision store, Kochi",
+    "teachMode": false,
+    "rubric": [
+      "grocery vocabulary",
+      "numbers and totals",
+      "asking for alternatives",
+      "everyday politeness"
+    ],
+    "defaultSecretAgenda": [
+      "grocery staples",
+      "quantities and packet sizes",
+      "asking for and refusing things politely"
+    ]
+  },
+  "te-kirana": {
+    "id": "te-kirana",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "kirana",
+    "shop": "kirana",
+    "name": "Venkatesh",
+    "level": 2,
+    "sceneLabel": "Kirana shop, Hyderabad",
     "teachMode": false,
     "rubric": [
       "grocery vocabulary",
@@ -845,6 +1029,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "understanding instructions"
     ]
   },
+  "te-doctor": {
+    "id": "te-doctor",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "doctor",
+    "shop": "clinic",
+    "name": "Dr Padmaja",
+    "level": 3,
+    "sceneLabel": "Clinic, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "describing symptoms",
+      "time and frequency words",
+      "understanding instructions",
+      "asking the doctor to repeat"
+    ],
+    "defaultSecretAgenda": [
+      "body parts and symptoms",
+      "duration and frequency of time",
+      "understanding instructions"
+    ]
+  },
   "kn-restaurant": {
     "id": "kn-restaurant",
     "language": "kn",
@@ -924,6 +1131,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Jayan",
     "level": 2,
     "sceneLabel": "Thattukada, Kochi",
+    "teachMode": false,
+    "rubric": [
+      "food vocabulary",
+      "ordering and requesting",
+      "handling a change of plan",
+      "politeness"
+    ],
+    "defaultSecretAgenda": [
+      "food and drink names",
+      "likes, dislikes and quantities",
+      "polite requests"
+    ]
+  },
+  "te-restaurant": {
+    "id": "te-restaurant",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "restaurant",
+    "shop": "restaurant",
+    "name": "Raju",
+    "level": 2,
+    "sceneLabel": "Tiffin centre, Hyderabad",
     "teachMode": false,
     "rubric": [
       "food vocabulary",
@@ -1029,6 +1259,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "neighbourhood daily routine"
     ]
   },
+  "te-neighbour": {
+    "id": "te-neighbour",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "neighbour",
+    "shop": "neighbour",
+    "name": "Saraswathi",
+    "level": 2,
+    "sceneLabel": "Your colony, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "small talk flow",
+      "talking about yourself",
+      "everyday household vocabulary",
+      "warmth"
+    ],
+    "defaultSecretAgenda": [
+      "introducing yourself",
+      "family and work",
+      "neighbourhood daily routine"
+    ]
+  },
   "kn-landlord": {
     "id": "kn-landlord",
     "language": "kn",
@@ -1108,6 +1361,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Varghese",
     "level": 3,
     "sceneLabel": "Your flat, Kochi",
+    "teachMode": false,
+    "rubric": [
+      "making a complaint clearly",
+      "money and date fluency",
+      "negotiating politely",
+      "standing your ground"
+    ],
+    "defaultSecretAgenda": [
+      "household and repair vocabulary",
+      "dates, months and money",
+      "complaining and negotiating politely"
+    ]
+  },
+  "te-landlord": {
+    "id": "te-landlord",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "landlord",
+    "shop": "landlord",
+    "name": "Rao garu",
+    "level": 3,
+    "sceneLabel": "Your flat, Hyderabad",
     "teachMode": false,
     "rubric": [
       "making a complaint clearly",
@@ -1213,6 +1489,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
       "opinions and small talk"
     ]
   },
+  "te-salon": {
+    "id": "te-salon",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "salon",
+    "shop": "salon",
+    "name": "Nagaraju",
+    "level": 2,
+    "sceneLabel": "Salon, Hyderabad",
+    "teachMode": false,
+    "rubric": [
+      "describing preferences",
+      "saying no politely",
+      "small talk",
+      "comparison words"
+    ],
+    "defaultSecretAgenda": [
+      "describing what you want",
+      "more, less, shorter, longer",
+      "opinions and small talk"
+    ]
+  },
   "kn-pharmacy": {
     "id": "kn-pharmacy",
     "language": "kn",
@@ -1292,6 +1591,29 @@ export const PERSONAS: Record<string, PersonaMeta> = {
     "name": "Noushad",
     "level": 2,
     "sceneLabel": "Medical store, Kochi",
+    "teachMode": false,
+    "rubric": [
+      "explaining what you need",
+      "understanding dose instructions",
+      "numbers and money",
+      "asking clarifying questions"
+    ],
+    "defaultSecretAgenda": [
+      "medicine and symptom words",
+      "numbers, doses and timing",
+      "asking for something cheaper"
+    ]
+  },
+  "te-pharmacy": {
+    "id": "te-pharmacy",
+    "language": "te",
+    "languageCode": "te-IN",
+    "languageName": "Telugu",
+    "scenario": "pharmacy",
+    "shop": "pharmacy",
+    "name": "Srikanth",
+    "level": 2,
+    "sceneLabel": "Medical shop, Hyderabad",
     "teachMode": false,
     "rubric": [
       "explaining what you need",

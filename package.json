@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check": "node scripts/run.mjs scripts/check_situations.ts"
   },
   "dependencies": {
     "@livekit/components-react": "^2.9.23",

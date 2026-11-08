@@ -3,7 +3,7 @@
 import { buildShape, shapeEnglish, SHAPES, type ShapeChoice, type ShapeId } from "../lib/shapes";
 import type { Lang } from "../lib/maatu-design";
 
-const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml", "te"];
 const base: ShapeChoice = {
   shape: "isAdj", who: "i", name: "", nameG: "m", verb: "drink", object: "tea", when: "present",
   timeWord: false, negative: false, question: false, gender: "m",

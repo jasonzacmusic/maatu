@@ -7,7 +7,7 @@ import type { Lang } from "./maatu-design";
 // Romanized Latin only, never native script. No em dashes anywhere.
 
 export type PersonId = "i" | "you" | "youp" | "he" | "she" | "we" | "they";
-export type Tense = "present" | "cont" | "past" | "future" | "want" | "can";
+export type Tense = "present" | "cont" | "past" | "future" | "want" | "can" | "must";
 export type Gender = "m" | "f";
 
 export type Person = {
@@ -24,24 +24,27 @@ export type VerbHi = Imp & { dict: string; stem: string; contStem?: string; fut?
 export type VerbTa = Imp & { dict: string; pres: string; past: string; fut: string; cont: string; inf: string };
 // Malayalam carries no person endings at all: one form fits every subject.
 export type VerbMl = Imp & { dict: string; pres: string; past: string; fut: string; cont: string; inf: string; pastNeg?: string };
-export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa; ml: VerbMl };
+// Telugu: stems plus person endings (chest + aanu = chestaanu). neg is the
+// base every "not" form hangs on: cheyya + nu, cheyya + ledu, cheyya + ku.
+export type VerbTe = Imp & { dict: string; pres: string; past: string; pastShe?: string; neg: string; noun: string; purp: string; want: string; contNeg: string; hort: string; must?: string; mustNot?: string };
+export type Verb = { id: string; group: "music" | "core"; en: VerbEn; note?: string; kn: VerbKn; hi: VerbHi; ta: VerbTa; ml: VerbMl; te: VerbTe };
 export type ObjectCat =
   | "instrument" | "music" | "language" | "study" | "food" | "drink" | "place"
   | "thing" | "clothes" | "transport" | "tech" | "media" | "money" | "sport" | "chore"
   | "health" | "people" | "documents" | "home";
 export type PlaceAt = Record<Lang, string>;
-export type ObjectWord = { id: string; at?: PlaceAt; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; kind: "thing" | "place" | "language"; cat: ObjectCat; ill?: boolean; acc?: Partial<Record<Lang, string>>; hiTail?: string; enByLang?: Record<Lang, string> };
-export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; tense?: Tense };
-export type DeckEntry = { en: string; kn: string; hi: string; ta: string; ml: string; trick?: string };
+export type ObjectWord = { id: string; at?: PlaceAt; en: string; kn: string; hi: string; hiG: Gender; hiPl?: boolean; ta: string; ml: string; te: string; kind: "thing" | "place" | "language"; cat: ObjectCat; ill?: boolean; acc?: Partial<Record<Lang, string>>; hiTail?: string; tePlain?: string; enByLang?: Record<Lang, string> };
+export type TimeWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; te: string; tense?: Tense };
+export type DeckEntry = { en: string; kn: string; hi: string; ta: string; ml: string; te: string; trick?: string };
 export type Rule = { title: string; body: string; example: string };
-export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; ml: string; slot: "thing" | "place"; why: string };
-export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string]; ml: [string, string] };
+export type Frame = { id: string; en: string; kn: string; hi: string; hiF?: string; ta: string; ml: string; te: string; slot: "thing" | "place"; why: string };
+export type Command = { en: string; kn: [string, string]; hi: [string, string]; ta: [string, string]; ml: [string, string]; te: [string, string] };
 export type AdjForms = { attr: string; pred: string };
 export type Adjective = {
   id: string; en: string; cat: string;
-  kn: AdjForms; hi: { m: string; f: string }; ta: AdjForms; ml: AdjForms;
+  kn: AdjForms; hi: { m: string; f: string }; ta: AdjForms; ml: AdjForms; te: AdjForms;
 };
-export type SmallWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string };
+export type SmallWord = { id: string; en: string; kn: string; hi: string; ta: string; ml: string; te: string };
 
 export type DeckId = "music" | "numbers" | "fruits" | "vegetables" | "countries" | "questions" | "little" | "describe" | "time";
 
@@ -111,6 +114,7 @@ export const TENSES: { id: Tense; label: string; en: string }[] = [
   { id: "future", label: "Future", en: "will happen" },
   { id: "want", label: "Want to", en: "wish" },
   { id: "can", label: "Know how to", en: "ability" },
+  { id: "must", label: "Have to", en: "a need or a duty" },
 ];
 
 const PERSON_INDEX: Record<PersonId, number> = { i: 0, you: 1, youp: 2, he: 3, she: 4, we: 5, they: 6 };
@@ -169,6 +173,9 @@ function knVerb(v: VerbKn, p: PersonId, t: Tense, neg: boolean): Form {
   if (t === "cont") {
     return neg ? { word: `${v.cont} illa`, parts: `${v.cont} + illa`, stem: v.cont } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}`, stem: v.cont };
   }
+  if (t === "must") {
+    return neg ? { word: v.want.replace(/beku$/, "bekilla"), parts: `${v.dict} + bekilla (no need)`, stem: v.want.slice(0, -4) } : { word: v.want, parts: `${v.dict} + beku (have to)`, stem: v.want.slice(0, -4) };
+  }
   if (t === "want") {
     return neg ? { word: `${v.inf} ishta illa`, parts: `${v.inf} + ishta illa (no wish)`, stem: v.inf } : { word: v.want, parts: `${v.dict} + beku`, stem: v.want.slice(0, -4) };
   }
@@ -225,6 +232,9 @@ function hiForm(v: VerbHi, p: PersonId, t: Tense, neg: boolean, g: Gender, objG:
     const perf = fem ? pf.f : plural ? pf.pl : pf.m;
     return { word: `${not}${perf}`, parts: `${perf} (matches the person)` };
   }
+  if (t === "must") {
+    return neg ? { word: `nahin ${v.dict} hai`, parts: `nahin + ${v.dict} + hai (no need)`, stem: v.dict } : { word: `${v.dict} hai`, parts: `${v.dict} + hai (have to)`, stem: v.dict };
+  }
   if (t === "want") {
     const w = (fem ? s.wantF : s.wantM)[i];
     return neg ? { word: `${not}${v.dict} ${w}`, parts: `nahin + ${v.dict} + ${w}`, stem: `${not}${v.dict}` } : { word: `${v.dict} ${w} ${s.aux[i]}`, parts: `${v.dict} + ${w} + ${s.aux[i]}`, stem: v.dict };
@@ -258,6 +268,9 @@ function taVerb(v: VerbTa, p: PersonId, t: Tense, neg: boolean): Form {
   }
   if (t === "cont") {
     return neg ? { word: `${v.inf}la`, parts: `${v.inf} + la`, stem: v.inf } : { word: `${v.cont} ${s.contAux[i]}`, parts: `${v.cont} + ${s.contAux[i]}`, stem: v.cont };
+  }
+  if (t === "must") {
+    return neg ? { word: `${v.inf} vendaam`, parts: `${v.inf} + vendaam (no need)`, stem: v.inf } : { word: `${v.inf}num`, parts: `${v.inf} + num (have to)`, stem: v.inf };
   }
   if (t === "want") {
     return neg ? { word: `${v.inf} vendaam`, parts: `${v.inf} + vendaam`, stem: v.inf } : { word: `${v.inf}num`, parts: `${v.inf} + num`, stem: v.inf };
@@ -312,16 +325,64 @@ function mlVerb(v: VerbMl, t: Tense, neg: boolean): Form {
       ? { word: negWord, parts: `${v.pres} + illa` , stem }
       : { word: v.cont, parts: `${stem} + unnund (happening right now)`, stem };
   }
+  if (t === "must") {
+    return neg ? { word: `${stem}enda`, parts: `${stem} + enda (no need)`, stem } : { word: `${stem}anam`, parts: `${stem} + anam (have to)`, stem };
+  }
   if (t === "want") {
     return neg ? { word: `${stem}anda`, parts: `${stem} + anda (no wish)`, stem } : { word: `${stem}anam`, parts: `${stem} + anam (a wish)`, stem };
   }
   return neg ? { word: `${v.inf} ariyilla`, parts: `${v.inf} + ariyilla`, stem: v.inf } : { word: `${v.inf} ariyaam`, parts: `${v.inf} + ariyaam`, stem: v.inf };
 }
 
+// ............................................................ Telugu
+// Person endings like Kannada and Tamil, with one surprise: she and it share
+// the same ending (chestundi, chesindi). Every form is built from five stored
+// pieces, so a new verb needs only its stems.
+const TE_PRES = ["aanu", "aavu", "aaru", "aadu", "undi", "aamu", "aaru"];
+const TE_CONT = ["unnaanu", "unnaavu", "unnaaru", "unnaadu", "unnadi", "unnaamu", "unnaaru"];
+const TE_PAST = ["aanu", "aavu", "aaru", "aadu", "indi", "aamu", "aaru"];
+const TE_NEG = ["nu", "vu", "ru", "du", "du", "mu", "ru"];
+
+// Telugu asks with aa on the last word: chestaavu becomes chestaavaa, undi becomes undaa.
+export function teQuestion(word: string): string {
+  if (word.endsWith("aa")) return word;
+  if (/[aeiou]$/.test(word)) return word.replace(/[aeiou]$/, "") + "aa";
+  return word + "aa";
+}
+
+function teVerb(v: VerbTe, p: PersonId, t: Tense, neg: boolean): Form {
+  const i = PERSON_INDEX[p];
+  if (t === "present" || t === "future") {
+    return neg
+      ? { word: v.neg + TE_NEG[i], parts: `${v.neg} + ${TE_NEG[i]} (not)`, stem: v.neg }
+      : { word: v.pres + TE_PRES[i], parts: `${v.pres} + ${TE_PRES[i]}`, stem: v.pres };
+  }
+  if (t === "past") {
+    if (neg) return { word: `${v.neg}ledu`, parts: `${v.neg} + ledu (did not, every person)`, stem: v.neg };
+    if (p === "she" && v.pastShe) return { word: v.pastShe, parts: `${v.pastShe} (she and it share this form)` };
+    return { word: v.past + TE_PAST[i], parts: `${v.past} + ${TE_PAST[i]}`, stem: v.past };
+  }
+  if (t === "cont") {
+    return neg
+      ? { word: v.contNeg, parts: `${v.contNeg} (not doing it now, every person)` }
+      : { word: v.pres + TE_CONT[i], parts: `${v.pres} + ${TE_CONT[i]}`, stem: v.pres };
+  }
+  if (t === "must") {
+    const must = v.must ?? v.want.replace(/ani$/, "i");
+    const noNeed = v.mustNot ?? (v.neg.endsWith("aa") ? `${v.neg}nakkarledu` : `${v.neg}kkarledu`);
+    return neg ? { word: noNeed, parts: `${noNeed} (no need, every person)` } : { word: must, parts: `${must} (have to, every person)` };
+  }
+  if (t === "want") {
+    return neg ? { word: `${v.want} ledu`, parts: `${v.want} + ledu (no wish)`, stem: v.want } : { word: `${v.want} undi`, parts: `${v.want} + undi (a wish)`, stem: v.want };
+  }
+  return neg ? { word: `${v.noun} raadu`, parts: `${v.noun} + raadu`, stem: v.noun } : { word: `${v.noun} vachchu`, parts: `${v.noun} + vachchu`, stem: v.noun };
+}
+
 export function verbForm(lang: Lang, verb: Verb, p: PersonId, t: Tense, neg = false, gender: Gender = "m", objG: Gender | "pl" | null = null): Form {
   if (lang === "kn") return knVerb(verb.kn, p, t, neg);
   if (lang === "hi") return hiVerb(verb.hi, p, t, neg, gender, objG);
   if (lang === "ml") return mlVerb(verb.ml, t, neg);
+  if (lang === "te") return teVerb(verb.te, p, t, neg);
   return taVerb(verb.ta, p, t, neg);
 }
 
@@ -342,6 +403,7 @@ function englishFor(c: Choice, verb: Verb, obj: ObjectWord | null, time: TimeWor
       : c.tense === "past" ? `did ${subj} ${verb.en.base}`
       : c.tense === "future" ? `will ${subj} ${verb.en.base}`
       : c.tense === "want" ? `${third ? "does" : "do"} ${subj} want to ${verb.en.base}`
+      : c.tense === "must" ? `${third ? "does" : "do"} ${subj} have to ${verb.en.base}`
       : `can ${subj} ${verb.en.base}`;
     return cap(`${c.negative ? q.replace(/^(\w+)/, "$1 not") : q} ${tail}`.trim()) + "?";
   }
@@ -350,6 +412,7 @@ function englishFor(c: Choice, verb: Verb, obj: ObjectWord | null, time: TimeWor
   else if (c.tense === "past") core = c.negative ? `did not ${verb.en.base}` : verb.en.past;
   else if (c.tense === "future") core = `will${c.negative ? " not" : ""} ${verb.en.base}`;
   else if (c.tense === "want") core = c.negative ? `${third ? "does" : "do"} not want to ${verb.en.base}` : `${third ? "wants" : "want"} to ${verb.en.base}`;
+  else if (c.tense === "must") core = c.negative ? `${third ? "does" : "do"} not have to ${verb.en.base}` : `${third ? "has" : "have"} to ${verb.en.base}`;
   else core = `${c.negative ? "cannot" : "can"} ${verb.en.base}`;
   return cap(`${subj} ${core} ${tail}`.trim()) + ".";
 }
@@ -387,11 +450,11 @@ export function build(lang: Lang, c: Choice): Built | null {
 
   if (lang === "hi") {
     const usesNe = c.tense === "past" && verb.hi.ne;
-    const subj = c.tense === "can" ? pr.dat : usesNe ? pr.ne ?? pr.sub : pr.sub;
+    const subj = c.tense === "can" || c.tense === "must" ? pr.dat : usesNe ? pr.ne ?? pr.sub : pr.sub;
     const v = hiVerb(verb.hi, c.person, c.tense, neg, g, obj ? (obj.hiPl ? "pl" : obj.hiG) : null);
     pieces.push({
       word: subj,
-      meaning: c.tense === "can" ? `to ${pr.en} (ability sits with the person)` : usesNe ? `${pr.en} + ne (past of a doing-verb)` : pr.en,
+      meaning: c.tense === "can" ? `to ${pr.en} (ability sits with the person)` : c.tense === "must" ? `to ${pr.en} (a duty sits with the person)` : usesNe ? `${pr.en} + ne (past of a doing-verb)` : pr.en,
       role: "subject",
     });
     if (obj) pieces.push({ word: objWord, meaning: `${objEn}${obj.kind === "thing" || obj.kind === "language" ? (obj.hiG === "f" ? " (feminine word)" : " (masculine word)") : ""}`, role: "object" });
@@ -414,6 +477,18 @@ export function build(lang: Lang, c: Choice): Built | null {
     const word = q ? mlQuestion(v.word) : v.word;
     pieces.push({ word, meaning: `${v.parts}${q ? " + o (question)" : ""}`, role: "verb", stem: v.stem });
     if (!note) note = "Malayalam never changes the verb for who is doing it. This exact form works for I, you, he, she, we and they.";
+    return { sentence: pieces.map((p) => p.word).join(" "), english, pieces, note };
+  }
+
+  if (lang === "te") {
+    const v = teVerb(verb.te, c.person, c.tense, neg);
+    // A wish and a skill sit with the person: naaku cheyyaalani undi, naaku cheyyadam vachchu.
+    const dative = c.tense === "can" || c.tense === "want";
+    pieces.push({ word: dative ? pr.dat : pr.sub, meaning: dative ? `to ${pr.en} (${c.tense === "want" ? "a wish" : "ability"} sits with the person)` : pr.en, role: "subject" });
+    if (obj) pieces.push({ word: objWord, meaning: objEn, role: "object" });
+    const word = q ? teQuestion(v.word) : v.word;
+    pieces.push({ word, meaning: `${v.parts}${q ? " + aa (question)" : ""}`, role: "verb", stem: v.stem });
+    if (c.person === "she" && !note && c.tense !== "want" && c.tense !== "can" && !(neg && c.tense === "past")) note = "Telugu gives she the same ending as it: aame chestundi, adi chestundi.";
     return { sentence: pieces.map((p) => p.word).join(" "), english, pieces, note };
   }
 
@@ -549,6 +624,15 @@ const ASKED: Record<Lang, string[]> = {
     "do you know Malayalam = ningalkku Malayalam ariyaamo",
     "what did you say = ningal enthu paranju",
     "what time is it = ethra mani aayi",
+  ],
+  te: [
+    "where are you going = meeru ekkadiki veltunnaaru",
+    "what is this = idi enti",
+    "how much is this = idi entha",
+    "what is your name = mee peru enti",
+    "do you know Telugu = meeku Telugu vachchaa",
+    "what did you say = meeru emannaaru",
+    "what time is it = time entha ayyindi",
   ],
 };
 

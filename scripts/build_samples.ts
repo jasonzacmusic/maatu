@@ -6,7 +6,7 @@ import { SITUATIONS } from "../lib/situations";
 import { buildLine, fullChoice } from "../lib/related";
 import type { LineSpec } from "../lib/situations";
 
-const langs = (process.argv[2] ?? "kn,hi,ta,ml,fr").split(",");
+const langs = (process.argv[2] ?? "kn,hi,ta,ml,te,fr").split(",");
 for (const l of PATH_LANGS.filter((x) => langs.includes(x.id))) {
   const say = (spec: LineSpec) => {
     const r = buildLine(l.id, fullChoice(spec, "m"));

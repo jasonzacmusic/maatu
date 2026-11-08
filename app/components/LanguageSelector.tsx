@@ -1,7 +1,7 @@
 import { LANG_NAME } from "@/lib/curriculum";
 import { C, LINE, type Lang } from "@/lib/maatu-design";
 
-const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml", "te"];
 
 type LanguageSelectorProps = {
   lang: Lang;

@@ -18,6 +18,7 @@ import {
   VERB_TILES,
   verbInLang,
   WHEN_TILES,
+  VERB_GROUPS,
   whenAllowed,
   WHO_TILES,
   wordBank,
@@ -220,6 +221,31 @@ function withMark(parts: Part[], question: boolean, lang: PathLang): Part[] {
   return [...parts.slice(0, -1), { ...last, word: last.word + (lang === "fr" ? " ?" : "?") }];
 }
 
+// ............................................................ change one thing
+type Chip = { role: Role; emoji: string; text: string };
+function QuickChips({ chips, onPick }: { chips: Chip[]; onPick: (r: Role) => void }) {
+  if (!chips.length) return null;
+  return (
+    <div className="mt-2.5 flex flex-wrap items-center gap-1.5" role="group" aria-label="Change one part">
+      <span className="mr-0.5 text-[9.5px] font-bold" style={{ color: C.faint, letterSpacing: 1.1 }}>CHANGE</span>
+      {chips.map((c) => (
+        <button
+          key={c.role}
+          type="button"
+          onClick={() => onPick(c.role)}
+          className="inline-flex max-w-[180px] items-center gap-1.5 rounded-full py-1 pl-1.5 pr-2.5 text-[12px] font-semibold focus-visible:outline focus-visible:outline-2"
+          style={{ background: `rgba(${ROLE[c.role].rgb},0.12)`, color: ROLE[c.role].color, border: `1px solid rgba(${ROLE[c.role].rgb},0.45)`, outlineColor: ROLE[c.role].color }}
+          aria-label={`Change ${ROLE[c.role].label}: ${c.text}`}
+        >
+          <span className="text-[15px] leading-none" aria-hidden="true">{c.emoji}</span>
+          <span className="truncate">{c.text}</span>
+          <span aria-hidden="true" style={{ opacity: 0.7 }}>▾</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 // ............................................................ the two switches
 // One control, two sides, a thumb that slides. Green and a tick on one side,
 // red and a cross on the other, so positive and negative read at a glance.
@@ -229,17 +255,19 @@ function Switch2({
   left,
   right,
   label,
+  compact = false,
 }: {
   on: boolean;
   onChange: (next: boolean) => void;
   left: { icon: string; text: string; color: string };
   right: { icon: string; text: string; color: string };
   label: string;
+  compact?: boolean;
 }) {
   const side = on ? right : left;
   return (
     <div className="min-w-0 flex-1">
-      <div className="mb-1 text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>
+      <div className={"mb-1 text-[9.5px] font-bold" + (compact ? " sr-only" : "")} style={{ color: C.mono, letterSpacing: 1.2 }}>
         {label}
       </div>
       <button
@@ -250,7 +278,7 @@ function Switch2({
         onClick={() => onChange(!on)}
         className="relative flex w-full items-center rounded-full p-1 focus-visible:outline focus-visible:outline-2"
         style={{
-          height: 50,
+          height: compact ? 38 : 50,
           background: `linear-gradient(90deg, rgba(127,227,168,0.10), rgba(255,141,122,0.10))`,
           border: `1px solid ${side.color}66`,
           outlineColor: side.color,
@@ -292,7 +320,7 @@ function Switch2({
 // Four stops on one rail from past to future, plus the two that are not times
 // at all (a wish and a skill) sitting below it where they belong.
 const RAIL: When[] = ["past", "cont", "present", "future"];
-const MOOD: When[] = ["want", "can"];
+const MOOD: When[] = ["want", "can", "must"];
 
 function Timeline({ when, setWhen, verb, object, timeWord, setTimeWord, rm }: { when: When; setWhen: (w: When) => void; verb: string; object: string | null; timeWord: boolean; setTimeWord: (v: boolean) => void; rm: boolean }) {
   const onRail = RAIL.includes(when);
@@ -541,7 +569,7 @@ function Venn() {
   const right = ["The action sits in the middle", "Needs le, la, un, une", "Each action is its own verb", "French: tu for friends, vous to be polite"];
   return (
     <div>
-      <svg viewBox="0 0 360 170" width="100%" style={{ maxWidth: 460, display: "block", margin: "0 auto" }} role="img" aria-label="Venn diagram: Kannada, Hindi, Tamil and Malayalam on the left, English and French on the right, shared ideas in the middle">
+      <svg viewBox="0 0 360 170" width="100%" style={{ maxWidth: 460, display: "block", margin: "0 auto" }} role="img" aria-label="Venn diagram: Kannada, Hindi, Tamil, Malayalam and Telugu on the left, English and French on the right, shared ideas in the middle">
         <circle cx="130" cy="85" r="78" fill="rgba(255,179,92,0.13)" stroke={C.sodium} strokeOpacity="0.6" />
         <circle cx="230" cy="85" r="78" fill="rgba(159,211,255,0.12)" stroke={SKY} strokeOpacity="0.6" />
         <text x="90" y="74" textAnchor="middle" fontSize="12" fontWeight="700" fill={C.sodium}>Kannada · Hindi</text>
@@ -641,6 +669,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const whenRef = useRef<HTMLDivElement | null>(null);
   const pickersRef = useRef<HTMLDivElement | null>(null);
   const [verbQuery, setVerbQuery] = useState("");
+  const [verbCat, setVerbCat] = useState<string | null>(null);
   const [wordQuery, setWordQuery] = useState("");
   const [bankOpen, setBankOpen] = useState(false);
   const [bankCat, setBankCat] = useState<string | null>(null);
@@ -802,8 +831,10 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
   const suggested = objectsFor(verb);
   const verbTiles = verbQuery ? searchVerbs(verbQuery) : VERB_TILES;
   const sitVerbIds = new Set(situation ? situationWords(situation).verbs : []);
-  const musicVerbs = verbTiles.filter((v) => (situation ? sitVerbIds.has(v.id) : v.music));
-  const otherVerbs = verbTiles.filter((v) => !(situation ? sitVerbIds.has(v.id) : v.music));
+  const catIds = verbCat && !verbQuery ? new Set(VERB_GROUPS.find((g) => g.id === verbCat)?.ids ?? []) : null;
+  const shown = catIds ? verbTiles.filter((v) => catIds.has(v.id)) : verbTiles;
+  const musicVerbs = catIds ? shown : shown.filter((v) => (situation ? sitVerbIds.has(v.id) : v.music));
+  const otherVerbs = catIds ? [] : shown.filter((v) => !(situation ? sitVerbIds.has(v.id) : v.music));
 
   const pickVerb = (id: string) => {
     setVerb(id);
@@ -868,6 +899,21 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
     return firstOf(all, sitWords.objects);
   }, [shape, situationId]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Change one thing: a chip for every part this sentence has, with its picture.
+  const strip = (t: string) => t.replace(/^(the|a|an|to the|to) /, "");
+  const quick: Chip[] = [];
+  const whoTile = WHO_TILES.find((t) => t.id === who);
+  if (uses("who") || shape === "does") quick.push({ role: "who", emoji: whoTile?.emoji ?? "🙋", text: who === "name" ? name || "a name" : whoTile ? (whoTile.hint ? `${whoTile.en}, ${whoTile.hint}` : whoTile.en) : "who" });
+  if (uses("verb") || uses("verb2") || shape === "does") {
+    const vt = VERB_TILES.find((v) => v.id === (uses("verb2") ? verb2 : verb));
+    if (vt) quick.push({ role: "action", emoji: vt.emoji, text: vt.short ?? vt.en.replace(/ \(.*\)$/, "") });
+  }
+  if ((uses("object") || shape === "does") && object) quick.push({ role: "what", emoji: OBJECT_EMOJI[object] ?? "•", text: strip(objectEnglish(object, plang)) });
+  if (can("tense")) {
+    const wt = WHEN_TILES.find((w) => w.id === when);
+    if (wt) quick.push({ role: "when", emoji: wt.emoji, text: wt.en });
+  }
+
   const found = wordQuery ? searchWords(wordQuery, plang) : [];
   const bankWords: ObjectWord[] = wordQuery ? found : bankCat ? (bank.find((g) => g.id === bankCat)?.words ?? []) : bank.flatMap((g) => g.words);
 
@@ -922,6 +968,11 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         </div>
       </div>
 
+      {/* ................................................. what do you want to say: the first choice */}
+      <div className="mt-4">
+        <ShapeRail shape={shape} onPick={pickShape} rm={rm} />
+      </div>
+
       {/* ................................................. the sentence, always in view */}
       <div ref={sentinel} aria-hidden="true" style={{ height: 1 }} />
       <div className="sticky top-0 z-20 -mx-5 mt-3 px-5 pb-2 pt-3 sm:mx-0 sm:px-0" style={{ background: `linear-gradient(${C.night} calc(100% - 12px), rgba(10,13,22,0))` }}>
@@ -932,11 +983,11 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         >
           <div className="flex items-start justify-between gap-3">
             <span className="min-w-0 flex-1">
-              <span className="flex items-center gap-1.5 text-[9.5px] font-bold" style={{ color: C.mono, letterSpacing: 1.2 }}>
+              <span className={"items-center gap-1.5 text-[9.5px] font-bold" + (stuck ? " hidden" : " flex")} style={{ color: C.mono, letterSpacing: 1.2 }}>
                 <span className="rounded-full px-1.5" style={{ background: "rgba(242,237,226,0.1)", color: C.milk }}>A</span>
                 YOUR IDEA
               </span>
-              <span className="mt-1 block text-[16px] font-semibold leading-snug" style={{ color: C.milk }}>
+              <span className={"block font-semibold leading-snug" + (stuck ? " text-[13.5px]" : " mt-1 text-[16px]")} style={{ color: C.milk }}>
                 {res && (shape === "does" ? <EnglishWords parts={res.enParts} question={question} /> : res.english)}
               </span>
             </span>
@@ -951,13 +1002,13 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
             </button>
           </div>
 
-          <div className={"flex items-center gap-2" + (stuck ? " my-2" : " my-3")} aria-hidden="true">
+          <div className={"items-center gap-2" + (stuck ? " hidden" : " my-3 flex")} aria-hidden="true">
             <span className="h-px flex-1" style={{ background: `linear-gradient(90deg,rgba(191,239,219,0.4),${langInfo.accent}88)` }} />
             <span className="text-[13px]">{langInfo.flag}</span>
             <span className="h-px flex-1" style={{ background: `linear-gradient(90deg,${langInfo.accent}88,rgba(245,194,255,0.4))` }} />
           </div>
 
-          <div className="flex items-center justify-between gap-2">
+          <div className={"items-center justify-between gap-2" + (stuck ? " hidden" : " flex")}>
             <span className="flex items-center gap-1.5 text-[9.5px] font-bold" style={{ color: langInfo.accent, letterSpacing: 1.2 }}>
               <span className="rounded-full px-1.5" style={{ background: langInfo.accent, color: C.ink }}>B</span>
               SAY IT IN {langInfo.label.toUpperCase()}
@@ -972,7 +1023,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           ) : res ? (
             <div key={res.sentence} style={{ animation: rm ? undefined : "mtFade 280ms ease both" }}>
               <div className="mt-2">
-                <Words parts={withMark(res.parts, question || /\?$/.test(res.english), plang)} size={22} onPick={jumpTo} />
+                <Words parts={withMark(res.parts, (can("question") && question) || /\?$/.test(res.english), plang)} size={stuck ? 19 : 22} onPick={jumpTo} />
               </div>
               <div className="mt-2.5 flex flex-wrap items-center gap-2">
                 <PlayButton voice={voice} text={res.sentence} lang={plang} big />
@@ -989,6 +1040,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                   </button>
                 )}
               </div>
+              {!stuck && <QuickChips chips={quick} onPick={jumpTo} />}
               <div className={"mt-2.5 rounded-[12px] px-3 py-2" + (stuck ? " hidden" : "")} style={{ background: "rgba(10,13,22,0.45)", border: `1px solid ${LINE_SOFT}` }}>
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[10px] font-bold" style={{ color: C.faint, letterSpacing: 1.1 }}>
@@ -1040,9 +1092,10 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
 
           {/* yes or no, telling or asking: always with the sentence, when the shape has them */}
           {(can("negative") || can("question") || can("register")) && (
-            <div className={"mt-3 flex gap-2 border-t pt-2.5" + (stuck ? " hidden sm:flex" : "")} style={{ borderColor: "rgba(242,237,226,0.10)" }}>
+            <div className={"flex gap-2 border-t" + (stuck ? " mt-2 pt-2" : " mt-3 pt-2.5")} style={{ borderColor: "rgba(242,237,226,0.10)" }}>
               {can("negative") && (
                 <Switch2
+                  compact={stuck}
                   label={shape === "tell" ? "DO IT, OR DO NOT" : "IS IT, OR IS IT NOT"} on={negative} onChange={setNegative}
                   left={{ icon: "✓", text: shape === "tell" ? "Do it" : "Yes, it is", color: GREEN }}
                   right={{ icon: "✗", text: shape === "tell" ? "Do not" : "No, it is not", color: RED }}
@@ -1050,6 +1103,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
               )}
               {can("question") && (
                 <Switch2
+                  compact={stuck}
                   label="TELLING, OR ASKING" on={question} onChange={setQuestion}
                   left={{ icon: "💬", text: "Telling", color: C.tube }}
                   right={{ icon: "❓", text: "Asking", color: SKY }}
@@ -1057,6 +1111,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
               )}
               {can("register") && (
                 <Switch2
+                  compact={stuck}
                   label="WHO YOU ARE TALKING TO" on={!polite} onChange={(v) => setPolite(!v)}
                   left={{ icon: "🙏", text: "Politely", color: C.tube }}
                   right={{ icon: "👋", text: "A friend", color: SKY }}
@@ -1067,82 +1122,6 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
         </div>
       </div>
 
-      {/* ................................................. say more: the lines around this one */}
-      {related.length > 0 && (
-        <div className="mt-2">
-          <div className="mb-1.5 flex items-baseline justify-between gap-2">
-            <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.2 }}>SAY MORE</span>
-            <span className="text-[11.5px]" style={{ color: C.faint }}>Lines that go with this one. Tap to make it yours.</span>
-          </div>
-          <div className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-1.5 sm:mx-0 sm:px-0" style={{ scrollbarWidth: "none" }}>
-            {related.map((r) => (
-              <button
-                key={r.label + r.res!.sentence}
-                type="button"
-                onClick={() => loadSpec(r.c)}
-                className="flex w-[196px] flex-none snap-start flex-col gap-1 rounded-[14px] px-3 py-2.5 text-left focus-visible:outline focus-visible:outline-2"
-                style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: LILAC }}
-              >
-                <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.1 }}>{r.label.toUpperCase()}</span>
-                <span className="text-[13.5px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r.res!.sentence}</span>
-                <span className="text-[11.5px] leading-snug" style={{ color: C.muted }}>{r.res!.english}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ................................................. the conversation */}
-      {talk.length > 0 && (
-        <section className="mt-3 rounded-[18px] p-3.5 sm:p-4" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
-          <div className="flex items-baseline justify-between gap-2">
-            <span className="min-w-0">
-              <span className="block text-[9.5px] font-bold" style={{ color: C.tube, letterSpacing: 1.2 }}>
-                {situation ? `${situation.emoji} ${situation.title.toUpperCase()}` : "A LITTLE CONVERSATION AROUND IT"}
-              </span>
-              <span className="block text-[13px] font-semibold" style={{ color: C.milk }}>
-                {situation ? situation.blurb : "Someone asks, you answer, and it carries on."}
-              </span>
-            </span>
-          </div>
-          <ol className="mt-2.5 flex flex-col gap-1.5">
-            {talk.map(({ l, res: r }, i) => {
-              const mine = l.by === "you";
-              const current = r!.sentence === res?.sentence;
-              return (
-                <li key={i} className={"flex items-center gap-2" + (mine ? " flex-row-reverse" : "")}>
-                  <button
-                    type="button"
-                    onClick={() => loadSpec(l.c)}
-                    aria-pressed={current}
-                    className="min-w-0 max-w-[86%] rounded-[14px] px-3 py-2 text-left focus-visible:outline focus-visible:outline-2"
-                    style={{
-                      background: current ? `${langInfo.accent}22` : mine ? "rgba(191,239,219,0.07)" : C.base,
-                      border: `1px solid ${current ? langInfo.accent : mine ? "rgba(191,239,219,0.22)" : LINE}`,
-                      outlineColor: langInfo.accent,
-                    }}
-                  >
-                    <span className="block text-[9.5px] font-bold" style={{ color: mine ? C.tube : C.mono, letterSpacing: 1.1 }}>
-                      {mine ? "YOU" : (situation?.them ?? "FRIEND").toUpperCase()}
-                    </span>
-                    <span className="block text-[14px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r!.sentence}</span>
-                    <span className="block text-[11.5px] leading-snug" style={{ color: C.muted }}>{r!.english}</span>
-                  </button>
-                  <PlayButton voice={voice} text={r!.sentence} lang={plang} />
-                </li>
-              );
-            })}
-          </ol>
-          {situation && plang === "fr" && talk.length < situation.lines.length && (
-            <p className="mt-2 text-[11.5px]" style={{ color: C.faint }}>French has the everyday lines and the commands. The rest of this conversation is in the four Indian languages.</p>
-          )}
-        </section>
-      )}
-
-      {/* ................................................. or make your own */}
-      <div className="mt-5">
-        <ShapeRail shape={shape} onPick={pickShape} rm={rm} />
-      </div>
 
       {can("tense") && (
         <div ref={whenRef} className="mt-3 scroll-mt-[220px] rounded-[18px]" style={{ boxShadow: flash === "when" ? `0 0 0 3px ${ROLE.when.color}55` : undefined, transition: "box-shadow 300ms ease" }}>
@@ -1264,6 +1243,25 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           glow={flash === "action"}
         >
           <Search value={verbQuery} onChange={setVerbQuery} placeholder="Search an action: cook, pay, open" tone="action" />
+          {!verbQuery && (
+            <div className="-mx-1 mb-2 flex gap-1.5 overflow-x-auto px-1 pb-1" style={{ scrollbarWidth: "none" }} role="group" aria-label="Kinds of action">
+              {[{ id: null as string | null, emoji: situation ? situation.emoji : "✨", label: situation ? "This place" : "All" }, ...VERB_GROUPS].map((g) => {
+                const on = verbCat === g.id;
+                return (
+                  <button
+                    key={g.id ?? "all"}
+                    type="button"
+                    onClick={() => setVerbCat(g.id)}
+                    aria-pressed={on}
+                    className="flex-none rounded-full px-3 py-1.5 text-[11.5px] font-semibold focus-visible:outline focus-visible:outline-2"
+                    style={{ background: on ? "rgba(255,179,92,0.16)" : C.base, color: on ? C.sodium : C.muted, border: `1px solid ${on ? "rgba(255,179,92,0.5)" : LINE}`, outlineColor: C.sodium }}
+                  >
+                    <span aria-hidden="true">{g.emoji}</span> {g.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
           <div className="max-h-[332px] overflow-y-auto pr-0.5" style={{ scrollbarWidth: "thin" }}>
             {musicVerbs.length > 0 && (
               <div className="grid grid-cols-4 gap-1.5">
@@ -1362,6 +1360,78 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
           )}
         </Panel>
       </div>
+      )}
+
+      {/* ................................................. say more: the lines around this one */}
+      {related.length > 0 && (
+        <div className="mt-5">
+          <div className="mb-1.5 flex items-baseline justify-between gap-2">
+            <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.2 }}>SAY MORE</span>
+            <span className="text-[11.5px]" style={{ color: C.faint }}>Lines that go with this one. Tap to make it yours.</span>
+          </div>
+          <div className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-1.5 sm:mx-0 sm:px-0" style={{ scrollbarWidth: "none" }}>
+            {related.map((r) => (
+              <button
+                key={r.label + r.res!.sentence}
+                type="button"
+                onClick={() => loadSpec(r.c)}
+                className="flex w-[196px] flex-none snap-start flex-col gap-1 rounded-[14px] px-3 py-2.5 text-left focus-visible:outline focus-visible:outline-2"
+                style={{ background: C.tar, border: `1px solid ${LINE}`, outlineColor: LILAC }}
+              >
+                <span className="text-[9.5px] font-bold" style={{ color: LILAC, letterSpacing: 1.1 }}>{r.label.toUpperCase()}</span>
+                <span className="text-[13.5px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r.res!.sentence}</span>
+                <span className="text-[11.5px] leading-snug" style={{ color: C.muted }}>{r.res!.english}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ................................................. the conversation */}
+      {talk.length > 0 && (
+        <section className="mt-3 rounded-[18px] p-3.5 sm:p-4" style={{ background: C.tar, border: `1px solid ${LINE}` }}>
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="min-w-0">
+              <span className="block text-[9.5px] font-bold" style={{ color: C.tube, letterSpacing: 1.2 }}>
+                {situation ? `${situation.emoji} ${situation.title.toUpperCase()}` : "A LITTLE CONVERSATION AROUND IT"}
+              </span>
+              <span className="block text-[13px] font-semibold" style={{ color: C.milk }}>
+                {situation ? situation.blurb : "Someone asks, you answer, and it carries on."}
+              </span>
+            </span>
+          </div>
+          <ol className="mt-2.5 flex flex-col gap-1.5">
+            {talk.map(({ l, res: r }, i) => {
+              const mine = l.by === "you";
+              const current = r!.sentence === res?.sentence;
+              return (
+                <li key={i} className={"flex items-center gap-2" + (mine ? " flex-row-reverse" : "")}>
+                  <button
+                    type="button"
+                    onClick={() => loadSpec(l.c)}
+                    aria-pressed={current}
+                    className="min-w-0 max-w-[86%] rounded-[14px] px-3 py-2 text-left focus-visible:outline focus-visible:outline-2"
+                    style={{
+                      background: current ? `${langInfo.accent}22` : mine ? "rgba(191,239,219,0.07)" : C.base,
+                      border: `1px solid ${current ? langInfo.accent : mine ? "rgba(191,239,219,0.22)" : LINE}`,
+                      outlineColor: langInfo.accent,
+                    }}
+                  >
+                    <span className="block text-[9.5px] font-bold" style={{ color: mine ? C.tube : C.mono, letterSpacing: 1.1 }}>
+                      {mine ? "YOU" : (situation?.them ?? "FRIEND").toUpperCase()}
+                    </span>
+                    <span className="block text-[14px] font-semibold leading-snug" style={{ color: langInfo.accent, fontFamily: MONO }}>{r!.sentence}</span>
+                    <span className="block text-[11.5px] leading-snug" style={{ color: C.muted }}>{r!.english}</span>
+                  </button>
+                  <PlayButton voice={voice} text={r!.sentence} lang={plang} />
+                </li>
+              );
+            })}
+          </ol>
+          {situation && plang === "fr" && talk.length < situation.lines.length && (
+            <p className="mt-2 text-[11.5px]" style={{ color: C.faint }}>French has the everyday lines and the commands. The rest of this conversation is in the five Indian languages.</p>
+          )}
+        </section>
       )}
 
       {/* ................................................. see how it is built */}
@@ -1474,7 +1544,7 @@ export function SentenceLab({ lang, onLanguageChange, gender, setGender, slow, s
                 </div>
               ))}
               <p className="mt-1 text-[12.5px]" style={{ color: C.muted }}>
-                Same colours, same jobs. Kannada, Hindi, Tamil and Malayalam park the action at the end; French keeps it in the middle like English.
+                Same colours, same jobs. Kannada, Hindi, Tamil, Malayalam and Telugu park the action at the end; French keeps it in the middle like English.
               </p>
             </div>
           )}

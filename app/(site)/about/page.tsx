@@ -7,7 +7,7 @@ import { aboutGraph } from "@/lib/structured-data";
 import { JsonLd } from "../../components/JsonLd";
 
 const DESCRIPTION =
-  "Maatu is the Kannada word for speech. It is an app from Nathaniel School of Music for speaking everyday Kannada, Hindi, Tamil and Malayalam out loud with a friendly AI teacher, with a French chat too.";
+  "Maatu is the Kannada word for speech. It is an app from Nathaniel School of Music for speaking everyday Kannada, Hindi, Tamil, Malayalam and Telugu out loud with a friendly AI teacher, with a French chat too.";
 
 export const metadata: Metadata = {
   title: "About Maatu",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const PRINCIPLES = [
   { title: "Speak first", body: "Every part of Maatu ends with you saying something out loud. Reading and tapping come second." },
-  { title: "Plain English letters", body: "Every Kannada, Hindi, Tamil and Malayalam word is written in the Latin alphabet, so the script never stands between you and your first conversation." },
+  { title: "Plain English letters", body: "Every Kannada, Hindi, Tamil, Malayalam and Telugu word is written in the Latin alphabet, so the script never stands between you and your first conversation." },
   { title: "The way people really talk", body: "Bengaluru Kannada, Delhi Hindi, Chennai Tamil and Kochi Malayalam as you hear them in an auto, a market or a tea stall, not the stiff textbook kind." },
   { title: "Gentle teaching", body: "Your teacher keeps the conversation going and helps with the right way of saying it, and a coach gives you notes after a call." },
   { title: "You stay in control", body: "Ask in English whenever you are stuck, and ask your teacher to slow down at any time." },
@@ -39,7 +39,7 @@ export default function About() {
           Maatu means <em>speech.</em>
         </h1>
         <p className="lede">
-          Maatu is the Kannada word for speech, or talk. It is an app for speaking everyday Kannada, Hindi, Tamil and Malayalam out loud with a friendly AI
+          Maatu is the Kannada word for speech, or talk. It is an app for speaking everyday Kannada, Hindi, Tamil, Malayalam and Telugu out loud with a friendly AI
           teacher, from your very first minute. No account, no script, no perfect sentences needed.
         </p>
         <div className="cta-row">
@@ -56,7 +56,7 @@ export default function About() {
         <h2>Why speaking comes first</h2>
         <div className="prose">
           <p>
-            Maatu is for adults who want to talk in everyday Kannada, Hindi, Tamil or Malayalam. Many apps teach you to tap the right answer; real life asks
+            Maatu is for adults who want to talk in everyday Kannada, Hindi, Tamil, Malayalam or Telugu. Many apps teach you to tap the right answer; real life asks
             you to speak. So Maatu works the other way round: you talk first, and grammar, vocabulary and confidence follow.
           </p>
           <p>
@@ -90,7 +90,7 @@ export default function About() {
       </section>
 
       <section className="site-section">
-        <h2>Four languages, four cities</h2>
+        <h2>Five languages, five cities</h2>
         <p className="section-lede">
           Each has its own teacher and a {ALL_LESSONS.length}-lesson course. French, with {FRENCH.teacher} in {FRENCH.city}, is a chat only for now.
         </p>

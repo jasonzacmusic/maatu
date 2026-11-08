@@ -4,7 +4,7 @@ import { buildShape, shapeEnglish, type ShapeChoice } from "./shapes";
 import { SITUATIONS, type Line, type LineSpec, type Situation } from "./situations";
 
 // The sentences around the one you just made. Built from the choice, never from
-// one language's text, so Kannada, Hindi, Tamil, Malayalam and French all get
+// one language's text, so Kannada, Hindi, Tamil, Malayalam, Telugu and French all get
 // the same neighbours. No em dashes anywhere.
 
 export type Related = { label: string; c: LineSpec };

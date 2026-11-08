@@ -22,7 +22,7 @@ export const UNITS: Unit[] = curriculum.units as Unit[];
 export const ALL_LESSONS: Lesson[] = UNITS.flatMap((u) => u.lessons);
 
 // Names, codes and teachers come from languages.json, shared with the agent.
-const INDIAN = ["kn", "hi", "ta", "ml"] as const satisfies readonly Lang[];
+const INDIAN = ["kn", "hi", "ta", "ml", "te"] as const satisfies readonly Lang[];
 export const LANG_NAME = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].name])) as Record<Lang, string>;
 export const LANG_CODE = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].code])) as Record<Lang, string>;
 const TEACHER_NAME = Object.fromEntries(INDIAN.map((l) => [l, LANGUAGES[l].teacher.name])) as Record<Lang, string>;

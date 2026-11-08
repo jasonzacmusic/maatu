@@ -71,7 +71,7 @@ type StreetStats = {
 };
 
 const EMPTY_STATS: StreetStats = { totalSeconds: 0, thisWeekSeconds: 0, sessionCount: 0, nights: 0, scenarios: [] };
-const LANGS: Lang[] = ["kn", "hi", "ta", "ml"];
+const LANGS: Lang[] = ["kn", "hi", "ta", "ml", "te"];
 
 function greeting() {
   const hour = new Date().getHours();
@@ -230,7 +230,7 @@ function Onboarding({ lang, setLang, onEnter, rm }: { lang: Lang; setLang: (l: L
             Your private speaking teacher, from the very first word.
           </h1>
           <p className="mx-auto mt-3 text-[14.5px] leading-relaxed" style={{ color: C.muted, maxWidth: 320 }}>
-            Speak Kannada, Hindi, Tamil or Malayalam. Chat about anything, build any sentence yourself, or act out a real situation.
+            Speak Kannada, Hindi, Tamil, Malayalam or Telugu. Chat about anything, build any sentence yourself, or act out a real situation.
           </p>
         </div>
 
@@ -539,7 +539,7 @@ function Hub({
                 One sentence sits on screen and you change any part of it: the action, the word, the time, yes or no, telling or asking.
               </p>
               <p className="mt-2 text-[13px]" style={{ color: C.mono }}>
-                {VERB_TILES.length} actions and {OBJECTS.length} words, in Kannada, Hindi, Tamil, Malayalam and French.
+                {VERB_TILES.length} actions and {OBJECTS.length} words, in Kannada, Hindi, Tamil, Malayalam, Telugu and French.
               </p>
               <button onClick={onBuild} className={cta + " mt-5"} style={{ background: BUILD.color, color: C.ink, outlineColor: C.milk }}>
                 Start building
@@ -1566,12 +1566,22 @@ export default function MaatuApp() {
     const storedGender = window.localStorage.getItem("maatu-gender");
     if (storedGender === "f" || storedGender === "m") setGender(storedGender);
     const storedLang = window.localStorage.getItem("maatu-lang") as Lang | null;
-    if (storedLang && LANGS.includes(storedLang)) {
-      setLangState(storedLang);
-      setScreen("hub");
+    // Deep links: /?lang=te&mode=build opens straight into a language and a
+    // mode (build, scenes, course, chat). The address is tidied afterwards.
+    const params = new URLSearchParams(window.location.search);
+    const linkLang = params.get("lang") as Lang | null;
+    const linkMode = params.get("mode");
+    const lang0 = linkLang && LANGS.includes(linkLang) ? linkLang : storedLang && LANGS.includes(storedLang) ? storedLang : null;
+    if (lang0) {
+      setLangState(lang0);
+      window.localStorage.setItem("maatu-lang", lang0);
+      if (linkMode === "scenes") lastTalkMode = "act";
+      else if (linkMode === "chat") lastTalkMode = "chat";
+      setScreen(linkMode === "build" ? "build" : linkMode === "course" ? "school" : "hub");
     } else {
       setScreen("onboarding");
     }
+    if (linkLang || linkMode) window.history.replaceState(null, "", window.location.pathname);
     const key = "maatu-user-id";
     let id = window.localStorage.getItem(key);
     if (!id) {

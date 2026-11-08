@@ -13,10 +13,17 @@
       "name": "Kannada",
       "code": "kn-IN",
       "city": "Bengaluru",
-      "teacher": { "name": "Meera", "gender": "female", "voice": "shreya" },
+      "teacher": {
+        "name": "Meera",
+        "gender": "female",
+        "voice": "shreya"
+      },
       "engine": "sarvam",
       "voiceModel": "bulbul:v4-flash",
-      "speakers": { "female": "chaitra_kn_conversation", "male": "chetan_kn_conversation" },
+      "speakers": {
+        "female": "chaitra_kn_conversation",
+        "male": "chetan_kn_conversation"
+      },
       "hearingHints": "namaskara, hegiddira, chennaagide, illi, alli, beku, beda, gottilla, swalpa, Meera"
     },
     "hi": {
@@ -24,7 +31,11 @@
       "name": "Hindi",
       "code": "hi-IN",
       "city": "Delhi",
-      "teacher": { "name": "Anjali", "gender": "female", "voice": "pooja" },
+      "teacher": {
+        "name": "Anjali",
+        "gender": "female",
+        "voice": "pooja"
+      },
       "engine": "sarvam",
       "voiceModel": "bulbul:v3",
       "speakers": {},
@@ -35,7 +46,11 @@
       "name": "Tamil",
       "code": "ta-IN",
       "city": "Chennai",
-      "teacher": { "name": "Kavya", "gender": "female", "voice": "ishita" },
+      "teacher": {
+        "name": "Kavya",
+        "gender": "female",
+        "voice": "ishita"
+      },
       "engine": "sarvam",
       "voiceModel": "bulbul:v3",
       "speakers": {},
@@ -46,18 +61,41 @@
       "name": "Malayalam",
       "code": "ml-IN",
       "city": "Kochi",
-      "teacher": { "name": "Devika", "gender": "female", "voice": "kavya" },
+      "teacher": {
+        "name": "Devika",
+        "gender": "female",
+        "voice": "kavya"
+      },
       "engine": "sarvam",
       "voiceModel": "bulbul:v3",
       "speakers": {},
       "hearingHints": "namaskaram, sukhamano, sheri, venam, venda, ethra, chetta, chechi, Devika"
+    },
+    "te": {
+      "accent": "#F29BD0",
+      "name": "Telugu",
+      "code": "te-IN",
+      "city": "Hyderabad",
+      "teacher": {
+        "name": "Sravani",
+        "gender": "female",
+        "voice": "priya"
+      },
+      "engine": "sarvam",
+      "voiceModel": "bulbul:v3",
+      "speakers": {},
+      "hearingHints": "namaskaaram, ela unnaaru, baagunnaanu, sare, kaavaali, vaddu, entha, anna, akka, Sravani"
     },
     "fr": {
       "accent": "#7FAEFF",
       "name": "French",
       "code": "fr-FR",
       "city": "Paris",
-      "teacher": { "name": "Camille", "gender": "female", "voice": "Aoede" },
+      "teacher": {
+        "name": "Camille",
+        "gender": "female",
+        "voice": "Aoede"
+      },
       "engine": "gemini-live",
       "voiceModel": "gemini-3.8-live",
       "speakers": {},
